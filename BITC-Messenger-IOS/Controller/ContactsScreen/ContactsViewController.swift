@@ -14,20 +14,22 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var Search: UISearchBar!
     
-    private var mContactsViewModel: ContactsViewModel!
-    private var mUserDefaults: IUserDefaultsStringsRead!
+    ///private var mContactsViewModel: ContactsViewModel!
+    ///private var mUserDefaults: IUserDefaultsStringsRead!
     
-    private var mContacts: [Contact] = [Contact]()
-    private var mFilteredContacts: [Contact] = [Contact]()
+    private var contacts: VSMContacts = VSMContacts()///
     
-    private var mInSearchMode: Bool = false
+    ///private var mContacts: [Contact] = [Contact]()
+    ///private var mFilteredContacts: [Contact] = [Contact]()
+    
+    ///private var mInSearchMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        mContactsViewModel = ContactsViewModel()
-        mUserDefaults = NSUserDefaultsStrings()
+        ///mContactsViewModel = ContactsViewModel()
+        ///mUserDefaults = NSUserDefaultsStrings()
         
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[1]
@@ -53,14 +55,14 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as? ContactCell {
             
-            var contact: Contact!
+            var contact: VSMContact!
             
-            if mInSearchMode {
-                contact = mFilteredContacts[indexPath.row]
-            } else {
-                contact = mContacts[indexPath.row]
-            }
-            
+            //if mInSearchMode {
+            //    contact = mFilteredContacts[indexPath.row]
+            //} else {
+            //    contact = mContacts[indexPath.row]
+            //}
+            contact = contacts.SArray[indexPath.row]
             cell.ConfigureCell(contact: contact)
             
             return cell
@@ -71,11 +73,11 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if mInSearchMode {
-            return mFilteredContacts.count
-        } else {
-            return mContacts.count
-        }
+        ///if mInSearchMode {
+        ///    return mFilteredContacts.count
+        ///} else {
+            return contacts.SArray.count
+        ///}
     }
 
     
@@ -88,7 +90,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if Search.text == nil || Search.text == "" {
+       /* if Search.text == nil || Search.text == "" {
             mInSearchMode = false
             view.endEditing(true)
         } else {
@@ -97,14 +99,20 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             mFilteredContacts = mContacts.filter({ $0.name!.range(of: lower!) != nil })
         }
         
-        Table.reloadData()
+        Table.reloadData()*/
     }
 
     private func LoadContacts() {
-        mContactsViewModel.SaveContactsFromWeb(email: mUserDefaults.GetUserEmail()!, passwordHash: mUserDefaults.GetUserPasswordHash()!) { result in
-            self.mContacts = result
+        //mContactsViewModel.SaveContactsFromWeb(email: mUserDefaults.GetUserEmail()!, passwordHash: mUserDefaults.GetUserPasswordHash()!) { result in
+        //   self.mContacts = result
+        //    self.Table.reloadData()
+        //}
+        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
+            
+            self.contacts = l
             self.Table.reloadData()
-        }
+            
+            }()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
     }
     
     /*

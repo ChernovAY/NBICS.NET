@@ -48,7 +48,7 @@ public class WebAPI{
 
 
 public class VSMContacts {
-    public static func VSMContactsAssync(to conts: inout VSMContacts, loadingDelegate: ((Bool)->Void)?=nil, ImageLoadedDelegate: ((VSMContact)->Void)?=nil){
+    public static func VSMContactsAssync(loadingDelegate: ((VSMContacts)->Void)?=nil, ImageLoadedDelegate: ((VSMContact)->Void)?=nil){
         WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.contatcs, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
             
             if(!s){
@@ -57,7 +57,7 @@ public class VSMContacts {
             else{
                 if d is Data {
                     let data = d as! Data
-                    conts = VSMContacts(from: data  , loadingDelegate:loadingDelegate, ImageLoadedDelegate: ImageLoadedDelegate)
+                    let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate, ImageLoadedDelegate: ImageLoadedDelegate)
                 }
             }
             }()}
@@ -69,17 +69,15 @@ public class VSMContacts {
             return array
         }
     }
-    public  var loadingDelegate:((Bool)->Void)? = nil
+    public  var loadingDelegate:((VSMContacts)->Void)? = nil
     public  var loaded:Bool = false{
         didSet {
-            if let ld = loadingDelegate { ld(loaded)}
-        }
-        willSet(newLoaded) {
-            if let ld = loadingDelegate { ld(newLoaded)}
+            if let ld = loadingDelegate{
+                if loaded { ld(self)}
+            }
         }
     }
-  
-    public init(array:[VSMContact], loadingDelegate:((Bool)->Void)?=nil){
+    public init(array:[VSMContact], loadingDelegate:((VSMContacts)->Void)?=nil){
         self.array = array
         if loadingDelegate != nil {self.loadingDelegate = loadingDelegate}
         if self.array.count>0 {loaded = true}
@@ -87,7 +85,7 @@ public class VSMContacts {
     public init(){
         
     }
-    init(from data: Data, loadingDelegate:((Bool)->Void)?=nil, ImageLoadedDelegate:((VSMContact)->Void)?=nil)
+    init(from data: Data, loadingDelegate:((VSMContacts)->Void)?=nil, ImageLoadedDelegate:((VSMContact)->Void)?=nil)
     {
         if let ld = loadingDelegate{
             self.loadingDelegate = ld
@@ -100,7 +98,7 @@ public class VSMContacts {
                 }
             }
             loaded  = true
-            if let ld = loadingDelegate { ld(loaded)}
+            if let ld = loadingDelegate { ld(self)}
         }
     }
     public class func load(){}
