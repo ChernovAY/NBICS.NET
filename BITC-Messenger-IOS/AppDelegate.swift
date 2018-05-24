@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    ///kekas
+    /**/
 }
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
