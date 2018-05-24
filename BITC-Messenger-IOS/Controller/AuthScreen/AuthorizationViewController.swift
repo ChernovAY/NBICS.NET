@@ -50,8 +50,7 @@ class AuthorizationViewController: UIViewController {
                                         self.mUserDefaults.SetUserPasswordHash(hash: hash)
                                         
                                         WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                        VSMContacts.VSMContactsAssync(to: &self.conts, loadingDelegate:{(l) in{print(l)}()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
-                                        
+                                       
                                         self.NavigateToChats()
                                         print("done")
                                     case "1":
@@ -85,7 +84,6 @@ class AuthorizationViewController: UIViewController {
                         switch result {
                             case "0":
                                     WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                    VSMContacts.VSMContactsAssync(to: &self.conts, loadingDelegate:{(l) in{print(l)}()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
                                     self.NavigateToChats()
                             default: break
                         }
