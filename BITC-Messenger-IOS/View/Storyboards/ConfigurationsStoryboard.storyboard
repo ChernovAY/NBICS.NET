@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Configurations View Controller-->
+        <scene sceneID="GHQ-Xe-CRc">
+            <objects>
+                <viewController storyboardIdentifier="ConfigurationsViewController" id="vNH-8Y-ibO" customClass="ConfigurationsViewController" customModule="BITC_Messenger_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZOt-RO-q1t"/>
+                        <viewControllerLayoutGuide type="bottom" id="IlD-GF-a6J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WRM-PV-dKg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChatBackground" translatesAutoresizingMaskIntoConstraints="NO" id="IJ5-cp-Bq3">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VOC-UH-d26" customClass="MainTabBar" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items/>
+                            </tabBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Конфигурации" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBc-ow-2Bq">
+                                <rect key="frame" x="128" y="323.5" width="118" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IlD-GF-a6J" firstAttribute="top" secondItem="IJ5-cp-Bq3" secondAttribute="bottom" id="DdW-1Y-GLg"/>
+                            <constraint firstAttribute="trailing" secondItem="IJ5-cp-Bq3" secondAttribute="trailing" id="NHm-0s-TCL"/>
+                            <constraint firstItem="IJ5-cp-Bq3" firstAttribute="top" secondItem="WRM-PV-dKg" secondAttribute="top" id="Ww3-28-Zhq"/>
+                            <constraint firstItem="DBc-ow-2Bq" firstAttribute="centerX" secondItem="WRM-PV-dKg" secondAttribute="centerX" id="nqf-VQ-nma"/>
+                            <constraint firstItem="DBc-ow-2Bq" firstAttribute="centerY" secondItem="WRM-PV-dKg" secondAttribute="centerY" id="x1c-X4-wf2"/>
+                            <constraint firstItem="IJ5-cp-Bq3" firstAttribute="leading" secondItem="WRM-PV-dKg" secondAttribute="leading" id="yZt-p6-2K4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="TabBar" destination="VOC-UH-d26" id="LF7-kI-Uhy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QN0-CJ-157" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28" y="27.436281859070466"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ChatBackground" width="414" height="736"/>
+    </resources>
+</document>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="h7t-Jw-PNm">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Start Screen View Controller-->
+        <scene sceneID="laC-ZR-ppf">
+            <objects>
+                <viewController id="h7t-Jw-PNm" customClass="StartScreenViewController" customModule="BITC_Messenger_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BP5-8v-RIa"/>
+                        <viewControllerLayoutGuide type="bottom" id="cN0-PM-ZGC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qhh-Je-QsJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoScreen" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-S3-wZK">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.NET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yle-VY-vRo">
+                                <rect key="frame" x="142.5" y="20" width="90" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="7Ue-BC-A3E"/>
+                                    <constraint firstAttribute="height" constant="21" id="ow9-kV-Lw4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.Чат" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpx-2k-dEc">
+                                <rect key="frame" x="125.5" y="429" width="124" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="BpV-H1-OqN"/>
+                                    <constraint firstAttribute="width" constant="124" id="gFt-96-uUh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Это коммуникатор, сервис обмена сообщениями, конфигурациями и файлами сети NBICS.NET" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAm-wd-9yD">
+                                <rect key="frame" x="35" y="473" width="305" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="UNp-Rs-jwa"/>
+                                    <constraint firstAttribute="height" constant="76" id="XAF-M0-npd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9ke-dr-KaX">
+                                <rect key="frame" x="178" y="557" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="eSt-4h-u2y"/>
+                                    <constraint firstAttribute="width" constant="20" id="k4N-fP-yqV"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjh-cl-k1R" customClass="BottomPanelView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="67.5" y="607" width="240" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hOS-xW-HuV">
+                                        <rect key="frame" x="35" y="6" width="170.5" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Разработано в РФ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-sG-S8k">
+                                                <rect key="frame" x="33" y="0.0" width="104.5" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дизайн Балтийский ИТ-Центр" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brq-vK-p2C">
+                                                <rect key="frame" x="0.5" y="14" width="170" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="EXF-0j-Lvf"/>
+                                    <constraint firstAttribute="trailing" secondItem="hOS-xW-HuV" secondAttribute="trailing" constant="34.5" id="Jvh-wS-rjZ"/>
+                                    <constraint firstItem="hOS-xW-HuV" firstAttribute="top" secondItem="gjh-cl-k1R" secondAttribute="top" constant="6" id="ZUo-dY-RIp"/>
+                                    <constraint firstAttribute="height" constant="40" id="cBb-lc-Ykh"/>
+                                    <constraint firstItem="hOS-xW-HuV" firstAttribute="leading" secondItem="gjh-cl-k1R" secondAttribute="leading" constant="35" id="rK4-Mh-9gw"/>
+                                    <constraint firstAttribute="bottom" secondItem="hOS-xW-HuV" secondAttribute="bottom" constant="6" id="xyn-CQ-geu"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yle-VY-vRo" firstAttribute="top" secondItem="BP5-8v-RIa" secondAttribute="bottom" id="5Cr-oh-awc"/>
+                            <constraint firstItem="9ke-dr-KaX" firstAttribute="top" secondItem="IAm-wd-9yD" secondAttribute="bottom" constant="8" id="9iE-NP-ul2"/>
+                            <constraint firstItem="gDs-S3-wZK" firstAttribute="top" secondItem="qhh-Je-QsJ" secondAttribute="top" id="Cg7-jy-h8b"/>
+                            <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="gDs-S3-wZK" secondAttribute="bottom" id="H5C-Di-Lrd"/>
+                            <constraint firstItem="IAm-wd-9yD" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="MaX-cV-e6i"/>
+                            <constraint firstItem="gDs-S3-wZK" firstAttribute="leading" secondItem="qhh-Je-QsJ" secondAttribute="leading" id="YVZ-zg-V0w"/>
+                            <constraint firstItem="qpx-2k-dEc" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="aET-Ob-BCZ"/>
+                            <constraint firstItem="9ke-dr-KaX" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="jpV-Pd-Qva"/>
+                            <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="IAm-wd-9yD" secondAttribute="bottom" constant="118" id="kvq-Vn-UTq"/>
+                            <constraint firstItem="yle-VY-vRo" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="lhH-yS-Vee"/>
+                            <constraint firstAttribute="trailing" secondItem="gDs-S3-wZK" secondAttribute="trailing" id="tWK-dK-ioJ"/>
+                            <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="gjh-cl-k1R" secondAttribute="bottom" constant="20" id="txa-nw-Bjn"/>
+                            <constraint firstItem="gjh-cl-k1R" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="txg-GK-d5R"/>
+                            <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="qpx-2k-dEc" secondAttribute="bottom" constant="217" id="u9k-Sr-VKU"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j10-sW-zYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="285.60000000000002" y="-443.02848575712147"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LogoScreen" width="828" height="1472"/>
+    </resources>
+</document>
