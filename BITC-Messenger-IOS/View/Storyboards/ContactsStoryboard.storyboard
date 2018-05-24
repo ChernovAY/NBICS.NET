@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="G4J-4T-9Rg">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Contacts View Controller-->
+        <scene sceneID="vhc-8r-Ctu">
+            <objects>
+                <viewController storyboardIdentifier="ContactsViewController" id="G4J-4T-9Rg" customClass="ContactsViewController" customModule="BITC_Messenger_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QlV-Ha-Num"/>
+                        <viewControllerLayoutGuide type="bottom" id="PvX-ap-8VB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nAB-xz-DcL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChatBackground" translatesAutoresizingMaskIntoConstraints="NO" id="5Gh-rC-D3N">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MbK-2b-Opq" customClass="MainTabBar" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="687" width="414" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items/>
+                            </tabBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Люди" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpz-zI-hge">
+                                <rect key="frame" x="185" y="30" width="45" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8m-Dd-d8V">
+                                <rect key="frame" x="0.0" y="58" width="414" height="50"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" searchBarStyle="minimal" placeholder="Найти контакты" translatesAutoresizingMaskIntoConstraints="NO" id="obh-dK-2nH" customClass="SearchBarBorderless" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-3" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="kfa-IQ-gey"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BwB-Ek-Qga">
+                                <rect key="frame" x="0.0" y="116" width="414" height="571"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ContactCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="o2R-JB-5Us" customClass="ContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o2R-JB-5Us" id="IkT-K9-DgD">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CQI-DO-dZU" customClass="CircleImageView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="20" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="QXK-Sg-GKj"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Rgr-ga-LVQ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKa-up-nXR">
+                                                    <rect key="frame" x="80" y="40" width="0.0" height="0.0"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="CQI-DO-dZU" firstAttribute="leading" secondItem="IkT-K9-DgD" secondAttribute="leadingMargin" id="9iS-3m-tdB"/>
+                                                <constraint firstItem="CQI-DO-dZU" firstAttribute="centerY" secondItem="IkT-K9-DgD" secondAttribute="centerY" id="Ike-O1-ZHa"/>
+                                                <constraint firstItem="PKa-up-nXR" firstAttribute="leading" secondItem="IkT-K9-DgD" secondAttribute="leadingMargin" constant="60" id="P59-bS-1wl"/>
+                                                <constraint firstItem="PKa-up-nXR" firstAttribute="centerY" secondItem="CQI-DO-dZU" secondAttribute="centerY" id="xYT-wU-avx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="NameLbl" destination="PKa-up-nXR" id="bq1-Zl-GGT"/>
+                                            <outlet property="ThumbImage" destination="CQI-DO-dZU" id="prb-Dw-ZAp"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="B8m-Dd-d8V" secondAttribute="trailing" id="7AQ-5a-Lel"/>
+                            <constraint firstItem="B8m-Dd-d8V" firstAttribute="centerX" secondItem="nAB-xz-DcL" secondAttribute="centerX" id="BQU-d7-P0d"/>
+                            <constraint firstAttribute="trailing" secondItem="BwB-Ek-Qga" secondAttribute="trailing" id="H1B-69-N0V"/>
+                            <constraint firstAttribute="trailing" secondItem="MbK-2b-Opq" secondAttribute="trailing" id="KVv-Ui-Orx"/>
+                            <constraint firstItem="B8m-Dd-d8V" firstAttribute="leading" secondItem="nAB-xz-DcL" secondAttribute="leading" id="LIW-zT-9DM"/>
+                            <constraint firstItem="cpz-zI-hge" firstAttribute="top" secondItem="QlV-Ha-Num" secondAttribute="bottom" constant="10" id="Mku-Ez-11z"/>
+                            <constraint firstItem="BwB-Ek-Qga" firstAttribute="leading" secondItem="nAB-xz-DcL" secondAttribute="leading" id="Qw3-LI-PK6"/>
+                            <constraint firstItem="PvX-ap-8VB" firstAttribute="top" secondItem="5Gh-rC-D3N" secondAttribute="bottom" id="Sos-8H-gok"/>
+                            <constraint firstItem="cpz-zI-hge" firstAttribute="centerX" secondItem="nAB-xz-DcL" secondAttribute="centerX" id="T3D-Gp-dNV"/>
+                            <constraint firstItem="PvX-ap-8VB" firstAttribute="top" secondItem="MbK-2b-Opq" secondAttribute="bottom" id="Wcr-VP-REl"/>
+                            <constraint firstItem="5Gh-rC-D3N" firstAttribute="top" secondItem="nAB-xz-DcL" secondAttribute="top" id="YU0-p4-HXZ"/>
+                            <constraint firstItem="B8m-Dd-d8V" firstAttribute="top" secondItem="cpz-zI-hge" secondAttribute="bottom" constant="8" id="cUB-1g-Rjl"/>
+                            <constraint firstItem="MbK-2b-Opq" firstAttribute="leading" secondItem="nAB-xz-DcL" secondAttribute="leading" id="jIa-18-AqJ"/>
+                            <constraint firstItem="5Gh-rC-D3N" firstAttribute="leading" secondItem="nAB-xz-DcL" secondAttribute="leading" id="nmN-tS-qEd"/>
+                            <constraint firstItem="BwB-Ek-Qga" firstAttribute="top" secondItem="B8m-Dd-d8V" secondAttribute="bottom" constant="8" id="rM7-Ch-ecL"/>
+                            <constraint firstItem="BwB-Ek-Qga" firstAttribute="centerX" secondItem="nAB-xz-DcL" secondAttribute="centerX" id="rOn-pF-N08"/>
+                            <constraint firstAttribute="trailing" secondItem="5Gh-rC-D3N" secondAttribute="trailing" id="tPW-qq-YAD"/>
+                            <constraint firstItem="MbK-2b-Opq" firstAttribute="top" secondItem="BwB-Ek-Qga" secondAttribute="bottom" id="ylP-T6-GBI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="Search" destination="obh-dK-2nH" id="McI-QS-kLm"/>
+                        <outlet property="TabBar" destination="MbK-2b-Opq" id="0W1-jt-wTE"/>
+                        <outlet property="Table" destination="BwB-Ek-Qga" id="ORa-ln-WG4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J71-Fy-waY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-486.95652173913049" y="-326.08695652173918"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ChatBackground" width="414" height="736"/>
+    </resources>
+</document>
