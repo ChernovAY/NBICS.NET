@@ -14,7 +14,6 @@ class AuthorizationViewController: UIViewController {
     
     @IBOutlet weak var PasswordField: StrickTextBox!
 
-    private let mAuthService: AuthRequests = AuthRequests()
     private let mUserDefaults: NSUserDefaultsStrings = NSUserDefaultsStrings()
     private let mHasher: Hasher = Hasher()
     
