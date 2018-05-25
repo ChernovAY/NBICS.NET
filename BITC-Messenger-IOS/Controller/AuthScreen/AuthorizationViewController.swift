@@ -18,8 +18,7 @@ class AuthorizationViewController: UIViewController {
     private let mUserDefaults: NSUserDefaultsStrings = NSUserDefaultsStrings()
     private let mHasher: Hasher = Hasher()
     
-    private var conts:VSMContacts = VSMContacts()//tst
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,8 +50,7 @@ class AuthorizationViewController: UIViewController {
                                         self.mUserDefaults.SetUserPasswordHash(hash: hash)
                                         
                                         WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                        VSMContacts.VSMContactsAssync(to: &self.conts, loadingDelegate:{(l) in{print(l)}()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
-                                        
+                                       
                                         self.NavigateToChats()
                                         print("done")
                                     case "1":
@@ -86,7 +84,6 @@ class AuthorizationViewController: UIViewController {
                         switch result {
                             case "0":
                                     WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                    VSMContacts.VSMContactsAssync(to: &self.conts, loadingDelegate:{(l) in{print(l)}()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
                                     self.NavigateToChats()
                             default: break
                         }
@@ -113,23 +110,4 @@ class AuthorizationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
 }
