@@ -211,7 +211,7 @@ public class VSMContact {
         self.CType          = ContType.init(rawValue: CType)!
         //Иконка-->
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"//let filename = NSHomeDirectory() + "/Icon_\(self.Id).I"
+        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 self.Photo = UIImage(data: data)
@@ -235,12 +235,10 @@ public class VSMContact {
                     if(data.count>0){
                         let fm = FileManager.default
                         let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-                        //NSHomeDirectory() + "/Icon_\(self.Id).I"
-                        //if(!fm.fileExists(atPath: filename)){
+
                             if(fm.createFile(atPath: filename, contents: data)){
                                 self.Photo = UIImage(data: data)
                             }
-                        //}
                     }
                 }
             }
