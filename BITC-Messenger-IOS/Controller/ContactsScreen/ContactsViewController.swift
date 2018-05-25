@@ -75,7 +75,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 60
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -102,7 +102,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
             self.Table.reloadData()
             
-            }()}, ImageLoadedDelegate: {(o) in {print(o.Name)}()})
+            }()})
     }
     
     /*
