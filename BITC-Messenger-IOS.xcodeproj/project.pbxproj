@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2B220A995887C36CEB78A733 /* Pods_BITC_Messenger_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */; };
-		534232201059B4975484B2EA /* Pods_BITC_Messenger_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2E6A869FAB7612981A067F /* Pods_BITC_Messenger_IOSTests.framework */; };
 		9BB9404720A9AF3200B60697 /* Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* Web.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
@@ -51,29 +50,15 @@
 		D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E3252B1F4C82DC00554DB2 /* AppDelegate.swift */; };
 		D4E325341F4C82DC00554DB2 /* BITC_Messenger_IOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4E325321F4C82DC00554DB2 /* BITC_Messenger_IOS.xcdatamodeld */; };
 		D4E325361F4C82DC00554DB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E325351F4C82DC00554DB2 /* Assets.xcassets */; };
-		D4E325441F4C82DD00554DB2 /* BITC_Messenger_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E325431F4C82DD00554DB2 /* BITC_Messenger_IOSTests.swift */; };
 		D4EB22141F4DFA2F002846E7 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB22131F4DFA2F002846E7 /* RegistrationViewController.swift */; };
 		D4FD6CB81F55C00D0035FF66 /* AuthRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FD6CB71F55C00D0035FF66 /* AuthRequests.swift */; };
 		D4FD6CBC1F55C0C10035FF66 /* Hasher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FD6CBB1F55C0C10035FF66 /* Hasher.swift */; };
 		D4FD6CBE1F55C5300035FF66 /* WebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FD6CBD1F55C5300035FF66 /* WebApi.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D4E325401F4C82DD00554DB2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4E325201F4C82DC00554DB2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D4E325271F4C82DC00554DB2;
-			remoteInfo = "BITC-Messenger-IOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		462BA1434CFD9532DC3DDD58 /* Pods-BITC-Messenger-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.release.xcconfig"; sourceTree = "<group>"; };
-		5884F42659D2AFB199C17006 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOSTests/Pods-BITC-Messenger-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		5A2E6A869FAB7612981A067F /* Pods_BITC_Messenger_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BITC_Messenger_IOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
-		6FFA3D3D3C39F239AFE6439C /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOSTests/Pods-BITC-Messenger-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B6E1411209CAB8E00EF1B06 /* BITC-Messenger-IOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BITC-Messenger-IOS.entitlements"; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* Web.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
@@ -119,9 +104,6 @@
 		D4E325331F4C82DC00554DB2 /* BITC_Messenger_IOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BITC_Messenger_IOS.xcdatamodel; sourceTree = "<group>"; };
 		D4E325351F4C82DC00554DB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4E3253A1F4C82DC00554DB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D4E3253F1F4C82DD00554DB2 /* BITC-Messenger-IOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BITC-Messenger-IOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4E325431F4C82DD00554DB2 /* BITC_Messenger_IOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BITC_Messenger_IOSTests.swift; sourceTree = "<group>"; };
-		D4E325451F4C82DD00554DB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4EB22131F4DFA2F002846E7 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegistrationViewController.swift; path = Controller/AuthScreen/RegistrationViewController.swift; sourceTree = "<group>"; };
 		D4FD6CB71F55C00D0035FF66 /* AuthRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthRequests.swift; path = Model/Authoriaztion/AuthRequests.swift; sourceTree = "<group>"; };
 		D4FD6CBA1F55C07B0035FF66 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
@@ -139,14 +121,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4E3253C1F4C82DD00554DB2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				534232201059B4975484B2EA /* Pods_BITC_Messenger_IOSTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -154,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */,
-				5A2E6A869FAB7612981A067F /* Pods_BITC_Messenger_IOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -164,8 +137,6 @@
 			children = (
 				636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */,
 				462BA1434CFD9532DC3DDD58 /* Pods-BITC-Messenger-IOS.release.xcconfig */,
-				6FFA3D3D3C39F239AFE6439C /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */,
-				5884F42659D2AFB199C17006 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -446,7 +417,6 @@
 			isa = PBXGroup;
 			children = (
 				D4E3252A1F4C82DC00554DB2 /* BITC-Messenger-IOS */,
-				D4E325421F4C82DD00554DB2 /* BITC-Messenger-IOSTests */,
 				D4E325291F4C82DC00554DB2 /* Products */,
 				328B24CC5B468D7502452A48 /* Pods */,
 				1C63B2CC501DB26ECE543CF3 /* Frameworks */,
@@ -457,7 +427,6 @@
 			isa = PBXGroup;
 			children = (
 				D4E325281F4C82DC00554DB2 /* BITC-Messenger-IOS.app */,
-				D4E3253F1F4C82DD00554DB2 /* BITC-Messenger-IOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -479,15 +448,6 @@
 				D4FD6CBA1F55C07B0035FF66 /* Bridge.h */,
 			);
 			path = "BITC-Messenger-IOS";
-			sourceTree = "<group>";
-		};
-		D4E325421F4C82DD00554DB2 /* BITC-Messenger-IOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				D4E325431F4C82DD00554DB2 /* BITC_Messenger_IOSTests.swift */,
-				D4E325451F4C82DD00554DB2 /* Info.plist */,
-			);
-			path = "BITC-Messenger-IOSTests";
 			sourceTree = "<group>";
 		};
 		D4FD6CB51F55BFE40035FF66 /* Model */ = {
@@ -542,27 +502,6 @@
 			productReference = D4E325281F4C82DC00554DB2 /* BITC-Messenger-IOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D4E3253E1F4C82DD00554DB2 /* BITC-Messenger-IOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D4E3254B1F4C82DD00554DB2 /* Build configuration list for PBXNativeTarget "BITC-Messenger-IOSTests" */;
-			buildPhases = (
-				C47B5AFE3FAD684E5902DA0E /* [CP] Check Pods Manifest.lock */,
-				D4E3253B1F4C82DD00554DB2 /* Sources */,
-				D4E3253C1F4C82DD00554DB2 /* Frameworks */,
-				D4E3253D1F4C82DD00554DB2 /* Resources */,
-				8B709AE002E20BEFF5FD6442 /* [CP] Embed Pods Frameworks */,
-				1DB48873ECE2E3DF82EC659F /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D4E325411F4C82DD00554DB2 /* PBXTargetDependency */,
-			);
-			name = "BITC-Messenger-IOSTests";
-			productName = "BITC-Messenger-IOSTests";
-			productReference = D4E3253F1F4C82DD00554DB2 /* BITC-Messenger-IOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -586,12 +525,6 @@
 							};
 						};
 					};
-					D4E3253E1F4C82DD00554DB2 = {
-						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = NXDNEMGHQV;
-						ProvisioningStyle = Automatic;
-						TestTargetID = D4E325271F4C82DC00554DB2;
-					};
 				};
 			};
 			buildConfigurationList = D4E325231F4C82DC00554DB2 /* Build configuration list for PBXProject "BITC-Messenger-IOS" */;
@@ -608,7 +541,6 @@
 			projectRoot = "";
 			targets = (
 				D4E325271F4C82DC00554DB2 /* BITC-Messenger-IOS */,
-				D4E3253E1F4C82DD00554DB2 /* BITC-Messenger-IOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -628,31 +560,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4E3253D1F4C82DD00554DB2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1DB48873ECE2E3DF82EC659F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOSTests/Pods-BITC-Messenger-IOSTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		268406A4423A88064E5897DB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -684,39 +594,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8B709AE002E20BEFF5FD6442 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOSTests/Pods-BITC-Messenger-IOSTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C47B5AFE3FAD684E5902DA0E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BITC-Messenger-IOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DD4670FB146F5438FDF40CB8 /* [CP] Embed Pods Frameworks */ = {
@@ -788,23 +665,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4E3253B1F4C82DD00554DB2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4E325441F4C82DD00554DB2 /* BITC_Messenger_IOSTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D4E325411F4C82DD00554DB2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D4E325271F4C82DC00554DB2 /* BITC-Messenger-IOS */;
-			targetProxy = D4E325401F4C82DD00554DB2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D4E325461F4C82DD00554DB2 /* Debug */ = {
@@ -932,38 +793,6 @@
 			};
 			name = Release;
 		};
-		D4E3254C1F4C82DD00554DB2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FFA3D3D3C39F239AFE6439C /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = NXDNEMGHQV;
-				INFOPLIST_FILE = "BITC-Messenger-IOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "riktus.BITC-Messenger-IOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BITC-Messenger-IOS.app/BITC-Messenger-IOS";
-			};
-			name = Debug;
-		};
-		D4E3254D1F4C82DD00554DB2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5884F42659D2AFB199C17006 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = NXDNEMGHQV;
-				INFOPLIST_FILE = "BITC-Messenger-IOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "riktus.BITC-Messenger-IOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BITC-Messenger-IOS.app/BITC-Messenger-IOS";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -981,15 +810,6 @@
 			buildConfigurations = (
 				D4E325491F4C82DD00554DB2 /* Debug */,
 				D4E3254A1F4C82DD00554DB2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D4E3254B1F4C82DD00554DB2 /* Build configuration list for PBXNativeTarget "BITC-Messenger-IOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D4E3254C1F4C82DD00554DB2 /* Debug */,
-				D4E3254D1F4C82DD00554DB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
