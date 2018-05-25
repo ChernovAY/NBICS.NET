@@ -14,23 +14,18 @@ public class ContactCell : UITableViewCell {
     @IBOutlet weak var NameLbl : UILabel!
     @IBOutlet weak var ThumbImage: UIImageView!
     
-    private var mContact: Contact!
+    private var mContact: VSMContact!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(contact: Contact) {
+    public func ConfigureCell(contact: VSMContact) {
         mContact = contact
         
-        NameLbl.text = contact.name
-        
-//        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
-        //let imagePath = String("\(documentDirectory)/\(contact.name!)")
-        
-        ThumbImage.image = UIImage(named: "EmptyUser")
+        NameLbl.text = contact.Name
+        ThumbImage.image = contact.Photo
         
         self.backgroundColor = UIColor.clear
-
     }
 }

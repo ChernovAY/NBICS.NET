@@ -14,20 +14,17 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var Search: UISearchBar!
     
-    private var mContactsViewModel: ContactsViewModel!
-    private var mUserDefaults: IUserDefaultsStringsRead!
     
-    private var mContacts: [Contact] = [Contact]()
-    private var mFilteredContacts: [Contact] = [Contact]()
-    
-    private var mInSearchMode: Bool = false
+    private var contacts = VSMContacts()
+    private var cArray   = [VSMContact]()
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        mContactsViewModel = ContactsViewModel()
-        mUserDefaults = NSUserDefaultsStrings()
+        ///mContactsViewModel = ContactsViewModel()
+        ///mUserDefaults = NSUserDefaultsStrings()
         
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[1]
@@ -38,6 +35,11 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
         
+        /*Реализовать для обновления по прокрутке SER! https://habr.com/post/228881/
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Идет обновление...")
+        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)*/
+        
         LoadContacts()
     }
 
@@ -46,21 +48,17 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         // Dispose of any resources that can be recreated.
     }
     
+    //func tableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print(indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as? ContactCell {
             
-            var contact: Contact!
+            var contact: VSMContact!
             
-            if mInSearchMode {
-                contact = mFilteredContacts[indexPath.row]
-            } else {
-                contact = mContacts[indexPath.row]
-            }
-            
+            contact = cArray[indexPath.row]
             cell.ConfigureCell(contact: contact)
             
             return cell
@@ -71,16 +69,13 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if mInSearchMode {
-            return mFilteredContacts.count
-        } else {
-            return mContacts.count
-        }
+
+            return cArray.count
     }
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 60
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,23 +83,26 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if Search.text == nil || Search.text == "" {
-            mInSearchMode = false
+       if Search.text == nil || Search.text == "" {
             view.endEditing(true)
-        } else {
-            mInSearchMode = true
-            let lower = searchBar.text?.lowercased()
-            mFilteredContacts = mContacts.filter({ $0.name!.range(of: lower!) != nil })
         }
+       else{
+
+        }
+        self.cArray = self.contacts.getContacts(searchBar.text)
         
         Table.reloadData()
     }
 
     private func LoadContacts() {
-        mContactsViewModel.SaveContactsFromWeb(email: mUserDefaults.GetUserEmail()!, passwordHash: mUserDefaults.GetUserPasswordHash()!) { result in
-            self.mContacts = result
+        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
+            
+            self.contacts = l
+            self.cArray = self.contacts.getContacts()
+
             self.Table.reloadData()
-        }
+            
+            }()})
     }
     
     /*
