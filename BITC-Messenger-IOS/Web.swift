@@ -63,7 +63,10 @@ public class VSMContacts {
             }()}
         )
     }
+    
     private var array:[VSMContact] = Array<VSMContact>()
+    
+    public var selectedText = ""
     
     public var SArray:[VSMContact]{ get {
             return array
@@ -101,6 +104,18 @@ public class VSMContacts {
             if let ld = loadingDelegate { ld(self)}
         }
     }
+    private func setFilter(_ what:String?=nil){
+        if let mask = what{
+            self.selectedText = mask.lowercased()
+        }
+        else if self.selectedText != ""{
+            self.selectedText = ""
+        }
+    }
+    public func getContacts(_ what : String?=nil)->[VSMContact]{
+        setFilter(what)
+        return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Name.lowercased().range(of: self.selectedText) != nil })
+    }
     public class func load(){}
 }
 //--------------------------------------------------
@@ -109,8 +124,7 @@ public class VSMContact {
     public enum ContType:String {
         case User, Group
     }
-    public var selected:Bool = true
-    
+  
     public var ImageLoadedDelegate:((VSMContact)->Void)? = nil
     public let EntityClass:     Int
     public let EntityId:        Int
@@ -197,7 +211,7 @@ public class VSMContact {
         self.CType          = ContType.init(rawValue: CType)!
         //Иконка-->
         let fm = FileManager.default
-        let filename = NSHomeDirectory() + "/Icon_\(self.Id).I"
+        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"//let filename = NSHomeDirectory() + "/Icon_\(self.Id).I"
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 self.Photo = UIImage(data: data)
@@ -220,7 +234,8 @@ public class VSMContact {
                     
                     if(data.count>0){
                         let fm = FileManager.default
-                        let filename = NSHomeDirectory() + "/Icon_\(self.Id).I"
+                        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
+                        //NSHomeDirectory() + "/Icon_\(self.Id).I"
                         //if(!fm.fileExists(atPath: filename)){
                             if(fm.createFile(atPath: filename, contents: data)){
                                 self.Photo = UIImage(data: data)
