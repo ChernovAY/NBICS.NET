@@ -132,6 +132,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
      }
+     ваыва
      */
 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
