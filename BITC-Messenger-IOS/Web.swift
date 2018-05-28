@@ -48,7 +48,7 @@ public class WebAPI{
 
 
 public class VSMContacts {
-    public static func VSMContactsAssync(loadingDelegate: ((VSMContacts)->Void)?=nil, ImageLoadedDelegate: ((VSMContact)->Void)?=nil){
+    public static func VSMContactsAssync(loadingDelegate: ((VSMContacts)->Void)?=nil){
         WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.contatcs, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
             
             if(!s){
@@ -57,7 +57,7 @@ public class VSMContacts {
             else{
                 if d is Data {
                     let data = d as! Data
-                    let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate, ImageLoadedDelegate: ImageLoadedDelegate)
+                    let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate)
                 }
             }
             }()}
@@ -88,7 +88,7 @@ public class VSMContacts {
     public init(){
         
     }
-    init(from data: Data, loadingDelegate:((VSMContacts)->Void)?=nil, ImageLoadedDelegate:((VSMContact)->Void)?=nil)
+    init(from data: Data, loadingDelegate:((VSMContacts)->Void)?=nil)
     {
         if let ld = loadingDelegate{
             self.loadingDelegate = ld
@@ -97,7 +97,7 @@ public class VSMContacts {
             let arr = json.array!
             for c in arr{
                 if let dict = c.dictionary{
-                    array.append(VSMContact(from:dict, ImageLoadedDelegate: ImageLoadedDelegate))
+                    array.append(VSMContact(from:dict))
                 }
             }
             loaded  = true
@@ -125,7 +125,6 @@ public class VSMContact {
         case User, Group
     }
   
-    public var ImageLoadedDelegate:((VSMContact)->Void)? = nil
     public let EntityClass:     Int
     public let EntityId:        Int
     public let EntityType:      Int
@@ -148,18 +147,13 @@ public class VSMContact {
     public  var IsOnline:        Bool
     public  var ReadOnly:        Bool
 
-    public var Photo:           UIImage?{
-        didSet {
-            if let ld = ImageLoadedDelegate { ld(self)}
-        }
-    }
+    public var Photo:           UIImage?
     public var PhotoUrl:        String
     
     public var CType:           ContType
 
     public init
-    (ImageLoadedDelegate:((VSMContact)->Void)? = nil
-    , EntityClass:     Int
+    ( EntityClass:     Int
     , EntityId:        Int
     , EntityType:      Int
     , EntityGuid:      String
@@ -183,9 +177,7 @@ public class VSMContact {
     , PhotoUrl:        String
     
     , CType:           String
-    ){
-        if let ild = ImageLoadedDelegate { self.ImageLoadedDelegate = ild }
-        self.EntityClass    = EntityClass
+    ){  self.EntityClass    = EntityClass
         self.EntityId       = EntityId
         self.EntityType     = EntityType
         self.EntityGuid     = EntityGuid
@@ -244,11 +236,9 @@ public class VSMContact {
             }
             }()})
     }
-    public convenience init(from dict:[String:JSON], ImageLoadedDelegate:((VSMContact)->Void)? = nil){
+    public convenience init(from dict:[String:JSON]){
         self.init(
-          ImageLoadedDelegate:  ImageLoadedDelegate
-            
-        , EntityClass:  dict["EntityClass"  ]!.int!
+          EntityClass:  dict["EntityClass"  ]!.int!
         , EntityId:     dict["EntityId"     ]!.int!
         , EntityType:   dict["EntityType"   ]!.int!
         , EntityGuid:   dict["EntityGuid"   ]!.string!
