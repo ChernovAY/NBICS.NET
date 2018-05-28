@@ -1,8 +1,8 @@
 //
 //  ConfigurationsViewController.swift
-//  BITC-Messenger-IOS
+//  NBICS-Messenger-IOS
 //
-//  Created by Александр  Волков on 19.09.17.
+//  Created by ООО "КИЦ ТЦ" on 19.09.17.
 //  Copyright © 2017 riktus. All rights reserved.
 //
 

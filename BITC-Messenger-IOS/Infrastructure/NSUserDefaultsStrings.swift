@@ -1,8 +1,8 @@
 //
 //  NSUserDefaultsStrings.swift
-//  BITC-Messenger-IOS
+//  NBICS-Messenger-IOS
 //
-//  Created by Александр  Волков on 29.08.17.
+//  Created by ООО "КИЦ ТЦ" on 29.08.17.
 //  Copyright © 2017 riktus. All rights reserved.
 //
 
