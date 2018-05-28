@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="h7t-Jw-PNm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="h7t-Jw-PNm">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -61,37 +60,6 @@
                                     <constraint firstAttribute="width" constant="20" id="k4N-fP-yqV"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjh-cl-k1R" customClass="BottomPanelView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                <rect key="frame" x="67.5" y="607" width="240" height="40"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hOS-xW-HuV">
-                                        <rect key="frame" x="35" y="6" width="170.5" height="28"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Разработано в РФ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="276-sG-S8k">
-                                                <rect key="frame" x="33" y="0.0" width="104.5" height="14"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дизайн Балтийский ИТ-Центр" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brq-vK-p2C">
-                                                <rect key="frame" x="0.5" y="14" width="170" height="14"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="EXF-0j-Lvf"/>
-                                    <constraint firstAttribute="trailing" secondItem="hOS-xW-HuV" secondAttribute="trailing" constant="34.5" id="Jvh-wS-rjZ"/>
-                                    <constraint firstItem="hOS-xW-HuV" firstAttribute="top" secondItem="gjh-cl-k1R" secondAttribute="top" constant="6" id="ZUo-dY-RIp"/>
-                                    <constraint firstAttribute="height" constant="40" id="cBb-lc-Ykh"/>
-                                    <constraint firstItem="hOS-xW-HuV" firstAttribute="leading" secondItem="gjh-cl-k1R" secondAttribute="leading" constant="35" id="rK4-Mh-9gw"/>
-                                    <constraint firstAttribute="bottom" secondItem="hOS-xW-HuV" secondAttribute="bottom" constant="6" id="xyn-CQ-geu"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -106,8 +74,6 @@
                             <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="IAm-wd-9yD" secondAttribute="bottom" constant="118" id="kvq-Vn-UTq"/>
                             <constraint firstItem="yle-VY-vRo" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="lhH-yS-Vee"/>
                             <constraint firstAttribute="trailing" secondItem="gDs-S3-wZK" secondAttribute="trailing" id="tWK-dK-ioJ"/>
-                            <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="gjh-cl-k1R" secondAttribute="bottom" constant="20" id="txa-nw-Bjn"/>
-                            <constraint firstItem="gjh-cl-k1R" firstAttribute="centerX" secondItem="qhh-Je-QsJ" secondAttribute="centerX" id="txg-GK-d5R"/>
                             <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="qpx-2k-dEc" secondAttribute="bottom" constant="217" id="u9k-Sr-VKU"/>
                         </constraints>
                     </view>
