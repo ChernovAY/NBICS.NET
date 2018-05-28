@@ -123,6 +123,17 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
      // Pass the selected object to the new view controller.
      }
      */
+
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tabBarIndex = item.tag
         switch tabBarIndex {

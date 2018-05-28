@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NSUserDefaultsStrings : IUserDefaultsStringsRead, IUserDefaultsStringsWrite {
+public class NSUserDefaultsStrings {
     private let mHashString = "HashString"
     private let mAvatarString = "AvatarString"
     private let mLoginString = "LoginString"

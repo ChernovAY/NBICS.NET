@@ -11,9 +11,7 @@
 		0E44CC839B0AFF52E9E1D004BD9580CD /* Pods-BITC-Messenger-IOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A8738616EFC13E8826649AE71E9FA9A8 /* Pods-BITC-Messenger-IOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10EB23E9ECC4B33E16933BB1EA560B6A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D182500FF4918391F97385DAE996449 /* Timeline.swift */; };
 		1B9EDEDC964E6B08F78920B4F4B9DB84 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 901710181ECB814C322BEBBC0BC5182E /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2C82FA888DD194C81864B71D68548C0D /* Pods-BITC-Messenger-IOSTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 223F9379E7FCAAFF144276AAE92CBD6E /* Pods-BITC-Messenger-IOSTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3626B94094672CB1C9DEA32B9F9502E1 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003F0620667B1D1CE3A63A07911DA946 /* TaskDelegate.swift */; };
-		38AF5B0943BB1F91B2EAA31F065FC87E /* Pods-BITC-Messenger-IOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C2837CBD4BA4B5C1225BD213404CA4 /* Pods-BITC-Messenger-IOSTests-dummy.m */; };
 		3FFD54991B8FA0FB92378703B233B176 /* SwiftyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 40940641FEC544E01CEA2CF3E3D8CEA5 /* SwiftyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5387216E723A3C68E851CA15573CDD71 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBEB670658597FB7864005ED913ECB6 /* Request.swift */; };
 		61200D01A1855D7920CEF835C8BE00B0 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5933A0580629CB79BDBD1D33483297F5 /* DispatchQueue+Alamofire.swift */; };
@@ -62,14 +60,11 @@
 		09922B86810418CDE6DD69710D5A9C17 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
 		0C6E04C2B770D33E90A7E43AD9A6DDF5 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		11397A85097BF70325D483D45A7A6722 /* Pods-BITC-Messenger-IOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BITC-Messenger-IOS-dummy.m"; sourceTree = "<group>"; };
-		16531E28C23795FF4F89B9B628D7CCDA /* Pods-BITC-Messenger-IOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BITC-Messenger-IOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		1B9FDA902336B0D6452FD30ECCA6DCED /* Pods-BITC-Messenger-IOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BITC-Messenger-IOS-resources.sh"; sourceTree = "<group>"; };
-		223F9379E7FCAAFF144276AAE92CBD6E /* Pods-BITC-Messenger-IOSTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BITC-Messenger-IOSTests-umbrella.h"; sourceTree = "<group>"; };
 		26EFF0A773A9B68F8036680922E55A8F /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
 		2D182500FF4918391F97385DAE996449 /* Timeline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timeline.swift; path = Source/Timeline.swift; sourceTree = "<group>"; };
 		332F6B9EA5D63A221428D82DFC754F83 /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
 		40940641FEC544E01CEA2CF3E3D8CEA5 /* SwiftyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-umbrella.h"; sourceTree = "<group>"; };
-		4376F1A34EB1A8E6D38D1BA007ED20C8 /* Pods-BITC-Messenger-IOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BITC-Messenger-IOSTests-frameworks.sh"; sourceTree = "<group>"; };
 		477A6EBB3874E8C05D03B7631A081D06 /* Pods-BITC-Messenger-IOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BITC-Messenger-IOS.modulemap"; sourceTree = "<group>"; };
 		47A6BCB8BFA44757C42826D92DE90E92 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
 		4F7DC1E21DB2CFEB43E506E64D5B61D6 /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
@@ -78,9 +73,7 @@
 		5933A0580629CB79BDBD1D33483297F5 /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		5B7781A8E338DF1CC0617DBD380DAE7D /* Pods-BITC-Messenger-IOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BITC-Messenger-IOS-acknowledgements.plist"; sourceTree = "<group>"; };
 		5F7C1B8E5800CB4992163B60F99E63A5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6032CD9E5DE4ACAADB85E08462B3ACE5 /* Pods-BITC-Messenger-IOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BITC-Messenger-IOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6CCAE3D335A42DC743D40F326C102A44 /* Pods-BITC-Messenger-IOSTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BITC-Messenger-IOSTests-resources.sh"; sourceTree = "<group>"; };
 		6EC9F2B17E3F31671529D092B9450376 /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
 		70319CB036CAED23F3DBC951D63875F4 /* Pods-BITC-Messenger-IOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BITC-Messenger-IOS-frameworks.sh"; sourceTree = "<group>"; };
 		73700E13B07592982F396FCAF905FBA6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,14 +83,11 @@
 		8F03809326666A0674F21BBADB1BB09D /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		8F09967AF3F01319A8CE22DD0393116A /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		901710181ECB814C322BEBBC0BC5182E /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9654A623556E9F0AE8CCA3A2DE788724 /* Pods-BITC-Messenger-IOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BITC-Messenger-IOSTests.modulemap"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A8738616EFC13E8826649AE71E9FA9A8 /* Pods-BITC-Messenger-IOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BITC-Messenger-IOS-umbrella.h"; sourceTree = "<group>"; };
-		A9C2837CBD4BA4B5C1225BD213404CA4 /* Pods-BITC-Messenger-IOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BITC-Messenger-IOSTests-dummy.m"; sourceTree = "<group>"; };
 		AEBEB670658597FB7864005ED913ECB6 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		BDA4E75AD925DA71AB62CAFBC7B83934 /* Pods-BITC-Messenger-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BITC-Messenger-IOS.release.xcconfig"; sourceTree = "<group>"; };
-		CB3403EA8B2BB06BE3C7ABCC5036F3C7 /* Pods_BITC_Messenger_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BITC_Messenger_IOS.framework; path = "Pods-BITC-Messenger-IOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDBABE284E543F96BBC4E2D982F394F0 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BITC-Messenger-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		CB3403EA8B2BB06BE3C7ABCC5036F3C7 /* Pods_BITC_Messenger_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BITC_Messenger_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE916262DA3B758CAD082788099FDE78 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF6FA20699EAC0AB72A507BB66B191F8 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		CFBFF681209D4E5030FF4116EFD41362 /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -105,14 +95,12 @@
 		DAA5CA9C1A1A8A10FA0F34E068E281AB /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Result.swift; sourceTree = "<group>"; };
 		E1456F70DDC38E5610289D309053CAC2 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
 		E42F49FBA20BC96954B56110A1FB0535 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
-		EB50747A9E2484212F1F262E23679610 /* Pods_BITC_Messenger_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BITC_Messenger_IOSTests.framework; path = "Pods-BITC-Messenger-IOSTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED9FE7D64C2F34F29B55243FEEF6FB23 /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BITC-Messenger-IOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F035BC8857C3C6209075589EF50D0D9E /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB50747A9E2484212F1F262E23679610 /* Pods_BITC_Messenger_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BITC_Messenger_IOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F035BC8857C3C6209075589EF50D0D9E /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05B506A540FE042146EA8265DD35585 /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
 		F26FB4343C43368E1D119B6871123AF1 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		F382C5721F36A8CF08DA36032E8FF2C1 /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = Source/Validation.swift; sourceTree = "<group>"; };
-		F56269DC911A6FBEDAACF2A51583F853 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6E662DC64E1A5740AA9A2707C5C4D51 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6E662DC64E1A5740AA9A2707C5C4D51 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,29 +153,10 @@
 			path = "../Target Support Files/Alamofire";
 			sourceTree = "<group>";
 		};
-		5739688024324935EFCDAD134864EC53 /* Pods-BITC-Messenger-IOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				F56269DC911A6FBEDAACF2A51583F853 /* Info.plist */,
-				9654A623556E9F0AE8CCA3A2DE788724 /* Pods-BITC-Messenger-IOSTests.modulemap */,
-				6032CD9E5DE4ACAADB85E08462B3ACE5 /* Pods-BITC-Messenger-IOSTests-acknowledgements.markdown */,
-				16531E28C23795FF4F89B9B628D7CCDA /* Pods-BITC-Messenger-IOSTests-acknowledgements.plist */,
-				A9C2837CBD4BA4B5C1225BD213404CA4 /* Pods-BITC-Messenger-IOSTests-dummy.m */,
-				4376F1A34EB1A8E6D38D1BA007ED20C8 /* Pods-BITC-Messenger-IOSTests-frameworks.sh */,
-				6CCAE3D335A42DC743D40F326C102A44 /* Pods-BITC-Messenger-IOSTests-resources.sh */,
-				223F9379E7FCAAFF144276AAE92CBD6E /* Pods-BITC-Messenger-IOSTests-umbrella.h */,
-				ED9FE7D64C2F34F29B55243FEEF6FB23 /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */,
-				CDBABE284E543F96BBC4E2D982F394F0 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */,
-			);
-			name = "Pods-BITC-Messenger-IOSTests";
-			path = "Target Support Files/Pods-BITC-Messenger-IOSTests";
-			sourceTree = "<group>";
-		};
 		67F261A9264501CB08C76238E455673B /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
 				FA98C98B31A4CABF25AFC740B57ECB30 /* Pods-BITC-Messenger-IOS */,
-				5739688024324935EFCDAD134864EC53 /* Pods-BITC-Messenger-IOSTests */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
@@ -251,7 +220,6 @@
 				CFBFF681209D4E5030FF4116EFD41362 /* SwiftyJSON.swift */,
 				872358948F17223FC246D5650867D2C7 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -285,7 +253,6 @@
 				F382C5721F36A8CF08DA36032E8FF2C1 /* Validation.swift */,
 				52CC3F1FEFCE662664006A9B9376FB3A /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -314,7 +281,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C82FA888DD194C81864B71D68548C0D /* Pods-BITC-Messenger-IOSTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +457,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38AF5B0943BB1F91B2EAA31F065FC87E /* Pods-BITC-Messenger-IOSTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,7 +574,6 @@
 		};
 		1ACFAA3E21B4F2279ADFD64A30666547 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED9FE7D64C2F34F29B55243FEEF6FB23 /* Pods-BITC-Messenger-IOSTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -642,7 +606,6 @@
 		};
 		30B048F2694D80A59D8F5B68A5E2C980 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDBABE284E543F96BBC4E2D982F394F0 /* Pods-BITC-Messenger-IOSTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
