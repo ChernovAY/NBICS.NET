@@ -102,7 +102,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
             self.Table.reloadData()
             
-            }()})
+            }()
+        })
     }
 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
