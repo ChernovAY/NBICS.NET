@@ -33,6 +33,35 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKs-TA-zVT" customClass="BottomPanelView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="67.5" y="607" width="240" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9yK-9y-HPM">
+                                        <rect key="frame" x="35" y="6" width="170" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Разработано в РФ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bk-KZ-L9I">
+                                                <rect key="frame" x="33" y="0.0" width="104.5" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дизайн Балтийский ИТ-Центр" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2t-Rc-jgP">
+                                                <rect key="frame" x="0.0" y="14" width="170" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="TZb-C8-Ygg"/>
+                                    <constraint firstItem="9yK-9y-HPM" firstAttribute="centerX" secondItem="NKs-TA-zVT" secondAttribute="centerX" id="e0k-r1-1Im"/>
+                                    <constraint firstAttribute="width" constant="240" id="sOs-bd-yRC"/>
+                                    <constraint firstItem="9yK-9y-HPM" firstAttribute="centerY" secondItem="NKs-TA-zVT" secondAttribute="centerY" id="yPG-pw-E2B"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="uO6-tx-oTS">
                                 <rect key="frame" x="47.5" y="253.5" width="280" height="160"/>
                                 <subviews>
@@ -83,7 +112,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4EM-Xd-cnY">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4EM-Xd-cnY">
                                 <rect key="frame" x="112.5" y="547" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Bvh-QR-A22"/>
@@ -142,12 +171,15 @@
                             <constraint firstItem="Olo-xV-y58" firstAttribute="trailing" secondItem="6Hp-wl-o4N" secondAttribute="trailing" constant="80" id="8Yx-8C-jk8"/>
                             <constraint firstItem="OdI-cT-LU3" firstAttribute="centerX" secondItem="bGk-tH-QOr" secondAttribute="centerX" id="9Ke-LX-nLG"/>
                             <constraint firstItem="6Hp-wl-o4N" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="Aj8-7k-ozL"/>
+                            <constraint firstItem="NKs-TA-zVT" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="Evp-ER-UQe"/>
                             <constraint firstItem="qkA-Fz-DXh" firstAttribute="top" secondItem="qWe-yx-wUi" secondAttribute="top" id="FCu-Cd-nyD"/>
                             <constraint firstItem="qkA-Fz-DXh" firstAttribute="leading" secondItem="qWe-yx-wUi" secondAttribute="leading" id="IFP-ry-qmr"/>
                             <constraint firstItem="uO6-tx-oTS" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="Jfk-Jz-XQj"/>
+                            <constraint firstItem="w3W-87-44k" firstAttribute="top" secondItem="NKs-TA-zVT" secondAttribute="bottom" constant="20" id="OaT-VP-nHe"/>
                             <constraint firstItem="6Hp-wl-o4N" firstAttribute="leading" secondItem="LY9-8F-eqm" secondAttribute="leading" constant="80" id="Q6U-Sz-foZ"/>
                             <constraint firstItem="uO6-tx-oTS" firstAttribute="centerY" secondItem="qWe-yx-wUi" secondAttribute="centerY" id="QEC-Pg-okV"/>
                             <constraint firstItem="6Hp-wl-o4N" firstAttribute="top" secondItem="uO6-tx-oTS" secondAttribute="bottom" constant="30" id="S3z-U9-UWa"/>
+                            <constraint firstItem="NKs-TA-zVT" firstAttribute="top" secondItem="4EM-Xd-cnY" secondAttribute="top" constant="60" id="VFC-eO-pzv"/>
                             <constraint firstAttribute="trailing" secondItem="GMZ-ZG-7x0" secondAttribute="trailing" constant="6" id="W9y-RB-6i9"/>
                             <constraint firstAttribute="trailing" secondItem="qkA-Fz-DXh" secondAttribute="trailing" id="Wor-ly-EoW"/>
                             <constraint firstItem="w3W-87-44k" firstAttribute="top" secondItem="qkA-Fz-DXh" secondAttribute="bottom" id="YPK-Wf-AUo"/>
@@ -193,6 +225,35 @@
                                 <color key="textColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XB0-cq-bib" customClass="BottomPanelView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="67.5" y="607" width="240" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pYV-CU-bEW">
+                                        <rect key="frame" x="35.5" y="6" width="170" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Разработано в РФ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSY-Bl-fY6">
+                                                <rect key="frame" x="33" y="0.0" width="104.5" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дизайн Балтийский ИТ-Центр" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5d-52-7VL">
+                                                <rect key="frame" x="0.0" y="14" width="170" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="PfQ-UR-hw1"/>
+                                    <constraint firstItem="pYV-CU-bEW" firstAttribute="centerX" secondItem="XB0-cq-bib" secondAttribute="centerX" id="hIP-xo-ube"/>
+                                    <constraint firstAttribute="width" constant="240" id="mpH-Yb-74r"/>
+                                    <constraint firstItem="pYV-CU-bEW" firstAttribute="centerY" secondItem="XB0-cq-bib" secondAttribute="centerY" id="zFh-Uz-WTe"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Qg1-Yl-pfo">
                                 <rect key="frame" x="47.5" y="120" width="280" height="220"/>
                                 <subviews>
@@ -270,7 +331,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vt-jb-FDy">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vt-jb-FDy">
                                 <rect key="frame" x="152.5" y="557" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="MmU-wG-Pbe"/>
@@ -319,10 +380,13 @@
                             <constraint firstItem="5xt-zd-Chs" firstAttribute="leading" secondItem="1Jp-tH-Xqy" secondAttribute="leading" id="5br-hG-z0B"/>
                             <constraint firstItem="50g-gG-Ud1" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="L7h-X9-a4b"/>
                             <constraint firstItem="5xt-zd-Chs" firstAttribute="top" secondItem="1Jp-tH-Xqy" secondAttribute="top" id="LDX-Bg-Qus"/>
+                            <constraint firstItem="XB0-cq-bib" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="LbG-9m-y6B"/>
                             <constraint firstItem="KGk-kn-z8n" firstAttribute="top" secondItem="5xt-zd-Chs" secondAttribute="bottom" id="OGI-8s-apy"/>
                             <constraint firstItem="giQ-Xt-cfl" firstAttribute="centerY" secondItem="b6t-HM-9jV" secondAttribute="centerY" id="OP6-Cr-W42"/>
                             <constraint firstAttribute="trailing" secondItem="qs9-O5-BCl" secondAttribute="trailing" constant="8" id="QHc-Fo-tmC"/>
+                            <constraint firstItem="XB0-cq-bib" firstAttribute="bottom" secondItem="3vt-jb-FDy" secondAttribute="bottom" constant="60" id="WJC-4L-n4j"/>
                             <constraint firstItem="szB-wk-8Tg" firstAttribute="trailing" secondItem="giQ-Xt-cfl" secondAttribute="trailing" constant="80" id="Yak-PQ-hTq"/>
+                            <constraint firstItem="KGk-kn-z8n" firstAttribute="top" secondItem="XB0-cq-bib" secondAttribute="bottom" constant="20" id="ZZd-J9-P5M"/>
                             <constraint firstItem="giQ-Xt-cfl" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="drZ-54-HHf"/>
                             <constraint firstItem="giQ-Xt-cfl" firstAttribute="top" secondItem="50g-gG-Ud1" secondAttribute="bottom" constant="30" id="ezG-iZ-Jp2"/>
                             <constraint firstItem="qs9-O5-BCl" firstAttribute="top" secondItem="iRu-MQ-2RU" secondAttribute="bottom" id="flT-K3-Otd"/>
@@ -363,6 +427,35 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ycz-2s-92t" customClass="BottomPanelView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                <rect key="frame" x="67.5" y="607" width="240" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0X-Ja-VzL">
+                                        <rect key="frame" x="35" y="6" width="170" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Разработано в РФ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0T-JH-1dD">
+                                                <rect key="frame" x="33" y="0.0" width="104.5" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дизайн Балтийский ИТ-Центр" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEF-fc-yG8">
+                                                <rect key="frame" x="0.0" y="14" width="170" height="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="e0X-Ja-VzL" firstAttribute="centerY" secondItem="Ycz-2s-92t" secondAttribute="centerY" id="55k-nW-lp2"/>
+                                    <constraint firstAttribute="width" constant="240" id="a3r-Dv-lEg"/>
+                                    <constraint firstItem="e0X-Ja-VzL" firstAttribute="centerX" secondItem="Ycz-2s-92t" secondAttribute="centerX" id="hDA-ZI-k63"/>
+                                    <constraint firstAttribute="height" constant="40" id="ikI-Ta-3wZ"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="TKM-KT-9b1">
                                 <rect key="frame" x="47.5" y="283.5" width="280" height="100"/>
                                 <subviews>
@@ -408,7 +501,7 @@
                                 <color key="textColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4M-FS-NvL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4M-FS-NvL">
                                 <rect key="frame" x="152" y="547" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="XrC-uG-s7h"/>
@@ -425,6 +518,7 @@
                         <color key="backgroundColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TKM-KT-9b1" firstAttribute="centerX" secondItem="oq6-gy-cee" secondAttribute="centerX" id="5aq-Kv-Gac"/>
+                            <constraint firstItem="Ycz-2s-92t" firstAttribute="centerX" secondItem="oq6-gy-cee" secondAttribute="centerX" id="8LC-TU-vQn"/>
                             <constraint firstItem="kMu-Sb-ebe" firstAttribute="top" secondItem="TKM-KT-9b1" secondAttribute="bottom" constant="30" id="BGA-Zp-5iR"/>
                             <constraint firstItem="TKM-KT-9b1" firstAttribute="centerY" secondItem="oq6-gy-cee" secondAttribute="centerY" id="Fae-1R-Zh6"/>
                             <constraint firstAttribute="trailing" secondItem="h9P-0U-jgD" secondAttribute="trailing" id="J1z-fU-glZ"/>
@@ -433,7 +527,10 @@
                             <constraint firstItem="fbi-bg-HMm" firstAttribute="top" secondItem="gPr-wn-bep" secondAttribute="bottom" id="Mm7-Gj-lRM"/>
                             <constraint firstAttribute="trailing" secondItem="fbi-bg-HMm" secondAttribute="trailing" constant="6" id="O14-UT-bfA"/>
                             <constraint firstItem="kMu-Sb-ebe" firstAttribute="centerX" secondItem="oq6-gy-cee" secondAttribute="centerX" id="WJS-11-UeC"/>
+                            <constraint firstItem="8xX-S7-KRo" firstAttribute="top" secondItem="Ycz-2s-92t" secondAttribute="bottom" constant="20" id="WLe-Jf-PXI"/>
                             <constraint firstItem="h9P-0U-jgD" firstAttribute="top" secondItem="oq6-gy-cee" secondAttribute="top" id="WUo-Xt-gfF"/>
+                            <constraint firstItem="zEF-fc-yG8" firstAttribute="top" secondItem="P4M-FS-NvL" secondAttribute="bottom" constant="50" id="aTN-Pi-dQk"/>
+                            <constraint firstItem="P0T-JH-1dD" firstAttribute="leading" secondItem="P4M-FS-NvL" secondAttribute="trailing" constant="-86.5" id="kIR-aF-UuQ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -453,6 +550,6 @@
         <image name="Password" width="280" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6jQ-Xa-0Em"/>
+        <segue reference="Doa-y2-I3h"/>
     </inferredMetricsTieBreakers>
 </document>
