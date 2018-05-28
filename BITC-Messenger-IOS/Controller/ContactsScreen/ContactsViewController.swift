@@ -129,7 +129,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             break
         default: break
         }
-        
     }
 
 }
