@@ -410,7 +410,7 @@
                                 <color key="textColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4M-FS-NvL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4M-FS-NvL">
                                 <rect key="frame" x="152" y="547" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="XrC-uG-s7h"/>
@@ -434,6 +434,7 @@
                             <constraint firstItem="h9P-0U-jgD" firstAttribute="leading" secondItem="oq6-gy-cee" secondAttribute="leading" id="LIR-7Y-NVL"/>
                             <constraint firstItem="fbi-bg-HMm" firstAttribute="top" secondItem="gPr-wn-bep" secondAttribute="bottom" id="Mm7-Gj-lRM"/>
                             <constraint firstAttribute="trailing" secondItem="fbi-bg-HMm" secondAttribute="trailing" constant="6" id="O14-UT-bfA"/>
+                            <constraint firstItem="h9P-0U-jgD" firstAttribute="leading" secondItem="P4M-FS-NvL" secondAttribute="trailing" constant="-222" id="TCa-Uz-bUk"/>
                             <constraint firstItem="P4M-FS-NvL" firstAttribute="top" secondItem="kMu-Sb-ebe" secondAttribute="bottom" constant="112.5" id="TDq-W1-4Ns"/>
                             <constraint firstItem="kMu-Sb-ebe" firstAttribute="centerX" secondItem="oq6-gy-cee" secondAttribute="centerX" id="WJS-11-UeC"/>
                             <constraint firstItem="h9P-0U-jgD" firstAttribute="top" secondItem="oq6-gy-cee" secondAttribute="top" id="WUo-Xt-gfF"/>

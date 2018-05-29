@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2B220A995887C36CEB78A733 /* Pods_BITC_Messenger_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */; };
-		9B5014CF20BC112F00790CAC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014CE20BC112F00790CAC /* Contacts.swift */; };
-		9B5014D120BC121200790CAC /* Chats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chats.swift */; };
-		9B5014D320BC249A00790CAC /* Conversations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversations.swift */; };
+		9B5014CF20BC112F00790CAC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014CE20BC112F00790CAC /* Contact.swift */; };
+		9B5014D120BC121200790CAC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chat.swift */; };
+		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
 		9BB9404720A9AF3200B60697 /* Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* Web.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
@@ -44,9 +44,9 @@
 /* Begin PBXFileReference section */
 		462BA1434CFD9532DC3DDD58 /* Pods-BITC-Messenger-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
-		9B5014CE20BC112F00790CAC /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
-		9B5014D020BC121200790CAC /* Chats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chats.swift; sourceTree = "<group>"; };
-		9B5014D220BC249A00790CAC /* Conversations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversations.swift; sourceTree = "<group>"; };
+		9B5014CE20BC112F00790CAC /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		9B5014D020BC121200790CAC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		9B5014D220BC249A00790CAC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* Web.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
@@ -313,9 +313,9 @@
 		D4FD6CB51F55BFE40035FF66 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9B5014CE20BC112F00790CAC /* Contacts.swift */,
-				9B5014D020BC121200790CAC /* Chats.swift */,
-				9B5014D220BC249A00790CAC /* Conversations.swift */,
+				9B5014CE20BC112F00790CAC /* Contact.swift */,
+				9B5014D020BC121200790CAC /* Chat.swift */,
+				9B5014D220BC249A00790CAC /* Conversation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -468,11 +468,11 @@
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
 				D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */,
 				D4C3D48F1F798B41008F9CE2 /* ContactCell.swift in Sources */,
-				9B5014D320BC249A00790CAC /* Conversations.swift in Sources */,
-				9B5014D120BC121200790CAC /* Chats.swift in Sources */,
+				9B5014D320BC249A00790CAC /* Conversation.swift in Sources */,
+				9B5014D120BC121200790CAC /* Chat.swift in Sources */,
 				D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */,
 				D4FD6CBC1F55C0C10035FF66 /* Hasher.swift in Sources */,
-				9B5014CF20BC112F00790CAC /* Contacts.swift in Sources */,
+				9B5014CF20BC112F00790CAC /* Contact.swift in Sources */,
 				9BB9404720A9AF3200B60697 /* Web.swift in Sources */,
 				D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */,
 				D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */,

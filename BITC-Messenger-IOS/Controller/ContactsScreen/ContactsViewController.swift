@@ -59,6 +59,17 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             var contact: VSMContact!
             
             contact = cArray[indexPath.row]
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             cell.ConfigureCell(contact: contact)
             
             return cell

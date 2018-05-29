@@ -35,13 +35,13 @@ public class WebAPI{
          -=Запрос списка пользователей группы=-GetContacts(int? GroupId, string Email, string PasswordHash)
     */
         
-    case login              = "Account/Login"
-    case captcha            = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
-    case registration       = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
-    case contatcs           = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
-    case userContactAvatar  = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
-    case getIcon            = ""
-    case conversations      = "VSM.Web.Plugins.Contacts/ContactsHome/AllChats"
+    case login                  = "Account/Login"
+    case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
+    case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
+    case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
+    case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
+    case getIcon                = ""
+    case getConversationList    = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
     }
     
     public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
