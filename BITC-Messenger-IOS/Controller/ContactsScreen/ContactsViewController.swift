@@ -15,8 +15,10 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Search: UISearchBar!
     
     
+    
     private var contacts = VSMContacts()
     private var cArray   = [VSMContact]()
+    var refreshControl:UIRefreshControl!
  
     
     override func viewDidLoad() {
@@ -35,12 +37,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
         
-        /*Реализовать для обновления по прокрутке SER! https://habr.com/post/228881/
-        refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Идет обновление...")
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)*/
-        
-        LoadContacts()
     }
 
     override func didReceiveMemoryWarning() {

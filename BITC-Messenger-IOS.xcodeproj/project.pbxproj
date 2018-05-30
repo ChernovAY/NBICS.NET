@@ -23,7 +23,7 @@
 		D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */; };
 		D45D962E1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */; };
 		D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */; };
-		D47D188B1F607BF2009D8E31 /* ContactsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */; };
+		D47D188B1F607BF2009D8E31 /* MessagesStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D47D188A1F607BF2009D8E31 /* MessagesStoryboard.storyboard */; };
 		D47D188E1F63242E009D8E31 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47D188D1F63242E009D8E31 /* MainTabBar.swift */; };
 		D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC619E1F86AF2700388173 /* CircleImageView.swift */; };
 		D4BC61A11F86B6BD00388173 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */; };
@@ -60,7 +60,7 @@
 		D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controller/SettingsScreen/SettingsViewController.swift; sourceTree = "<group>"; };
 		D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizationStoryboard.storyboard; path = View/Storyboards/AuthorizationStoryboard.storyboard; sourceTree = "<group>"; };
 		D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationViewController.swift; path = Controller/AuthScreen/AuthorizationViewController.swift; sourceTree = "<group>"; };
-		D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ContactsStoryboard.storyboard; path = View/Storyboards/ContactsStoryboard.storyboard; sourceTree = "<group>"; };
+		D47D188A1F607BF2009D8E31 /* MessagesStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MessagesStoryboard.storyboard; path = View/Storyboards/MessagesStoryboard.storyboard; sourceTree = "<group>"; };
 		D47D188D1F63242E009D8E31 /* MainTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBar.swift; path = View/Controls/TabBar/MainTabBar.swift; sourceTree = "<group>"; };
 		D4BC619E1F86AF2700388173 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CircleImageView.swift; path = View/Controls/CircleImageView.swift; sourceTree = "<group>"; };
 		D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewControllerExtension.swift; path = Extensions/ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			children = (
 				D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */,
 				D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */,
-				D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */,
+				D47D188A1F607BF2009D8E31 /* MessagesStoryboard.storyboard */,
 				D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */,
 				D4568CA01F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard */,
 				D4568CA51F71909000AA0D64 /* SettingsStoryboard.storyboard */,
@@ -396,7 +396,7 @@
 			files = (
 				D4DE426C1F632D4B0076008B /* ChatsStoryboard.storyboard in Resources */,
 				D4568CA61F71909000AA0D64 /* SettingsStoryboard.storyboard in Resources */,
-				D47D188B1F607BF2009D8E31 /* ContactsStoryboard.storyboard in Resources */,
+				D47D188B1F607BF2009D8E31 /* MessagesStoryboard.storyboard in Resources */,
 				D4BE98E91F4C8A9100AE9405 /* StartStoryboard.storyboard in Resources */,
 				D4E325361F4C82DC00554DB2 /* Assets.xcassets in Resources */,
 				D4568CA11F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard in Resources */,
