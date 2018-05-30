@@ -49,6 +49,17 @@ class AuthorizationViewController: UIViewController {
                                         self.mUserDefaults.SetUserPasswordHash(hash: hash)
                                         
                                         WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
+                                        //tst-->
+                                        var conv =  VSMConversations()
+                                        VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
+                                            
+                                            conv = c
+                                            
+                                            }()
+                                        })
+                                        
+                                        //tst--<
+                                        
                                        
                                         self.NavigateToChats()
                                         print("done")

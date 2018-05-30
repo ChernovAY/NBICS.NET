@@ -11,6 +11,10 @@ import Alamofire
 
 public typealias Params = [String:Any];
 
+public enum ContType:String {
+    case User, Group, Chat
+}
+
 public class WebAPI{
     public struct Settings{
         public static var hash         = ""
@@ -41,7 +45,8 @@ public class WebAPI{
     case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
     case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
     case getIcon                = ""
-    case getConversationList    = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
+    case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
+    //case messages
     }
     
     public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params, completionHandler: @escaping (Any,Bool) -> ()) {

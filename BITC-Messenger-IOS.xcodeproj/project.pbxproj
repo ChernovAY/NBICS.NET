@@ -11,6 +11,7 @@
 		9B5014CF20BC112F00790CAC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014CE20BC112F00790CAC /* Contact.swift */; };
 		9B5014D120BC121200790CAC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chat.swift */; };
 		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
+		9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D420BD8E8200790CAC /* DateExtension.swift */; };
 		9BB9404720A9AF3200B60697 /* Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* Web.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
@@ -47,6 +48,7 @@
 		9B5014CE20BC112F00790CAC /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9B5014D020BC121200790CAC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		9B5014D220BC249A00790CAC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		9B5014D420BD8E8200790CAC /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* Web.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */,
 				D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */,
 				D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */,
+				9B5014D420BD8E8200790CAC /* DateExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				9B5014CF20BC112F00790CAC /* Contact.swift in Sources */,
 				9BB9404720A9AF3200B60697 /* Web.swift in Sources */,
 				D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */,
+				9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */,
 				D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */,
 				D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */,
 				D4EB22141F4DFA2F002846E7 /* RegistrationViewController.swift in Sources */,

@@ -78,15 +78,27 @@ public class VSMContacts {
         setFilter(what)
         return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Name.lowercased().range(of: self.selectedText) != nil })
     }
+    
+    public func findOrCreate(what dict:[String:JSON]?)->VSMContact?{
+        if let d = dict{
+            let id = d["Id"]!.int64!
+            if let c = SArray.first(where: ({$0.Id == id})){
+                return c
+            }
+            else{
+                return VSMContact(from:d)
+            }
+        }
+        else{
+            return nil
+        }
+    }
     public class func load(){}
 }
 //--------------------------------------------------
 
 public class VSMContact {
-    public enum ContType:String {
-        case User, Group
-    }
-    
+ 
     public let EntityClass:     Int
     public let EntityId:        Int
     public let EntityType:      Int
