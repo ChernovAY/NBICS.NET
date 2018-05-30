@@ -15,13 +15,13 @@ public class VSMConversations{
      WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.lastConversationList, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
      
      if(!s){
-     UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+        UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
      }
      else{
-     if d is Data {
-     let data = d as! Data
-     let _ = VSMConversations(from: data  , loadingDelegate:loadingDelegate)
-     }
+        if d is Data {
+            let data = d as! Data
+            let _ = VSMConversations(from: data  , loadingDelegate:loadingDelegate)
+        }
      }
      }()}
      )
@@ -67,17 +67,8 @@ public class VSMConversations{
             if let ld = loadingDelegate { ld(self)}
         }
     }
-    private func setFilter(_ what:String?=nil){
-        if let mask = what{
-            self.selectedText = mask.lowercased()
-        }
-        else if self.selectedText != ""{
-            self.selectedText = ""
-        }
-    }
+
     public func getConversations(/*_ what : String?=nil*/)->[VSMConversation]{
-        //setFilter(what)
-        //return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
         return self.SArray
     }
     public class func load(){}
@@ -125,7 +116,7 @@ public class VSMConversation{
         self.init(
          Id:                    dict["Id"                      ]!.string!
         ,IsDialog:              dict["IsDialog"                ]!.bool!
-        ,LastMessage:           VSMMessage(from: dict["LastMessage"             ]!.dictionary!)
+        ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
         ,Name:                  dict["Name"                    ]!.string!
         ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
         ,Users:                 usrs

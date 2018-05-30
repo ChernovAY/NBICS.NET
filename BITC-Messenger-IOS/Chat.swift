@@ -124,3 +124,49 @@ public class VSMMessage{
         )
     }
 }
+
+public class VSMAttachedFile{
+    public let Extension:   String
+    public let Guid:        String
+    public let Name:        String
+    public var PreviewIcon: UIImage?
+    
+    public init (Extension: String, Guid: String, Name: String){
+        
+        
+        //Иконка-->
+        let fm = FileManager.default
+        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
+        if(fm.fileExists(atPath: filename)){
+            if let data = fm.contents(atPath: filename){
+                self.Photo = UIImage(data: data)
+            }
+            else{
+                self.Photo = UIImage(named: "EmptyUser")
+            }
+        }
+        else{
+            self.Photo = UIImage(named: "EmptyUser")
+        }
+        //Иконка--<
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
+            if(!s){
+                print(d as! String)
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    
+                    if(data.count>0){
+                        let fm = FileManager.default
+                        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
+                        
+                        if(fm.createFile(atPath: filename, contents: data)){
+                            self.Photo = UIImage(data: data)
+                        }
+                    }
+                }
+            }
+            }()})
+    }
+}

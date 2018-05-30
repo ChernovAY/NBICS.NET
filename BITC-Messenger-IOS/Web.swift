@@ -37,16 +37,29 @@ public class WebAPI{
          -=Возвращает фотографии пользователей по url=- GetContactsPhotosByUrl(string ContactId, string Email, string PasswordHash)
          -=Запрос списка групп=- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
          -=Запрос списка пользователей группы=-GetContacts(int? GroupId, string Email, string PasswordHash)
+    
+         Скачивание файла=- Download(string FileGuid, string FileName, string FileExtension)
+         Получаем preview по Guid=- GetFilePreviewIcon(string FileMetaData)
+         Получаем изображение файла картинки в base64=- GetFileImage(string FileMetaData)
+         
+         
     */
         
-    case login                  = "Account/Login"
-    case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
-    case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
-    case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
-    case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
-    case getIcon                = ""
-    case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
-    //case messages
+        case login                  = "Account/Login"
+        case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
+        case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
+    
+        case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
+        case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
+        case getIcon                = ""
+    
+        case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
+    
+        case download               = "VSM.Web.Plugins.Contacts/ContactsHome/Download"
+        case filePreviewIcon        = "VSM.Web.Plugins.Contacts/ContactsHome/GetFilePreviewIcon"
+        case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"
+        
+        case conversationMessages   = "GetConversationNMessagesAfterOrBefore"
     }
     
     public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params, completionHandler: @escaping (Any,Bool) -> ()) {

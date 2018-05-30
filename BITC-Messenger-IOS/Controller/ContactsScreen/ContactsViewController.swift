@@ -37,6 +37,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
         
+        LoadContacts()
+        
     }
 
     override func didReceiveMemoryWarning() {

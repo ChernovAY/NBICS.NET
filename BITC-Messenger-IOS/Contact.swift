@@ -86,7 +86,9 @@ public class VSMContacts {
                 return c
             }
             else{
-                return VSMContact(from:d)
+                let c = VSMContact(from:d)
+                array.append(c)
+                return c
             }
         }
         else{
@@ -228,7 +230,7 @@ public class VSMContact {
             , IsOnline:     dict["IsOnline"     ]!.bool!
             , ReadOnly:     dict["ReadOnly"     ]!.bool!
             , PhotoUrl:     dict["PhotoUrl"     ]!.string!
-            , CType:        dict["Type"         ]!.string!
+            , CType:        dict["Type"         ]!.string != nil ? dict["Type"         ]!.string! : "User"
         )
     }
     
