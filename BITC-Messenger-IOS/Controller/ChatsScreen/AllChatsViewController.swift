@@ -8,11 +8,12 @@
 
 import UIKit
 
-class AllChatsViewController: UIViewController, UITabBarDelegate {
+class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var TabBar: MainTabBar!
     
-
+    private let cArray = [VSMConversation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +25,25 @@ class AllChatsViewController: UIViewController, UITabBarDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath) as? ConversationCell {
+            
+            var conv: VSMConversation!
+            
+            conv = cArray[indexPath.row]
+            cell.ConfigureCell(conversation: conv)
+            
+            return cell
+            
+        } else {
+            return UITableViewCell()
+        }
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

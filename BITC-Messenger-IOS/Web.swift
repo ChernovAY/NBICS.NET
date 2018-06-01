@@ -44,11 +44,14 @@ public class WebAPI{
          
          
     */
-        
         case login                  = "Account/Login"
         case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
         case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
     
+        case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation"
+        case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"
+        case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfile"
+        
         case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
         case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
         case getIcon                = ""
@@ -59,7 +62,18 @@ public class WebAPI{
         case filePreviewIcon        = "VSM.Web.Plugins.Contacts/ContactsHome/GetFilePreviewIcon"
         case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"
         
-        case conversationMessages   = "GetConversationNMessagesAfterOrBefore"
+        case conversationMessages   = "VSM.Web.Plugins.Contacts/ContactsHome/GetConversationNMessagesAfterOrBefore"
+    }
+    public static func syncRequest(addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
+        let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
+        let resp =  request.syncResponse()
+        let succ = resp.error == nil
+        if(succ){
+            return (resp.data!, true)
+        }
+        else{
+            return (resp.error.unsafelyUnwrapped.localizedDescription, false)
+        }
     }
     
     public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
@@ -77,4 +91,6 @@ public class WebAPI{
             completionHandler(res, succ)
         }
     }
+    public static var UserContacts = VSMContacts()
+    public static var UserConversations = VSMConversations()
 }

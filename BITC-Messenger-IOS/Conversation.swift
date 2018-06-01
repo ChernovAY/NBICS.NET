@@ -68,7 +68,7 @@ public class VSMConversations{
         }
     }
 
-    public func getConversations(/*_ what : String?=nil*/)->[VSMConversation]{
+    public func getConversations()->[VSMConversation]{
         return self.SArray
     }
     public class func load(){}
@@ -80,7 +80,6 @@ public class VSMConversation{
     public let Id: String
     public let IsDialog: Bool
     public let LastMessage: VSMMessage?
-    //Messages: [] (0) Наверное и не надо
     public let Name: String
     public var NotReadedMessagesCount: Int
     public var Users: [VSMContact]

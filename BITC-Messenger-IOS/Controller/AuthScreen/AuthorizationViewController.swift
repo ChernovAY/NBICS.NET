@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class AuthorizationViewController: UIViewController {
     
@@ -49,18 +50,7 @@ class AuthorizationViewController: UIViewController {
                                         self.mUserDefaults.SetUserPasswordHash(hash: hash)
                                         
                                         WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                        //tst-->
-                                        var conv =  VSMConversations()
-                                        VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
-                                            
-                                            conv = c
-                                            
-                                            }()
-                                        })
-                                        
-                                        //tst--<
-                                        
-                                       
+                                        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.getUserContact()}()})
                                         self.NavigateToChats()
                                         print("done")
                                     case "1":
@@ -94,6 +84,7 @@ class AuthorizationViewController: UIViewController {
                         switch result {
                             case "0":
                                     WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
+                                    VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.getUserContact()}()})
                                     self.NavigateToChats()
                             default: break
                         }
@@ -103,6 +94,26 @@ class AuthorizationViewController: UIViewController {
             )
         }
     }
+    //Потом найти для этого правильное место!
+    private func getUserContact(){
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+            
+            if(!s){
+                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        let dict = json.dictionary!
+                        VSMConversation.contacts.findOrCreate(what: dict)?.isOwnContact = true
+                        }
+                    }
+                }
+            }()})
+    }
+        
+
     private func NavigateToChats() {
         let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
         if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:

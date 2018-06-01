@@ -12,6 +12,7 @@
 		9B5014D120BC121200790CAC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chat.swift */; };
 		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
 		9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D420BD8E8200790CAC /* DateExtension.swift */; };
+		9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D620C032F500790CAC /* AlamoFire.swift */; };
 		9BB9404720A9AF3200B60697 /* Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* Web.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
@@ -30,7 +31,7 @@
 		D4BE98E71F4C88D000AE9405 /* BottomPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE98E61F4C88D000AE9405 /* BottomPanelView.swift */; };
 		D4BE98E91F4C8A9100AE9405 /* StartStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */; };
 		D4BE98EF1F4C952C00AE9405 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE98EE1F4C952C00AE9405 /* StartScreenViewController.swift */; };
-		D4C3D48F1F798B41008F9CE2 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3D48E1F798B41008F9CE2 /* ContactCell.swift */; };
+		D4C3D48F1F798B41008F9CE2 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3D48E1F798B41008F9CE2 /* Cells.swift */; };
 		D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */; };
 		D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */; };
 		D4DE426C1F632D4B0076008B /* ChatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */; };
@@ -49,6 +50,7 @@
 		9B5014D020BC121200790CAC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		9B5014D220BC249A00790CAC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		9B5014D420BD8E8200790CAC /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		9B5014D620C032F500790CAC /* AlamoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamoFire.swift; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* Web.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
@@ -67,7 +69,7 @@
 		D4BE98E61F4C88D000AE9405 /* BottomPanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomPanelView.swift; path = View/LaunchScreen/BottomPanelView.swift; sourceTree = "<group>"; };
 		D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = StartStoryboard.storyboard; path = View/Storyboards/StartStoryboard.storyboard; sourceTree = "<group>"; };
 		D4BE98EE1F4C952C00AE9405 /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartScreenViewController.swift; path = Controller/LaunchScreen/StartScreenViewController.swift; sourceTree = "<group>"; };
-		D4C3D48E1F798B41008F9CE2 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCell.swift; path = View/Controls/ContactsScreen/ContactCell.swift; sourceTree = "<group>"; };
+		D4C3D48E1F798B41008F9CE2 /* Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cells.swift; path = View/Controls/ContactsScreen/Cells.swift; sourceTree = "<group>"; };
 		D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSUserDefaultsStrings.swift; path = Infrastructure/NSUserDefaultsStrings.swift; sourceTree = "<group>"; };
 		D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarBorderless.swift; path = View/Controls/SearchBarBorderless.swift; sourceTree = "<group>"; };
 		D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ChatsStoryboard.storyboard; path = View/Storyboards/ChatsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */,
 				D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */,
 				9B5014D420BD8E8200790CAC /* DateExtension.swift */,
+				9B5014D620C032F500790CAC /* AlamoFire.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				D44DC7CB1F4D790F004874C8 /* Common */,
 				D4BE98E51F4C88A900AE9405 /* LaunchScreen */,
 				D4BC619E1F86AF2700388173 /* CircleImageView.swift */,
+				D4C3D48E1F798B41008F9CE2 /* Cells.swift */,
 				D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */,
 			);
 			name = Controls;
@@ -248,7 +252,6 @@
 		D4C3D48D1F798A5D008F9CE2 /* ContactsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				D4C3D48E1F798B41008F9CE2 /* ContactCell.swift */,
 			);
 			name = ContactsScreen;
 			sourceTree = "<group>";
@@ -470,7 +473,7 @@
 				D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */,
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
 				D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */,
-				D4C3D48F1F798B41008F9CE2 /* ContactCell.swift in Sources */,
+				D4C3D48F1F798B41008F9CE2 /* Cells.swift in Sources */,
 				9B5014D320BC249A00790CAC /* Conversation.swift in Sources */,
 				9B5014D120BC121200790CAC /* Chat.swift in Sources */,
 				D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */,
@@ -487,6 +490,7 @@
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,
 				D4DE426F1F632EED0076008B /* AllChatsViewController.swift in Sources */,
 				D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */,
+				9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */,
 				D4BC61A11F86B6BD00388173 /* ViewControllerExtension.swift in Sources */,
 				D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */,
 				D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */,

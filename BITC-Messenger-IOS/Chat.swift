@@ -10,22 +10,10 @@ import Foundation
 import SwiftyJSON
 //
 public class VSMMessages{
-    /*public static func VSMMessagesAssync(loadingDelegate: ((VSMMessages)->Void)?=nil){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.contatcs, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
-            
-            if(!s){
-                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate)
-                }
-            }
-            }()}
-        )
-    }*/
-    
+
+    public var N:Int = 20
+    private var Last = ""
+    private var ConversationId = ""
     private var array:[VSMMessage] = Array<VSMMessage>()
     
     public var selectedText = ""
@@ -34,27 +22,25 @@ public class VSMMessages{
         return array
         }
     }
-    public  var loadingDelegate:((VSMMessages)->Void)? = nil
-    public  var loaded:Bool = false{
-        didSet {
-            if let ld = loadingDelegate{
-                if loaded { ld(self)}
-            }
-        }
+    public  var loadingDelegate:((Bool)->Void)? = nil
+
+    public init(ConversationId:String, loadingDelegate:((Bool)->Void)?=nil){
+        self.ConversationId = ConversationId
+        self.loadingDelegate = loadingDelegate
     }
-    public init(array:[VSMMessage], loadingDelegate:((VSMMessages)->Void)?=nil){
-        self.array = array
-        if loadingDelegate != nil {self.loadingDelegate = loadingDelegate}
-        if self.array.count>0 {loaded = true}
-    }
-    public init(){
+    
+    public convenience init(ConversationId: String, array:[VSMMessage], loadingDelegate:((Bool)->Void)?=nil){
+        self.init(ConversationId: ConversationId, loadingDelegate: loadingDelegate)
         
-    }
-    init(from data: Data, loadingDelegate:((VSMMessages)->Void)?=nil)
-    {
-        if let ld = loadingDelegate{
-            self.loadingDelegate = ld
+        self.array = array
+        if self.array.count>0{
+            self.Last = self.array.last!.Id
         }
+    }
+    convenience init(ConversationId:String, from data: Data, loadingDelegate:((Bool)->Void)?=nil)
+    {
+        self.init(ConversationId: ConversationId, loadingDelegate: loadingDelegate)
+        
         if let json = try? JSON(data: data) {
             let arr = json.array!
             for c in arr{
@@ -62,10 +48,13 @@ public class VSMMessages{
                     array.append(VSMMessage(from:dict))
                 }
             }
-            loaded  = true
-            if let ld = loadingDelegate { ld(self)}
+            if self.array.count>0{
+                self.Last = self.array.last!.Id
+            }
+            if let ld = loadingDelegate { ld(true)}
         }
     }
+    
     private func setFilter(_ what:String?=nil){
         if let mask = what{
             self.selectedText = mask.lowercased()
@@ -78,14 +67,38 @@ public class VSMMessages{
         setFilter(what)
         return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
-    public class func load(){}
+    public func load(){
+     
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: ["ConversationId":ConversationId, "N":N, "isAfter":false, "MessageId":Last, "email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+            
+            if(!s){
+                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        let arr = json["Messages"].array!
+                        for c in arr{
+                            if let dict = c.dictionary{
+                                self.array.append(VSMMessage(from:dict))
+                            }
+                        }
+                        if self.array.count>0{
+                            self.Last = self.array.last!.Id
+                        }
+                        if let ld = self.loadingDelegate { ld(true)}
+                    }
+                }
+            }
+            }()}
+        )
+    }
 }
 
 public class VSMMessage{
 
-    //Этих потом!!!!! SER!!
-    //AttachedConfigurations: [] (0)
-    //AttachedFiles: [] (0)
+    public var AttachedFiles =  Array<VSMAttachedFile>()
     
     public let ConversationId:  String
     public let Draft:           Bool
@@ -98,10 +111,11 @@ public class VSMMessage{
         (ConversationId:  String
         ,Draft:           Bool
         ,Id:              String
-        ,Sender:          VSMContact?  //!ref
+        ,Sender:          VSMContact?
         ,Text:            String
         ,Time:            Date
         ,CType:           String
+        ,AttachedFiles:   [VSMAttachedFile]?=nil
         )
     {
         self.ConversationId = ConversationId
@@ -111,6 +125,10 @@ public class VSMMessage{
         self.Text           = Text
         self.Time           = Time
         self.CType          = ContType.init(rawValue: CType)!
+        
+        if let af = AttachedFiles {
+            self.AttachedFiles  = af
+        }
     }
     public convenience init (from dict:[String:JSON]){
         self.init(
@@ -122,6 +140,16 @@ public class VSMMessage{
             ,Time:          Date(fromString: dict["Time"]!.string!)
             ,CType:         dict["Type"]!.string!
         )
+        
+        if let jsonArr = dict["AttachedFiles"]?.array{
+            for jaf in jsonArr{
+                if let af = jaf.dictionary{
+                    AttachedFiles.append(VSMAttachedFile(from:af))
+                }
+            }
+            
+        }
+        
     }
 }
 
@@ -131,42 +159,53 @@ public class VSMAttachedFile{
     public let Name:        String
     public var PreviewIcon: UIImage?
     
+    private func setPrevIcon(_ from : String){
+        if(from != ""){
+            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+            self.PreviewIcon = UIImage(data: dataDecoded)
+        }
+    }
+    
+    
     public init (Extension: String, Guid: String, Name: String){
+        self.Extension      = Extension
+        self.Guid           = Guid
+        self.Name           = Name
+        self.PreviewIcon    = UIImage(named:"AnyFile")
+    }
+    public convenience init(from dict:[String:JSON]){
+        self.init(
+             Extension: dict["Extension"]!.string!
+            ,Guid: dict["Guid"]!.string!
+            ,Name: dict["Name"]!.string!
+        )
         
-        
-        //Иконка-->
-        let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-        if(fm.fileExists(atPath: filename)){
-            if let data = fm.contents(atPath: filename){
-                self.Photo = UIImage(data: data)
-            }
-            else{
-                self.Photo = UIImage(named: "EmptyUser")
-            }
+        if let ds = dict["PreviewIcon"]!.string {
+                self.setPrevIcon(ds)
         }
         else{
-            self.Photo = UIImage(named: "EmptyUser")
-        }
-        //Иконка--<
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
-            if(!s){
-                print(d as! String)
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    
-                    if(data.count>0){
-                        let fm = FileManager.default
-                        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-                        
-                        if(fm.createFile(atPath: filename, contents: data)){
-                            self.Photo = UIImage(data: data)
+            let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
+            let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
+            var base64 = ""
+            if(z.1){
+                let d = z.0 as! Data
+                if let json = try? JSON(data: d) {
+                    if let dict = json.dictionary{
+                        if let dd = dict["FileMetaData"]?.dictionary{
+                            if let ddd = dd["PreviewIcon"]{
+                                base64 = ddd.string!
+                            }
+                            else{
+                                base64 = ""
+                            }
                         }
                     }
+                    self.setPrevIcon(base64)
                 }
             }
-            }()})
+            else{
+                print(z.0)
+            }
+        }
     }
 }

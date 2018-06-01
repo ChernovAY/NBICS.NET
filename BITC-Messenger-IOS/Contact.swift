@@ -27,11 +27,13 @@ public class VSMContacts {
     }
     
     private var array:[VSMContact] = Array<VSMContact>()
-    
     public var selectedText = ""
     
     public var SArray:[VSMContact]{ get {
         return array
+        }
+        set(value){
+            self.array = value
         }
     }
     public  var loadingDelegate:((VSMContacts)->Void)? = nil
@@ -78,7 +80,20 @@ public class VSMContacts {
         setFilter(what)
         return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Name.lowercased().range(of: self.selectedText) != nil })
     }
-    
+
+    public func addIfNotExists(from a:[VSMContact]){
+        
+        for ai in a{
+            if let _ = SArray.first(where: ({$0.Id == ai.Id})){
+                continue
+            }
+            else{
+                array.append(ai)
+            }
+        }
+    }
+
+
     public func findOrCreate(what dict:[String:JSON]?)->VSMContact?{
         if let d = dict{
             let id = d["Id"]!.int64!
@@ -100,7 +115,7 @@ public class VSMContacts {
 //--------------------------------------------------
 
 public class VSMContact {
- 
+    public var isOwnContact = false
     public let EntityClass:     Int
     public let EntityId:        Int
     public let EntityType:      Int
@@ -153,7 +168,9 @@ public class VSMContact {
         , PhotoUrl:        String
         
         , CType:           String
-        ){  self.EntityClass    = EntityClass
+        , Photo:           String = ""
+        ){
+        self.EntityClass    = EntityClass
         self.EntityId       = EntityId
         self.EntityType     = EntityType
         self.EntityGuid     = EntityGuid
@@ -192,7 +209,8 @@ public class VSMContact {
             self.Photo = UIImage(named: "EmptyUser")
         }
         //Иконка--<
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
+        if (self.PhotoUrl != "") {
+            WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
             if(!s){
                 print(d as! String)
             }
@@ -211,7 +229,21 @@ public class VSMContact {
                 }
             }
             }()})
+        }
+        else if Photo != "" {
+            if let dataDecoded  = Data(base64Encoded: Photo, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
+                self.Photo = UIImage(data: dataDecoded)
+                let fm = FileManager.default
+                let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
+                fm.createFile(atPath: filename, contents: dataDecoded)
+            }
+            else{
+                self.Photo = UIImage(named: "EmptyUser")
+            }
+            
+        }
     }
+    
     public convenience init(from dict:[String:JSON]){
         self.init(
             EntityClass:  dict["EntityClass"  ]!.int!
@@ -229,8 +261,9 @@ public class VSMContact {
             , IsNew:        dict["IsNew"        ]!.bool!
             , IsOnline:     dict["IsOnline"     ]!.bool!
             , ReadOnly:     dict["ReadOnly"     ]!.bool!
-            , PhotoUrl:     dict["PhotoUrl"     ]!.string!
+            , PhotoUrl:     dict["PhotoUrl"     ]!.string != nil ? dict["PhotoUrl"     ]!.string! : ""
             , CType:        dict["Type"         ]!.string != nil ? dict["Type"         ]!.string! : "User"
+            , Photo:        dict["Photo"        ]!.string != nil ? dict["Photo"        ]!.string! : ""
         )
     }
     
