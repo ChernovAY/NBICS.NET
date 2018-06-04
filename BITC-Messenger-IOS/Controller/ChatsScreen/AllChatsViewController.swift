@@ -26,6 +26,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
         Table.delegate = self
         Table.dataSource = self
+        self.getUserContact()
         Load()
     }
 
@@ -72,12 +73,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         //потом может и убрать?
         VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
             WebAPI.UserConversations = c
-            
-
-            
             self.Table.reloadData()
-            
-            self.getUserContact()
             }()
             })
     }
@@ -112,7 +108,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     private func getUserContact(){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+        /*WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -131,7 +127,11 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
                     }
                 }
             }
-            }()})
+            }()})*/
+        if let usr = WebAPI.Profile{
+            self.UserFullNameLabel.text = "\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
+            self.UserPhoto.image = usr.Icon
+        }
     }
     /*
     // MARK: - Navigation
