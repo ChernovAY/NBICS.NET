@@ -36,12 +36,14 @@ class AllChatsViewController: UIViewController, UITabBarDelegate {
                     self.present(contactsViewController, animated: true, completion: nil)
                 }
                 break
+            /*
             case 2:
                 let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
                 if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
                     self.present(configViewController, animated: true, completion: nil)
                 }
                 break
+            */
             case 3:
                 let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
                 if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{

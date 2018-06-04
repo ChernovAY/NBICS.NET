@@ -1,20 +1,18 @@
 //
-//  StartScreenViewController.swift
-//  NBICS-Messenger-IOS
+//  MessengesViewController.swift
+//  BITC-Messenger-IOS
 //
-//  Created by ООО "КИЦ ТЦ" on 22.08.17.
-//  Copyright © 2017 riktus. All rights reserved.
+//  Created by bender on 30.05.2018.
+//  Copyright © 2018 riktus. All rights reserved.
 //
 
 import UIKit
 
-class StartScreenViewController: UIViewController{
+class MessengesViewController: UIViewController {
 
-    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //ActivityIndicator.
-        ActivityIndicator.startAnimating()
+
         // Do any additional setup after loading the view.
     }
 

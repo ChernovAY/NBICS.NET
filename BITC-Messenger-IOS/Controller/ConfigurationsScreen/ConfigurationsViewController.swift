@@ -9,9 +9,20 @@
 import UIKit
 
 class ConfigurationsViewController: UIViewController, UITabBarDelegate {
-    
-    @IBOutlet weak var TabBar: MainTabBar!
 
+    @IBOutlet weak var TabBar: MainTabBar!
+    @IBOutlet weak var BackItem: UIBarButtonItem!
+    @IBOutlet weak var SendButton: UIButton!
+    @IBOutlet weak var MessageField: UITextField!
+    
+    @IBAction func BackItem(_ sender: Any) {
+        let targetStoryboard = UIStoryboard(name: "ContactsStoryboard", bundle: nil)
+        if let contactsViewController = targetStoryboard.instantiateViewController(withIdentifier:
+            "ContactsViewController") as? ContactsViewController {
+            self.present(contactsViewController, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +45,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tabBarIndex = item.tag
         switch tabBarIndex {
@@ -60,7 +71,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate {
             break
         default: break
         }
-        
     }
-
+    */
 }

@@ -34,9 +34,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Table.delegate = self
         Table.dataSource = self
         
-        Search.delegate = self
-        Search.returnKeyType = UIReturnKeyType.done
-        
+        LoadContacts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +44,10 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     //func tableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
+        let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
+        if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
+            self.present(configViewController, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,9 +66,9 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-            return cArray.count
+        return cArray.count
     }
+
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -92,16 +93,14 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
     private func LoadContacts() {
         VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
-            
             self.contacts = l
             self.cArray = self.contacts.getContacts()
-
             self.Table.reloadData()
-            
             }()
         })
     }
 
+    
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tabBarIndex = item.tag
         switch tabBarIndex {
@@ -112,12 +111,14 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
                 self.present(chatsViewController, animated: true, completion: nil)
             }
             break
+        /*
         case 2:
             let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
             if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
                 self.present(configViewController, animated: true, completion: nil)
             }
             break
+        */
         case 3:
             let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
             if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{
@@ -127,5 +128,4 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         default: break
         }
     }
-
 }

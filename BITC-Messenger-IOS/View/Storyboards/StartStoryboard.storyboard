@@ -77,6 +77,9 @@
                             <constraint firstItem="cN0-PM-ZGC" firstAttribute="top" secondItem="qpx-2k-dEc" secondAttribute="bottom" constant="217" id="u9k-Sr-VKU"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ActivityIndicator" destination="9ke-dr-KaX" id="WKf-ac-UAX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j10-sW-zYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
