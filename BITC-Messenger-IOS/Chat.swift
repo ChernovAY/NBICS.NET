@@ -185,6 +185,7 @@ public class VSMAttachedFile{
         }
         else{
             let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
+            //let json = self.getJSON()
             let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
             var base64 = ""
             if(z.1){
@@ -206,6 +207,16 @@ public class VSMAttachedFile{
             else{
                 print(z.0)
             }
+        }
+    }
+    public func getJSON()->String{
+        if let p = self.PreviewIcon{
+            let image64 = UIImagePNGRepresentation(p)?.base64EncodedString()
+            return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": image64]).rawString([.castNilToNSNull: true])!
+            
+        }
+        else{
+            return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
         }
     }
 }

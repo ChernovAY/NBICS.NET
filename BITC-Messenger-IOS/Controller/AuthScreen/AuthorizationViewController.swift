@@ -51,8 +51,7 @@ class AuthorizationViewController: UIViewController {
                                         
                                         WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
                                         WebAPI.Profile = VSMProfile()
-                                        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.getUserContact(); }()})
-                                        self.NavigateToChats()
+                                        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{self.getUserContact(); WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.NavigateToChats();}()})
                                         print("done")
                                     case "1":
                                         let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
@@ -86,8 +85,8 @@ class AuthorizationViewController: UIViewController {
                             case "0":
                                     WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
                                     WebAPI.Profile = VSMProfile()
-                                    VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.getUserContact()}()})
-                                    self.NavigateToChats()
+                                    VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{self.getUserContact(); WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.NavigateToChats();}()})
+                            
                             default: break
                         }
                     }
@@ -98,22 +97,22 @@ class AuthorizationViewController: UIViewController {
     }
     //Потом найти для этого правильное место!
     private func getUserContact(){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+        let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash])
             
-            if(!s){
-                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+            if(!z.1){
+                UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
             }
             else{
-                if d is Data {
-                    let data = d as! Data
+                if z.0 is Data {
+                    let data = z.0 as! Data
                     if let json = try? JSON(data: data) {
                         let dict = json.dictionary!
                         VSMConversation.contacts.findOrCreate(what: dict)?.isOwnContact = true
                         }
                     }
                 }
-            }()})
     }
+    
         
 
     private func NavigateToChats() {
