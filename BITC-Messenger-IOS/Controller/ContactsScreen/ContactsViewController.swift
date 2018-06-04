@@ -15,8 +15,16 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Search: UISearchBar!
     
     
-    
-    private var contacts = VSMContacts()
+    //tst-->
+    private func say(_ c:Bool){
+        if(c){
+            print(self.mess!)
+        }
+    }
+    private var conv =  VSMConversations()
+    private var mess : VSMMessages?
+    //tst--<
+
     private var cArray   = [VSMContact]()
     var refreshControl:UIRefreshControl!
  
@@ -34,7 +42,13 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Table.delegate = self
         Table.dataSource = self
         
+        Search.delegate = self
+        Search.returnKeyType = UIReturnKeyType.done
+        //tst-->
+        mess = VSMMessages(ConversationId: "-9223372036854755343", loadingDelegate:self.say)
+        //tst--<
         LoadContacts()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,18 +100,30 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
        else{
 
         }
-        self.cArray = self.contacts.getContacts(searchBar.text)
+        self.cArray = WebAPI.UserContacts.getContacts(searchBar.text)
         
         Table.reloadData()
     }
 
     private func LoadContacts() {
-        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
-            self.contacts = l
-            self.cArray = self.contacts.getContacts()
-            self.Table.reloadData()
-            }()
-        })
+        //потом может и убрать?
+            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
+                WebAPI.UserContacts = l
+                VSMConversation.contacts.addIfNotExists(from: l.SArray)
+                 self.cArray = l.getContacts()
+                self.Table.reloadData()
+                
+                //tst-->
+                self.mess!.load()
+                
+                VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
+                    self.conv = c
+                    print(self.conv)
+                    }()
+                })
+                
+                //tst--<
+            }()})
     }
 
     

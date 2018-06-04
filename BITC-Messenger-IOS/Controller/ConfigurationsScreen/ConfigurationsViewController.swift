@@ -30,7 +30,14 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate {
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[2]
     }
-
+    @IBAction func BackButton(_ sender: Any) {
+        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
+        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
+            "AllChatsViewController") as? AllChatsViewController {
+            self.present(chatsViewController, animated: true, completion: nil)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
