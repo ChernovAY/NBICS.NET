@@ -93,4 +93,5 @@ public class WebAPI{
     }
     public static var UserContacts = VSMContacts()
     public static var UserConversations = VSMConversations()
+    public static var Profile : VSMProfile?
 }

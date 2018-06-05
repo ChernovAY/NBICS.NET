@@ -26,6 +26,11 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
         Table.delegate = self
         Table.dataSource = self
+        
+        if let usr = WebAPI.Profile{
+            self.UserFullNameLabel.text = "\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
+            self.UserPhoto.image = usr.Icon
+        }
         Load()
     }
 
@@ -72,12 +77,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         //потом может и убрать?
         VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
             WebAPI.UserConversations = c
-            
-
-            
             self.Table.reloadData()
-            
-            self.getUserContact()
             }()
             })
     }
@@ -111,28 +111,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
     }
 
-    private func getUserContact(){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
-            
-            if(!s){
-                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    if let json = try? JSON(data: data) {
-                        let dict = json.dictionary!
-                        let c =  VSMConversation.contacts.findOrCreate(what: dict)
-                        c?.isOwnContact = true
-                        if let usr = VSMConversation.contacts.SArray.first(where: ({$0.isOwnContact})) {
-                            self.UserFullNameLabel.text = usr.Name
-                            self.UserPhoto.image = usr.Photo
-                        }
-                    }
-                }
-            }
-            }()})
-    }
     /*
     // MARK: - Navigation
 
