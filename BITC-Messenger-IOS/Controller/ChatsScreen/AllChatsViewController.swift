@@ -15,7 +15,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
-    
+    var conversetionId: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,6 +43,10 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let conv = WebAPI.UserConversations.SArray[indexPath.row]
+        conversetionId = conv.Id
+        print(conversetionId)
+
         /*
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{

@@ -21,6 +21,13 @@ class MessegesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC: AllChatsViewController = segue.destination as! AllChatsViewController
+        print(destinationVC.conversetionId)
+        print("asdasd")
+        //let messeges = VSMMessages(ConversationId: conv.Id, loadingDelegate: {(t) in print(t) })
+        //messeges.load()
+    }
 
     /*
     // MARK: - Navigation

@@ -137,7 +137,7 @@
                                         <connections>
                                             <outlet property="NameLbl" destination="mzN-KG-7jJ" id="tmI-4F-C8c"/>
                                             <outlet property="ThumbImage" destination="gpF-Fx-tzr" id="K3J-bt-COb"/>
-                                            <segue destination="CRD-TJ-FBl" kind="show" id="8ny-O1-7BG"/>
+                                            <segue destination="CRD-TJ-FBl" kind="show" id="rNr-Gp-l9V"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -533,12 +533,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <tabBar hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8X-gs-4gO" customClass="MainTabBar" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items/>
-                            </tabBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4El-Hz-RB2">
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
@@ -583,11 +577,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ae-7G-ggb">
-                                <rect key="frame" x="0.0" y="-50" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KUj-Vi-VeX">
+                                <rect key="frame" x="0.0" y="19" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Назад" id="9lF-Ki-6lF"/>
+                                    <barButtonItem title="Назад" id="hrQ-8T-O2e">
+                                        <connections>
+                                            <segue destination="Slf-jA-6H2" kind="show" id="uHI-9u-nD0"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -595,6 +592,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mAm-xu-eGE" secondAttribute="trailing" id="1Iw-Bx-K6U"/>
                             <constraint firstItem="mAm-xu-eGE" firstAttribute="top" secondItem="eOW-GG-u0d" secondAttribute="bottom" constant="43" id="2dI-zq-VLM"/>
+                            <constraint firstItem="KUj-Vi-VeX" firstAttribute="leading" secondItem="O4h-BQ-PsS" secondAttribute="leading" id="4d2-K8-c2T"/>
+                            <constraint firstAttribute="trailing" secondItem="KUj-Vi-VeX" secondAttribute="trailing" id="67W-qy-QBV"/>
                             <constraint firstItem="nwe-zm-IC0" firstAttribute="top" secondItem="4El-Hz-RB2" secondAttribute="bottom" id="87I-zr-R0W"/>
                             <constraint firstItem="4El-Hz-RB2" firstAttribute="leading" secondItem="O4h-BQ-PsS" secondAttribute="leading" id="Gf0-h3-b0d"/>
                             <constraint firstAttribute="trailing" secondItem="Lfj-mb-DX9" secondAttribute="trailing" id="IQl-GL-aba"/>
@@ -602,24 +601,23 @@
                             <constraint firstAttribute="trailing" secondItem="4El-Hz-RB2" secondAttribute="trailing" id="L3h-ER-TEX"/>
                             <constraint firstItem="nwe-zm-IC0" firstAttribute="top" secondItem="Lfj-mb-DX9" secondAttribute="bottom" id="TUW-0z-Ch6"/>
                             <constraint firstItem="Lfj-mb-DX9" firstAttribute="top" secondItem="O4h-BQ-PsS" secondAttribute="top" id="YRk-Te-947"/>
+                            <constraint firstItem="mAm-xu-eGE" firstAttribute="top" secondItem="KUj-Vi-VeX" secondAttribute="bottom" id="bII-uX-ZLr"/>
                             <constraint firstItem="Lfj-mb-DX9" firstAttribute="leading" secondItem="O4h-BQ-PsS" secondAttribute="leading" id="dLN-Hs-kI1"/>
                             <constraint firstItem="4El-Hz-RB2" firstAttribute="top" secondItem="mAm-xu-eGE" secondAttribute="bottom" constant="8" id="eXN-k7-Arx"/>
+                            <constraint firstItem="KUj-Vi-VeX" firstAttribute="top" secondItem="O4h-BQ-PsS" secondAttribute="top" constant="19" id="nov-a5-ZN5"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="MessageField" destination="ar5-Qu-JUX" id="17g-Xu-JZY"/>
-                        <outlet property="SendButton" destination="2yu-LX-7J6" id="LSn-Uw-GlA"/>
-                        <outlet property="TabBar" destination="h8X-gs-4gO" id="jN4-5X-XnH"/>
-                        <outlet property="sendButton" destination="2yu-LX-7J6" id="H9O-x7-Pfh"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tP-u7-uM4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1138" y="815"/>
+            <point key="canvasLocation" x="-868" y="78"/>
         </scene>
     </scenes>
     <resources>
         <image name="ChatBackground" width="414" height="736"/>
         <image name="EmptyUser" width="41" height="53"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uHI-9u-nD0"/>
+    </inferredMetricsTieBreakers>
 </document>
