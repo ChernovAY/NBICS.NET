@@ -16,4 +16,9 @@ extension Date{
         let date = dateFormatter.date(from: fromString)!
         self = date
     }
+    public func toString(_ format:String = "dd.MM.yyyy")->String{
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = format
+        return dateformatter.string(from:self)
+    }
 }

@@ -76,6 +76,7 @@ class AuthorizationViewController: UIViewController {
             WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.login, params: ["user" : email, "passwordHash" : hash], completionHandler: {(d,s) in{
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                    //UIAlertController(title: "Ошибка", message: d as? String, preferredStyle: UIAlertControllerStyle.alert)
                 }
                 else{
                     if d is Data {
@@ -107,7 +108,8 @@ class AuthorizationViewController: UIViewController {
                     let data = z.0 as! Data
                     if let json = try? JSON(data: data) {
                         let dict = json.dictionary!
-                        VSMConversation.contacts.findOrCreate(what: dict)?.isOwnContact = true
+                        WebAPI.Contact = VSMConversation.contacts.findOrCreate(what: dict)
+                        WebAPI.Contact!.isOwnContact = true
                         }
                     }
                 }

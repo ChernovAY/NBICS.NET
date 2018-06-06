@@ -43,27 +43,47 @@ public class WebAPI{
          Получаем изображение файла картинки в base64=- GetFileImage(string FileMetaData)
          
          
+         Загрузка файла для сообщения =- UploadMessageFileWithoutDraft(IFormFile File, string Email, string PasswordHash)
+         Удаление прикрепленного файла с сервера =- RemoveMessageFileFromServerWithoutDraft(string FileMetaData, string Email, string PasswordHash)
+         Поиск пользователей для добавления в список контактов=- SearchContacts(string Email, string PasswordHash, string SearchString)
+         Сообщение прочитано=- SetConversationMessagesReaded(string ConversationId, string Email, string PasswordHash)
+         Возвращает информацию о пользователе по его Id =- GetUserProfile(int UserId, string Email, string PasswordHash)
+         
+         Отправка сообщения списка групп =- SendMessage(string Message, string NotificationSettings, string Email, string PasswordHash, bool UseDraft = true)
+    
     */
-        case login                  = "Account/Login"
+        case login                  = "Account/Login" //+++
         case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
         case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
     
-        case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation"
-        case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"
+        case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation" //+++
+        case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"  //+++
         case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfile"
         
-        case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"
+        case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"        //+++
         case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
-        case getIcon                = ""
+        case getIcon                = ""    //+++
     
-        case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"
+        case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"   //+++
     
         case download               = "VSM.Web.Plugins.Contacts/ContactsHome/Download"
-        case filePreviewIcon        = "VSM.Web.Plugins.Contacts/ContactsHome/GetFilePreviewIcon"
+        case filePreviewIcon        = "VSM.Web.Plugins.Contacts/ContactsHome/GetFilePreviewIcon"    //+++
         case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"
         
-        case conversationMessages   = "VSM.Web.Plugins.Contacts/ContactsHome/GetConversationNMessagesAfterOrBefore"
+        case conversationMessages   = "VSM.Web.Plugins.Contacts/ContactsHome/GetConversationNMessagesAfterOrBefore" //+++
+        case messageReaded          = "VSM.Web.Plugins.Contacts/ContactsHome/SetConversationMessagesReaded"
+        case sendMessage            = "VSM.Web.Plugins.Contacts/ContactsHome/SendMessage"
+        
+        case fileUpload             = "VSM.Web.Plugins.Contacts/ContactsHome/UploadMessageFileWithoutDraft"
+        case fileDrop               = "VSM.Web.Plugins.Contacts/ContactsHome/RemoveMessageFileFromServerWithoutDraft"
+        
+    
     }
+    /*public static func upload(filePath:String, loadedDelegate: (VSMAttachedFile)->Void, progressDelegate:((Int)->Void)? = nil ){
+       let url = URL(fileURLWithPath: filePath)
+           Alamofire.upload(url, to: URLConvertible)
+       
+    }*/
     public static func syncRequest(addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
         let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
         let resp =  request.syncResponse()
@@ -94,4 +114,5 @@ public class WebAPI{
     public static var UserContacts = VSMContacts()
     public static var UserConversations = VSMConversations()
     public static var Profile : VSMProfile?
+    public static var Contact : VSMContact?
 }
