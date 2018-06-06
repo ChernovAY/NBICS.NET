@@ -15,7 +15,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
-    @IBOutlet weak var UserFullNameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +27,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Table.dataSource = self
         
         if let usr = WebAPI.Profile{
-            self.UserFullNameLabel.text = "\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
+            self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
             self.UserPhoto.image = usr.Icon
         }
         Load()
@@ -44,10 +43,12 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
             self.present(configViewController, animated: true, completion: nil)
         }
+        */
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -110,15 +111,5 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         }
 
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

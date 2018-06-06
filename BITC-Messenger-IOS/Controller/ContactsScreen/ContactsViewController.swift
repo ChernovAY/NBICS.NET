@@ -58,10 +58,12 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     //func tableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
             self.present(configViewController, animated: true, completion: nil)
         }
+        */
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

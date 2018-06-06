@@ -9,10 +9,26 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    @IBOutlet weak var FullnameLabel: UILabel!
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var BirthDayLabel: UILabel!
+    @IBOutlet weak var UserPhoto: UIImageView!
+    @IBOutlet weak var FamilyLabel: UILabel!
+    @IBOutlet weak var EmailLabel: UILabel!
+    @IBOutlet weak var SkypeLabel: UILabel!
+    @IBOutlet weak var PatronymicLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let usr = WebAPI.Profile{
+            self.UserPhoto.image = usr.Icon
+            self.FullnameLabel.text = "\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
+            self.NameLabel.text = "\(usr.Name)"
+            self.FamilyLabel.text = "\(usr.FamilyName)"
+            self.PatronymicLabel.text = "\(usr.Patronymic)"
+            self.EmailLabel.text = "\(usr.Email)"
+            self.SkypeLabel.text = "\(usr.Skype)"
+            self.BirthDayLabel.text = "\(usr.BirthDay)"
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -20,16 +36,4 @@ class ProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

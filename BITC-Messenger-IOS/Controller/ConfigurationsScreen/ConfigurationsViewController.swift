@@ -11,7 +11,6 @@ import UIKit
 class ConfigurationsViewController: UIViewController, UITabBarDelegate {
 
     @IBOutlet weak var TabBar: MainTabBar!
-    @IBOutlet weak var BackItem: UIBarButtonItem!
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     
@@ -29,13 +28,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate {
         // Do any additional setup after loading the view.
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[2]
-    }
-    @IBAction func BackButton(_ sender: Any) {
-        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
-        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-            "AllChatsViewController") as? AllChatsViewController {
-            self.present(chatsViewController, animated: true, completion: nil)
-        }
     }
     
     override func didReceiveMemoryWarning() {
