@@ -251,7 +251,7 @@ public class VSMAttachedFile{
         if let ds = dict["PreviewIcon"]!.string {
                 self.setPrevIcon(ds)
         }
-        else{
+        else {
             //let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
             let json = self.getJSON(false)
             let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
@@ -262,10 +262,9 @@ public class VSMAttachedFile{
                     if let dict = json.dictionary{
                         if let dd = dict["FileMetaData"]?.dictionary{
                             if let ddd = dd["PreviewIcon"]{
-                                base64 = ddd.string!
-                            }
-                            else{
-                                base64 = ""
+                                if let ds = ddd.string{
+                                    base64 = ds
+                                }
                             }
                         }
                     }

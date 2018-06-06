@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 public typealias Params = [String:Any];
 
@@ -79,7 +80,10 @@ public class WebAPI{
         
     
     }
-    public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Int)->Void){
+    /*{"FileMetaData":{"Guid":"4eb666d5-3731-4ac1-bcbf-8be4372c47a3","Name":"PIcon_-2147468100","Extension":"I","DownloadURL":"/VSM.Web.Plugins.Contacts/ContactsHome/Download/?FileGuid=4eb666d5-3731-4ac1-bcbf-8be4372c47a3&FileName=PIcon_-2147468100&FileExtension=I","PreviewIcon":null,"ImageBase64":null},"Success":true,"Message":null}*/
+    //потом перекинуть в правильное меесто!
+    //public static func dropFile()
+    public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Double)->Void){
        let url = URL(fileURLWithPath: filePath)
        let hostUrl = "\(Settings.caddress)\(WebAPIEntry.fileUpload.rawValue)"
         Alamofire.upload(
@@ -92,15 +96,20 @@ public class WebAPI{
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .success(let upload, _, _):
-                    upload.responseString { response in
-                        debugPrint(response)
-                        }
-                   .uploadProgress { progress in // main queue by default
-                            debugPrint(progress.fractionCompleted)
+                    //upload.responseString { response in
+                    //    debugPrint(response)
+                    //    }
+                    upload.uploadProgress { progress in // main queue by default
+                        progressDelegate(progress.fractionCompleted)
+                        
                     }
-                    .responseJSON { response in
-                            //loadedDelegate(JSON(response).dictioanry)
-                        debugPrint(response)
+                    upload.response{ response in
+                        if let data = response.data{
+                            if let dict = JSON(data).dictionary!["FileMetaData"]?.dictionary{
+                                loadedDelegate(VSMAttachedFile(from: dict))
+                            }
+                        }
+                        //print(String(data: response.data! ,encoding: String.Encoding.utf8)!)
                     }
 
                 case .failure(let encodingError):
