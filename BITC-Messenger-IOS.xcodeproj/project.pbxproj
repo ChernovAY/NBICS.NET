@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B220A995887C36CEB78A733 /* Pods_BITC_Messenger_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */; };
 		569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */; };
+		56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9E7E120C80B54009F48BE /* MessegesViewController.swift */; };
 		9B5014CF20BC112F00790CAC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014CE20BC112F00790CAC /* Contact.swift */; };
 		9B5014D120BC121200790CAC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chat.swift */; };
 		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		462BA1434CFD9532DC3DDD58 /* Pods-BITC-Messenger-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		56F9E7E120C80B54009F48BE /* MessegesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessegesViewController.swift; path = Controller/MessegesViewController.swift; sourceTree = "<group>"; };
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9B5014CE20BC112F00790CAC /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9B5014D020BC121200790CAC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 			);
 			name = ProfileScreen;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		56F9E7E020C80B14009F48BE /* MessegesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				56F9E7E120C80B54009F48BE /* MessegesViewController.swift */,
+			);
+			name = MessegesScreen;
 			sourceTree = "<group>";
 		};
 		D438FF3A1F4C83FE003FC42D /* View */ = {
@@ -244,6 +254,7 @@
 		D4BE98EA1F4C8F7000AE9405 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				56F9E7E020C80B14009F48BE /* MessegesScreen */,
 				569D0D2020C6BD4A00B987C0 /* ProfileScreen */,
 				D4568CA71F71909500AA0D64 /* SettingsScreen */,
 				D4568CA21F718F0200AA0D64 /* ConfigurationsScreen */,
@@ -485,6 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */,
 				D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */,
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
 				D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */,
