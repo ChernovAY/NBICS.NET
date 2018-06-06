@@ -200,6 +200,7 @@ public class VSMContact {
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 self.Photo = UIImage(data: data)
+                WebAPI.upload(filePath: filename, loadedDelegate: {file in print(file)}, progressDelegate: {percent in print(percent)})//////!!!!!!!!
             }
             else{
                 self.Photo = UIImage(named: "EmptyUser")

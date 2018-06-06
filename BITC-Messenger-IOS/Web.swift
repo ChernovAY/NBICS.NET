@@ -79,11 +79,36 @@ public class WebAPI{
         
     
     }
-    /*public static func upload(filePath:String, loadedDelegate: (VSMAttachedFile)->Void, progressDelegate:((Int)->Void)? = nil ){
+    public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Int)->Void){
        let url = URL(fileURLWithPath: filePath)
-           Alamofire.upload(url, to: URLConvertible)
-       
-    }*/
+       let hostUrl = "\(Settings.caddress)\(WebAPIEntry.fileUpload.rawValue)"
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(url, withName: "File")
+                multipartFormData.append(Settings.user.data(using: String.Encoding.utf8)!, withName: "Email")
+                multipartFormData.append(Settings.hash.data(using: String.Encoding.utf8)!, withName: "PasswordHash")
+            },
+           to: hostUrl,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString { response in
+                        debugPrint(response)
+                        }
+                   .uploadProgress { progress in // main queue by default
+                            debugPrint(progress.fractionCompleted)
+                    }
+                    .responseJSON { response in
+                            //loadedDelegate(JSON(response).dictioanry)
+                        debugPrint(response)
+                    }
+
+                case .failure(let encodingError):
+                    debugPrint(encodingError)
+                }
+        }
+        )
+    }
     public static func syncRequest(addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
         let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
         let resp =  request.syncResponse()
