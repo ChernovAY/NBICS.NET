@@ -111,6 +111,7 @@ public class VSMProfile{
                         , Phone: dict["Phone"]!.string!
                         , Skype: dict["Skype"]!.string!
                     )
+                    
                     return
                 }
             }

@@ -11,7 +11,7 @@ import SwiftyJSON
 //
 public class VSMMessages{
 
-    public var N:Int = 20
+    private var N:Int = 20
     private var Last = ""
     private var ConversationId = ""
     private var array:[VSMMessage] = Array<VSMMessage>()
@@ -20,6 +20,9 @@ public class VSMMessages{
     
     public var SArray:[VSMMessage]{ get {
         return array
+        }
+        set(value){
+            self.array = value
         }
     }
     public  var loadingDelegate:((Bool)->Void)? = nil
@@ -96,9 +99,10 @@ public class VSMMessages{
     }
 }
 
-public class VSMMessage{
+ public class VSMMessage{
 
-    public var AttachedFiles =  Array<VSMAttachedFile>()
+    private var isFileUploading = false
+    public  var AttachedFiles   =  Array<VSMAttachedFile>()
     
     public let ConversationId:  String
     public let Draft:           Bool
@@ -110,7 +114,7 @@ public class VSMMessage{
     public init
         (ConversationId:  String
         ,Draft:           Bool
-        ,Id:              String
+        ,Id:              String?
         ,Sender:          VSMContact?
         ,Text:            String
         ,Time:            Date
@@ -120,7 +124,7 @@ public class VSMMessage{
     {
         self.ConversationId = ConversationId
         self.Draft          = Draft
-        self.Id             = Id
+        self.Id             = Id ?? "New"
         self.Sender         = Sender
         self.Text           = Text
         self.Time           = Time
@@ -134,7 +138,7 @@ public class VSMMessage{
         self.init(
             ConversationId: dict["ConversationId"]!.string!
             ,Draft:         dict["Draft"]!.bool!
-            ,Id:            dict["Id"]!.string!
+            ,Id:            dict["Id"]!.string
             ,Sender:        VSMConversation.contacts.findOrCreate(what: dict["Sender"]!.dictionary)
             ,Text:          dict["Text"]!.string!
             ,Time:          Date(fromString: dict["Time"]!.string!)
@@ -149,7 +153,71 @@ public class VSMMessage{
             }
             
         }
+    }
+    
+    //var m = VSMMessage(ConversationId: self.Id, Draft: false, Id:nil, Sender: nil, Text: "TEEEEEEEEXT!", Time:Date(), CType: ContType.Chat.rawValue)
+    //m.sendMessage()
+    
+    public func sendMessage(sendDelegate: ((VSMMessage)->Void)? = nil){
+        if self.isFileUploading {return;}
+        let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": false] as Params
         
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
+            if(!s){
+                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        if json.dictionary!["Success"]!.bool! {
+                            if let dict = json.dictionary!["Message"]?.dictionary{
+                                if let ms = sendDelegate {
+                                    ms(VSMMessage(from: dict))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            }()})
+    }
+    
+    public func uploadFiles(filePath: [String], loadingDelegate:((Int, String)->Void)?){
+            let fm = FileManager.default
+            for f in filePath{
+                if(fm.fileExists(atPath: f)){
+                    if let data = fm.contents(atPath: f){
+                        //self.Photo = UIImage(data: data)
+                    }
+                }
+            }
+        }
+        
+    public func dropFile(file: String, loadingDelegate:((Bool)->Void)?){
+        
+    }
+    
+    public func getJSON(_ forRequest:Bool = true)->String{
+        var j:[String:Any]
+        if(forRequest){
+        var attArray = [Any]()
+        for a in self.AttachedFiles{
+            attArray.append(a.getJSON())
+        }
+        j =
+        ["ConversationId": ConversationId
+        ,"Text": Text
+        ,"Sender":["Id":WebAPI.Contact!.Id] as [String : Any]
+        ] as [String : Any]
+        if attArray.count>0{
+            j["AttachedFiles"] = attArray
+        }
+        }
+        else{
+            j = [:] as [String:Any]
+        }
+        return JSON(j).rawString([.castNilToNSNull: true])!
     }
 }
 
@@ -184,8 +252,8 @@ public class VSMAttachedFile{
                 self.setPrevIcon(ds)
         }
         else{
-            let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
-            //let json = self.getJSON()
+            //let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
+            let json = self.getJSON(false)
             let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
             var base64 = ""
             if(z.1){
@@ -209,8 +277,9 @@ public class VSMAttachedFile{
             }
         }
     }
-    public func getJSON()->String{
-        if let p = self.PreviewIcon{
+    public func getJSON(_ forRequest:Bool = true)->String{
+        if self.PreviewIcon != UIImage(named:"AnyFile") && self.PreviewIcon != nil && !forRequest {
+            let p = self.PreviewIcon!
             let image64 = UIImagePNGRepresentation(p)?.base64EncodedString()
             return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": image64]).rawString([.castNilToNSNull: true])!
             
