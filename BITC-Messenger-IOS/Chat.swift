@@ -226,14 +226,20 @@ public class VSMAttachedFile{
     public let Guid:        String
     public let Name:        String
     public var PreviewIcon: UIImage?
+    public var ImageBase64: UIImage?
     
-    private func setPrevIcon(_ from : String){
+    public func setPrevIcon(_ from : String){ //public временно ???????/
         if(from != ""){
             let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
             self.PreviewIcon = UIImage(data: dataDecoded)
         }
     }
-    
+    public func setFileImage(_ from : String){ //public временно ???????/
+        if(from != ""){
+            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+            self.ImageBase64 = UIImage(data: dataDecoded)
+        }
+    }
     
     public init (Extension: String, Guid: String, Name: String){
         self.Extension      = Extension

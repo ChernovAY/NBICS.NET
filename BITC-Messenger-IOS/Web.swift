@@ -80,9 +80,54 @@ public class WebAPI{
         
     
     }
-    /*{"FileMetaData":{"Guid":"4eb666d5-3731-4ac1-bcbf-8be4372c47a3","Name":"PIcon_-2147468100","Extension":"I","DownloadURL":"/VSM.Web.Plugins.Contacts/ContactsHome/Download/?FileGuid=4eb666d5-3731-4ac1-bcbf-8be4372c47a3&FileName=PIcon_-2147468100&FileExtension=I","PreviewIcon":null,"ImageBase64":null},"Success":true,"Message":null}*/
     //потом перекинуть в правильное меесто!
-    //public static func dropFile()
+    public static func getFileImage(fileData: VSMAttachedFile)->Bool{
+        let req = syncRequest(addres: Settings.caddress, entry: WebAPIEntry.fileImage, params: ["FileMetaData": fileData.getJSON()])
+        if(req.1){
+            if let j = JSON(req.0).dictionary{
+                if (j["Success"]?.bool!)!{
+                    let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
+                    fileData.setFileImage(base64!)
+                    return true
+                }
+            }
+        }
+        else{
+            print(req.0)
+        }
+        return false
+    }
+    public static func dropFile(fileData: VSMAttachedFile)->Bool{
+        let req = syncRequest(addres: Settings.caddress, entry: WebAPIEntry.fileDrop, params: ["FileMetaData": fileData.getJSON(),"Email":Settings.user, "PasswordHash":Settings.hash])
+        if(req.1){
+            if let j = JSON(req.0).dictionary{
+                return (j["Success"]?.bool)!
+            }
+        }
+        else{
+            print(req.0)
+        }
+            return false
+    }
+    // Session Manager Configurations!!!!!!!
+    public static func download(FileGuid:String, FileName:String, FileExtension:String, loadedDelegate: @escaping (Bool)->Void, progressDelegate: @escaping (Double)->Void){
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileURL = documentsURL.appendingPathComponent("\(FileName).\(FileExtension)")
+            
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        let urlstr = "\(Settings.caddress)\(WebAPIEntry.download.rawValue)?FileGuid=\(FileGuid)&FileName=\(FileName)&FileExtension=\(FileExtension)"
+        Alamofire.download(urlstr, to: destination)
+            .downloadProgress { progress in
+                progressDelegate(progress.fractionCompleted)
+        }
+        .responseData { response in
+                   loadedDelegate(response.result.isSuccess)
+        }
+    }
+    
     public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Double)->Void){
        let url = URL(fileURLWithPath: filePath)
        let hostUrl = "\(Settings.caddress)\(WebAPIEntry.fileUpload.rawValue)"
@@ -96,12 +141,8 @@ public class WebAPI{
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .success(let upload, _, _):
-                    //upload.responseString { response in
-                    //    debugPrint(response)
-                    //    }
                     upload.uploadProgress { progress in // main queue by default
                         progressDelegate(progress.fractionCompleted)
-                        
                     }
                     upload.response{ response in
                         if let data = response.data{
