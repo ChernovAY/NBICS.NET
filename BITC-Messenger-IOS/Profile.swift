@@ -51,6 +51,7 @@ public class VSMProfile{
         let fm = FileManager.default
         let filename = NSTemporaryDirectory() + "/PIcon_\(self.Entity).I"
         if(fm.fileExists(atPath: filename)){
+<<<<<<< HEAD
                             /*WebAPI.upload(filePath: filename, loadedDelegate: {
                                 file in print(file)
                                 
@@ -58,6 +59,8 @@ public class VSMProfile{
                                 percent in print(percent)
                                 
                             })//////!!!!!!!!*/
+=======
+>>>>>>> master
             if let data = fm.contents(atPath: filename){
                 self.Icon = UIImage(data: data)
             }
