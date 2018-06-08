@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController {
             self.PatronymicLabel.text = "\(usr.Patronymic)"
             self.EmailLabel.text = "\(usr.Email)"
             self.SkypeLabel.text = "\(usr.Skype)"
-            self.BirthDayLabel.text = "\(usr.BirthDay)"
+            self.BirthDayLabel.text = "\(usr.BirthDay.toString())"
         }
         // Do any additional setup after loading the view.
     }

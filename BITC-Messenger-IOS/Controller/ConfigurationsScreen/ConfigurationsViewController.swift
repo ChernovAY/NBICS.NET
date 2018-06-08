@@ -8,26 +8,33 @@
 
 import UIKit
 
-class ConfigurationsViewController: UIViewController, UITabBarDelegate {
+class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    private var Messages: VSMMessages?
+    
     @IBOutlet weak var TabBar: MainTabBar!
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
+    @IBOutlet weak var Table: UITableView!
     
-    @IBAction func BackItem(_ sender: Any) {
-        let targetStoryboard = UIStoryboard(name: "ContactsStoryboard", bundle: nil)
-        if let contactsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-            "ContactsViewController") as? ContactsViewController {
-            self.present(contactsViewController, animated: true, completion: nil)
+    @IBAction func backToChats(_ sender: Any) {
+        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
+        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
+            "AllChatsViewController") as? AllChatsViewController {
+            self.present(chatsViewController, animated: true, completion: nil)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
         // Do any additional setup after loading the view.
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[2]
+        Table.delegate = self
+        Table.dataSource = self
+        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
+        Messages!.load()
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,33 +42,27 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
- 
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let tabBarIndex = item.tag
-        switch tabBarIndex {
-        case 0:
-            let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
-            if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-                "AllChatsViewController") as? AllChatsViewController {
-                self.present(chatsViewController, animated: true, completion: nil)
-            }
-            break
-        case 1:
-            let targetStoryboard = UIStoryboard(name: "ContactsStoryboard", bundle: nil)
-            if let contactsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-                "ContactsViewController") as? ContactsViewController {
-                self.present(contactsViewController, animated: true, completion: nil)
-            }
-            break
-        case 3:
-            let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
-            if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{
-                self.present(settingsControler, animated: true, completion: nil)
-            }
-            break
-        default: break
+    private func loadedMesseges (b: Bool) {
+        if b {self.Table.reloadData()}
+    }
+
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (Messages?.getMessages().count)!
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageCell {
+            
+            var message: VSMMessage!
+            
+            message = Messages!.SArray[indexPath.row]
+            cell.ConfigureCell(message: message)
+            
+            return cell
+            
+        } else {
+            return UITableViewCell()
         }
     }
-    */
 }

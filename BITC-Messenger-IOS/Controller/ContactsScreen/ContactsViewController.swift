@@ -31,10 +31,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        ///mContactsViewModel = ContactsViewModel()
-        ///mUserDefaults = NSUserDefaultsStrings()
         
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[1]
@@ -56,14 +52,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         // Dispose of any resources that can be recreated.
     }
     
-    //func tableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-        let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
-        if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
-            self.present(configViewController, animated: true, completion: nil)
-        }
-        */
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,19 +101,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
                 WebAPI.UserContacts = l
                 VSMConversation.contacts.addIfNotExists(from: l.SArray)
-                 self.cArray = l.getContacts()
+                self.cArray = l.getContacts()
                 self.Table.reloadData()
-                
-                //tst-->
-                self.mess!.load()
-                
-                VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
-                    self.conv = c
-                    print(self.conv)
-                    }()
-                })
-                
-                //tst--<
             }()})
     }
 

@@ -149,4 +149,8 @@ public class WebAPI{
     public static var UserConversations = VSMConversations()
     public static var Profile : VSMProfile?
     public static var Contact : VSMContact?
+    
+    public struct VSMChatsCommunication{
+        public static var conversetionId = ""
+    }
 }

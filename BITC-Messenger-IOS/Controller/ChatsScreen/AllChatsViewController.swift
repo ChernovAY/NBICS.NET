@@ -15,11 +15,9 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
-    var conversetionId: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
         TabBar.delegate = self
         TabBar.selectedItem = TabBar.items?[0]
     
@@ -35,7 +33,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,15 +41,15 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conv = WebAPI.UserConversations.SArray[indexPath.row]
-        conversetionId = conv.Id
-        print(conversetionId)
-
-        /*
+        WebAPI.VSMChatsCommunication.conversetionId = conv.Id
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
             self.present(configViewController, animated: true, completion: nil)
         }
-        */
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -79,7 +76,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
     
     private func Load() {
-        //потом может и убрать?
         VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
             WebAPI.UserConversations = c
             self.Table.reloadData()
@@ -97,14 +93,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
                     self.present(contactsViewController, animated: true, completion: nil)
                 }
                 break
-            /*
-            case 2:
-                let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
-                if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
-                    self.present(configViewController, animated: true, completion: nil)
-                }
-                break
-            */
             case 3:
                 let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
                 if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{

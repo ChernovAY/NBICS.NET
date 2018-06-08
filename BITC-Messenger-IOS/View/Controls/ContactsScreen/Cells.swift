@@ -30,6 +30,26 @@ public class ContactCell : UITableViewCell {
     }
 }
 
+public class MessageCell : UITableViewCell {
+
+    //@IBOutlet weak var MessageField: UITextField!
+    //@IBOutlet weak var MessageLabel: UILabel!
+    
+    private var mMessage: VSMMessage!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(message: VSMMessage) {
+        mMessage = message
+        //MessageField.text = message.Text
+        //MessageLabel.text = message.Text
+        
+        self.backgroundColor = UIColor.clear
+    }
+}
+
 public class ConversationCell : UITableViewCell {
     
     @IBOutlet weak var NameLbl : UILabel!
