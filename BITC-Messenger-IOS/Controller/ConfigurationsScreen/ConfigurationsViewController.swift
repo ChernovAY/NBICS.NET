@@ -28,7 +28,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
  
     @IBAction func sendMessageButton(_ sender: Any) {
         let TextMessage: String = MessageField.text!
-        VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: WebAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue)
+        VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: WebAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue).sendMessage(Messages: self.Messages)
         
     }
     
