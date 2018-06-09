@@ -26,31 +26,31 @@ public class WebAPI{
     public enum WebAPIEntry:String{
     /*
          http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
-         -=Запрос списка групп =- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
+         +++-=Запрос списка групп =- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
          -=Получаем последние N сообщений беседы=-GetConversationLastNMessages(string ConversationId, int N, string Email, string PasswordHash)
-         -=Получаем N сообщений беседы после определенного сообщения=-GetConversationNMessagesAfterOrBefore(string ConversationId, string MessageId, int N, bool IsAfter, string Email, string PasswordHash)
-         -=Поиск пользователей для добавления в список контактов=- SearchContacts(string Email, string PasswordHash, string SearchString)
+         +++-=Получаем N сообщений беседы после определенного сообщения=-GetConversationNMessagesAfterOrBefore(string ConversationId, string MessageId, int N, bool IsAfter, string Email, string PasswordHash)
+         +-=Поиск пользователей для добавления в список контактов=- SearchContacts(string Email, string PasswordHash, string SearchString)
          -=Возвращает метадату чата по id=-GetConversationById(string ConversationId, string Email, string PasswordHash)
-         -=получить количество непрочитанных сообщений=- GetNotReadedMessagesCount(string Email, string PasswordHash)
-         -=последние беседы пользователя=- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
+         +-=получить количество непрочитанных сообщений=- GetNotReadedMessagesCount(string Email, string PasswordHash)
+         +++-=последние беседы пользователя=- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
          -=Получаем метаданные беседы по Id=- GetConversationFullMetaDataById(string ConversationId, string Email, string PasswordHash)
          -=Получаем метаданные беседы двух пользователей=- GetConversation(string Sender, string Addressee, string Email, string PasswordHash)
          -=Возвращает фотографии пользователей по url=- GetContactsPhotosByUrl(string ContactId, string Email, string PasswordHash)
-         -=Запрос списка групп=- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
-         -=Запрос списка пользователей группы=-GetContacts(int? GroupId, string Email, string PasswordHash)
+         +++-=Запрос списка групп=- http://nbics.net/VSM.Web.Plugins.Contacts/ContactsHome/GetContactsGroups?Email=1&PasswordHash=06d49632c9dc9bcb62aeaef99612ba6b
+         +++-=Запрос списка пользователей группы=-GetContacts(int? GroupId, string Email, string PasswordHash)
     
-         Скачивание файла=- Download(string FileGuid, string FileName, string FileExtension)
-         Получаем preview по Guid=- GetFilePreviewIcon(string FileMetaData)
-         Получаем изображение файла картинки в base64=- GetFileImage(string FileMetaData)
+         +++Скачивание файла=- Download(string FileGuid, string FileName, string FileExtension)
+         +++Получаем preview по Guid=- GetFilePreviewIcon(string FileMetaData)
+         +++Получаем изображение файла картинки в base64=- GetFileImage(string FileMetaData)
          
          
-         Загрузка файла для сообщения =- UploadMessageFileWithoutDraft(IFormFile File, string Email, string PasswordHash)
-         Удаление прикрепленного файла с сервера =- RemoveMessageFileFromServerWithoutDraft(string FileMetaData, string Email, string PasswordHash)
-         Поиск пользователей для добавления в список контактов=- SearchContacts(string Email, string PasswordHash, string SearchString)
-         Сообщение прочитано=- SetConversationMessagesReaded(string ConversationId, string Email, string PasswordHash)
-         Возвращает информацию о пользователе по его Id =- GetUserProfile(int UserId, string Email, string PasswordHash)
+         +++Загрузка файла для сообщения =- UploadMessageFileWithoutDraft(IFormFile File, string Email, string PasswordHash)
+         +++Удаление прикрепленного файла с сервера =- RemoveMessageFileFromServerWithoutDraft(string FileMetaData, string Email, string PasswordHash)
          
-         Отправка сообщения списка групп =- SendMessage(string Message, string NotificationSettings, string Email, string PasswordHash, bool UseDraft = true)
+         +Сообщение прочитано=- SetConversationMessagesReaded(string ConversationId, string Email, string PasswordHash)
+         +Возвращает информацию о пользователе по его Id =- GetUserProfile(int UserId, string Email, string PasswordHash)
+         
+         +++Отправка сообщения списка групп =- SendMessage(string Message, string NotificationSettings, string Email, string PasswordHash, bool UseDraft = true)
     
     */
         case login                  = "Account/Login" //+++
@@ -67,16 +67,16 @@ public class WebAPI{
     
         case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"   //+++
     
-        case download               = "VSM.Web.Plugins.Contacts/ContactsHome/Download"
+        case download               = "VSM.Web.Plugins.Contacts/ContactsHome/Download"  //+++
         case filePreviewIcon        = "VSM.Web.Plugins.Contacts/ContactsHome/GetFilePreviewIcon"    //+++
-        case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"
+        case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"  //+++
         
         case conversationMessages   = "VSM.Web.Plugins.Contacts/ContactsHome/GetConversationNMessagesAfterOrBefore" //+++
         case messageReaded          = "VSM.Web.Plugins.Contacts/ContactsHome/SetConversationMessagesReaded"
-        case sendMessage            = "VSM.Web.Plugins.Contacts/ContactsHome/SendMessage"
+        case sendMessage            = "VSM.Web.Plugins.Contacts/ContactsHome/SendMessage"   //+++
         
-        case fileUpload             = "VSM.Web.Plugins.Contacts/ContactsHome/UploadMessageFileWithoutDraft"
-        case fileDrop               = "VSM.Web.Plugins.Contacts/ContactsHome/RemoveMessageFileFromServerWithoutDraft"
+        case fileUpload             = "VSM.Web.Plugins.Contacts/ContactsHome/UploadMessageFileWithoutDraft" //+++
+        case fileDrop               = "VSM.Web.Plugins.Contacts/ContactsHome/RemoveMessageFileFromServerWithoutDraft"   //+++
         
     
     }

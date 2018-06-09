@@ -166,15 +166,18 @@ public class VSMMessages{
     //var m = VSMMessage(ConversationId: self.Id, Draft: false, Id:nil, Sender: nil, Text: "TEEEEEEEEXT!", Time:Date(), CType: ContType.Chat.rawValue)
     //m.sendMessage()
     
-    public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
+    public func sendMessage(Messages: VSMMessages? = nil/*, sendDelegate: ((Bool)->Void)? = nil*/){
         if self.isFileUploading {return;}
         let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": false] as Params
         
         WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-                if let ms = sendDelegate {
+                /*if let ms = sendDelegate {
                     ms(false)
+                }*/
+                if let mss = Messages{
+                    mss.load(isAfter: false)
                 }
             }
             else{
@@ -182,9 +185,9 @@ public class VSMMessages{
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            if let ms = sendDelegate {
+                            /*if let ms = sendDelegate {
                                  ms(true)
-                            }
+                            }*/
                             if let mss = Messages{
                                     mss.load(isAfter: true)
                             }
@@ -192,8 +195,11 @@ public class VSMMessages{
                         }
                     }
                 }
-                if let ms = sendDelegate {
+                /*if let ms = sendDelegate {
                     ms(false)
+                }*/
+                if let mss = Messages{
+                    mss.load(isAfter: false)
                 }
             }
             }()})
