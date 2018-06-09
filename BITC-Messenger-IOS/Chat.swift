@@ -13,6 +13,7 @@ public class VSMMessages{
 
     private var N:Int = 20
     private var Last = ""
+    private var First = ""
     private var ConversationId = ""
     private var array:[VSMMessage] = Array<VSMMessage>()
     
@@ -53,6 +54,7 @@ public class VSMMessages{
             }
             if self.array.count>0{
                 self.Last = self.array.last!.Id
+                self.First = self.array.first!.Id
             }
             if let ld = loadingDelegate { ld(true)}
         }
@@ -70,9 +72,8 @@ public class VSMMessages{
         setFilter(what)
         return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
-    public func load(){
-     
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: ["ConversationId":ConversationId, "N":N, "isAfter":false, "MessageId":Last, "email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+    public func load(isAfter:Bool=false){
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: ["ConversationId":ConversationId, "N":N, "isAfter":isAfter, "MessageId":isAfter ? First : Last, "email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -84,11 +85,18 @@ public class VSMMessages{
                         let arr = json["Messages"].array!
                         for c in arr{
                             if let dict = c.dictionary{
-                                self.array.append(VSMMessage(from:dict))
+                                if isAfter{
+                                    self.array.insert(VSMMessage(from:dict), at: 0)
+                                }
+                                    
+                                else {
+                                    self.array.append(VSMMessage(from:dict))
+                                }
                             }
                         }
                         if self.array.count>0{
                             self.Last = self.array.last!.Id
+                            self.First = self.array.first!.Id
                         }
                         if let ld = self.loadingDelegate { ld(true)}
                     }
@@ -158,32 +166,40 @@ public class VSMMessages{
     //var m = VSMMessage(ConversationId: self.Id, Draft: false, Id:nil, Sender: nil, Text: "TEEEEEEEEXT!", Time:Date(), CType: ContType.Chat.rawValue)
     //m.sendMessage()
     
-    public func sendMessage(sendDelegate: ((VSMMessage)->Void)? = nil){
+    public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
         if self.isFileUploading {return;}
         let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": false] as Params
         
         WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                if let ms = sendDelegate {
+                    ms(false)
+                }
             }
             else{
                 if d is Data {
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            if let dict = json.dictionary!["Message"]?.dictionary{
-                                if let ms = sendDelegate {
-                                    ms(VSMMessage(from: dict))
-                                }
+                            if let ms = sendDelegate {
+                                 ms(true)
                             }
+                            if let mss = Messages{
+                                    mss.load(isAfter: true)
+                            }
+                            
                         }
                     }
+                }
+                if let ms = sendDelegate {
+                    ms(false)
                 }
             }
             }()})
     }
     
-    public func uploadFiles(filePath: [String], loadingDelegate:((Int, String)->Void)?){
+    /*public func uploadFiles(filePath: [String], loadingDelegate:((Int, String)->Void)?){
             let fm = FileManager.default
             for f in filePath{
                 if(fm.fileExists(atPath: f)){
@@ -193,10 +209,10 @@ public class VSMMessages{
                 }
             }
         }
+      */
+    /*public func dropFile(file: String, loadingDelegate:((Bool)->Void)?){
         
-    public func dropFile(file: String, loadingDelegate:((Bool)->Void)?){
-        
-    }
+    }*/
     
     public func getJSON(_ forRequest:Bool = true)->String{
         var j:[String:Any]
