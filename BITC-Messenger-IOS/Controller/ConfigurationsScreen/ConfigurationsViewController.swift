@@ -24,7 +24,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             self.present(chatsViewController, animated: true, completion: nil)
         }
     }
-    
+    /*
+    @IBAction func backToChats(_ sender: Any) {
+
+    }
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
@@ -33,6 +37,8 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         TabBar.selectedItem = TabBar.items?[2]
         Table.delegate = self
         Table.dataSource = self
+        Table.rowHeight = UITableViewAutomaticDimension
+        Table.estimatedRowHeight = 300
         Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
         Messages!.load()
     }

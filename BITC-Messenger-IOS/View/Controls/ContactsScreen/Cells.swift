@@ -31,21 +31,31 @@ public class ContactCell : UITableViewCell {
 }
 
 public class MessageCell : UITableViewCell {
-
-    //@IBOutlet weak var MessageField: UITextField!
-    //@IBOutlet weak var MessageLabel: UILabel!
     
     private var mMessage: VSMMessage!
     
+    @IBOutlet weak var ReceiverView: UIView!
+    @IBOutlet weak var ReceiverMessageLabel: UILabel!
+    @IBOutlet weak var SenderView: UIView!
+    @IBOutlet weak var SenderMessageLabel: UILabel!
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     public func ConfigureCell(message: VSMMessage) {
         mMessage = message
-        //MessageField.text = message.Text
-        //MessageLabel.text = message.Text
-        
+        if (message.Sender?.isOwnContact == false) {
+            ReceiverMessageLabel.text = ""
+            ReceiverView.isHidden = true;
+            SenderMessageLabel.text = message.Text
+            SenderView.isHidden = false
+        } else {
+            SenderMessageLabel.text = ""
+            SenderView.isHidden = true
+            ReceiverMessageLabel.text = message.Text
+            ReceiverView.isHidden = false;
+        }
         self.backgroundColor = UIColor.clear
     }
 }
