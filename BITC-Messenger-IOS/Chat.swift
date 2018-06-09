@@ -88,6 +88,7 @@ public class VSMMessages{
                                 if isAfter{
                                     self.array.insert(VSMMessage(from:dict), at: 0)
                                 }
+                                    
                                 else {
                                     self.array.append(VSMMessage(from:dict))
                                 }
