@@ -16,6 +16,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
+    private let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
     
     @IBAction func backToChats(_ sender: Any) {
         let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
@@ -24,17 +25,19 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             self.present(chatsViewController, animated: true, completion: nil)
         }
     }
-    /*
-    @IBAction func backToChats(_ sender: Any) {
-
+ 
+    @IBAction func sendMessageButton(_ sender: Any) {
+        let TextMessage: String = MessageField.text!
+        VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: WebAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue)
+        
     }
-    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
+        
         // Do any additional setup after loading the view.
         TabBar.delegate = self
-        TabBar.selectedItem = TabBar.items?[2]
+        TabBar.selectedItem = TabBar.items?[1]
         Table.delegate = self
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension

@@ -163,9 +163,9 @@
 		D438FF3A1F4C83FE003FC42D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D438FF3B1F4C8405003FC42D /* Storyboards */,
 				D44DC7D21F4D7D99004874C8 /* Colors */,
 				D4BE98E41F4C889600AE9405 /* Controls */,
-				D438FF3B1F4C8405003FC42D /* Storyboards */,
 			);
 			name = View;
 			sourceTree = "<group>";
