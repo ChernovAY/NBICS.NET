@@ -657,7 +657,7 @@
 				INFOPLIST_FILE = "BITC-Messenger-IOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "riktus.BITC-Messenger-IOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.NBICS.Messenger-IOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "BITC-Messenger-IOS/Bridge.h";
 				SWIFT_VERSION = 3.0;
@@ -673,7 +673,7 @@
 				INFOPLIST_FILE = "BITC-Messenger-IOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "riktus.BITC-Messenger-IOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.NBICS.Messenger-IOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "BITC-Messenger-IOS/Bridge.h";
 				SWIFT_VERSION = 3.0;

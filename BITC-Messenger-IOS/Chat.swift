@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import Alamofire
 //
 public class VSMMessages{
 
@@ -73,7 +74,8 @@ public class VSMMessages{
         return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
     public func load(isAfter:Bool=false){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: ["ConversationId":ConversationId, "N":N, "isAfter":isAfter, "MessageId":isAfter ? First : Last, "email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : WebAPI.Settings.user, "PasswordHash" : WebAPI.Settings.hash] as [String : Any]
+        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -83,17 +85,20 @@ public class VSMMessages{
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         let arr = json["Messages"].array!
+                        var arrMsg = [VSMMessage]()
                         for c in arr{
                             if let dict = c.dictionary{
-                                if isAfter{
-                                    self.array.insert(VSMMessage(from:dict), at: 0)
-                                }
-                                    
-                                else {
-                                    self.array.append(VSMMessage(from:dict))
-                                }
+                                arrMsg.append(VSMMessage(from:dict))
                             }
                         }
+                        if isAfter{
+                            self.array.append(contentsOf: arrMsg)
+                        }
+                        else
+                        {
+                            self.array.insert(contentsOf: arrMsg, at: 0)
+                        }
+
                         if self.array.count>0{
                             self.Last = self.array.last!.Id
                             self.First = self.array.first!.Id
@@ -164,43 +169,36 @@ public class VSMMessages{
         }
     }
     
-    //var m = VSMMessage(ConversationId: self.Id, Draft: false, Id:nil, Sender: nil, Text: "TEEEEEEEEXT!", Time:Date(), CType: ContType.Chat.rawValue)
-    //m.sendMessage()
-    
-    public func sendMessage(Messages: VSMMessages? = nil/*, sendDelegate: ((Bool)->Void)? = nil*/){
+    public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
         if self.isFileUploading {return;}
-        let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": false] as Params
+        let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": "False"] as Params
         
         WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-                /*if let ms = sendDelegate {
+                if let ms = sendDelegate {
                     ms(false)
-                }*/
-                if let mss = Messages{
-                    mss.load(isAfter: false)
                 }
+                //if let mss = Messages{
+                //    mss.load(isAfter: false)
+                //}
             }
             else{
                 if d is Data {
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            /*if let ms = sendDelegate {
+                            if let ms = sendDelegate {
                                  ms(true)
-                            }*/
-                            if let mss = Messages{
-                                    mss.load(isAfter: true)
                             }
-                            
+                            if let mss = Messages{
+                                mss.load(isAfter: true)
+                            }
                         }
                     }
                 }
-                /*if let ms = sendDelegate {
+                if let ms = sendDelegate {
                     ms(false)
-                }*/
-                if let mss = Messages{
-                    mss.load(isAfter: false)
                 }
             }
             }()})

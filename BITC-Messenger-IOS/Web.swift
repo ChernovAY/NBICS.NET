@@ -171,8 +171,9 @@ public class WebAPI{
         }
     }
     
-    public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
-        let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
+    public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
+        let addr = addres + entry.rawValue + postf
+        let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
         
         request.response {  response in
             var res:Any
