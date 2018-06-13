@@ -18,8 +18,8 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        TabBar.delegate = self
-        TabBar.selectedItem = TabBar.items?[0]
+        //TabBar.delegate = self
+        //TabBar.selectedItem = TabBar.items?[0]
     
         Table.delegate = self
         Table.dataSource = self

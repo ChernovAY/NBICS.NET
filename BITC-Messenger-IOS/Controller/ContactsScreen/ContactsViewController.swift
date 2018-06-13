@@ -32,8 +32,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        TabBar.delegate = self
-        TabBar.selectedItem = TabBar.items?[1]
+        //TabBar.delegate = self
+        //TabBar.selectedItem = TabBar.items?[1]
         
         Table.delegate = self
         Table.dataSource = self
