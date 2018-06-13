@@ -30,7 +30,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         }
         Load()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

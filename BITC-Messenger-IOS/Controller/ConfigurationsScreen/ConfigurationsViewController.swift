@@ -53,6 +53,21 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Messages!.load()
     }
     
+    @IBAction func backToChats(_ sender: Any) {
+        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
+        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
+            "AllChatsViewController") as? AllChatsViewController {
+            self.present(chatsViewController, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func sendMessageButton(_ sender: Any) {
+        let TextMessage: String = MessageField.text!
+        VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: WebAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue).sendMessage(Messages: self.Messages)
+        MessageField.text = ""
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

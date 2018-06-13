@@ -13,8 +13,6 @@ class StartScreenViewController: UIViewController{
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //ActivityIndicator.
-        ActivityIndicator.startAnimating()
         // Do any additional setup after loading the view.
     }
 

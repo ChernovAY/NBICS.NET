@@ -32,6 +32,13 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func exitButton(_ sender: Any) {
+        let targetStoryboard = UIStoryboard(name: "AuthorizationStoryboard", bundle: nil)
+        if let authorizationViewController = targetStoryboard.instantiateViewController(withIdentifier:
+            "AuthorizationViewController") as? AuthorizationViewController {
+            self.present(authorizationViewController, animated: true, completion: nil)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
