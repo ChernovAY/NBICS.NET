@@ -81,6 +81,28 @@ public class WebAPI{
             completionHandler(res, succ)
         }
     }
+    //public s
+    public static func getPicture(name:String, empty:String)->UIImage{
+        var img:UIImage?
+        let fm = FileManager.default
+        let filename = NSTemporaryDirectory() + "/" + name
+        if(fm.fileExists(atPath: filename)){
+            if let data = fm.contents(atPath: filename){
+                img = UIImage(data: data)
+            }
+            else{
+                img = UIImage(named: empty)
+            }
+        }
+        else{
+            img = UIImage(named: empty)
+        }
+        if img == nil{
+            img = UIImage(named: empty)
+        }
+        return img!
+    }
+    
     public static var UserContacts = VSMContacts()
     public static var UserConversations = VSMConversations()
     public static var Profile : VSMProfile?

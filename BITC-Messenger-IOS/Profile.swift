@@ -49,21 +49,8 @@ public class VSMProfile{
             self.Phone = Phone
             self.Skype = Skype
         
-        //Фотка-->
-        let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/PIcon_\(self.Entity).I"
-        if(fm.fileExists(atPath: filename)){
-            if let data = fm.contents(atPath: filename){
-                self.Icon = UIImage(data: data)
-            }
-            else{
-                self.Icon = UIImage(named: "EmptyUser")
-            }
-        }
-        else{
-            self.Icon = UIImage(named: "EmptyUser")
-        }
-        //Фотка--<
+        self.Icon = WebAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")
+    
         if (self.IconUrl != "") {
             let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.IconUrl, params: [:])
             if(!z.1){
