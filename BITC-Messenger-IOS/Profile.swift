@@ -9,13 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-    /*
-    public string       Email
-    public string       PasswordHash
-    public bool         byMobile = true
- */
-    
-
 public class VSMProfile{
     private var p               = [String:Any]()
     private var newPasswordHash = ""{didSet{p["newPasswordHash"] = newPasswordHash  ;   p["oldPasswordHash"] = WebAPI.Settings.hash }}
@@ -128,6 +121,26 @@ public class VSMProfile{
             print(z.0)
         }
         return nil
+    }
+    public func set()->Bool{
+        if self.p.count != 0 {
+            p["Email"] = WebAPI.Settings.user
+            p["PasswordHash"] = WebAPI.Settings.hash
+            p["byMobile"] = true
+            let r = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.setProfile, params: ["ProfileItem" : JSON(p).rawString([.castNilToNSNull: true])!])
+            if !r.1{
+                UIAlertView(title: "Ошибка", message: r.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                return false
+            }
+            else{
+                print(r.0 as! Data)
+                if let nph = p["newPasswordHash"]{ //!!!!!!Может не сработать!!!
+                    WebAPI.Settings.hash = nph as! String
+                }
+                return true
+            }
+        }
+        return false
     }
     
 }

@@ -137,29 +137,6 @@
 			name = MessegesScreen;
 			sourceTree = "<group>";
 		};
-		9B618A6D20CA85F70017EC7F /* New */ = {
-			isa = PBXGroup;
-			children = (
-				9B618A6F20CA86360017EC7F /* Infrastructure */,
-				9B618A6E20CA86320017EC7F /* Model */,
-			);
-			path = New;
-			sourceTree = "<group>";
-		};
-		9B618A6E20CA86320017EC7F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		9B618A6F20CA86360017EC7F /* Infrastructure */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Infrastructure;
-			sourceTree = "<group>";
-		};
 		D438FF3A1F4C83FE003FC42D /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,7 +328,6 @@
 		D4E3252A1F4C82DC00554DB2 /* BITC-Messenger-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				9B618A6D20CA85F70017EC7F /* New */,
 				D4D071391F55BD690046A277 /* Infrastructure */,
 				D44DC7CF1F4D7D6A004874C8 /* Extensions */,
 				D4FD6CB51F55BFE40035FF66 /* Model */,
