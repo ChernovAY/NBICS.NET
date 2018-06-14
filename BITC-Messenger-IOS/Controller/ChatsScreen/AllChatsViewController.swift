@@ -17,9 +17,9 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var UserNameLabel: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         Table.delegate = self
         Table.dataSource = self
-        
         if let usr = WebAPI.Profile{
             self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
             self.UserPhoto.image = usr.Icon
@@ -38,10 +38,13 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conv = WebAPI.UserConversations.SArray[indexPath.row]
         WebAPI.VSMChatsCommunication.conversetionId = conv.Id
+        performSegue(withIdentifier: "showChat", sender: self)
+        /*
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
             self.present(configViewController, animated: true, completion: nil)
         }
+        */
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

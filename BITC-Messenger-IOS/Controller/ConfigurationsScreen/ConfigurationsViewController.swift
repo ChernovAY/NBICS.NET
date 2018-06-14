@@ -43,8 +43,8 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        TabBar.delegate = self
-        TabBar.selectedItem = TabBar.items?[1]
+        //TabBar.delegate = self
+        //TabBar.selectedItem = TabBar.items?[1]
         Table.delegate = self
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension
@@ -52,7 +52,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
         Messages!.load()
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

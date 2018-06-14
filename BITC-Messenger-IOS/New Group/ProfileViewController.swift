@@ -29,9 +29,8 @@ class ProfileViewController: UIViewController {
             self.SkypeLabel.text = "\(usr.Skype)"
             self.BirthDayLabel.text = "\(usr.BirthDay.toString())"
         }
-        // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func exitButton(_ sender: Any) {
         let targetStoryboard = UIStoryboard(name: "AuthorizationStoryboard", bundle: nil)
         if let authorizationViewController = targetStoryboard.instantiateViewController(withIdentifier:
