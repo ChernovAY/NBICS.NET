@@ -16,17 +16,11 @@ public class VSMMessages{
     private var Last = ""
     private var First = ""
     private var ConversationId = ""
-    private var array:[VSMMessage] = Array<VSMMessage>()
+    
+    public var array:[VSMMessage] = Array<VSMMessage>()
     
     public var selectedText = ""
     
-    public var SArray:[VSMMessage]{ get {
-        return array
-        }
-        set(value){
-            self.array = value
-        }
-    }
     public  var loadingDelegate:((Bool)->Void)? = nil
 
     public init(ConversationId:String, loadingDelegate:((Bool)->Void)?=nil){
@@ -71,11 +65,11 @@ public class VSMMessages{
     }
     public func getMessages(_ what : String?=nil)->[VSMMessage]{
         setFilter(what)
-        return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
+        return self.selectedText == "" ? self.array : self.array.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
     public func load(isAfter:Bool=false){
-        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : WebAPI.Settings.user, "PasswordHash" : WebAPI.Settings.hash] as [String : Any]
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
+        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -171,9 +165,9 @@ public class VSMMessages{
     
     public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
         if self.isFileUploading || self.Id == "New" {return;}
-        let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": "False"] as Params
+        let p = ["Message":getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
         
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                 if let ms = sendDelegate {
@@ -219,7 +213,7 @@ public class VSMMessages{
         j =
         ["ConversationId": ConversationId
         ,"Text": Text
-        ,"Sender":["Id":WebAPI.Contact!.Id] as [String : Any]
+        ,"Sender":["Id":VSMAPI.Contact!.Id] as [String : Any]
         ] as [String : Any]
         if attArray.count>0{
             j["AttachedFiles"] = attArray
@@ -236,12 +230,12 @@ public class VSMAttachedFile{
     
     public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Double)->Void){
         let url = URL(fileURLWithPath: filePath)
-        let hostUrl = "\(WebAPI.Settings.caddress)\(WebAPI.WebAPIEntry.fileUpload.rawValue)"
+        let hostUrl = "\(VSMAPI.Settings.caddress)\(VSMAPI.WebAPIEntry.fileUpload.rawValue)"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 multipartFormData.append(url, withName: "File")
-                multipartFormData.append(WebAPI.Settings.user.data(using: String.Encoding.utf8)!, withName: "Email")
-                multipartFormData.append(WebAPI.Settings.hash.data(using: String.Encoding.utf8)!, withName: "PasswordHash")
+                multipartFormData.append(VSMAPI.Settings.user.data(using: String.Encoding.utf8)!, withName: "Email")
+                multipartFormData.append(VSMAPI.Settings.hash.data(using: String.Encoding.utf8)!, withName: "PasswordHash")
         },
             to: hostUrl,
             encodingCompletion: { encodingResult in
@@ -289,7 +283,7 @@ public class VSMAttachedFile{
         }
         else {
             let json = self.getJSON(false)
-            let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
             var base64 = ""
             if(z.1){
                 let d = z.0 as! Data
@@ -325,7 +319,7 @@ public class VSMAttachedFile{
     
     //сохранять!!!!!
     public func getFileImage()->Bool{
-        let req = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.fileImage, params: ["FileMetaData": getJSON()])
+        let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": getJSON()])
         if(req.1){
             if let j = JSON(req.0).dictionary{
                 if (j["Success"]?.bool!)!{
@@ -348,7 +342,7 @@ public class VSMAttachedFile{
             
             return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
         }
-        let urlstr = "\(WebAPI.Settings.caddress)\(WebAPI.WebAPIEntry.download.rawValue)?FileGuid=\(self.Guid)&FileName=\(self.Name)&FileExtension=\(self.Extension)"
+        let urlstr = "\(VSMAPI.Settings.caddress)\(VSMAPI.WebAPIEntry.download.rawValue)?FileGuid=\(self.Guid)&FileName=\(self.Name)&FileExtension=\(self.Extension)"
         Alamofire.download(urlstr, to: destination)
             .downloadProgress { progress in
                 progressDelegate(progress.fractionCompleted)
@@ -358,7 +352,7 @@ public class VSMAttachedFile{
         }
     }
     public func dropFile()->Bool{
-        let req = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.fileDrop, params: ["FileMetaData": getJSON(),"Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash])
+        let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileDrop, params: ["FileMetaData": getJSON(),"Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash])
         if(req.1){
             if let j = JSON(req.0).dictionary{
                 return (j["Success"]?.bool)!

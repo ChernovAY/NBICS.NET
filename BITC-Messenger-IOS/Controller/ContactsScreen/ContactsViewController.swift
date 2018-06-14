@@ -91,7 +91,7 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
        else{
 
         }
-        self.cArray = WebAPI.UserContacts.getContacts(searchBar.text)
+        self.cArray = VSMAPI.UserContacts.getContacts(searchBar.text)
         
         Table.reloadData()
     }
@@ -99,8 +99,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     private func LoadContacts() {
         //потом может и убрать?
             VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
-                WebAPI.UserContacts = l
-                VSMConversation.contacts.addIfNotExists(from: l.SArray)
+                VSMAPI.UserContacts = l
+                VSMConversation.contacts.addIfNotExists(from: l.array)
                 self.cArray = l.getContacts()
                 self.Table.reloadData()
             }()})

@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var PatronymicLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let usr = WebAPI.Profile{
+        if let usr = VSMAPI.Profile{
             self.UserPhoto.image = usr.Icon
             self.FullnameLabel.text = "\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
             self.NameLabel.text = "\(usr.Name)"

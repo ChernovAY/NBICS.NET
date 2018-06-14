@@ -16,11 +16,38 @@ public enum ContType:String {
     case User, Group, Chat
 }
 
-public class WebAPI{
+public class VSMAPI{
+    public static var Sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru", "http://site.bgr39.ru"]
+    
     public struct Settings{
-        public static var hash         = ""
-        public static var caddress     = "https://nbics.net/"
-        public static var user         = ""
+        public static var hash:String{
+            get{return UserDefaults.standard.object(forKey: "hash") as? String ?? ""}
+            set(value){UserDefaults.standard.set(value, forKey: "hash")}
+        }
+        public static var caddress:String{
+            get{return UserDefaults.standard.object(forKey: "caddress") as? String ?? "https://nbics.net/"}
+            set(value){UserDefaults.standard.set(value, forKey: "caddress")}
+        }
+        public static var user:String{
+            get{return UserDefaults.standard.object(forKey: "user") as? String ?? ""}
+            set(value){UserDefaults.standard.set(value, forKey: "user")}
+        }
+        public static var login:Bool{
+            get{return UserDefaults.standard.object(forKey: "login") as? Bool ?? false}
+            set(value){UserDefaults.standard.set(value, forKey: "login")}
+        }
+        public static func logOut(){
+           Settings.user = ""; Settings.hash = ""; Settings.login = false;
+            VSMAPI.Profile = nil
+            VSMAPI.Contact = nil
+            VSMAPI.UserConversations.array.removeAll()
+            VSMAPI.UserContacts.array.removeAll()
+        }
+        public static func logIn(_ user:String, _ hash: String ){
+            Settings.user = user; Settings.hash = hash; Settings.login = true;
+            VSMAPI.Profile = VSMProfile()
+            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{VSMAPI.getUserContact(); VSMAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.array);}()})
+        }
     }
 
     public enum WebAPIEntry:String{
@@ -53,7 +80,7 @@ public class WebAPI{
     
     }
     // Session Manager Configurations!!!!!!!
-    public static func syncRequest(addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
+    public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
         let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
         let resp =  request.syncResponse()
         let succ = resp.error == nil
@@ -65,7 +92,7 @@ public class WebAPI{
         }
     }
     
-    public static func Request (addres:String, entry: WebAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
+    public static func Request (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
         let addr = addres + entry.rawValue + postf
         let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
         
@@ -81,7 +108,16 @@ public class WebAPI{
             completionHandler(res, succ)
         }
     }
-    //public s
+    public static func savePicture(name: String, data: Data)->Bool{
+        var ret = false
+        let fm = FileManager.default
+        let filename = NSTemporaryDirectory() + "/"+name
+        if(fm.createFile(atPath: filename, contents: data)){
+                ret = true
+        }
+        return ret
+    }
+    
     public static func getPicture(name:String, empty:String)->UIImage{
         var img:UIImage?
         let fm = FileManager.default
@@ -111,4 +147,24 @@ public class WebAPI{
     public struct VSMChatsCommunication{
         public static var conversetionId = ""
     }
+    
+/////////////////////
+    private static func getUserContact(){
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+        
+        if(!z.1){
+            UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+        }
+        else{
+            if z.0 is Data {
+                let data = z.0 as! Data
+                if let json = try? JSON(data: data) {
+                    let dict = json.dictionary!
+                    VSMAPI.Contact = VSMConversation.contacts.findOrCreate(what: dict)
+                    VSMAPI.Contact!.isOwnContact = true
+                }
+            }
+        }
+    }
+    
 }

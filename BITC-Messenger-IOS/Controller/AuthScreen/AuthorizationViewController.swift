@@ -15,7 +15,6 @@ class AuthorizationViewController: UIViewController {
     
     @IBOutlet weak var PasswordField: StrickTextBox!
 
-    private let mUserDefaults: NSUserDefaultsStrings = NSUserDefaultsStrings()
     private let mHasher: Hasher = Hasher()
     
   
@@ -32,11 +31,11 @@ class AuthorizationViewController: UIViewController {
     }
     
     @IBAction func EnterChat(_ sender: Any) {
-        if mUserDefaults.GetLoginStatus() == false {
+        if !VSMAPI.Settings.login{
             if (!(PasswordField.text?.isEmpty)! && !(LoginField.text?.isEmpty)!){
                 if let hash = mHasher.GetMD5Hash(inputString: PasswordField.text!) {
                     if let email = LoginField.text {
-                        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.login, params: ["login" : email, "passwordHash" : hash], completionHandler: {(d,s) in{
+                        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : email, "passwordHash" : hash], completionHandler: {(d,s) in{
                             if(!s){
                                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                             }
@@ -46,19 +45,16 @@ class AuthorizationViewController: UIViewController {
                                     let result = String(data: data, encoding: .utf8)
                                     switch result {
                                     case "0":
-                                        self.mUserDefaults.SetUserEmail(email: email)
-                                        self.mUserDefaults.SetUserPasswordHash(hash: hash)
-                                        
-                                        WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                        WebAPI.Profile = VSMProfile()
-                                        VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{self.getUserContact(); WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.NavigateToChats();}()})
-                                        print("done")
+                                        VSMAPI.Settings.logIn(email, hash)
+                                         self.NavigateToChats()
                                     case "1":
                                         let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                                         button2Alert.show()
+                                        VSMAPI.Settings.logOut();
                                     case "2":
                                         let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                                         button2Alert.show()
+                                        VSMAPI.Settings.logOut();
                                     default: break
                                     }
                                 }
@@ -72,8 +68,7 @@ class AuthorizationViewController: UIViewController {
                 button2Alert.show()
             }
         } else {
-            let email = mUserDefaults.GetUserEmail()!, hash = mUserDefaults.GetUserPasswordHash()!;
-            WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.login, params: ["user" : email, "passwordHash" : hash], completionHandler: {(d,s) in{
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["user" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                     //UIAlertController(title: "Ошибка", message: d as? String, preferredStyle: UIAlertControllerStyle.alert)
@@ -84,9 +79,7 @@ class AuthorizationViewController: UIViewController {
                         let result = String(data: data, encoding: .utf8)
                         switch result {
                             case "0":
-                                    WebAPI.Settings.user = email; WebAPI.Settings.hash = hash;
-                                    WebAPI.Profile = VSMProfile()
-                                    VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{self.getUserContact(); WebAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.SArray); self.NavigateToChats();}()})
+                                    self.NavigateToChats()
                             
                             default: break
                         }
@@ -97,24 +90,7 @@ class AuthorizationViewController: UIViewController {
         }
     }
     //Потом найти для этого правильное место!
-    private func getUserContact(){
-        let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.userInformation, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash])
-            
-            if(!z.1){
-                UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-            }
-            else{
-                if z.0 is Data {
-                    let data = z.0 as! Data
-                    if let json = try? JSON(data: data) {
-                        let dict = json.dictionary!
-                        WebAPI.Contact = VSMConversation.contacts.findOrCreate(what: dict)
-                        WebAPI.Contact!.isOwnContact = true
-                        }
-                    }
-                }
-    }
-    
+   
     private func NavigateToChats() {
         let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
         if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:

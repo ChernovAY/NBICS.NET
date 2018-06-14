@@ -20,7 +20,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Table.delegate = self
         Table.dataSource = self
         
-        if let usr = WebAPI.Profile{
+        if let usr = VSMAPI.Profile{
             self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
             self.UserPhoto.image = usr.Icon
         }
@@ -32,12 +32,12 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WebAPI.UserConversations.SArray.count
+        return VSMAPI.UserConversations.array.count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conv = WebAPI.UserConversations.SArray[indexPath.row]
-        WebAPI.VSMChatsCommunication.conversetionId = conv.Id
+        let conv = VSMAPI.UserConversations.array[indexPath.row]
+        VSMAPI.VSMChatsCommunication.conversetionId = conv.Id
         let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
         if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
             self.present(configViewController, animated: true, completion: nil)
@@ -61,7 +61,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             
             var conv: VSMConversation!
             
-            conv = WebAPI.UserConversations.SArray[indexPath.row]
+            conv = VSMAPI.UserConversations.array[indexPath.row]
             cell.ConfigureCell(conversation: conv)
             
             return cell
@@ -73,7 +73,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     private func Load() {
         VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
-            WebAPI.UserConversations = c
+            VSMAPI.UserConversations = c
             self.Table.reloadData()
             }()
         })

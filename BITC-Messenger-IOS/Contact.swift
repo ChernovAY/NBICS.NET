@@ -11,7 +11,7 @@ import SwiftyJSON
 
 public class VSMContacts {
     public static func VSMContactsAssync(loadingDelegate: ((VSMContacts)->Void)?=nil){
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.contatcs, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.contatcs, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -26,16 +26,9 @@ public class VSMContacts {
         )
     }
     
-    private var array:[VSMContact] = Array<VSMContact>()
+    public var array:[VSMContact] = Array<VSMContact>()
     public var selectedText = ""
     
-    public var SArray:[VSMContact]{ get {
-        return array
-        }
-        set(value){
-            self.array = value
-        }
-    }
     public  var loadingDelegate:((VSMContacts)->Void)? = nil
     public  var loaded:Bool = false{
         didSet {
@@ -78,13 +71,13 @@ public class VSMContacts {
     }
     public func getContacts(_ what : String?=nil)->[VSMContact]{
         setFilter(what)
-        return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Name.lowercased().range(of: self.selectedText) != nil })
+        return self.selectedText == "" ? self.array : self.array.filter({ $0.Name.lowercased().range(of: self.selectedText) != nil })
     }
 
     public func addIfNotExists(from a:[VSMContact]){
         
         for ai in a{
-            if let _ = SArray.first(where: ({$0.Id == ai.Id})){
+            if let _ = array.first(where: ({$0.Id == ai.Id})){
                 continue
             }
             else{
@@ -97,7 +90,7 @@ public class VSMContacts {
     public func findOrCreate(what dict:[String:JSON]?)->VSMContact?{
         if let d = dict{
             let id = d["Id"]!.int64!
-            if let c = SArray.first(where: ({$0.Id == id})){
+            if let c = array.first(where: ({$0.Id == id})){
                 return c
             }
             else{
@@ -210,7 +203,7 @@ public class VSMContact {
         }
         //Иконка--<
         if (self.PhotoUrl != "") {
-            WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
             if(!s){
                 print(d as! String)
             }
