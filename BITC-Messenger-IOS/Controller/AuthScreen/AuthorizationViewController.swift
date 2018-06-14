@@ -115,8 +115,6 @@ class AuthorizationViewController: UIViewController {
                 }
     }
     
-        
-
     private func NavigateToChats() {
         let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
         if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
@@ -124,14 +122,4 @@ class AuthorizationViewController: UIViewController {
             self.present(chatsViewController, animated: true, completion: nil)
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
