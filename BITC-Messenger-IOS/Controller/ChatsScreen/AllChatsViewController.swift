@@ -17,10 +17,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var UserNameLabel: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //TabBar.delegate = self
-        //TabBar.selectedItem = TabBar.items?[0]
-    
         Table.delegate = self
         Table.dataSource = self
         
@@ -80,9 +76,10 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             WebAPI.UserConversations = c
             self.Table.reloadData()
             }()
-            })
+        })
     }
     
+    /*
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let tabBarIndex = item.tag
         switch tabBarIndex {
@@ -103,5 +100,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         }
 
     }
+ */
 
 }
