@@ -59,7 +59,7 @@ public class WebAPI{
     
         case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation" //+++
         case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"  //+++
-        case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfile"
+        case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfileApi"
         
         case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"        //+++
         case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"

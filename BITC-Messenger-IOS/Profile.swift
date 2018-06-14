@@ -9,21 +9,30 @@
 import Foundation
 import SwiftyJSON
 
+    /*
+    public string       Email
+    public string       PasswordHash
+    public bool         byMobile = true
+ */
+    
+
 public class VSMProfile{
-   
-    public let BirthDay:    Date
+    private var p               = [String:Any]()
+    private var newPasswordHash = ""{didSet{p["newPasswordHash"] = newPasswordHash  ;   p["oldPasswordHash"] = WebAPI.Settings.hash }}
+    
     public let Email:       String
     public let Entity:      Int
-    public let FamilyName:  String
-    //public let Gender: Object пока без него
-    public var Icon:        UIImage?
     public let IconUrl:     String
-    public let Name:        String
+    
+    public var BirthDay:    Date    {didSet{p["birthDay"] = BirthDay                ;                                               }}
+    public var Name:        String  {didSet{p["name"] = Name                        ;   p["nameUpdateFlag"] = true                  }}
+    public var Patronymic:  String  {didSet{p["patronymic"] = Patronymic            ;   p["patronymicUpdateFlag"] = true            }}
+    public var Phone:       String  {didSet{p["phone"] = Phone                      ;   p["phoneUpdateFlag"] = true                 }}
+    public var Skype:       String  {didSet{p["skype"] = Skype                      ;   p["phoneUpdateFlag"] = true                 }}
+    public var FamilyName:  String  {didSet{p["familyName"] = FamilyName            ;   p["familyNameUpdateFlag"] = true            }}
+    public var Icon:        UIImage?{didSet{p["icon"] = Icon                        ;   p["photoUpdateFlag"] = true                 }}
     //public let Organizations: [Object] пока без них
-    public let Patronymic:  String
-    public let Phone:       String
-    public let Skype:       String
-    //public let UserStatus: "" пока без него
+
     
     public init (
         BirthDay: Date

@@ -52,7 +52,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
         Messages!.load()
     }
-    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
