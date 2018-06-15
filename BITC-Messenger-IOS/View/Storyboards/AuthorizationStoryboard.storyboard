@@ -591,12 +591,12 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-1B-vOy">
-                                <rect key="frame" x="0.0" y="282" width="375" height="447"/>
+                                <rect key="frame" x="0.0" y="282" width="375" height="442"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="80" id="n2Z-R6-eXz" customClass="ConversationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="80" id="n2Z-R6-eXz" customClass="ConversationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n2Z-R6-eXz" id="aIF-P9-fBf">
@@ -645,7 +645,7 @@
                         <constraints>
                             <constraint firstItem="3UB-P0-Gmd" firstAttribute="leading" secondItem="Q1r-LK-8gJ" secondAttribute="leading" id="253-ki-4vG"/>
                             <constraint firstItem="y2K-eu-uDA" firstAttribute="centerX" secondItem="Q1r-LK-8gJ" secondAttribute="centerX" id="6hY-Wl-Wwr"/>
-                            <constraint firstItem="8aC-FD-b2M" firstAttribute="top" secondItem="qfj-1B-vOy" secondAttribute="bottom" id="8EQ-pS-9He"/>
+                            <constraint firstItem="8aC-FD-b2M" firstAttribute="top" secondItem="qfj-1B-vOy" secondAttribute="bottom" constant="5" id="8EQ-pS-9He"/>
                             <constraint firstItem="5QM-rE-1jb" firstAttribute="leading" secondItem="Q1r-LK-8gJ" secondAttribute="leading" constant="8" id="8SI-jO-PfA"/>
                             <constraint firstItem="5QM-rE-1jb" firstAttribute="top" secondItem="3UB-P0-Gmd" secondAttribute="bottom" constant="8" id="ES4-zO-seE"/>
                             <constraint firstItem="UxJ-NP-3iH" firstAttribute="top" secondItem="Q1r-LK-8gJ" secondAttribute="top" id="I0u-fv-g1K"/>
@@ -682,7 +682,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Klq-JW-HAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="652" y="934.18290854572717"/>
+            <point key="canvasLocation" x="652" y="933.99014778325125"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="ZoS-GB-1bG">
@@ -1016,17 +1016,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <tabBar hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FHN-MP-5Mr" customClass="MainTabBar" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="763" width="375" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items/>
-                            </tabBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IaE-C6-RSm">
-                                <rect key="frame" x="0.0" y="738" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="726" width="375" height="52"/>
                                 <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2wL-hz-Imw">
+                                        <rect key="frame" x="8" y="11" width="305" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az8-nv-rNI">
-                                        <rect key="frame" x="321" y="5" width="46" height="30"/>
+                                        <rect key="frame" x="321" y="6" width="46" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="C77-Ls-u8m"/>
                                         </constraints>
@@ -1037,26 +1037,20 @@
                                             <action selector="sendMessageButton:" destination="cJv-ws-YBb" eventType="touchUpInside" id="rqV-1A-C8J"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2wL-hz-Imw">
-                                        <rect key="frame" x="8" y="5" width="305" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="az8-nv-rNI" firstAttribute="leading" secondItem="2wL-hz-Imw" secondAttribute="trailing" constant="8" id="D7I-zA-lHe"/>
-                                    <constraint firstAttribute="bottom" secondItem="az8-nv-rNI" secondAttribute="bottom" constant="5" id="ITs-J4-iGL"/>
-                                    <constraint firstItem="az8-nv-rNI" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="5" id="TfE-wt-D0o"/>
-                                    <constraint firstItem="2wL-hz-Imw" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="5" id="hep-SE-FSc"/>
-                                    <constraint firstAttribute="bottom" secondItem="2wL-hz-Imw" secondAttribute="bottom" constant="5" id="kfq-aW-IvQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="az8-nv-rNI" secondAttribute="bottom" constant="6" id="ITs-J4-iGL"/>
+                                    <constraint firstItem="az8-nv-rNI" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="6" id="TfE-wt-D0o"/>
+                                    <constraint firstItem="2wL-hz-Imw" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="11" id="hep-SE-FSc"/>
+                                    <constraint firstAttribute="bottom" secondItem="2wL-hz-Imw" secondAttribute="bottom" constant="11" id="kfq-aW-IvQ"/>
                                     <constraint firstAttribute="trailing" secondItem="az8-nv-rNI" secondAttribute="trailing" constant="8" id="ptn-ZV-imd"/>
                                     <constraint firstItem="2wL-hz-Imw" firstAttribute="leading" secondItem="IaE-C6-RSm" secondAttribute="leading" constant="8" id="zjb-v2-Qy4"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUZ-1W-PVh">
-                                <rect key="frame" x="0.0" y="88" width="375" height="642"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="630"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -1144,7 +1138,6 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="MessageField" destination="2wL-hz-Imw" id="7aG-rL-GEf"/>
-                        <outlet property="TabBar" destination="FHN-MP-5Mr" id="Pvk-1W-TAE"/>
                         <outlet property="Table" destination="CUZ-1W-PVh" id="d8g-wV-8bJ"/>
                     </connections>
                 </viewController>
@@ -1207,12 +1200,12 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aKY-V0-jrE">
-                                <rect key="frame" x="0.0" y="184" width="375" height="537"/>
+                                <rect key="frame" x="0.0" y="184" width="375" height="540"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="ContactCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="LQk-VL-xWG" customClass="ContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ContactCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="LQk-VL-xWG" customClass="ContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LQk-VL-xWG" id="fG6-xR-jxQ">
@@ -1257,7 +1250,7 @@
                             <constraint firstAttribute="trailing" secondItem="aKY-V0-jrE" secondAttribute="trailing" id="SG7-Sv-iER"/>
                             <constraint firstAttribute="trailing" secondItem="k3E-FD-KYb" secondAttribute="trailing" id="Ux7-2Y-eGS"/>
                             <constraint firstItem="FL0-aB-lQz" firstAttribute="top" secondItem="Gyr-aO-vgb" secondAttribute="bottom" constant="10" id="VNR-sY-rrl"/>
-                            <constraint firstItem="EYf-Z5-AYT" firstAttribute="top" secondItem="aKY-V0-jrE" secondAttribute="bottom" constant="8" id="W5t-cJ-vk9"/>
+                            <constraint firstItem="EYf-Z5-AYT" firstAttribute="top" secondItem="aKY-V0-jrE" secondAttribute="bottom" constant="5" id="W5t-cJ-vk9"/>
                             <constraint firstItem="jpB-qG-DrW" firstAttribute="top" secondItem="OTQ-26-Vkc" secondAttribute="top" id="bWR-YQ-d7Q"/>
                             <constraint firstItem="k3E-FD-KYb" firstAttribute="top" secondItem="FL0-aB-lQz" secondAttribute="bottom" constant="8" id="dWZ-0s-cef"/>
                             <constraint firstItem="k3E-FD-KYb" firstAttribute="centerX" secondItem="OTQ-26-Vkc" secondAttribute="centerX" id="eTA-SD-Vaa"/>

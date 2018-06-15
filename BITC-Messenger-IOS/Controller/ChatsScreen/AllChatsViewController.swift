@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var TabBar: MainTabBar!
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
@@ -39,16 +38,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         let conv = WebAPI.UserConversations.SArray[indexPath.row]
         WebAPI.VSMChatsCommunication.conversetionId = conv.Id
         performSegue(withIdentifier: "showChat", sender: self)
-        /*
-        let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
-        if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
-            self.present(configViewController, animated: true, completion: nil)
-        }
-        */
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,28 +70,5 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             }()
         })
     }
-    
-    /*
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let tabBarIndex = item.tag
-        switch tabBarIndex {
-            case 1:
-                let targetStoryboard = UIStoryboard(name: "ContactsStoryboard", bundle: nil)
-                if let contactsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-                    "ContactsViewController") as? ContactsViewController {
-                    self.present(contactsViewController, animated: true, completion: nil)
-                }
-                break
-            case 3:
-                let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
-                if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{
-                    self.present(settingsControler, animated: true, completion: nil)
-                }
-                break
-            default: break
-        }
-
-    }
- */
 
 }

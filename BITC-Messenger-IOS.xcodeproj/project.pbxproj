@@ -21,14 +21,10 @@
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
 		D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D31F4D7DB7004874C8 /* Colors.swift */; };
 		D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */; };
-		D4568CA11F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4568CA01F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard */; };
 		D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4568CA31F718F2700AA0D64 /* ConfigurationsViewController.swift */; };
-		D4568CA61F71909000AA0D64 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4568CA51F71909000AA0D64 /* SettingsStoryboard.storyboard */; };
 		D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */; };
 		D45D962E1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */; };
 		D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */; };
-		D47D188B1F607BF2009D8E31 /* ContactsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */; };
-		D47D188E1F63242E009D8E31 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47D188D1F63242E009D8E31 /* MainTabBar.swift */; };
 		D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC619E1F86AF2700388173 /* CircleImageView.swift */; };
 		D4BC61A11F86B6BD00388173 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */; };
 		D4BE98E71F4C88D000AE9405 /* BottomPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE98E61F4C88D000AE9405 /* BottomPanelView.swift */; };
@@ -37,7 +33,6 @@
 		D4C3D48F1F798B41008F9CE2 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3D48E1F798B41008F9CE2 /* Cells.swift */; };
 		D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */; };
 		D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */; };
-		D4DE426C1F632D4B0076008B /* ChatsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */; };
 		D4DE426F1F632EED0076008B /* AllChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DE426E1F632EED0076008B /* AllChatsViewController.swift */; };
 		D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DE42711F6332CB0076008B /* ContactsViewController.swift */; };
 		D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E3252B1F4C82DC00554DB2 /* AppDelegate.swift */; };
@@ -62,14 +57,10 @@
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
 		D44DC7D31F4D7DB7004874C8 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = View/Colors/Colors.swift; sourceTree = "<group>"; };
 		D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UITextFieldExtension.swift; path = Extensions/UITextFieldExtension.swift; sourceTree = "<group>"; };
-		D4568CA01F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ConfigurationsStoryboard.storyboard; path = View/Storyboards/ConfigurationsStoryboard.storyboard; sourceTree = "<group>"; };
 		D4568CA31F718F2700AA0D64 /* ConfigurationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurationsViewController.swift; path = Controller/ConfigurationsScreen/ConfigurationsViewController.swift; sourceTree = "<group>"; };
-		D4568CA51F71909000AA0D64 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard.storyboard; path = View/Storyboards/SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controller/SettingsScreen/SettingsViewController.swift; sourceTree = "<group>"; };
 		D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizationStoryboard.storyboard; path = View/Storyboards/AuthorizationStoryboard.storyboard; sourceTree = "<group>"; };
 		D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationViewController.swift; path = Controller/AuthScreen/AuthorizationViewController.swift; sourceTree = "<group>"; };
-		D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ContactsStoryboard.storyboard; path = View/Storyboards/ContactsStoryboard.storyboard; sourceTree = "<group>"; };
-		D47D188D1F63242E009D8E31 /* MainTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBar.swift; path = View/Controls/TabBar/MainTabBar.swift; sourceTree = "<group>"; };
 		D4BC619E1F86AF2700388173 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CircleImageView.swift; path = View/Controls/CircleImageView.swift; sourceTree = "<group>"; };
 		D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewControllerExtension.swift; path = Extensions/ViewControllerExtension.swift; sourceTree = "<group>"; };
 		D4BE98E61F4C88D000AE9405 /* BottomPanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomPanelView.swift; path = View/LaunchScreen/BottomPanelView.swift; sourceTree = "<group>"; };
@@ -78,7 +69,6 @@
 		D4C3D48E1F798B41008F9CE2 /* Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cells.swift; path = View/Controls/ContactsScreen/Cells.swift; sourceTree = "<group>"; };
 		D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSUserDefaultsStrings.swift; path = Infrastructure/NSUserDefaultsStrings.swift; sourceTree = "<group>"; };
 		D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarBorderless.swift; path = View/Controls/SearchBarBorderless.swift; sourceTree = "<group>"; };
-		D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ChatsStoryboard.storyboard; path = View/Storyboards/ChatsStoryboard.storyboard; sourceTree = "<group>"; };
 		D4DE426E1F632EED0076008B /* AllChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllChatsViewController.swift; path = Controller/ChatsScreen/AllChatsViewController.swift; sourceTree = "<group>"; };
 		D4DE42711F6332CB0076008B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = Controller/ContactsScreen/ContactsViewController.swift; sourceTree = "<group>"; };
 		D4E325281F4C82DC00554DB2 /* BITC-Messenger-IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BITC-Messenger-IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,10 +165,6 @@
 			children = (
 				D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */,
 				D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */,
-				D47D188A1F607BF2009D8E31 /* ContactsStoryboard.storyboard */,
-				D4DE426B1F632D4B0076008B /* ChatsStoryboard.storyboard */,
-				D4568CA01F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard */,
-				D4568CA51F71909000AA0D64 /* SettingsStoryboard.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -186,7 +172,6 @@
 		D44DC7CB1F4D790F004874C8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D47D188C1F632415009D8E31 /* TabBar */,
 				D44DC7CC1F4D7916004874C8 /* TextBox */,
 			);
 			name = Common;
@@ -245,18 +230,9 @@
 			name = AuthScreen;
 			sourceTree = "<group>";
 		};
-		D47D188C1F632415009D8E31 /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				D47D188D1F63242E009D8E31 /* MainTabBar.swift */,
-			);
-			name = TabBar;
-			sourceTree = "<group>";
-		};
 		D4BE98E41F4C889600AE9405 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				D4C3D48D1F798A5D008F9CE2 /* ContactsScreen */,
 				D44DC7CB1F4D790F004874C8 /* Common */,
 				D4BE98E51F4C88A900AE9405 /* LaunchScreen */,
 				D4BC619E1F86AF2700388173 /* CircleImageView.swift */,
@@ -295,13 +271,6 @@
 				D4BE98EE1F4C952C00AE9405 /* StartScreenViewController.swift */,
 			);
 			name = LaunchScreen;
-			sourceTree = "<group>";
-		};
-		D4C3D48D1F798A5D008F9CE2 /* ContactsScreen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ContactsScreen;
 			sourceTree = "<group>";
 		};
 		D4D071391F55BD690046A277 /* Infrastructure */ = {
@@ -447,12 +416,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4DE426C1F632D4B0076008B /* ChatsStoryboard.storyboard in Resources */,
-				D4568CA61F71909000AA0D64 /* SettingsStoryboard.storyboard in Resources */,
-				D47D188B1F607BF2009D8E31 /* ContactsStoryboard.storyboard in Resources */,
 				D4BE98E91F4C8A9100AE9405 /* StartStoryboard.storyboard in Resources */,
 				D4E325361F4C82DC00554DB2 /* Assets.xcassets in Resources */,
-				D4568CA11F718EF900AA0D64 /* ConfigurationsStoryboard.storyboard in Resources */,
 				D45D962E1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,7 +501,6 @@
 				D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */,
 				D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */,
 				D4EB22141F4DFA2F002846E7 /* RegistrationViewController.swift in Sources */,
-				D47D188E1F63242E009D8E31 /* MainTabBar.swift in Sources */,
 				D4BE98E71F4C88D000AE9405 /* BottomPanelView.swift in Sources */,
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,
 				569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */,

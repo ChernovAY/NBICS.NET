@@ -12,19 +12,10 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
 
     private var Messages: VSMMessages?
     
-    @IBOutlet weak var TabBar: MainTabBar!
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
     private let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
-    
-    @IBAction func backToChats(_ sender: Any) {
-        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
-        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-            "AllChatsViewController") as? AllChatsViewController {
-            self.present(chatsViewController, animated: true, completion: nil)
-        }
-    }
  
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
@@ -36,15 +27,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
                     self.MessageField.text! = ""
                 }
             }()})
-            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        //TabBar.delegate = self
-        //TabBar.selectedItem = TabBar.items?[1]
         Table.delegate = self
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension
@@ -55,7 +42,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     private func loadedMesseges (b: Bool) {
