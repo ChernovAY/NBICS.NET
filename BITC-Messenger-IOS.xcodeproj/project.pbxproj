@@ -16,7 +16,7 @@
 		9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D420BD8E8200790CAC /* DateExtension.swift */; };
 		9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D620C032F500790CAC /* AlamoFire.swift */; };
 		9B5E196020C5419000407868 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E195F20C5419000407868 /* Profile.swift */; };
-		9BB9404720A9AF3200B60697 /* Web.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* Web.swift */; };
+		9BB9404720A9AF3200B60697 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* API.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
 		D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D31F4D7DB7004874C8 /* Colors.swift */; };
@@ -31,7 +31,6 @@
 		D4BE98E91F4C8A9100AE9405 /* StartStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */; };
 		D4BE98EF1F4C952C00AE9405 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE98EE1F4C952C00AE9405 /* StartScreenViewController.swift */; };
 		D4C3D48F1F798B41008F9CE2 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3D48E1F798B41008F9CE2 /* Cells.swift */; };
-		D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */; };
 		D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */; };
 		D4DE426F1F632EED0076008B /* AllChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DE426E1F632EED0076008B /* AllChatsViewController.swift */; };
 		D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DE42711F6332CB0076008B /* ContactsViewController.swift */; };
@@ -52,7 +51,7 @@
 		9B5014D420BD8E8200790CAC /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		9B5014D620C032F500790CAC /* AlamoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamoFire.swift; sourceTree = "<group>"; };
 		9B5E195F20C5419000407868 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		9BB9404620A9AF3200B60697 /* Web.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web.swift; sourceTree = "<group>"; };
+		9BB9404620A9AF3200B60697 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
 		D44DC7D31F4D7DB7004874C8 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = View/Colors/Colors.swift; sourceTree = "<group>"; };
@@ -67,7 +66,6 @@
 		D4BE98E81F4C8A9100AE9405 /* StartStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = StartStoryboard.storyboard; path = View/Storyboards/StartStoryboard.storyboard; sourceTree = "<group>"; };
 		D4BE98EE1F4C952C00AE9405 /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartScreenViewController.swift; path = Controller/LaunchScreen/StartScreenViewController.swift; sourceTree = "<group>"; };
 		D4C3D48E1F798B41008F9CE2 /* Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cells.swift; path = View/Controls/ContactsScreen/Cells.swift; sourceTree = "<group>"; };
-		D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSUserDefaultsStrings.swift; path = Infrastructure/NSUserDefaultsStrings.swift; sourceTree = "<group>"; };
 		D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarBorderless.swift; path = View/Controls/SearchBarBorderless.swift; sourceTree = "<group>"; };
 		D4DE426E1F632EED0076008B /* AllChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllChatsViewController.swift; path = Controller/ChatsScreen/AllChatsViewController.swift; sourceTree = "<group>"; };
 		D4DE42711F6332CB0076008B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = Controller/ContactsScreen/ContactsViewController.swift; sourceTree = "<group>"; };
@@ -125,29 +123,6 @@
 				56F9E7E120C80B54009F48BE /* MessegesViewController.swift */,
 			);
 			name = MessegesScreen;
-			sourceTree = "<group>";
-		};
-		9B618A6D20CA85F70017EC7F /* New */ = {
-			isa = PBXGroup;
-			children = (
-				9B618A6F20CA86360017EC7F /* Infrastructure */,
-				9B618A6E20CA86320017EC7F /* Model */,
-			);
-			path = New;
-			sourceTree = "<group>";
-		};
-		9B618A6E20CA86320017EC7F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		9B618A6F20CA86360017EC7F /* Infrastructure */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 		D438FF3A1F4C83FE003FC42D /* View */ = {
@@ -276,8 +251,7 @@
 		D4D071391F55BD690046A277 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				9BB9404620A9AF3200B60697 /* Web.swift */,
-				D4D0713B1F55BDAC0046A277 /* NSUserDefaultsStrings.swift */,
+				9BB9404620A9AF3200B60697 /* API.swift */,
 				D4FD6CBB1F55C0C10035FF66 /* Hasher.swift */,
 			);
 			name = Infrastructure;
@@ -320,7 +294,6 @@
 		D4E3252A1F4C82DC00554DB2 /* BITC-Messenger-IOS */ = {
 			isa = PBXGroup;
 			children = (
-				9B618A6D20CA85F70017EC7F /* New */,
 				D4D071391F55BD690046A277 /* Infrastructure */,
 				D44DC7CF1F4D7D6A004874C8 /* Extensions */,
 				D4FD6CB51F55BFE40035FF66 /* Model */,
@@ -495,11 +468,10 @@
 				D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */,
 				D4FD6CBC1F55C0C10035FF66 /* Hasher.swift in Sources */,
 				9B5014CF20BC112F00790CAC /* Contact.swift in Sources */,
-				9BB9404720A9AF3200B60697 /* Web.swift in Sources */,
+				9BB9404720A9AF3200B60697 /* API.swift in Sources */,
 				D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */,
 				9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */,
 				D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */,
-				D4D0713C1F55BDAC0046A277 /* NSUserDefaultsStrings.swift in Sources */,
 				D4EB22141F4DFA2F002846E7 /* RegistrationViewController.swift in Sources */,
 				D4BE98E71F4C88D000AE9405 /* BottomPanelView.swift in Sources */,
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,

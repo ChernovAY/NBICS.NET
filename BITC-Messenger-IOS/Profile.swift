@@ -9,16 +9,9 @@
 import Foundation
 import SwiftyJSON
 
-    /*
-    public string       Email
-    public string       PasswordHash
-    public bool         byMobile = true
- */
-    
-
 public class VSMProfile{
     private var p               = [String:Any]()
-    private var newPasswordHash = ""{didSet{p["newPasswordHash"] = newPasswordHash  ;   p["oldPasswordHash"] = WebAPI.Settings.hash }}
+    private var newPasswordHash = ""{didSet{p["newPasswordHash"] = newPasswordHash  ;   p["oldPasswordHash"] = VSMAPI.Settings.hash }}
     
     public let Email:       String
     public let Entity:      Int
@@ -32,7 +25,6 @@ public class VSMProfile{
     public var FamilyName:  String  {didSet{p["familyName"] = FamilyName            ;   p["familyNameUpdateFlag"] = true            }}
     public var Icon:        UIImage?{didSet{p["icon"] = Icon                        ;   p["photoUpdateFlag"] = true                 }}
     //public let Organizations: [Object] пока без них
-
     
     public init (
         BirthDay: Date
@@ -55,24 +47,9 @@ public class VSMProfile{
             self.Patronymic = Patronymic
             self.Phone = Phone
             self.Skype = Skype
-        
-        //Фотка-->
-        let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/PIcon_\(self.Entity).I"
-        if(fm.fileExists(atPath: filename)){
-            if let data = fm.contents(atPath: filename){
-                self.Icon = UIImage(data: data)
-            }
-            else{
-                self.Icon = UIImage(named: "EmptyUser")
-            }
-        }
-        else{
-            self.Icon = UIImage(named: "EmptyUser")
-        }
-        //Фотка--<
+
         if (self.IconUrl != "") {
-            let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.getIcon, postf:self.IconUrl, params: [:])
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.IconUrl, params: [:])
             if(!z.1){
                 print(z.0 as! String)
             }
@@ -80,11 +57,8 @@ public class VSMProfile{
                  if z.0 is Data {
                     let data = z.0 as! Data
                     if(data.count>0){
-                        let fm = FileManager.default
-                        let filename = NSTemporaryDirectory() + "/PIcon_\(self.Entity).I"
-                        if(fm.createFile(atPath: filename, contents: data)){
-                            self.Icon = UIImage(data: data)
-                        }
+                        self.Icon = UIImage(data: data)
+                        _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: data)
                     }
                 }
             }
@@ -92,17 +66,16 @@ public class VSMProfile{
         else if Icon != "" {
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
                 self.Icon = UIImage(data: dataDecoded)
-                let fm = FileManager.default
-                let filename = NSTemporaryDirectory() + "/PIcon_\(self.Entity).I"
-                fm.createFile(atPath: filename, contents: dataDecoded)
+                _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: dataDecoded)
             }
             else{
                 self.Icon = UIImage(named: "EmptyUser")
             }
         }
+        self.Icon = VSMAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")
     }
     public convenience init?(){
-        let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.profile, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash])
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.profile, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
         if(z.1){
             let d = z.0 as! Data
             if let json = try? JSON(data: d) {
@@ -128,6 +101,26 @@ public class VSMProfile{
             print(z.0)
         }
         return nil
+    }
+    public func set()->Bool{
+        if self.p.count != 0 {
+            p["Email"] = VSMAPI.Settings.user
+            p["PasswordHash"] = VSMAPI.Settings.hash
+            p["byMobile"] = true
+            let r = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.setProfile, params: ["ProfileItem" : JSON(p).rawString([.castNilToNSNull: true])!])
+            if !r.1{
+                UIAlertView(title: "Ошибка", message: r.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                return false
+            }
+            else{
+                print(r.0 as! Data)
+                if let nph = p["newPasswordHash"]{ //!!!!!!Может не сработать!!!
+                    VSMAPI.Settings.hash = nph as! String
+                }
+                return true
+            }
+        }
+        return false
     }
     
 }

@@ -16,17 +16,11 @@ public class VSMMessages{
     private var Last = ""
     private var First = ""
     private var ConversationId = ""
-    private var array:[VSMMessage] = Array<VSMMessage>()
+    
+    public var array:[VSMMessage] = Array<VSMMessage>()
     
     public var selectedText = ""
     
-    public var SArray:[VSMMessage]{ get {
-        return array
-        }
-        set(value){
-            self.array = value
-        }
-    }
     public  var loadingDelegate:((Bool)->Void)? = nil
 
     public init(ConversationId:String, loadingDelegate:((Bool)->Void)?=nil){
@@ -71,11 +65,11 @@ public class VSMMessages{
     }
     public func getMessages(_ what : String?=nil)->[VSMMessage]{
         setFilter(what)
-        return self.selectedText == "" ? self.SArray : self.SArray.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
+        return self.selectedText == "" ? self.array : self.array.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
     public func load(isAfter:Bool=false){
-        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : WebAPI.Settings.user, "PasswordHash" : WebAPI.Settings.hash] as [String : Any]
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
+        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -170,18 +164,15 @@ public class VSMMessages{
     }
     
     public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
-        if self.isFileUploading {return;}
-        let p = ["Message":getJSON(), "Email":WebAPI.Settings.user, "PasswordHash":WebAPI.Settings.hash, "UseDraft": "False"] as Params
+        if self.isFileUploading || self.Id == "New" {return;}
+        let p = ["Message":getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
         
-        WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                 if let ms = sendDelegate {
                     ms(false)
                 }
-                //if let mss = Messages{
-                //    mss.load(isAfter: false)
-                //}
             }
             else{
                 if d is Data {
@@ -204,20 +195,13 @@ public class VSMMessages{
             }()})
     }
     
-    /*public func uploadFiles(filePath: [String], loadingDelegate:((Int, String)->Void)?){
-            let fm = FileManager.default
-            for f in filePath{
-                if(fm.fileExists(atPath: f)){
-                    if let data = fm.contents(atPath: f){
-                        //self.Photo = UIImage(data: data)
-                    }
-                }
-            }
-        }
-      */
-    /*public func dropFile(file: String, loadingDelegate:((Bool)->Void)?){
-        
-    }*/
+    public func attachFile(filePath: String, progressDelegate: @escaping (Double)->Void){
+        self.isFileUploading = true
+        VSMAttachedFile.upload(filePath: filePath, loadedDelegate: {af in {
+                self.AttachedFiles.append(af)
+                self.isFileUploading = false
+            }()}, progressDelegate: progressDelegate)
+    }
     
     public func getJSON(_ forRequest:Bool = true)->String{
         var j:[String:Any]
@@ -229,7 +213,7 @@ public class VSMMessages{
         j =
         ["ConversationId": ConversationId
         ,"Text": Text
-        ,"Sender":["Id":WebAPI.Contact!.Id] as [String : Any]
+        ,"Sender":["Id":VSMAPI.Contact!.Id] as [String : Any]
         ] as [String : Any]
         if attArray.count>0{
             j["AttachedFiles"] = attArray
@@ -243,24 +227,43 @@ public class VSMMessages{
 }
 
 public class VSMAttachedFile{
+    
+    public static func upload(filePath:String, loadedDelegate: @escaping (VSMAttachedFile)->Void, progressDelegate: @escaping (Double)->Void){
+        let url = URL(fileURLWithPath: filePath)
+        let hostUrl = "\(VSMAPI.Settings.caddress)\(VSMAPI.WebAPIEntry.fileUpload.rawValue)"
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(url, withName: "File")
+                multipartFormData.append(VSMAPI.Settings.user.data(using: String.Encoding.utf8)!, withName: "Email")
+                multipartFormData.append(VSMAPI.Settings.hash.data(using: String.Encoding.utf8)!, withName: "PasswordHash")
+        },
+            to: hostUrl,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.uploadProgress { progress in // main queue by default
+                        progressDelegate(progress.fractionCompleted)
+                    }
+                    upload.response{ response in
+                        if let data = response.data{
+                            if let dict = JSON(data).dictionary!["FileMetaData"]?.dictionary{
+                                loadedDelegate(VSMAttachedFile(from: dict))
+                            }
+                        }
+                    }
+                    
+                case .failure(let encodingError):
+                    debugPrint(encodingError)
+                }
+        }
+        )
+    }
+    
     public let Extension:   String
     public let Guid:        String
     public let Name:        String
     public var PreviewIcon: UIImage?
     public var ImageBase64: UIImage?
-    
-    public func setPrevIcon(_ from : String){ //public временно ???????/
-        if(from != ""){
-            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            self.PreviewIcon = UIImage(data: dataDecoded)
-        }
-    }
-    public func setFileImage(_ from : String){ //public временно ???????/
-        if(from != ""){
-            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            self.ImageBase64 = UIImage(data: dataDecoded)
-        }
-    }
     
     public init (Extension: String, Guid: String, Name: String){
         self.Extension      = Extension
@@ -279,9 +282,8 @@ public class VSMAttachedFile{
                 self.setPrevIcon(ds)
         }
         else {
-            //let json = JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
             let json = self.getJSON(false)
-            let z = WebAPI.syncRequest(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
             var base64 = ""
             if(z.1){
                 let d = z.0 as! Data
@@ -314,4 +316,65 @@ public class VSMAttachedFile{
             return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
         }
     }
+    
+    //сохранять!!!!!
+    public func getFileImage()->Bool{
+        let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": getJSON()])
+        if(req.1){
+            if let j = JSON(req.0).dictionary{
+                if (j["Success"]?.bool!)!{
+                    let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
+                    self.setFileImage(base64!)
+                    return true
+                }
+            }
+        }
+        else{
+            print(req.0)
+        }
+        return false
+    }
+    public func download(loadedDelegate: @escaping (Bool)->Void, progressDelegate: @escaping (Double)->Void){
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileURL = documentsURL.appendingPathComponent("\(self.Name).\(self.Extension)")
+            
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        let urlstr = "\(VSMAPI.Settings.caddress)\(VSMAPI.WebAPIEntry.download.rawValue)?FileGuid=\(self.Guid)&FileName=\(self.Name)&FileExtension=\(self.Extension)"
+        Alamofire.download(urlstr, to: destination)
+            .downloadProgress { progress in
+                progressDelegate(progress.fractionCompleted)
+            }
+            .responseData { response in
+                loadedDelegate(response.result.isSuccess)
+        }
+    }
+    public func dropFile()->Bool{
+        let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileDrop, params: ["FileMetaData": getJSON(),"Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash])
+        if(req.1){
+            if let j = JSON(req.0).dictionary{
+                return (j["Success"]?.bool)!
+            }
+        }
+        else{
+            print(req.0)
+        }
+        return false
+    }
+    //------------------------------------------
+    private func setPrevIcon(_ from : String){
+        if(from != ""){
+            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+            self.PreviewIcon = UIImage(data: dataDecoded)
+        }
+    }
+    private func setFileImage(_ from : String){
+        if(from != ""){
+            let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+            self.ImageBase64 = UIImage(data: dataDecoded)
+        }
+    }
+    
 }

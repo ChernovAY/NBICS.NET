@@ -13,7 +13,7 @@ class MessegesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Получено")
-        print(WebAPI.VSMChatsCommunication.conversetionId)
+        print(VSMAPI.VSMChatsCommunication.conversetionId)
     }
 
     override func didReceiveMemoryWarning() {

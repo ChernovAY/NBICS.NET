@@ -21,7 +21,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
             let TextMessage: String = MessageField.text!
-            VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: WebAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue).sendMessage(Messages: self.Messages!, sendDelegate:{(b) in
+            VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: VSMAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue).sendMessage(Messages: self.Messages!, sendDelegate:{(b) in
             {
                 if b {
                     self.MessageField.text! = ""
@@ -47,7 +47,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     private func loadedMesseges (b: Bool) {
         if b {self.Table.reloadData()}
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: (self.Messages?.SArray.count)!-1, section: 0)
+            let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
             self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
     }
@@ -62,7 +62,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             
             var message: VSMMessage!
             
-            message = Messages!.SArray[indexPath.row]
+            message = Messages!.array[indexPath.row]
             cell.ConfigureCell(message: message)
             
             return cell

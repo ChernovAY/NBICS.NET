@@ -31,7 +31,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WebAPI.UserConversations.SArray.count
+        return VSMAPI.UserConversations.array.count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -53,7 +53,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             
             var conv: VSMConversation!
             
-            conv = WebAPI.UserConversations.SArray[indexPath.row]
+            conv = VSMAPI.UserConversations.array[indexPath.row]
             cell.ConfigureCell(conversation: conv)
             
             return cell
@@ -65,7 +65,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     private func Load() {
         VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
-            WebAPI.UserConversations = c
+            VSMAPI.UserConversations = c
             self.Table.reloadData()
             }()
         })

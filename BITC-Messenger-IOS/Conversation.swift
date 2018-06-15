@@ -12,7 +12,7 @@ import SwiftyJSON
 
 public class VSMConversations{
     public static func VSMConversationsAssync(loadingDelegate: ((VSMConversations)->Void)?=nil){
-     WebAPI.Request(addres: WebAPI.Settings.caddress, entry: WebAPI.WebAPIEntry.lastConversationList, params: ["email" : WebAPI.Settings.user, "passwordHash" : WebAPI.Settings.hash], completionHandler: {(d,s) in{
+     VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.lastConversationList, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
      
      if(!s){
         UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -27,14 +27,10 @@ public class VSMConversations{
      )
      }
     
-    private var array:[VSMConversation] = Array<VSMConversation>()
+    public var array:[VSMConversation] = Array<VSMConversation>()
     
     public var selectedText = ""
     
-    public var SArray:[VSMConversation]{ get {
-        return array
-        }
-    }
     public  var loadingDelegate:((VSMConversations)->Void)? = nil
     public  var loaded:Bool = false{
         didSet {
@@ -69,7 +65,7 @@ public class VSMConversations{
     }
 
     public func getConversations()->[VSMConversation]{
-        return self.SArray
+        return self.array
     }
     public class func load(){}
 }
