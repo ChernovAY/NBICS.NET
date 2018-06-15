@@ -159,7 +159,6 @@ public class VSMContact {
         
         , PhotoUrl:        String
         
-        , CType:           String
         , Photo:           String = ""
         ){
         self.EntityClass    = EntityClass
@@ -253,7 +252,6 @@ public class VSMContact {
             , IsOnline:     dict["IsOnline"     ]!.bool!
             , ReadOnly:     dict["ReadOnly"     ]!.bool!
             , PhotoUrl:     dict["PhotoUrl"     ]!.string != nil ? dict["PhotoUrl"     ]!.string! : ""
-            , CType:        dict["Type"         ]!.string != nil ? dict["Type"         ]!.string! : "User"
             , Photo:        dict["Photo"        ]!.string != nil ? dict["Photo"        ]!.string! : ""
         )
     }
