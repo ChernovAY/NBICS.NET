@@ -56,12 +56,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="RxM-K3-R6e" kind="relationship" relationship="rootViewController" id="aWF-T9-yXY"/>
+                        <segue destination="v74-1R-5fB" kind="relationship" relationship="rootViewController" id="VOb-BI-ad7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPa-hS-1Tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1759" y="197"/>
+            <point key="canvasLocation" x="-3198" y="197"/>
         </scene>
         <!--Authorization View Controller-->
         <scene sceneID="oLL-k8-EAb">
@@ -964,10 +964,24 @@
                                     <constraint firstAttribute="trailing" secondItem="qQI-E3-T8m" secondAttribute="trailing" constant="8" id="x7f-0v-rGT"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1h-rY-5xp">
+                                <rect key="frame" x="164" y="529" width="46" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="KPV-rV-2vX"/>
+                                </constraints>
+                                <state key="normal" title="Выход">
+                                    <color key="titleColor" red="0.0078431372550000003" green="0.67450980390000004" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutButton:" destination="iUD-id-7G1" eventType="touchUpInside" id="Wds-6t-MtD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0Ym-M5-QJC" firstAttribute="top" secondItem="X3O-ie-oFC" secondAttribute="bottom" constant="23" id="1fL-Pa-KSV"/>
+                            <constraint firstItem="Q1h-rY-5xp" firstAttribute="centerX" secondItem="pOz-TN-Q12" secondAttribute="centerX" id="937-Hi-WS7"/>
+                            <constraint firstItem="Q1h-rY-5xp" firstAttribute="top" secondItem="Jsx-e4-bfV" secondAttribute="bottom" constant="8" id="EA1-dx-rOv"/>
                             <constraint firstItem="Jsx-e4-bfV" firstAttribute="leading" secondItem="Buz-Qz-eIf" secondAttribute="leading" id="ESc-Gf-aX8"/>
                             <constraint firstAttribute="trailing" secondItem="pOz-TN-Q12" secondAttribute="trailing" id="FyP-3P-BLz"/>
                             <constraint firstItem="pTN-t3-ORz" firstAttribute="top" secondItem="0Ym-M5-QJC" secondAttribute="bottom" constant="23" id="KAj-wJ-54G"/>
@@ -994,11 +1008,13 @@
                         <outlet property="PatronymicLabel" destination="pbs-aw-r9k" id="sRH-h7-l1t"/>
                         <outlet property="SkypeLabel" destination="Nd0-i9-8WL" id="zXH-qU-iuU"/>
                         <outlet property="UserPhoto" destination="So9-jB-fyE" id="yLX-RY-UAV"/>
+                        <segue destination="6uy-8S-qyj" kind="unwind" identifier="unwindToViewController1" unwindAction="prepareForUnwindWithSegue:" id="j2g-c1-k8W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cOb-rz-rkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6uy-8S-qyj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1561" y="936"/>
+            <point key="canvasLocation" x="1560.8" y="935.46798029556658"/>
         </scene>
         <!--Configurations View Controller-->
         <scene sceneID="9zx-6A-Ld9">
@@ -1271,6 +1287,86 @@
             </objects>
             <point key="canvasLocation" x="653.60000000000002" y="2387.4384236453202"/>
         </scene>
+        <!--Start Screen View Controller-->
+        <scene sceneID="gjP-bB-25A">
+            <objects>
+                <viewController id="v74-1R-5fB" customClass="StartScreenViewController" customModule="BITC_Messenger_IOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g7J-zM-cSx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gtg-bi-MHn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yvW-NO-nkb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoScreen" translatesAutoresizingMaskIntoConstraints="NO" id="qeS-5m-fMV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.NET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DdC-UL-qcl">
+                                <rect key="frame" x="142.66666666666666" y="44" width="90" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="tHT-Xz-Usr"/>
+                                    <constraint firstAttribute="height" constant="21" id="zXh-qw-hEd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.Чат" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPS-be-tIh">
+                                <rect key="frame" x="125.66666666666669" y="540" width="124" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="sgF-Io-1Kr"/>
+                                    <constraint firstAttribute="width" constant="124" id="uxd-B9-ohQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Это коммуникатор, сервис обмена сообщениями, конфигурациями и файлами сети NBICS.NET" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNy-er-cRB">
+                                <rect key="frame" x="35" y="584" width="305" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="CQx-yU-I9L"/>
+                                    <constraint firstAttribute="height" constant="76" id="Zdn-ks-9Zk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="DTO-3C-F8z">
+                                <rect key="frame" x="178" y="668" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="NMb-VJ-rZl"/>
+                                    <constraint firstAttribute="width" constant="20" id="UDE-K0-cIx"/>
+                                </constraints>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="WPS-be-tIh" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="1mJ-ge-Du2"/>
+                            <constraint firstItem="qeS-5m-fMV" firstAttribute="top" secondItem="yvW-NO-nkb" secondAttribute="top" id="Au6-DC-3Sa"/>
+                            <constraint firstAttribute="trailing" secondItem="qeS-5m-fMV" secondAttribute="trailing" id="HHF-kb-yhB"/>
+                            <constraint firstItem="DTO-3C-F8z" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="Pwv-XE-KUO"/>
+                            <constraint firstItem="DTO-3C-F8z" firstAttribute="top" secondItem="lNy-er-cRB" secondAttribute="bottom" constant="8" id="VcW-YB-BsC"/>
+                            <constraint firstItem="Gtg-bi-MHn" firstAttribute="top" secondItem="WPS-be-tIh" secondAttribute="bottom" constant="217" id="hlm-25-q6E"/>
+                            <constraint firstItem="Gtg-bi-MHn" firstAttribute="top" secondItem="lNy-er-cRB" secondAttribute="bottom" constant="118" id="jZG-WA-T0q"/>
+                            <constraint firstItem="qeS-5m-fMV" firstAttribute="leading" secondItem="yvW-NO-nkb" secondAttribute="leading" id="k9o-r2-bY1"/>
+                            <constraint firstItem="lNy-er-cRB" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="kmp-Gb-kss"/>
+                            <constraint firstItem="Gtg-bi-MHn" firstAttribute="top" secondItem="qeS-5m-fMV" secondAttribute="bottom" id="mau-3X-bdW"/>
+                            <constraint firstItem="DdC-UL-qcl" firstAttribute="top" secondItem="g7J-zM-cSx" secondAttribute="bottom" id="njL-TF-wrw"/>
+                            <constraint firstItem="DdC-UL-qcl" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="xot-Ur-K19"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PRv-iC-YOW"/>
+                    <connections>
+                        <outlet property="ActivityIndicator" destination="DTO-3C-F8z" id="gZZ-71-wDv"/>
+                        <segue destination="RxM-K3-R6e" kind="show" identifier="showAuthorizationScreen" id="9Ci-wZ-i6i"/>
+                        <segue destination="00L-l2-WpI" kind="show" identifier="showChatsScreen" id="iHP-2j-sc0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g5C-gP-j1n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1759" y="197"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ActiveChat" width="48" height="48"/>
@@ -1281,10 +1377,12 @@
         <image name="Email" width="140" height="20"/>
         <image name="EmptyUser" width="41" height="53"/>
         <image name="Login" width="280" height="40"/>
+        <image name="LogoScreen" width="828" height="1472"/>
         <image name="NewChat" width="32" height="32"/>
         <image name="Password" width="280" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aWF-T9-yXY"/>
+        <segue reference="9Ci-wZ-i6i"/>
+        <segue reference="iHP-2j-sc0"/>
     </inferredMetricsTieBreakers>
 </document>

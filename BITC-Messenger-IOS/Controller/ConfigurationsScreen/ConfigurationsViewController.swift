@@ -44,10 +44,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         super.didReceiveMemoryWarning()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = true
-    }
-    
     private func loadedMesseges (b: Bool) {
         if b {self.Table.reloadData()}
         DispatchQueue.main.async {

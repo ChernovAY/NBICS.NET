@@ -164,7 +164,7 @@ public class VSMMessages{
     }
     
     public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
-        if self.isFileUploading || self.Id == "New" {return;}
+        if self.isFileUploading || self.Id != "New" {return;}
         let p = ["Message":getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
         
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{

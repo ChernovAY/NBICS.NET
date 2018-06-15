@@ -29,10 +29,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return VSMAPI.UserConversations.array.count

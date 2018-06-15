@@ -44,7 +44,19 @@ public class VSMAPI{
             VSMAPI.UserContacts.array.removeAll()
         }
         public static func logIn(user:String, hash: String, delegate: @escaping ()->Void ){
-            if(VSMAPI.Settings.login) {return;}
+            func fill(_ delegate: @escaping ()->Void){
+                VSMAPI.Profile = VSMProfile()
+                VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
+                    {
+                        VSMAPI.getUserContact();
+                        VSMAPI.UserContacts.addIfNotExists(from: l.array);
+                        VSMConversation.contacts.addIfNotExists(from: l.array);
+                        delegate();}()})
+            }
+            if(VSMAPI.Settings.login) {
+                fill(delegate)
+                return;
+            }
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
@@ -56,13 +68,7 @@ public class VSMAPI{
                         switch result {
                         case "0":
                             Settings.user = user; Settings.hash = hash; Settings.login = true;
-                            VSMAPI.Profile = VSMProfile()
-                            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
-                                {
-                                    VSMAPI.getUserContact();
-                                    VSMAPI.UserContacts.addIfNotExists(from: l.array);
-                                    VSMConversation.contacts.addIfNotExists(from: l.array);
-                                    delegate();}()})
+                            fill(delegate)
                         case "1":
                             let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                             button2Alert.show()
