@@ -13,12 +13,24 @@ class StartScreenViewController: UIViewController{
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        if !VSMAPI.Settings.login{
+            performSegue(withIdentifier: "showAuthorizationScreen", sender: self)
+        }
+        else {
+            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash, delegate: self.NavigateToChats)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    private func NavigateToChats() {
+        performSegue(withIdentifier: "showChatsScreen", sender: self)
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        
     }
 
 }

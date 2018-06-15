@@ -31,13 +31,11 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func exitButton(_ sender: Any) {
-        let targetStoryboard = UIStoryboard(name: "AuthorizationStoryboard", bundle: nil)
-        if let authorizationViewController = targetStoryboard.instantiateViewController(withIdentifier:
-            "AuthorizationViewController") as? AuthorizationViewController {
-            self.present(authorizationViewController, animated: true, completion: nil)
-        }
+    @IBAction func logOutButton(_ sender: Any) {
+        self.viewDidLoad()
+        self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
