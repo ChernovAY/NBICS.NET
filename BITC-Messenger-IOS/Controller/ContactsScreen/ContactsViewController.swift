@@ -40,9 +40,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
-        //tst-->
-        mess = VSMMessages(ConversationId: "-9223372036854755343", loadingDelegate:self.say)
-        //tst--<
         LoadContacts()
         
     }
@@ -97,7 +94,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     private func LoadContacts() {
-        //потом может и убрать?
             VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
                 VSMAPI.UserContacts = l
                 VSMConversation.contacts.addIfNotExists(from: l.array)

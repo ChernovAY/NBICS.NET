@@ -45,8 +45,7 @@ class AuthorizationViewController: UIViewController {
                                     let result = String(data: data, encoding: .utf8)
                                     switch result {
                                     case "0":
-                                        VSMAPI.Settings.logIn(email, hash)
-                                         self.NavigateToChats()
+                                        VSMAPI.Settings.logIn(user: email, hash: hash, delegate: self.NavigateToChats)
                                     case "1":
                                         let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                                         button2Alert.show()
@@ -68,7 +67,7 @@ class AuthorizationViewController: UIViewController {
                 button2Alert.show()
             }
         } else {
-            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["user" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                     //UIAlertController(title: "Ошибка", message: d as? String, preferredStyle: UIAlertControllerStyle.alert)
@@ -79,8 +78,7 @@ class AuthorizationViewController: UIViewController {
                         let result = String(data: data, encoding: .utf8)
                         switch result {
                             case "0":
-                                    self.NavigateToChats()
-                            
+                                    VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash, delegate: self.NavigateToChats)
                             default: break
                         }
                     }

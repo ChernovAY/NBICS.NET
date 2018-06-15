@@ -43,10 +43,15 @@ public class VSMAPI{
             VSMAPI.UserConversations.array.removeAll()
             VSMAPI.UserContacts.array.removeAll()
         }
-        public static func logIn(_ user:String, _ hash: String ){
+        public static func logIn(user:String, hash: String, delegate: @escaping ()->Void ){
             Settings.user = user; Settings.hash = hash; Settings.login = true;
             VSMAPI.Profile = VSMProfile()
-            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{VSMAPI.getUserContact(); VSMAPI.UserContacts = l;VSMConversation.contacts.addIfNotExists(from: l.array);}()})
+            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
+                {
+                    VSMAPI.getUserContact();
+                    VSMAPI.UserContacts.addIfNotExists(from: l.array);
+                    VSMConversation.contacts.addIfNotExists(from: l.array);
+                    delegate();}()})
         }
     }
 
