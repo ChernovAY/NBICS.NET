@@ -15,7 +15,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
-    private let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
+    private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
  
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
@@ -42,6 +42,10 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     private func loadedMesseges (b: Bool) {
