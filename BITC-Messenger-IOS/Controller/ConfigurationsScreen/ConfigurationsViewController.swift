@@ -15,13 +15,13 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
-    private let ConversetionId = WebAPI.VSMChatsCommunication.conversetionId
+    private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
  
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
             let TextMessage: String = MessageField.text!
-            VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: VSMAPI.Contact!, Text: TextMessage, Time: Date(), CType: ContType.User.rawValue).sendMessage(Messages: self.Messages!, sendDelegate:{(b) in
+            VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: VSMAPI.Contact!, Text: TextMessage, Time: Date()).sendMessage(Messages: self.Messages!, sendDelegate:{(b) in
             {
                 if b {
                     self.MessageField.text! = ""

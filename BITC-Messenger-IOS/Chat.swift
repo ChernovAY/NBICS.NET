@@ -118,7 +118,6 @@ public class VSMMessages{
     public let Sender:          VSMContact?
     public let Text:            String
     public let Time:            Date
-    public let CType:           ContType
     public init
         (ConversationId:  String
         ,Draft:           Bool
@@ -126,7 +125,6 @@ public class VSMMessages{
         ,Sender:          VSMContact?
         ,Text:            String
         ,Time:            Date
-        ,CType:           String
         ,AttachedFiles:   [VSMAttachedFile]?=nil
         )
     {
@@ -136,7 +134,6 @@ public class VSMMessages{
         self.Sender         = Sender
         self.Text           = Text
         self.Time           = Time
-        self.CType          = ContType.init(rawValue: CType)!
         
         if let af = AttachedFiles {
             self.AttachedFiles  = af
@@ -150,7 +147,6 @@ public class VSMMessages{
             ,Sender:        VSMConversation.contacts.findOrCreate(what: dict["Sender"]!.dictionary)
             ,Text:          dict["Text"]!.string!
             ,Time:          Date(fromString: dict["Time"]!.string!)
-            ,CType:         dict["Type"]!.string!
         )
         
         if let jsonArr = dict["AttachedFiles"]?.array{

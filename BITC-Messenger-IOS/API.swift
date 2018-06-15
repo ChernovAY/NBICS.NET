@@ -12,12 +12,25 @@ import SwiftyJSON
 
 public typealias Params = [String:Any];
 
-public enum ContType:String {
-    case User, Group, Chat
-}
-
 public class VSMAPI{
     public static var sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru", "http://site.bgr39.ru"]
+    
+    public class Connectivity {
+        public class var isConn:Bool {
+            return NetworkReachabilityManager()!.isReachable
+        }
+        public class var fromServer:Bool{
+            if(NetworkReachabilityManager()!.isReachable){
+                Counter = Counter + 1
+                if Counter >= MaxN {
+                    Counter = 0
+                }
+            }
+            return (Counter == 0 && NetworkReachabilityManager()!.isReachable)
+        }
+        private static var Counter = -1
+        private static var MaxN = 10
+    }
     
     public struct Settings{
         public static var hash:String{
@@ -196,5 +209,4 @@ public class VSMAPI{
             }
         }
     }
-    
 }

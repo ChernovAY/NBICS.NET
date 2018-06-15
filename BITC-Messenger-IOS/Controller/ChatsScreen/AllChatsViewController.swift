@@ -19,7 +19,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         
         Table.delegate = self
         Table.dataSource = self
-        if let usr = WebAPI.Profile{
+        if let usr = VSMAPI.Profile{
             self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
             self.UserPhoto.image = usr.Icon
         }
@@ -35,8 +35,8 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conv = WebAPI.UserConversations.SArray[indexPath.row]
-        WebAPI.VSMChatsCommunication.conversetionId = conv.Id
+        let conv = VSMAPI.UserConversations.array[indexPath.row]
+        VSMAPI.VSMChatsCommunication.conversetionId = conv.Id
         performSegue(withIdentifier: "showChat", sender: self)
     }
     

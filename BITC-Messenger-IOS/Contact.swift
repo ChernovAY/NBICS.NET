@@ -77,7 +77,8 @@ public class VSMContacts {
     public func addIfNotExists(from a:[VSMContact]){
         
         for ai in a{
-            if let _ = array.first(where: ({$0.Id == ai.Id})){
+            if let af = array.first(where: ({$0.Id == ai.Id})){
+                //af.IsNew
                 continue
             }
             else{
@@ -85,7 +86,6 @@ public class VSMContacts {
             }
         }
     }
-
 
     public func findOrCreate(what dict:[String:JSON]?)->VSMContact?{
         if let d = dict{
@@ -134,8 +134,7 @@ public class VSMContact {
     public var Photo:           UIImage?
     public var PhotoUrl:        String
     
-    public var CType:           ContType
-    
+
     public init
         ( EntityClass:     Int
         , EntityId:        Int
@@ -186,7 +185,6 @@ public class VSMContact {
         
         self.PhotoUrl       = PhotoUrl
         
-        self.CType          = ContType.init(rawValue: CType)!
         //Иконка-->
         let fm = FileManager.default
         let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
@@ -259,7 +257,9 @@ public class VSMContact {
             , Photo:        dict["Photo"        ]!.string != nil ? dict["Photo"        ]!.string! : ""
         )
     }
-    
+    /*public func updateContent(from dict:[String:JSON])->VSMContact{
+        
+    }*/
     //Удалит контакт и пошлет сей факТ на сервер
     public func remove()->Bool{
         return false
