@@ -17,7 +17,7 @@ public enum ContType:String {
 }
 
 public class VSMAPI{
-    public static var Sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru", "http://site.bgr39.ru"]
+    public static var sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru", "http://site.bgr39.ru"]
     
     public struct Settings{
         public static var hash:String{
@@ -44,14 +44,39 @@ public class VSMAPI{
             VSMAPI.UserContacts.array.removeAll()
         }
         public static func logIn(user:String, hash: String, delegate: @escaping ()->Void ){
-            Settings.user = user; Settings.hash = hash; Settings.login = true;
-            VSMAPI.Profile = VSMProfile()
-            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
-                {
-                    VSMAPI.getUserContact();
-                    VSMAPI.UserContacts.addIfNotExists(from: l.array);
-                    VSMConversation.contacts.addIfNotExists(from: l.array);
-                    delegate();}()})
+            if(VSMAPI.Settings.login) {return;}
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
+                if(!s){
+                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                }
+                else{
+                    if d is Data {
+                        let data = d as! Data
+                        let result = String(data: data, encoding: .utf8)
+                        switch result {
+                        case "0":
+                            Settings.user = user; Settings.hash = hash; Settings.login = true;
+                            VSMAPI.Profile = VSMProfile()
+                            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
+                                {
+                                    VSMAPI.getUserContact();
+                                    VSMAPI.UserContacts.addIfNotExists(from: l.array);
+                                    VSMConversation.contacts.addIfNotExists(from: l.array);
+                                    delegate();}()})
+                        case "1":
+                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                            button2Alert.show()
+                            VSMAPI.Settings.logOut();
+                        case "2":
+                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                            button2Alert.show()
+                            VSMAPI.Settings.logOut();
+                        default: break
+                        }
+                    }
+                }
+                }()}
+            )
         }
     }
 
