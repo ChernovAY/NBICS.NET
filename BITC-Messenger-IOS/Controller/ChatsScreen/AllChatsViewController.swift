@@ -11,16 +11,15 @@ import SwiftyJSON
 
 class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var TabBar: MainTabBar!
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         Table.delegate = self
         Table.dataSource = self
-        
-        if let usr = VSMAPI.Profile{
+        if let usr = WebAPI.Profile{
             self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
             self.UserPhoto.image = usr.Icon
         }
@@ -36,16 +35,9 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conv = VSMAPI.UserConversations.array[indexPath.row]
-        VSMAPI.VSMChatsCommunication.conversetionId = conv.Id
-        let targetStoryboard = UIStoryboard(name: "ConfigurationsStoryboard", bundle: nil)
-        if let configViewController = targetStoryboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as? ConfigurationsViewController{
-            self.present(configViewController, animated: true, completion: nil)
-        }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        let conv = WebAPI.UserConversations.SArray[indexPath.row]
+        WebAPI.VSMChatsCommunication.conversetionId = conv.Id
+        performSegue(withIdentifier: "showChat", sender: self)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -78,28 +70,5 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             }()
         })
     }
-    
-    /*
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let tabBarIndex = item.tag
-        switch tabBarIndex {
-            case 1:
-                let targetStoryboard = UIStoryboard(name: "ContactsStoryboard", bundle: nil)
-                if let contactsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-                    "ContactsViewController") as? ContactsViewController {
-                    self.present(contactsViewController, animated: true, completion: nil)
-                }
-                break
-            case 3:
-                let targetStoryboard = UIStoryboard(name: "SettingsStoryboard", bundle: nil)
-                if let settingsControler = targetStoryboard.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController{
-                    self.present(settingsControler, animated: true, completion: nil)
-                }
-                break
-            default: break
-        }
-
-    }
- */
 
 }

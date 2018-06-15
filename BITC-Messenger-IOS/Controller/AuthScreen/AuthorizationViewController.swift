@@ -49,10 +49,6 @@ class AuthorizationViewController: UIViewController {
     }
   
     private func NavigateToChats() {
-        let targetStoryboard = UIStoryboard(name: "ChatsStoryboard", bundle: nil)
-        if let chatsViewController = targetStoryboard.instantiateViewController(withIdentifier:
-            "AllChatsViewController") as? AllChatsViewController {
-            self.present(chatsViewController, animated: true, completion: nil)
-        }
+        performSegue(withIdentifier: "successfulAuthorization", sender: self)
     }
 }
