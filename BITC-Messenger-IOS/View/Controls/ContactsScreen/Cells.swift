@@ -36,6 +36,7 @@ public class MessageCell : UITableViewCell {
     
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverMessageLabel: UILabel!
+    @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
     @IBOutlet weak var SenderView: UIView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
 
@@ -54,6 +55,7 @@ public class MessageCell : UITableViewCell {
             SenderMessageLabel.text = ""
             SenderView.isHidden = true
             ReceiverMessageLabel.text = message.Text
+            ReceiverMessageTimeLabel.text = "";
             ReceiverView.isHidden = false;
         }
         self.backgroundColor = UIColor.clear

@@ -32,7 +32,8 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func logOutButton(_ sender: Any) {
-        self.viewDidLoad()
+        //   self.viewDidLoad()
+        VSMAPI.Settings.logOut()
         self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
     

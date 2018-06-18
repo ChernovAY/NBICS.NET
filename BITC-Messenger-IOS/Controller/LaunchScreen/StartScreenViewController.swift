@@ -13,6 +13,10 @@ class StartScreenViewController: UIViewController{
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if !VSMAPI.Settings.login{
             performSegue(withIdentifier: "showAuthorizationScreen", sender: self)
         }

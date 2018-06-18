@@ -12,8 +12,6 @@ class MessegesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Получено")
-        print(VSMAPI.VSMChatsCommunication.conversetionId)
     }
 
     override func didReceiveMemoryWarning() {
