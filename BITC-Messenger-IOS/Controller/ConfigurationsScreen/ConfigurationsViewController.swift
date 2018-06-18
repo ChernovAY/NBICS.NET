@@ -11,12 +11,12 @@ import UIKit
 class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
     private var Messages: VSMMessages?
-    
+    private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
+
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
-    private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
- 
+    
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -32,6 +32,8 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //ReceiverMessageView.layer.cornerRadius = 3
+        //ReceiverMessageView.layer.cornerRadius = 3
         Table.delegate = self
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension

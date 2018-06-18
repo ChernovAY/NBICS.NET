@@ -55,7 +55,7 @@ public class MessageCell : UITableViewCell {
             SenderMessageLabel.text = ""
             SenderView.isHidden = true
             ReceiverMessageLabel.text = message.Text
-            ReceiverMessageTimeLabel.text = "";
+            ReceiverMessageTimeLabel.text = message.Time.toTimeString();
             ReceiverView.isHidden = false;
         }
         self.backgroundColor = UIColor.clear
