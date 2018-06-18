@@ -108,6 +108,14 @@ public class VSMContacts {
 //--------------------------------------------------
 
 public class VSMContact {
+    public enum ContactType:Int{
+        case Del = -1, Own, Cont, Conv, In, Out
+    }
+    public var ContactType  = VSMContact.ContactType.Del{
+        willSet(newType){
+            
+        }
+    }
     public var isOwnContact = false
     public let EntityClass:     Int
     public let EntityId:        Int
