@@ -40,6 +40,7 @@ public class MessageCell : UITableViewCell {
     @IBOutlet weak var SenderView: UIView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
     @IBOutlet weak var SenderMessageTimeLabel: UILabel!
+    @IBOutlet weak var ReceiverImage: UIImageView!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,21 +48,30 @@ public class MessageCell : UITableViewCell {
     
     public func ConfigureCell(message: VSMMessage) {
         mMessage = message
-        if (message.Sender?.isOwnContact == false) {
-            SenderMessageLabel.text = ""
-            SenderMessageTimeLabel.text = ""
-            SenderView.isHidden = true
-            ReceiverMessageLabel.text = message.Text
-            ReceiverMessageTimeLabel.text = message.Time.toTimeString();
-            ReceiverView.isHidden = false;
-        } else {
-            ReceiverMessageLabel.text = ""
-            ReceiverMessageTimeLabel.text = ""
-            ReceiverView.isHidden = true
-            SenderMessageLabel.text = message.Text
-            SenderMessageTimeLabel.text = message.Time.toTimeString();
-            SenderView.isHidden = false
-            
+        if (message.Text != ""){
+            if (message.Sender?.isOwnContact == false) {
+                self.ReceiverView?.clipsToBounds = true
+                self.ReceiverView!.layer.cornerRadius = 10
+                self.ReceiverImage?.clipsToBounds = true
+                self.ReceiverImage.layer.cornerRadius = 10
+                SenderMessageLabel.text = ""
+                SenderMessageTimeLabel.text = ""
+                SenderView.isHidden = true
+                ReceiverImage.image = message.Sender?.Photo
+                ReceiverMessageLabel.text = message.Text
+                ReceiverMessageTimeLabel.text = message.Time.toTimeString();
+                ReceiverView.isHidden = false;
+            } else {
+                self.SenderView?.clipsToBounds = true
+                self.SenderView!.layer.cornerRadius = 10
+                ReceiverMessageLabel.text = ""
+                ReceiverMessageTimeLabel.text = ""
+                ReceiverView.isHidden = true
+                SenderMessageLabel.text = message.Text
+                SenderMessageTimeLabel.text = message.Time.toTimeString();
+                SenderView.isHidden = false
+                
+            }
         }
         self.backgroundColor = UIColor.clear
     }

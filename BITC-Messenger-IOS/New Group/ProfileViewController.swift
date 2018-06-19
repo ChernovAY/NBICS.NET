@@ -20,6 +20,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let usr = VSMAPI.Profile{
+            self.UserPhoto?.clipsToBounds = true
+            self.UserPhoto!.layer.cornerRadius = 30
             self.UserPhoto.image = usr.Icon
             self.FullnameLabel.text = "\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
             self.NameLabel.text = "\(usr.Name)"
