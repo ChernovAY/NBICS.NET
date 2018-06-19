@@ -30,29 +30,22 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        Table.separatorStyle = UITableViewCellSeparatorStyle.none
-        Table.delegate = self
-        Table.dataSource = self
-        Table.rowHeight = UITableViewAutomaticDimension
-        Table.estimatedRowHeight = 300
-        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
-        Messages!.load()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
+<<<<<<< Updated upstream
         moveTextField(textField, moveDistance: -203, up: true)
+=======
+        moveTextField(textField, moveDistance: -205, up: true)
+>>>>>>> Stashed changes
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
+<<<<<<< Updated upstream
         moveTextField(textField, moveDistance: -203, up: false)
+=======
+        moveTextField(textField, moveDistance: -205, up: false)
+>>>>>>> Stashed changes
     }
     
     // Hide the keyboard when the return key pressed
@@ -70,6 +63,21 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         UIView.setAnimationDuration(moveDuration)
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Table.separatorStyle = UITableViewCellSeparatorStyle.none
+        Table.delegate = self
+        Table.dataSource = self
+        Table.rowHeight = UITableViewAutomaticDimension
+        Table.estimatedRowHeight = 300
+        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
+        Messages!.load()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     private func loadedMesseges (b: Bool) {

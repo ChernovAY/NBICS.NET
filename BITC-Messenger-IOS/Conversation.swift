@@ -75,16 +75,17 @@ public class VSMConversation{
     
     public let Id: String
     public let IsDialog: Bool
-    public let LastMessage: VSMMessage?
+    
     public let Name: String
     public var NotReadedMessagesCount: Int
+    public var LastMessage: VSMMessage?
     public var Users: [VSMContact]
-    
+    public var Messages = [VSMMessage]()
     public init
         (Id:                        String
         ,IsDialog:                  Bool
         ,LastMessage:               VSMMessage?
-        //Messages: [] (0) Наверное и не надо
+        ,Messages:                  [VSMMessage]?
         ,Name:                      String
         ,NotReadedMessagesCount:    Int
         ,Users:                     [VSMContact]
@@ -92,13 +93,13 @@ public class VSMConversation{
         self.Id                     = Id
         self.IsDialog               = IsDialog
         self.LastMessage            = LastMessage
-        //Messages: [] (0) Наверное и не надо
+        self.Messages               = Messages ?? [VSMMessage]()
         self.Name                   = Name
         self.NotReadedMessagesCount = NotReadedMessagesCount
         self.Users                  = Users
     }
     public convenience init(from dict:[String:JSON]){
-        var usrs = [VSMContact]()
+        var usrs = [VSMContact]()///////////!!!!!!!!! Переделать
         if let usrsJSArray = dict["Users"]?.array{
             for d in usrsJSArray{
                 if let dict = d.dictionary{
@@ -112,6 +113,7 @@ public class VSMConversation{
          Id:                    dict["Id"                      ]!.string!
         ,IsDialog:              dict["IsDialog"                ]!.bool!
         ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
+        ,Messages:              nil
         ,Name:                  dict["Name"                    ]!.string!
         ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
         ,Users:                 usrs
