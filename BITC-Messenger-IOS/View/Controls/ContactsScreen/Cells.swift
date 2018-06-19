@@ -48,19 +48,20 @@ public class MessageCell : UITableViewCell {
     public func ConfigureCell(message: VSMMessage) {
         mMessage = message
         if (message.Sender?.isOwnContact == false) {
-            ReceiverMessageLabel.text = ""
-            ReceiverMessageTimeLabel.text = ""
-            ReceiverView.isHidden = true
-            SenderMessageLabel.text = message.Text
-            SenderMessageTimeLabel.text = message.Time.toTimeString();
-            SenderView.isHidden = false
-        } else {
             SenderMessageLabel.text = ""
             SenderMessageTimeLabel.text = ""
             SenderView.isHidden = true
             ReceiverMessageLabel.text = message.Text
             ReceiverMessageTimeLabel.text = message.Time.toTimeString();
             ReceiverView.isHidden = false;
+        } else {
+            ReceiverMessageLabel.text = ""
+            ReceiverMessageTimeLabel.text = ""
+            ReceiverView.isHidden = true
+            SenderMessageLabel.text = message.Text
+            SenderMessageTimeLabel.text = message.Time.toTimeString();
+            SenderView.isHidden = false
+            
         }
         self.backgroundColor = UIColor.clear
     }
