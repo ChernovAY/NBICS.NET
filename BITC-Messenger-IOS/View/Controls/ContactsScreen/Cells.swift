@@ -39,7 +39,8 @@ public class MessageCell : UITableViewCell {
     @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
     @IBOutlet weak var SenderView: UIView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
-
+    @IBOutlet weak var SenderMessageTimeLabel: UILabel!
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -48,11 +49,14 @@ public class MessageCell : UITableViewCell {
         mMessage = message
         if (message.Sender?.isOwnContact == false) {
             ReceiverMessageLabel.text = ""
-            ReceiverView.isHidden = true;
+            ReceiverMessageTimeLabel.text = ""
+            ReceiverView.isHidden = true
             SenderMessageLabel.text = message.Text
+            SenderMessageTimeLabel.text = message.Time.toTimeString();
             SenderView.isHidden = false
         } else {
             SenderMessageLabel.text = ""
+            SenderMessageTimeLabel.text = ""
             SenderView.isHidden = true
             ReceiverMessageLabel.text = message.Text
             ReceiverMessageTimeLabel.text = message.Time.toTimeString();

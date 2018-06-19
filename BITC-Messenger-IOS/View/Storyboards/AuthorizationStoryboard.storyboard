@@ -1123,7 +1123,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0078431372550000003" green="0.67450980390000004" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="PW3-oh-9Aa" secondAttribute="trailing" constant="8" id="Aa5-jR-b3X"/>
                                                         <constraint firstItem="f16-wd-RNM" firstAttribute="top" secondItem="Dut-nU-tpE" secondAttribute="top" constant="8" id="Cgp-u6-rkO"/>
@@ -1151,6 +1151,9 @@
                                             <outlet property="ReceiverMessageLabel" destination="6ea-zK-zPj" id="S7d-8z-h19"/>
                                             <outlet property="ReceiverMessageTimeLabel" destination="aBN-bO-4M5" id="8eN-jD-k9p"/>
                                             <outlet property="ReceiverView" destination="9tB-a5-fDy" id="7Le-2x-6vc"/>
+                                            <outlet property="SenderMessageLabel" destination="f16-wd-RNM" id="fGf-EH-QqV"/>
+                                            <outlet property="SenderMessageTimeLabel" destination="PW3-oh-9Aa" id="112-29-htB"/>
+                                            <outlet property="SenderView" destination="Dut-nU-tpE" id="pWU-xO-EGh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
