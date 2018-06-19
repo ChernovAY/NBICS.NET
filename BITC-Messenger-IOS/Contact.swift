@@ -109,7 +109,7 @@ public class VSMContacts {
 
 public class VSMContact {
     public enum ContactType:Int{
-        case Del = -1, Own, Cont, Conv, In, Out
+        case Del = -1, Own, Cont, Conv, In, Out, Cand, Sel
     }
     public var ContactType  = VSMContact.ContactType.Del{
         willSet(newType){
