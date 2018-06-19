@@ -30,6 +30,21 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Table.separatorStyle = UITableViewCellSeparatorStyle.none
+        Table.delegate = self
+        Table.dataSource = self
+        Table.rowHeight = UITableViewAutomaticDimension
+        Table.estimatedRowHeight = 300
+        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
+        Messages!.load()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -250, up: true)
@@ -50,26 +65,12 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
         let moveDuration = 0.3
         let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
         UIView.beginAnimations("animateTextField", context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(moveDuration)
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        Table.separatorStyle = UITableViewCellSeparatorStyle.none
-        Table.delegate = self
-        Table.dataSource = self
-        Table.rowHeight = UITableViewAutomaticDimension
-        Table.estimatedRowHeight = 300
-        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
-        Messages!.load()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     private func loadedMesseges (b: Bool) {
