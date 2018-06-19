@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     private var Messages: VSMMessages?
     private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
@@ -30,10 +30,35 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
     }
     
+    // Start Editing The Text Field
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -230, up: true)
+    }
+    
+    // Finish Editing The Text Field
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -230, up: false)
+    }
+    
+    // Hide the keyboard when the return key pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Move the text field in a pretty animation!
+    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //ReceiverMessageView.layer.cornerRadius = 3
-        //ReceiverMessageView.layer.cornerRadius = 3
         Table.delegate = self
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension
@@ -53,7 +78,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
     }
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (Messages?.getMessages().count)!
