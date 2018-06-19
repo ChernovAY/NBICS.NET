@@ -32,12 +32,20 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
+<<<<<<< Updated upstream
         moveTextField(textField, moveDistance: -203, up: true)
+=======
+        moveTextField(textField, moveDistance: -205, up: true)
+>>>>>>> Stashed changes
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
+<<<<<<< Updated upstream
         moveTextField(textField, moveDistance: -203, up: false)
+=======
+        moveTextField(textField, moveDistance: -205, up: false)
+>>>>>>> Stashed changes
     }
     
     // Hide the keyboard when the return key pressed
