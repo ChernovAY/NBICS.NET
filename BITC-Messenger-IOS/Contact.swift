@@ -116,13 +116,14 @@ public class VSMContact {
             
         }
     }
-    public var isOwnContact = false
+    public var isOwnContact = false // потом убрать
+    public var ContType         = VSMContact.ContactType.Del
     public let EntityClass:     Int
     public let EntityId:        Int
     public let EntityType:      Int
     public let EntityGuid:      String
     
-    public let Id:              Int64
+    public let Id:              Int
     public let Code:            String?
     public let Alias:           String?
     public let Name:            String
@@ -149,7 +150,7 @@ public class VSMContact {
         , EntityType:      Int
         , EntityGuid:      String
         
-        , Id:              Int64
+        , Id:              Int
         , Code:            String?
         , Alias:           String?
         , Name:            String
@@ -192,21 +193,7 @@ public class VSMContact {
         
         self.PhotoUrl       = PhotoUrl
         
-        //Иконка-->
-        let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-        if(fm.fileExists(atPath: filename)){
-            if let data = fm.contents(atPath: filename){
-                self.Photo = UIImage(data: data)
-            }
-            else{
-                self.Photo = UIImage(named: "EmptyUser")
-            }
-        }
-        else{
-            self.Photo = UIImage(named: "EmptyUser")
-        }
-        //Иконка--<
+        self.Photo = VSMAPI.getPicture(name: "Icon_\(self.Id).I", empty: "EmptyUser")
         if (self.PhotoUrl != "") {
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
             if(!s){
@@ -217,12 +204,8 @@ public class VSMContact {
                     let data = d as! Data
                     
                     if(data.count>0){
-                        let fm = FileManager.default
-                        let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-                        
-                        if(fm.createFile(atPath: filename, contents: data)){
-                            self.Photo = UIImage(data: data)
-                        }
+                        _ = VSMAPI.savePicture(name:"Icon_\(self.Id).I", data: data)
+                        self.Photo = UIImage(data: data)
                     }
                 }
             }
@@ -230,15 +213,8 @@ public class VSMContact {
         }
         else if Photo != "" {
             if let dataDecoded  = Data(base64Encoded: Photo, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
-                self.Photo = UIImage(data: dataDecoded)
-                let fm = FileManager.default
-                let filename = NSTemporaryDirectory() + "/Icon_\(self.Id).I"
-                fm.createFile(atPath: filename, contents: dataDecoded)
+                _ = VSMAPI.savePicture(name:"Icon_\(self.Id).I", data: dataDecoded)
             }
-            else{
-                self.Photo = UIImage(named: "EmptyUser")
-            }
-            
         }
     }
     
@@ -248,7 +224,7 @@ public class VSMContact {
             , EntityId:     dict["EntityId"     ]!.int!
             , EntityType:   dict["EntityType"   ]!.int!
             , EntityGuid:   dict["EntityGuid"   ]!.string!
-            , Id:           dict["Id"           ]!.int64!
+            , Id:           dict["Id"           ]!.int!
             , Code:         dict["Code"         ]?.string
             , Alias:        dict["Alias"        ]?.string
             , Name:         dict["Name"         ]!.string!
@@ -263,11 +239,30 @@ public class VSMContact {
             , Photo:        dict["Photo"        ]!.string != nil ? dict["Photo"        ]!.string! : ""
         )
     }
+    public convenience init?(){
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+        if(!z.1){
+            print("Ошибка \(z.0 as? String)")
+        }
+        else{
+            if z.0 is Data {
+                let data = z.0 as! Data
+                if let json = try? JSON(data: data) {
+                    let dict = json.dictionary!
+                    self.init(from: dict)
+                    ContType = .Own
+                    return
+                }
+            }
+        }
+        return nil
+    }
+    
     /*public func updateContent(from dict:[String:JSON])->VSMContact{
         
     }*/
     //Удалит контакт и пошлет сей факТ на сервер
-    public func remove()->Bool{
+    /*public func remove()->Bool{
         return false
-    }
+    }*/
 }

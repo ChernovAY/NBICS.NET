@@ -57,7 +57,6 @@ public class VSMProfile{
                  if z.0 is Data {
                     let data = z.0 as! Data
                     if(data.count>0){
-                        self.Icon = UIImage(data: data)
                         _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: data)
                     }
                 }
@@ -65,11 +64,7 @@ public class VSMProfile{
         }
         else if Icon != "" {
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
-                self.Icon = UIImage(data: dataDecoded)
                 _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: dataDecoded)
-            }
-            else{
-                self.Icon = UIImage(named: "EmptyUser")
             }
         }
         self.Icon = VSMAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")

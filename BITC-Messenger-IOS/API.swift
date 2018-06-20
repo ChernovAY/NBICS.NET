@@ -193,6 +193,8 @@ public class VSMAPI{
     public static var Profile : VSMProfile?
     public static var Contact : VSMContact?
     
+    public static var Data = VSMData()
+    
     public struct VSMChatsCommunication{
         public static var conversetionId = ""
     }
