@@ -18,6 +18,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var Table: UITableView!
     
     @IBAction func sendMessageButton(_ sender: Any) {
@@ -33,6 +34,42 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Table.separatorStyle = UITableViewCellSeparatorStyle.none
+        Table.delegate = self
+        Table.dataSource = self
+        Table.rowHeight = UITableViewAutomaticDimension
+        Table.estimatedRowHeight = 300
+        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
+        Messages!.load()
+        if (Screen == 2){
+            if (ScreenHeight == 667){
+                MoveDistance = -209
+            }
+        }
+        else if (Screen == 3){
+            MoveDistance = -222
+            if (ScreenHeight == 812){
+                MoveDistance = -250
+            }
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    private func loadedMesseges (b: Bool) {
+        if b {self.Table.reloadData()}
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
+            self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        }
+        Table.isHidden = false
+        ActivityIndicator.isHidden = true
+    }
+
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: MoveDistance, up: true)
@@ -58,42 +95,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         UIView.setAnimationDuration(moveDuration)
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        Table.separatorStyle = UITableViewCellSeparatorStyle.none
-        Table.delegate = self
-        Table.dataSource = self
-        Table.rowHeight = UITableViewAutomaticDimension
-        Table.estimatedRowHeight = 300
-        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
-        Messages!.load()
-        print(ScreenHeight)
-        print(Screen)
-        if (Screen == 2){
-            if (ScreenHeight == 667){
-                MoveDistance = -209
-            }
-        }
-        else if (Screen == 3){
-            MoveDistance = -222
-            if (ScreenHeight == 812){
-                MoveDistance = -250
-            }
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    private func loadedMesseges (b: Bool) {
-        if b {self.Table.reloadData()}
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
-            self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
-        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
