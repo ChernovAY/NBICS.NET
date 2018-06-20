@@ -48,12 +48,18 @@ public class MessageCell : UITableViewCell {
     
     public func ConfigureCell(message: VSMMessage) {
         mMessage = message
+        self.ReceiverView?.clipsToBounds = true
+        self.ReceiverView!.layer.cornerRadius = 10
+        self.ReceiverImage?.clipsToBounds = true
+        self.ReceiverImage.layer.cornerRadius = 10
+        self.SenderView?.clipsToBounds = true
+        self.SenderView!.layer.cornerRadius = 10
+        SenderMessageLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        SenderMessageLabel.numberOfLines = 0
+        ReceiverMessageLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        ReceiverMessageLabel.numberOfLines = 0
         if (message.Text != ""){
             if (message.Sender?.isOwnContact == false) {
-                self.ReceiverView?.clipsToBounds = true
-                self.ReceiverView!.layer.cornerRadius = 10
-                self.ReceiverImage?.clipsToBounds = true
-                self.ReceiverImage.layer.cornerRadius = 10
                 SenderMessageLabel.text = ""
                 SenderMessageTimeLabel.text = ""
                 SenderView.isHidden = true
@@ -62,8 +68,6 @@ public class MessageCell : UITableViewCell {
                 ReceiverMessageTimeLabel.text = message.Time.toTimeString();
                 ReceiverView.isHidden = false;
             } else {
-                self.SenderView?.clipsToBounds = true
-                self.SenderView!.layer.cornerRadius = 10
                 ReceiverMessageLabel.text = ""
                 ReceiverMessageTimeLabel.text = ""
                 ReceiverView.isHidden = true

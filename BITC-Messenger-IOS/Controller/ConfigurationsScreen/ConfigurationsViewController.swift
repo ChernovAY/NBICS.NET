@@ -12,7 +12,10 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
 
     private var Messages: VSMMessages?
     private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
-
+    private let Screen = UIScreen.main.scale
+    private let ScreenHeight = UIScreen.main.bounds.height
+    private var MoveDistance = -203
+    
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var Table: UITableView!
@@ -32,12 +35,12 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -203, up: true)
+        moveTextField(textField, moveDistance: MoveDistance, up: true)
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -203, up: false)
+        moveTextField(textField, moveDistance: MoveDistance, up: false)
     }
     
     // Hide the keyboard when the return key pressed
@@ -66,6 +69,19 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Table.estimatedRowHeight = 300
         Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
         Messages!.load()
+        print(ScreenHeight)
+        print(Screen)
+        if (Screen == 2){
+            if (ScreenHeight == 667){
+                MoveDistance = -209
+            }
+        }
+        else if (Screen == 3){
+            MoveDistance = -222
+            if (ScreenHeight == 812){
+                MoveDistance = -250
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
