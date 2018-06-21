@@ -26,7 +26,7 @@ public class VSMData{
     
     public var Notifications           = [VSMNotification]()//???????
     
-    public var Contacts                = Dictionary<String, VSMContact>()
+    public var Contacts                = Dictionary<Int, VSMContact>()
     public var Conversations           = Dictionary<String,VSMConversation>()
     
     public var Profile : VSMProfile?
@@ -35,39 +35,55 @@ public class VSMData{
     public init(){
         timer = RepeatingTimer(timeInterval: period)
         timer.eventHandler = timerFired
-        timer.resume()
     }
     deinit{
         timer.suspend()
         timerHandler?.dispose()
     }
+    public func deleteAll(){
+        EInit.raise(data: false)
+        ETimerAction.raise(data: true)
+
+        Notifications.removeAll()
+        Contacts.removeAll()
+        Conversations.removeAll()
+        Profile = nil
+        Contact = nil
+    }
     public func loadAll(){
         if timerHandler == nil{timerHandler = ETimerAction.addHandler(target: self, handler: VSMData.timerHandlerFunc)}
+        if !VSMAPI.Settings.login {return}
+        if Profile == nil{Profile = VSMProfile()}
+        if Contact == nil{Contact = VSMContact()}
+        Contacts[Contact!.Id] = Contact
+        //loadContacts(loadConversations)
+        
+        ETimerAction.raise(data: false)
+        EInit.raise(data: true)
     }
-    public var EInitAll        =     Event<()>()
-    public var EContLoaded     =     Event<()>()
-    public var EConvLoaded     =     Event<()>()
-    public var EMessLoaded     =     Event<String>()
-    public var ENUnreadchanged =     Event<Int>()
-    public var EInternetStatus =     Event<Bool>()
+    public var EInit            =     Event<Bool>()
+    public var EContLoaded    =     Event<()>()
+    public var EConvLoaded      =     Event<()>()
+    public var EMessLoaded      =     Event<String>()
+    public var ENUnreadchanged  =     Event<Int>()
+    public var EInternetStatus  =     Event<Bool>()
     
-    public var ETimerAction   =     Event<Bool>()
+    public var ETimerAction     =     Event<Bool>()
     
     private func timerFired(){
-        print("TimefFired \(Date().toTimeString())")
-        ETimerAction.raise(data: false)
+        ETimerAction.raise(data: true)
         if internetStatusFlag(){
             
         }
-        ETimerAction.raise(data: true)
+        ETimerAction.raise(data: false)
     }
     private func timerHandlerFunc(_ data: Bool){
         isWorking = data
         if data{
-            timer.resume()
+            timer.suspend()
         }
         else{
-            timer.suspend()
+            timer.resume()
         }
     }
     private func internetStatusFlag()->Bool{
@@ -76,6 +92,29 @@ public class VSMData{
             internetStatus = VSMAPI.Connectivity.isConn
         }
         return internetStatus
+    }
+    private func loadContacts(ContactType: VSMContact.ContactType, entry: VSMAPI.WebAPIEntry, delegate:((Any,Any,Any)->())?=nil){
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.contatcs, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
+            if(!s){print("Ошибка \(d as? String)")}
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    //let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate)
+                    
+                    delegate?()
+                }
+            }
+            }()}
+        )
+    }
+    private func loadInRequests(){
+        
+    }
+    private func loadOutRequests(){
+        
+    }
+    private func loadConversations(_ delegate:(()->())?=nil){
+        
     }
 }
 //---------------------это потом
