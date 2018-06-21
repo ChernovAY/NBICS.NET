@@ -30,11 +30,11 @@ class ProfileViewController: UIViewController {
             self.EmailLabel.text = "\(usr.Email)"
             self.SkypeLabel.text = "\(usr.Skype)"
             self.BirthDayLabel.text = "\(usr.BirthDay.toString())"
+            navigationController?.title = "asdasdasd"
         }
     }
     
     @IBAction func logOutButton(_ sender: Any) {
-        //   self.viewDidLoad()
         VSMAPI.Settings.logOut()
         self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }

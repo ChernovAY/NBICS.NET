@@ -19,8 +19,6 @@ class StartScreenViewController: UIViewController{
         /*s.messLoaded[self] = {s in print(s)}*///Delegate
     }
     deinit {
-        //s.messLoaded.removeValue(forKey: self)
-    ///Delegate
     }
     override func viewDidAppear(_ animated: Bool) {
         if !VSMAPI.Settings.login{
@@ -33,7 +31,6 @@ class StartScreenViewController: UIViewController{
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     private func NavigateToChats() {
         performSegue(withIdentifier: "showChatsScreen", sender: self)
