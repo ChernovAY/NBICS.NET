@@ -167,7 +167,7 @@ public class VSMAPI{
         return ret
     }
     
-    public static func getPicture(name:String, empty:String)->UIImage{
+    public static func getPicture(name:String, empty:String)->UIImage?{
         var img:UIImage?
         let fm = FileManager.default
         let filename = NSTemporaryDirectory() + "/" + name
@@ -175,17 +175,17 @@ public class VSMAPI{
             if let data = fm.contents(atPath: filename){
                 img = UIImage(data: data)
             }
-            else{
+            else if empty != ""{
                 img = UIImage(named: empty)
             }
         }
-        else{
+        else if empty != ""{
             img = UIImage(named: empty)
         }
-        if img == nil{
+        if img == nil && empty != "" {
             img = UIImage(named: empty)
         }
-        return img!
+        return img
     }
     
     public static var UserContacts = VSMContacts()

@@ -9,10 +9,14 @@
 import UIKit
 
 class StartScreenViewController: UIViewController{
+    private var m = VSMData()
+    /*private var s = VSMData()*///Delegate
     
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        m.loadAll()
+        /*s.messLoaded[self] = {s in print(s)}*///Delegate
     }
     deinit {
     }
