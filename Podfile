@@ -4,10 +4,4 @@ use_frameworks!
 target 'BITC-Messenger-IOS' do
   pod 'Alamofire', '~> 4.0'
   pod 'SwiftyJSON', '~> 4.0'
-
-  target 'BITC-Messenger-IOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end
