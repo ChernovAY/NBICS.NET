@@ -273,7 +273,7 @@ public class VSMAttachedFile{
         if PreviewIcon != "" {
             self.setPrevIcon(PreviewIcon)
         }
-        else {
+        else if !VSMAPI.fileExists("APFile_\(self.Guid).I"){
             let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":self.getJSON()])
             var base64 = ""
             if(z.1){
@@ -294,6 +294,8 @@ public class VSMAttachedFile{
             else{
                 print(z.0)
             }
+           
+            if self.Extension.range(of: "(((?i)(jpg|png|gif|bmp))$)", options: .regularExpression, range: nil, locale: nil) != nil{
             let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": self.getJSON()])
             if(req.1){
                 if let j = JSON(req.0).dictionary{
@@ -306,6 +308,7 @@ public class VSMAttachedFile{
             else{
                 print(req.0)
             }
+        }
         }
      }
     public convenience init(from dict:[String:JSON]){

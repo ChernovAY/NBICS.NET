@@ -51,24 +51,25 @@ public class VSMData{
     }
     public func loadAll(){
         if timerHandler == nil{timerHandler = ETimerAction.addHandler(target: self, handler: VSMData.timerHandlerFunc)}
-        if !VSMAPI.Settings.login {return}
+        if !VSMAPI.Settings.login || isWorking {return}
+         ETimerAction.raise(data: true)
         if Profile == nil{Profile = VSMProfile()}
         if Contact == nil{Contact = VSMContact()}
         Contacts[Contact!.Id] = Contact
         DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
-            DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
-                Loader.init(delegate: { (A, B) in
-                    self.EInit.raise(data: true)
-                })
+            DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
+                DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
+                    DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
+                        Loader.init(delegate: { (A, B) in
+                            self.EInit.raise(data: true)
+                            self.ETimerAction.raise(data: false)
+                        })
+                    )
+                )
             )
-            ).exec()
-        
-        ETimerAction.raise(data: false)
-        EInit.raise(data: true)
+        ).exec()
     }
     public var EInit            =     Event<Bool>()
-    public var EContLoaded    =     Event<()>()
-    public var EConvLoaded      =     Event<()>()
     public var EMessLoaded      =     Event<String>()
     public var ENUnreadchanged  =     Event<Int>()
     public var EInternetStatus  =     Event<Bool>()
@@ -78,7 +79,7 @@ public class VSMData{
     private func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
-            
+            print("TimerFired \(Date().toTimeString())")
         }
         ETimerAction.raise(data: false)
     }
@@ -101,13 +102,88 @@ public class VSMData{
     private func loadContacts(_ _data:Any?, _ _opt:Any?){
         let data = _data as! Data
         let opt  = _opt as! VSMContact.ContactType
-        print("{\(data.base64EncodedData())  \(opt.rawValue)")
         
+        if let json = try? JSON(data: data) {
+            let arr = json.array!
+            var oldcont = self.Contacts.filter {$1.ContType == opt}
+            for c in arr{
+                if let dict = c.dictionary{
+                    let nc = VSMContact(from:dict)
+                    nc.ContType = opt
+                    oldcont = oldcont.filter { $0.key != nc.Id }
+                    Contacts[nc.Id] = nc
+                }
+            }
+            for dc in oldcont{
+                Contacts = Contacts.filter { $0.key != dc.value.Id }
+            }
+        }
     }
-    private func loadConversations(_data:Any, _opt:Any){
+    private func loadConversations(_ _data:Any, _ _opt:Any){
         let data = _data as! Data
-        print("{\(data.base64EncodedData())")
+        if let json = try? JSON(data: data) {
+            let arr = json.array!
+            var oldconv = self.Conversations
+            for c in arr{
+                if let dict = c.dictionary{
+                    let nc = makeConv(what:dict)
+                    oldconv = oldconv.filter { $0.key != nc.Id }
+                    if let c = Conversations[nc.Id]{
+                        let msgs = c.Messages
+                        let draft = c.Draft
+                        nc.Draft = draft
+                        nc.Messages = msgs
+                    }
+                    else{
+                        let draft = VSMMessage(ConversationId: nc.Id, Draft: false, Id: nil, Sender: Contact!, Text: "", Time: Date())
+                        nc.Draft = draft
+                    }
+                    Conversations[nc.Id] = nc
+                }
+            }
+            for dc in oldconv{
+                Conversations = Conversations.filter { $0.key != dc.value.Id }
+            }
+        }
     }
+    private func convContFindOrCreate(what dict:[String:JSON])->VSMContact?{
+        var c:VSMContact? = nil
+        if let key = dict["Id"]!.int{
+            if let c = Contacts[key]{
+                if c.ContType != .Conv{
+                    return  Contacts[key]!
+                }
+            }
+        }
+        c = VSMContact(from:dict)
+        c!.ContType = .Conv
+        Contacts[c!.Id] = c
+        return c
+    }
+    private func makeConv(what dict:[String:JSON])->VSMConversation{
+        var ret:VSMConversation
+        var usrs = [VSMContact]()
+        if let usrsJSArray = dict["Users"]?.array{
+            for d in usrsJSArray{
+                if let dict = d.dictionary{
+                    if let cc = convContFindOrCreate(what: dict){
+                        usrs.append(cc)
+                    }
+                }
+            }
+        }
+        ret = VSMConversation(
+            Id:                     dict["Id"                      ]!.string!
+            ,IsDialog:              dict["IsDialog"                ]!.bool!
+            ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
+            ,Messages:              nil
+            ,Name:                  dict["Name"                    ]!.string!
+            ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
+            ,Users:                 usrs
+        )
+        return ret
+    }
+
 }
 //---------------------это потом
 open class VSMNotification{

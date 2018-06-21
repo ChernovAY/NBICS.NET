@@ -54,7 +54,9 @@ public class VSMAPI{
             VSMAPI.Profile = nil
             VSMAPI.Contact = nil
             VSMAPI.UserConversations.array.removeAll()
-            VSMAPI.UserContacts.array.removeAll()
+            VSMAPI.UserContacts.array.removeAll()///Потом зачистить
+            VSMAPI.deleteCommunicatorFiles()
+            VSMAPI.deleteCommunicatorFiles()
         }
         public static func logIn(user:String, hash: String, delegate: @escaping ()->Void ){
             func fill(_ delegate: @escaping ()->Void){
@@ -187,6 +189,26 @@ public class VSMAPI{
         }
         return img
     }
+    public static func fileExists(_ name:String)->Bool{
+        let fm = FileManager.default
+        let filename = NSTemporaryDirectory() + "/" + name
+        return fm.fileExists(atPath: filename)
+    }
+    public static func deleteCommunicatorFiles(){
+            let fm = FileManager.default
+            let url = URL(fileURLWithPath: NSTemporaryDirectory())
+            let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: url.path)!
+            while let element = enumerator.nextObject() as? String, element.hasSuffix(".I") {
+                try? fm.removeItem(atPath: NSTemporaryDirectory()+"/"+element)
+            }
+    }
+    //----------------------------------------------------------------------------------------
+    //
+    //
+    //
+    //
+    //
+    
     
     public static var UserContacts = VSMContacts()
     public static var UserConversations = VSMConversations()

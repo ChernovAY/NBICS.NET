@@ -119,6 +119,5 @@ public class VSMConversation{
         ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
         ,Users:                 usrs
         )
-        
     }
 }
