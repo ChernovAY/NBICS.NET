@@ -1130,6 +1130,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="cJv-ws-YBb" id="mtx-yl-DpU"/>
+                                    <outlet property="delegate" destination="cJv-ws-YBb" id="rv3-UK-5SL"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

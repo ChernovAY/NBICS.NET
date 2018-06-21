@@ -15,11 +15,13 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     private let Screen = UIScreen.main.scale
     private let ScreenHeight = UIScreen.main.bounds.height
     private var MoveDistance = -203
+    private var refreshControl:UIRefreshControl!
     
     @IBOutlet weak var SendButton: UIButton!
     @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
@@ -54,6 +56,18 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
                 MoveDistance = -250
             }
         }
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(doSomething), for: .valueChanged)
+        
+        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
+        Table.refreshControl = refreshControl
+    }
+    
+    @objc func doSomething(refreshControl: UIRefreshControl) {
+        Messages!.load()
+       
+        // somewhere in your code you might need to call:
+        refreshControl.endRefreshing()
     }
     
     override func didReceiveMemoryWarning() {
@@ -61,10 +75,12 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     private func loadedMesseges (b: Bool) {
-        if b {self.Table.reloadData()}
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
-            self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        self.Table.reloadData()
+        if b {
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
+                self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
         }
         Table.isHidden = false
         ActivityIndicator.isHidden = true

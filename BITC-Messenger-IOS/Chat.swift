@@ -68,6 +68,7 @@ public class VSMMessages{
         return self.selectedText == "" ? self.array : self.array.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
     }
     public func load(isAfter:Bool=false){
+        var retFlag = isAfter || self.Last == ""
         let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             
@@ -97,7 +98,7 @@ public class VSMMessages{
                             self.Last = self.array.last!.Id
                             self.First = self.array.first!.Id
                         }
-                        if let ld = self.loadingDelegate { ld(true)}
+                        if let ld = self.loadingDelegate { ld(retFlag)}
                     }
                 }
             }
