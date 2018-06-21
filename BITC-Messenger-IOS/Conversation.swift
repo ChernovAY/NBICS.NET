@@ -79,6 +79,7 @@ public class VSMConversation{
     public let Name: String
     public var NotReadedMessagesCount: Int
     public var LastMessage: VSMMessage?
+    public var Draft: VSMMessage?//потом сохранять!!!!!
     public var Users: [VSMContact]
     public var Messages = [VSMMessage]()
     public init
@@ -99,7 +100,7 @@ public class VSMConversation{
         self.Users                  = Users
     }
     public convenience init(from dict:[String:JSON]){
-        var usrs = [VSMContact]()///////////!!!!!!!!! Переделать
+        var usrs = [VSMContact]()///////////!!!!!!!!! Переделать для Data, а это потм удалить!!!!!!!!!!!
         if let usrsJSArray = dict["Users"]?.array{
             for d in usrsJSArray{
                 if let dict = d.dictionary{

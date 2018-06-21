@@ -199,9 +199,8 @@ public class VSMMessages{
             }()}, progressDelegate: progressDelegate)
     }
     
-    public func getJSON(_ forRequest:Bool = true)->String{
+    public func getJSON()->String{
         var j:[String:Any]
-        if(forRequest){
         var attArray = [Any]()
         for a in self.AttachedFiles{
             attArray.append(a.getJSON())
@@ -213,10 +212,6 @@ public class VSMMessages{
         ] as [String : Any]
         if attArray.count>0{
             j["AttachedFiles"] = attArray
-        }
-        }
-        else{
-            j = [:] as [String:Any]
         }
         return JSON(j).rawString([.castNilToNSNull: true])!
     }
@@ -258,28 +253,27 @@ public class VSMAttachedFile{
     public let Extension:   String
     public let Guid:        String
     public let Name:        String
-    public var PreviewIcon: UIImage?
-    public var ImageBase64: UIImage?
+    public var PreviewIcon: UIImage?{
+        get{
+            return VSMAPI.getPicture(name: "AIFile_\(self.Guid).I", empty: "AnyFile")
+        }
+    }
+    public var ImageBase64: UIImage?{
+        get{
+            return VSMAPI.getPicture(name: "APFile_\(self.Guid).I", empty: "")
+        }
+    }
     
-    public init (Extension: String, Guid: String, Name: String){
+    public init (Extension: String, Guid: String, Name: String, PreviewIcon:String = ""){
         self.Extension      = Extension
         self.Guid           = Guid
         self.Name           = Name
-        self.PreviewIcon    = UIImage(named:"AnyFile")
-    }
-    public convenience init(from dict:[String:JSON]){
-        self.init(
-             Extension: dict["Extension"]!.string!
-            ,Guid: dict["Guid"]!.string!
-            ,Name: dict["Name"]!.string!
-        )
-        
-        if let ds = dict["PreviewIcon"]!.string {
-                self.setPrevIcon(ds)
+ 
+        if PreviewIcon != "" {
+            self.setPrevIcon(PreviewIcon)
         }
         else {
-            let json = self.getJSON(false)
-            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":json])
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":self.getJSON()])
             var base64 = ""
             if(z.1){
                 let d = z.0 as! Data
@@ -299,37 +293,33 @@ public class VSMAttachedFile{
             else{
                 print(z.0)
             }
-        }
-    }
-    public func getJSON(_ forRequest:Bool = true)->String{
-        if self.PreviewIcon != UIImage(named:"AnyFile") && self.PreviewIcon != nil && !forRequest {
-            let p = self.PreviewIcon!
-            let image64 = UIImagePNGRepresentation(p)?.base64EncodedString()
-            return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": image64]).rawString([.castNilToNSNull: true])!
-            
-        }
-        else{
-            return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
-        }
-    }
-    
-    //сохранять!!!!!
-    public func getFileImage()->Bool{
-        let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": getJSON()])
-        if(req.1){
-            if let j = JSON(req.0).dictionary{
-                if (j["Success"]?.bool!)!{
-                    let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
-                    self.setFileImage(base64!)
-                    return true
+            let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": self.getJSON()])
+            if(req.1){
+                if let j = JSON(req.0).dictionary{
+                    if (j["Success"]?.bool!)!{
+                        let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
+                        self.setFileImage(base64!)
+                    }
                 }
             }
+            else{
+                print(req.0)
+            }
         }
-        else{
-            print(req.0)
-        }
-        return false
+     }
+    public convenience init(from dict:[String:JSON]){
+        self.init(
+             Extension      : dict["Extension"]!.string!
+            ,Guid           : dict["Guid"]!.string!
+            ,Name           : dict["Name"]!.string!
+            ,PreviewIcon    : dict["PreviewIcon"]!.string ?? ""
+        )
     }
+    public func getJSON()->String{
+        return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
+    }
+    
+
     public func download(loadedDelegate: @escaping (Bool)->Void, progressDelegate: @escaping (Double)->Void){
         
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
@@ -363,13 +353,13 @@ public class VSMAttachedFile{
     private func setPrevIcon(_ from : String){
         if(from != ""){
             let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            self.PreviewIcon = UIImage(data: dataDecoded)
+            _ = VSMAPI.savePicture(name:"AIFile_\(self.Guid).I", data: dataDecoded)
         }
     }
     private func setFileImage(_ from : String){
         if(from != ""){
             let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            self.ImageBase64 = UIImage(data: dataDecoded)
+            _ = VSMAPI.savePicture(name:"APFile_\(self.Guid).I", data: dataDecoded)
         }
     }
     

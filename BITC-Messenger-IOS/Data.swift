@@ -11,18 +11,17 @@ import SwiftyJSON
 
 public class VSMData{
     private let period:TimeInterval  = 2     // в секундах интервал опроса сервера на предмет наличия новых данных есть - обнавляем модель (без контактоа)
-    private let MaxCounter           = 10
     
     private var timer:RepeatingTimer
     private var timerHandler: Disposable?
     
     private var isWorking            = false
     private var internetStatus       = true
-    private var counter              = 0     // счетчик принудительного обращения к серверу 0 = обнавляем контакты
+
     
     public var NNotReadedMessages      = 0
     public var NNewRequests            = 0
-    public var IsReloadNeeded          = false
+
     
     public var Notifications           = [VSMNotification]()//???????
     
@@ -56,7 +55,13 @@ public class VSMData{
         if Profile == nil{Profile = VSMProfile()}
         if Contact == nil{Contact = VSMContact()}
         Contacts[Contact!.Id] = Contact
-        //loadContacts(loadConversations)
+        DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
+            DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
+                Loader.init(delegate: { (A, B) in
+                    self.EInit.raise(data: true)
+                })
+            )
+            ).exec()
         
         ETimerAction.raise(data: false)
         EInit.raise(data: true)
@@ -93,28 +98,15 @@ public class VSMData{
         }
         return internetStatus
     }
-    private func loadContacts(ContactType: VSMContact.ContactType, entry: VSMAPI.WebAPIEntry, delegate:((Any,Any,Any)->())?=nil){
-        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.contatcs, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], completionHandler: {(d,s) in{
-            if(!s){print("Ошибка \(d as? String)")}
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    //let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate)
-                    
-                    delegate?()
-                }
-            }
-            }()}
-        )
-    }
-    private func loadInRequests(){
+    private func loadContacts(_ _data:Any?, _ _opt:Any?){
+        let data = _data as! Data
+        let opt  = _opt as! VSMContact.ContactType
+        print("{\(data.base64EncodedData())  \(opt.rawValue)")
         
     }
-    private func loadOutRequests(){
-        
-    }
-    private func loadConversations(_ delegate:(()->())?=nil){
-        
+    private func loadConversations(_data:Any, _opt:Any){
+        let data = _data as! Data
+        print("{\(data.base64EncodedData())")
     }
 }
 //---------------------это потом

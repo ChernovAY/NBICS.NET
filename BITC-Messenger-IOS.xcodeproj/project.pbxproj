@@ -19,6 +19,7 @@
 		9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D620C032F500790CAC /* AlamoFire.swift */; };
 		9B5E196020C5419000407868 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E195F20C5419000407868 /* Profile.swift */; };
 		9B73740E20D7A4C900547CD6 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73740D20D7A4C900547CD6 /* Data.swift */; };
+		9B781B7920DA9A140060DCD9 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B781B7820DA9A140060DCD9 /* DataUtils.swift */; };
 		9BB9404720A9AF3200B60697 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* API.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
@@ -57,6 +58,7 @@
 		9B5014D620C032F500790CAC /* AlamoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamoFire.swift; sourceTree = "<group>"; };
 		9B5E195F20C5419000407868 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9B73740D20D7A4C900547CD6 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		9B781B7820DA9A140060DCD9 /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				D4FD6CBB1F55C0C10035FF66 /* Hasher.swift */,
 				9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */,
 				9B188F0020D8FF0F000177E5 /* Event.swift */,
+				9B781B7820DA9A140060DCD9 /* DataUtils.swift */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */,
 				D4BE98EF1F4C952C00AE9405 /* StartScreenViewController.swift in Sources */,
 				9B5E196020C5419000407868 /* Profile.swift in Sources */,
+				9B781B7920DA9A140060DCD9 /* DataUtils.swift in Sources */,
 				D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

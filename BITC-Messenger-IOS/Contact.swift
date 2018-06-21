@@ -118,11 +118,6 @@ public class VSMContact {
     }
     public var isOwnContact = false // потом убрать
     public var ContType         = VSMContact.ContactType.Del
-    public let EntityClass:     Int
-    public let EntityId:        Int
-    public let EntityType:      Int
-    public let EntityGuid:      String
-    
     public let Id:              Int
     public let Code:            String?
     public let Alias:           String?
@@ -134,23 +129,21 @@ public class VSMContact {
     //public let Devices: Devices
     //public let Groups: Groups
     
-    public let Guid:            String
-    
+   
     public  var IsNew:           Bool
     public  var IsOnline:        Bool
     public  var ReadOnly:        Bool
     
-    public var Photo:           UIImage?
+    public var Photo:           UIImage?{
+        get{
+            return VSMAPI.getPicture(name: "Icon_\(self.Id).I", empty: "EmptyUser")
+        }
+    }
     public var PhotoUrl:        String
     
 
     public init
-        ( EntityClass:     Int
-        , EntityId:        Int
-        , EntityType:      Int
-        , EntityGuid:      String
-        
-        , Id:              Int
+        ( Id:              Int
         , Code:            String?
         , Alias:           String?
         , Name:            String
@@ -160,8 +153,7 @@ public class VSMContact {
         
         //public let Devices: Devices
         //public let Groups: Groups
-        , Guid:            String
-        
+   
         , IsNew:           Bool
         , IsOnline:        Bool
         , ReadOnly:        Bool
@@ -170,11 +162,6 @@ public class VSMContact {
         
         , Photo:           String = ""
         ){
-        self.EntityClass    = EntityClass
-        self.EntityId       = EntityId
-        self.EntityType     = EntityType
-        self.EntityGuid     = EntityGuid
-        
         self.Id             = Id
         self.Code           = Code
         self.Alias          = Alias
@@ -185,7 +172,6 @@ public class VSMContact {
         
         //public let Devices: Devices
         //public let Groups: Groups
-        self.Guid           = Guid
         
         self.IsNew          = IsNew
         self.IsOnline       = IsOnline
@@ -193,7 +179,6 @@ public class VSMContact {
         
         self.PhotoUrl       = PhotoUrl
         
-        self.Photo = VSMAPI.getPicture(name: "Icon_\(self.Id).I", empty: "EmptyUser")
         if (self.PhotoUrl != "") {
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
             if(!s){
@@ -205,7 +190,6 @@ public class VSMContact {
                     
                     if(data.count>0){
                         _ = VSMAPI.savePicture(name:"Icon_\(self.Id).I", data: data)
-                        self.Photo = UIImage(data: data)
                     }
                 }
             }
@@ -220,18 +204,13 @@ public class VSMContact {
     
     public convenience init(from dict:[String:JSON]){
         self.init(
-            EntityClass:  dict["EntityClass"  ]!.int!
-            , EntityId:     dict["EntityId"     ]!.int!
-            , EntityType:   dict["EntityType"   ]!.int!
-            , EntityGuid:   dict["EntityGuid"   ]!.string!
-            , Id:           dict["Id"           ]!.int!
+              Id:           dict["Id"           ]!.int!
             , Code:         dict["Code"         ]?.string
             , Alias:        dict["Alias"        ]?.string
             , Name:         dict["Name"         ]!.string!
             , FirstName:    dict["FirstName"    ]!.string!
             , SurName:      dict["SurName"      ]!.string!
             , Patronymic:   dict["Patronymic"   ]!.string!
-            , Guid:         dict["Guid"         ]!.string!
             , IsNew:        dict["IsNew"        ]!.bool!
             , IsOnline:     dict["IsOnline"     ]!.bool!
             , ReadOnly:     dict["ReadOnly"     ]!.bool!
@@ -258,9 +237,6 @@ public class VSMContact {
         return nil
     }
     
-    /*public func updateContent(from dict:[String:JSON])->VSMContact{
-        
-    }*/
     //Удалит контакт и пошлет сей факТ на сервер
     /*public func remove()->Bool{
         return false
