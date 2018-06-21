@@ -58,15 +58,16 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(doSomething), for: .valueChanged)
-        
-        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
         Table.refreshControl = refreshControl
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.SendButton.layer.cornerRadius = self.SendButton.frame.height/2.0;
     }
     
     @objc func doSomething(refreshControl: UIRefreshControl) {
         Messages!.load()
        
-        // somewhere in your code you might need to call:
         refreshControl.endRefreshing()
     }
     

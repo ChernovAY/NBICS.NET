@@ -101,7 +101,7 @@ public class VSMData{
                     let data = d as! Data
                     //let _ = VSMContacts(from: data  , loadingDelegate:loadingDelegate)
                     
-                    delegate?()
+                    //delegate?()
                 }
             }
             }()}
