@@ -64,7 +64,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     @objc func doSomething(refreshControl: UIRefreshControl) {
         Messages!.load()
-       
         refreshControl.endRefreshing()
     }
     
