@@ -66,16 +66,16 @@ public class VSMData{
         if Contact == nil{Contact = VSMContact()}
         Contacts[Contact!.Id] = Contact
         DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
-            DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
-                DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
+            //DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
+                //DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
                     DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
                         Loader.init(delegate: { (A, B) in
                             self.EInit.raise(data: true)
                             self.ETimerAction.raise(data: false)
                         })
                     )
-                )
-            )
+                //)
+            //)
             
         ).exec()
     }
