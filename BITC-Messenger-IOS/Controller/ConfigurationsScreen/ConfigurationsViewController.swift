@@ -10,8 +10,9 @@ import UIKit
 
 class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
-    private var Messages: VSMMessages?
-    private let ConversetionId = VSMAPI.VSMChatsCommunication.conversetionId
+    private var EInitHandler: Disposable?
+    private let Conversation: VSMConversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
+    
     private let Screen = UIScreen.main.scale
     private let ScreenHeight = UIScreen.main.bounds.height
     private var MoveDistance = -203
@@ -26,13 +27,9 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
-            let TextMessage: String = MessageField.text!
-            VSMMessage(ConversationId: ConversetionId, Draft: false, Id: nil, Sender: VSMAPI.Contact!, Text: TextMessage, Time: Date()).sendMessage(Messages: self.Messages!, sendDelegate:{(b) in
-            {
-                if b {
-                    self.MessageField.text! = ""
-                }
-            }()})
+            //Врееееменно!!!! пока нет файлов
+            Conversation.Draft.Text = mt
+            Conversation.sendMessage(sendDelegate:Load)
         }
     }
     
@@ -43,8 +40,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Table.dataSource = self
         Table.rowHeight = UITableViewAutomaticDimension
         Table.estimatedRowHeight = 300
-        Messages = VSMMessages(ConversationId: ConversetionId, loadingDelegate: loadedMesseges)
-        Messages!.load()
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: ConfigurationsViewController.Load)}
         if (Screen == 2){
             if (ScreenHeight == 667){
                 MoveDistance = -209
@@ -59,12 +55,14 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(doSomething), for: .valueChanged)
         Table.refreshControl = refreshControl
+        Load()
+    }
+    deinit {
+        EInitHandler?.dispose()
     }
     
-    
     @objc func doSomething(refreshControl: UIRefreshControl) {
-        Messages!.load()
-       
+        self.Conversation.load(loadingDelegate: loadedMesseges)
         refreshControl.endRefreshing()
     }
     
@@ -76,7 +74,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         self.Table.reloadData()
         if b {
             DispatchQueue.main.async {
-                let indexPath = IndexPath(row: (self.Messages?.array.count)!-1, section: 0)
+                let indexPath = IndexPath(row: (self.Conversation.Messages.count)-1, section: 0)
                 self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
         }
@@ -112,21 +110,31 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (Messages?.getMessages().count)!
+        return (Conversation.Messages.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageCell {
-            
             var message: VSMMessage!
-            
-            message = Messages!.array[indexPath.row]
+           
+            message = Conversation.Messages[indexPath.row]
             cell.ConfigureCell(message: message)
             
             return cell
             
         } else {
             return UITableViewCell()
+        }
+    }
+    func Load(_ b:Bool = true){
+        if b {
+            MessageField.text = self.Conversation.Draft.Text
+            if self.Conversation.Messages.count > 0{
+                self.Conversation.load(isAfter:true, loadingDelegate: loadedMesseges)
+            }
+            else{
+                self.Conversation.load(loadingDelegate: loadedMesseges)
+            }
         }
     }
 }

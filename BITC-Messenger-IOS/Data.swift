@@ -55,7 +55,7 @@ public class VSMData{
     }
     public func getConversations(filter:String = "" )->[VSMConversation]{
         let f = filter.lowercased()
-        return self.Conversations.values.filter({(f == "" || ( ($0.Name == "" && $0.Users.first(where: ({$0.ContType != VSMContact.ContactType.Own }))!.Name.lowercased().range(of: f) != nil) || ($0.Name != "" && $0.Name.lowercased().range(of: f) != nil)))}).sorted(by: {$0.LastMessage?.Id ?? "T" > $1.LastMessage?.Id ?? "T"})
+        return self.Conversations.values.filter({(f == "" || ( ($0.Name == "" && $0.Users.first(where: ({!$0.isOwnContact}))!.Name.lowercased().range(of: f) != nil) || ($0.Name != "" && $0.Name.lowercased().range(of: f) != nil)))}).sorted(by: {$0.LastMessage?.Id ?? "T" < $1.LastMessage?.Id ?? "T"})
     }
     
     public func loadAll(){

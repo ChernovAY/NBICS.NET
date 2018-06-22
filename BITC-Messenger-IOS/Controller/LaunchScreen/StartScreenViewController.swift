@@ -9,29 +9,32 @@
 import UIKit
 
 class StartScreenViewController: UIViewController{
-    /*private var s = VSMData()*///Delegate
+    
+    private var EInitHandler: Disposable?
     
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*s.messLoaded[self] = {s in print(s)}*///Delegate
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: StartScreenViewController.NavigateToChats)}
     }
     deinit {
+        EInitHandler?.dispose()
     }
     override func viewDidAppear(_ animated: Bool) {
         if !VSMAPI.Settings.login{
             performSegue(withIdentifier: "showAuthorizationScreen", sender: self)
         }
         else {
-            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash, delegate: self.NavigateToChats)
+            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    private func NavigateToChats() {
-        performSegue(withIdentifier: "showChatsScreen", sender: self)
+    public func NavigateToChats(_ b:Bool=true) {
+        EInitHandler?.dispose()
+        if b{performSegue(withIdentifier: "showChatsScreen", sender: self)}
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {

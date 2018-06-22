@@ -11,6 +11,8 @@ import SwiftyJSON
 
 class AuthorizationViewController: UIViewController {
     
+    private var EInitHandler: Disposable?
+    
     @IBOutlet weak var LoginField: StrickTextBox!
     
     @IBOutlet weak var PasswordField: StrickTextBox!
@@ -22,8 +24,11 @@ class AuthorizationViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.hideKeyboardWhenTappedAround()
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AuthorizationViewController.NavigateToChats)}
     }
-
+    deinit {
+        EInitHandler?.dispose()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,7 +39,7 @@ class AuthorizationViewController: UIViewController {
             if (!(PasswordField.text?.isEmpty)! && !(LoginField.text?.isEmpty)!){
                 if let hash = mHasher.GetMD5Hash(inputString: PasswordField.text!) {
                     if let email = LoginField.text {
-                        VSMAPI.Settings.logIn(user: email, hash: hash, delegate: self.NavigateToChats)
+                        VSMAPI.Settings.logIn(user: email, hash: hash)
                     }
                 }
             } else {
@@ -43,11 +48,11 @@ class AuthorizationViewController: UIViewController {
             }
         }
         else {
-            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash, delegate: self.NavigateToChats)
+            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }
   
-    private func NavigateToChats() {
-        performSegue(withIdentifier: "successfulAuthorization", sender: self)
+    private func NavigateToChats(_ b: Bool=true) {
+        if b{performSegue(withIdentifier: "successfulAuthorization", sender: self)}
     }
 }

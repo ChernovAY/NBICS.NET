@@ -10,6 +10,8 @@ import UIKit
 import SwiftyJSON
 
 class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
+    private var EInitHandler: Disposable?
+    private var convs = [VSMConversation]()
     
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
@@ -19,23 +21,22 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         
         Table.delegate = self
         Table.dataSource = self
-        if let usr = VSMAPI.Profile{
-            self.UserNameLabel.setTitle("\(usr.Email) (\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
-            self.UserPhoto.image = usr.Icon
-        }
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AllChatsViewController.Load)}
         Load()
     }
-    
+    deinit {
+        EInitHandler?.dispose()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return VSMAPI.UserConversations.array.count
+        return convs.count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conv = VSMAPI.UserConversations.array[indexPath.row]
+        let conv = convs[indexPath.row]
         VSMAPI.VSMChatsCommunication.conversetionId = conv.Id
         performSegue(withIdentifier: "showChat", sender: self)
     }
@@ -53,7 +54,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             
             var conv: VSMConversation!
             
-            conv = VSMAPI.UserConversations.array[indexPath.row]
+            conv = convs[indexPath.row]
             cell.ConfigureCell(conversation: conv)
             
             return cell
@@ -63,12 +64,19 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         }
     }
     
-    private func Load() {
-        VSMConversations.VSMConversationsAssync(loadingDelegate:{(c) in{
-            VSMAPI.UserConversations = c
-            self.Table.reloadData()
-            }()
-        })
+    private func Load(_ b:Bool = true) {
+        if b{
+            convs = VSMAPI.Data.getConversations()
+            if VSMAPI.Settings.login{
+                if let usr = VSMAPI.Data.Profile{
+                    self.UserNameLabel.setTitle("\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
+                    self.UserPhoto.image = usr.Icon
+                }
+            }
+        }
+        else{
+            convs.removeAll()
+        }
+        self.Table.reloadData()
     }
-
 }
