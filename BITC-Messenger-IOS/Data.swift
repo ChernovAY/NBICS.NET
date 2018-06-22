@@ -60,7 +60,7 @@ public class VSMData{
     
     public func loadAll(){
         if timerHandler == nil{timerHandler = ETimerAction.addHandler(target: self, handler: VSMData.timerHandlerFunc)}
-        if !VSMAPI.Settings.login || isWorking {return}
+        if !VSMAPI.Settings.login /*|| isWorking */{return}
          ETimerAction.raise(data: true)
         if Profile == nil{Profile = VSMProfile()}
         if Contact == nil{Contact = VSMContact()}
@@ -89,7 +89,7 @@ public class VSMData{
     private func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
-            print("TimerFired \(Date().toTimeString())")
+            loadAll()///!!!!!!!!tst
         }
         ETimerAction.raise(data: false)
     }
