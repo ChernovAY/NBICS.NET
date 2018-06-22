@@ -61,9 +61,6 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Table.refreshControl = refreshControl
     }
     
-    override func viewDidLayoutSubviews() {
-        self.SendButton.layer.cornerRadius = self.SendButton.frame.height/2.0;
-    }
     
     @objc func doSomething(refreshControl: UIRefreshControl) {
         Messages!.load()

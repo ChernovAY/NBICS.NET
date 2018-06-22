@@ -71,7 +71,7 @@ public class VSMConversations{
 }
 
 public class VSMConversation{
-    public static let contacts: VSMContacts = VSMContacts()
+    public static let contacts: VSMContacts = VSMContacts() // потом убрать
     
     public let Id: String
     public let IsDialog: Bool

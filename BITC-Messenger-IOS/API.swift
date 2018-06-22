@@ -67,6 +67,7 @@ public class VSMAPI{
                         VSMAPI.UserContacts.addIfNotExists(from: l.array);
                         VSMConversation.contacts.addIfNotExists(from: l.array);
                         delegate();}()})
+                Data.loadAll()
             }
             if(VSMAPI.Settings.login) {
                 fill(delegate)

@@ -207,10 +207,10 @@ public class VSMContact {
               Id:           dict["Id"           ]!.int!
             , Code:         dict["Code"         ]?.string
             , Alias:        dict["Alias"        ]?.string
-            , Name:         dict["Name"         ]!.string!
-            , FirstName:    dict["FirstName"    ]!.string!
-            , SurName:      dict["SurName"      ]!.string!
-            , Patronymic:   dict["Patronymic"   ]!.string!
+            , Name:         dict["Name"         ]!.string ?? ""
+            , FirstName:    dict["FirstName"    ]!.string ?? ""
+            , SurName:      dict["SurName"      ]!.string ?? ""
+            , Patronymic:   dict["Patronymic"   ]!.string ?? ""
             , IsNew:        dict["IsNew"        ]!.bool!
             , IsOnline:     dict["IsOnline"     ]!.bool!
             , ReadOnly:     dict["ReadOnly"     ]!.bool!
