@@ -580,7 +580,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6U-Yq-m32">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6U-Yq-m32">
                                 <rect key="frame" x="74" y="111" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="4Ja-Ey-0Vx"/>
@@ -612,9 +612,9 @@
                             <constraint firstItem="UxJ-NP-3iH" firstAttribute="leading" secondItem="Q1r-LK-8gJ" secondAttribute="leading" id="oU1-09-lL7"/>
                             <constraint firstAttribute="bottom" secondItem="8aC-FD-b2M" secondAttribute="bottom" id="p4c-Vo-stZ"/>
                             <constraint firstAttribute="trailing" secondItem="UxJ-NP-3iH" secondAttribute="trailing" id="uao-W4-8Xx"/>
-                            <constraint firstItem="o6U-Yq-m32" firstAttribute="top" secondItem="5QM-rE-1jb" secondAttribute="top" id="v4T-a0-XzD"/>
+                            <constraint firstItem="o6U-Yq-m32" firstAttribute="top" secondItem="5QM-rE-1jb" secondAttribute="top" constant="15" id="v4T-a0-XzD"/>
                             <constraint firstItem="o6U-Yq-m32" firstAttribute="leading" secondItem="5QM-rE-1jb" secondAttribute="trailing" constant="8" id="vCb-rA-5Mp"/>
-                            <constraint firstItem="o6U-Yq-m32" firstAttribute="top" secondItem="at9-oR-XBN" secondAttribute="bottom" constant="8" symbolic="YES" id="ygW-sR-f03"/>
+                            <constraint firstItem="o6U-Yq-m32" firstAttribute="top" secondItem="at9-oR-XBN" secondAttribute="bottom" constant="23" id="ygW-sR-f03"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Чаты" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="8G8-CM-gyZ"/>
@@ -997,11 +997,11 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az8-nv-rNI">
-                                        <rect key="frame" x="332" y="6" width="35" height="35"/>
+                                        <rect key="frame" x="332" y="8" width="35" height="31"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="9FQ-yN-rcb"/>
-                                            <constraint firstAttribute="height" constant="35" id="oIo-uQ-AXH"/>
+                                            <constraint firstAttribute="height" constant="31" id="oIo-uQ-AXH"/>
                                         </constraints>
                                         <state key="normal" image="Send">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1017,8 +1017,8 @@
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="az8-nv-rNI" firstAttribute="leading" secondItem="2wL-hz-Imw" secondAttribute="trailing" constant="8" id="D7I-zA-lHe"/>
-                                    <constraint firstAttribute="bottom" secondItem="az8-nv-rNI" secondAttribute="bottom" constant="6" id="ITs-J4-iGL"/>
-                                    <constraint firstItem="az8-nv-rNI" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="6" id="TfE-wt-D0o"/>
+                                    <constraint firstAttribute="bottom" secondItem="az8-nv-rNI" secondAttribute="bottom" constant="8" id="ITs-J4-iGL"/>
+                                    <constraint firstItem="az8-nv-rNI" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="8" id="TfE-wt-D0o"/>
                                     <constraint firstItem="2wL-hz-Imw" firstAttribute="top" secondItem="IaE-C6-RSm" secondAttribute="top" constant="7" id="hep-SE-FSc"/>
                                     <constraint firstAttribute="bottom" secondItem="2wL-hz-Imw" secondAttribute="bottom" constant="7" id="kfq-aW-IvQ"/>
                                     <constraint firstAttribute="trailing" secondItem="az8-nv-rNI" secondAttribute="trailing" constant="8" id="ptn-ZV-imd"/>

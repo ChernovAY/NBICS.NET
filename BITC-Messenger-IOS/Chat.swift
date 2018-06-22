@@ -110,7 +110,7 @@ public class VSMMessages{
 
  public class VSMMessage{
 
-    private var isFileUploading = false
+    public var isFileUploading = false
     public  var AttachedFiles   =  Array<VSMAttachedFile>()
     
     public let ConversationId:  String

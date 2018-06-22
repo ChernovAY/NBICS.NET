@@ -67,11 +67,22 @@ public class VSMConversations{
     public func getConversations()->[VSMConversation]{
         return self.array
     }
-    public class func load(){}
 }
 
 public class VSMConversation{
     public static let contacts: VSMContacts = VSMContacts() // потом убрать
+   
+    private var N:Int = 20
+    private var Last:String{
+        get{
+            return Messages.last?.Id ?? ""
+        }
+    }
+    private var First:String{
+        get{
+            return Messages.first?.Id ?? ""
+        }
+    }
     
     public let Id: String
     public let IsDialog: Bool
@@ -79,7 +90,7 @@ public class VSMConversation{
     public let Name: String
     public var NotReadedMessagesCount: Int
     public var LastMessage: VSMMessage?
-    public var Draft: VSMMessage?//потом сохранять!!!!!
+    public var Draft: VSMMessage?
     public var Users: [VSMContact]
     public var Messages = [VSMMessage]()
     public init
@@ -98,6 +109,7 @@ public class VSMConversation{
         self.Name                   = Name
         self.NotReadedMessagesCount = NotReadedMessagesCount
         self.Users                  = Users
+        self.Draft                  = VSMMessage(ConversationId: Id, Draft: false, Id: nil, Sender: Users.first(where: ({$0.ContType == VSMContact.ContactType.Own})), Text: "", Time: Date())
     }
     public convenience init(from dict:[String:JSON]){
         var usrs = [VSMContact]()///////////!!!!!!!!! Переделать для Data, а это потм удалить!!!!!!!!!!!
@@ -118,6 +130,71 @@ public class VSMConversation{
         ,Name:                  dict["Name"                    ]!.string!
         ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
         ,Users:                 usrs
+        )
+    }
+    public func sendMessage(sendDelegate: ((Bool, String)->Void)? = nil){
+        if self.Draft != nil && self.Draft!.isFileUploading || self.Id != "New" {return;}
+        let p = ["Message":self.Draft!.getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
+        
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
+            if(!s){
+                print("Ошибка \(d as? String)")
+                if let ms = sendDelegate {
+                    ms(false, self.Id)
+                }
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        if json.dictionary!["Success"]!.bool! {
+                            if let ms = sendDelegate {
+                                ms(true, self.Id)
+                            }
+                            self.load(isAfter: true)
+                        }
+                    }
+                }
+                if let ms = sendDelegate {
+                    ms(false, self.Id)
+                }
+            }
+            }()})
+    }
+    
+    public func load(isAfter:Bool=false, loadingDelegate:((Bool, String)->Void)? = nil){
+        let retFlag = isAfter || self.Last == ""
+        let prms = ["ConversationId":Id, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
+            
+            if(!s){
+                print( "Ошибка \(d as? String)")
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        let arr = json["Messages"].array!
+                        var arrMsg = [VSMMessage]()
+                        for c in arr{
+                            if let dict = c.dictionary{
+                                arrMsg.append(VSMMessage(from:dict))
+                            }
+                        }
+                        if isAfter{
+                            self.Messages.append(contentsOf: arrMsg)
+                        }
+                        else
+                        {
+                            self.Messages.insert(contentsOf: arrMsg, at: 0)
+                        }
+                        
+                        if let ld = loadingDelegate { ld(retFlag, self.Id)}
+                    }
+                }
+            }
+            
+            }()}
         )
     }
 }

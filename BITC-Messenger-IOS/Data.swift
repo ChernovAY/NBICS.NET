@@ -49,6 +49,15 @@ public class VSMData{
         Profile = nil
         Contact = nil
     }
+    public func getContacts(type: VSMContact.ContactType, filter:String = "" )->[VSMContact]{
+        let f = filter.lowercased()
+        return self.Contacts.values.filter({ $0.ContType == type && (f == "" || $0.Name.lowercased().range(of: f) != nil) }).sorted(by: {$0.Name > $1.Name})
+    }
+    public func getConversations(filter:String = "" )->[VSMConversation]{
+        let f = filter.lowercased()
+        return self.Conversations.values.filter({(f == "" || ( ($0.Name == "" && $0.Users.first(where: ({$0.ContType != VSMContact.ContactType.Own }))!.Name.lowercased().range(of: f) != nil) || ($0.Name != "" && $0.Name.lowercased().range(of: f) != nil)))}).sorted(by: {$0.LastMessage?.Id ?? "T" > $1.LastMessage?.Id ?? "T"})
+    }
+    
     public func loadAll(){
         if timerHandler == nil{timerHandler = ETimerAction.addHandler(target: self, handler: VSMData.timerHandlerFunc)}
         if !VSMAPI.Settings.login || isWorking {return}
@@ -134,10 +143,6 @@ public class VSMData{
                         let draft = c.Draft
                         nc.Draft = draft
                         nc.Messages = msgs
-                    }
-                    else{
-                        let draft = VSMMessage(ConversationId: nc.Id, Draft: false, Id: nil, Sender: Contact!, Text: "", Time: Date())
-                        nc.Draft = draft
                     }
                     Conversations[nc.Id] = nc
                 }
