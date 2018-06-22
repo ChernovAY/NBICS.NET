@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var PatronymicLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let usr = VSMAPI.Profile{
+        if let usr = VSMAPI.Data.Profile{
             self.UserPhoto?.clipsToBounds = true
             self.UserPhoto!.layer.cornerRadius = 30
             self.UserPhoto.image = usr.Icon

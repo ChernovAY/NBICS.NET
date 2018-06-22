@@ -10,103 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 //
-public class VSMMessages{
-
-    private var N:Int = 20
-    private var Last = ""
-    private var First = ""
-    private var ConversationId = ""
-    
-    public var array:[VSMMessage] = Array<VSMMessage>()
-    
-    public var selectedText = ""
-    
-    public  var loadingDelegate:((Bool)->Void)? = nil
-
-    public init(ConversationId:String, loadingDelegate:((Bool)->Void)?=nil){
-        self.ConversationId = ConversationId
-        self.loadingDelegate = loadingDelegate
-    }
-    
-    public convenience init(ConversationId: String, array:[VSMMessage], loadingDelegate:((Bool)->Void)?=nil){
-        self.init(ConversationId: ConversationId, loadingDelegate: loadingDelegate)
-        
-        self.array = array
-        if self.array.count>0{
-            self.Last = self.array.last!.Id
-        }
-    }
-    convenience init(ConversationId:String, from data: Data, loadingDelegate:((Bool)->Void)?=nil)
-    {
-        self.init(ConversationId: ConversationId, loadingDelegate: loadingDelegate)
-        
-        if let json = try? JSON(data: data) {
-            let arr = json.array!
-            for c in arr{
-                if let dict = c.dictionary{
-                    array.append(VSMMessage(from:dict))
-                }
-            }
-            if self.array.count>0{
-                self.Last = self.array.last!.Id
-                self.First = self.array.first!.Id
-            }
-            if let ld = loadingDelegate { ld(true)}
-        }
-    }
-    
-    private func setFilter(_ what:String?=nil){
-        if let mask = what{
-            self.selectedText = mask.lowercased()
-        }
-        else if self.selectedText != ""{
-            self.selectedText = ""
-        }
-    }
-    public func getMessages(_ what : String?=nil)->[VSMMessage]{
-        setFilter(what)
-        return self.selectedText == "" ? self.array : self.array.filter({ $0.Text.lowercased().range(of: self.selectedText) != nil })
-    }
-    public func load(isAfter:Bool=false){
-        var retFlag = isAfter || self.Last == ""
-        let prms = ["ConversationId":ConversationId, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
-        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
-            
-            if(!s){
-                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    if let json = try? JSON(data: data) {
-                        let arr = json["Messages"].array!
-                        var arrMsg = [VSMMessage]()
-                        for c in arr{
-                            if let dict = c.dictionary{
-                                arrMsg.append(VSMMessage(from:dict))
-                            }
-                        }
-                        if isAfter{
-                            self.array.append(contentsOf: arrMsg)
-                        }
-                        else
-                        {
-                            self.array.insert(contentsOf: arrMsg, at: 0)
-                        }
-
-                        if self.array.count>0{
-                            self.Last = self.array.last!.Id
-                            self.First = self.array.first!.Id
-                        }
-                        if let ld = self.loadingDelegate { ld(retFlag)}
-                    }
-                }
-            }
-            
-            }()}
-        )
-    }
-}
 
  public class VSMMessage{
 
@@ -117,7 +20,7 @@ public class VSMMessages{
     public let Draft:           Bool
     public let Id:              String
     public let Sender:          VSMContact?
-    public let Text:            String
+    public var Text:            String
     public let Time:            Date
     public init
         (ConversationId:  String
@@ -145,7 +48,7 @@ public class VSMMessages{
             ConversationId: dict["ConversationId"]!.string!
             ,Draft:         dict["Draft"]!.bool!
             ,Id:            dict["Id"]!.string
-            ,Sender:        VSMConversation.contacts.findOrCreate(what: dict["Sender"]!.dictionary)
+            ,Sender:        VSMAPI.Data.Contacts[(dict["Sender"]!.dictionary?["Id"]?.int) ?? 0]
             ,Text:          dict["Text"]!.string!
             ,Time:          Date(fromString: dict["Time"]!.string!)
         )
@@ -160,38 +63,7 @@ public class VSMMessages{
         }
     }
     
-    public func sendMessage(Messages: VSMMessages? = nil, sendDelegate: ((Bool)->Void)? = nil){
-        if self.isFileUploading || self.Id != "New" {return;}
-        let p = ["Message":getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
-        
-        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
-            if(!s){
-                UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-                if let ms = sendDelegate {
-                    ms(false)
-                }
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    if let json = try? JSON(data: data) {
-                        if json.dictionary!["Success"]!.bool! {
-                            if let ms = sendDelegate {
-                                 ms(true)
-                            }
-                            if let mss = Messages{
-                                mss.load(isAfter: true)
-                            }
-                        }
-                    }
-                }
-                if let ms = sendDelegate {
-                    ms(false)
-                }
-            }
-            }()})
-    }
-    
+     
     public func attachFile(filePath: String, progressDelegate: @escaping (Double)->Void){
         self.isFileUploading = true
         VSMAttachedFile.upload(filePath: filePath, loadedDelegate: {af in {
@@ -209,7 +81,7 @@ public class VSMMessages{
         j =
         ["ConversationId": ConversationId
         ,"Text": Text
-        ,"Sender":["Id":VSMAPI.Contact!.Id] as [String : Any]
+        ,"Sender":["Id":VSMAPI.Data.Contact!.Id] as [String : Any]
         ] as [String : Any]
         if attArray.count>0{
             j["AttachedFiles"] = attArray

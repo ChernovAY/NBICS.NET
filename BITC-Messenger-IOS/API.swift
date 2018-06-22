@@ -51,26 +51,11 @@ public class VSMAPI{
         }
         public static func logOut(){
            Settings.user = ""; Settings.hash = ""; Settings.login = false;
-            VSMAPI.Profile = nil
-            VSMAPI.Contact = nil
-            VSMAPI.UserConversations.array.removeAll()
-            VSMAPI.UserContacts.array.removeAll()///Потом зачистить
-            VSMAPI.deleteCommunicatorFiles()
             VSMAPI.deleteCommunicatorFiles()
         }
-        public static func logIn(user:String, hash: String, delegate: @escaping ()->Void ){
-            func fill(_ delegate: @escaping ()->Void){
-                VSMAPI.Profile = VSMProfile()
-                VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in
-                    {
-                        VSMAPI.getUserContact();
-                        VSMAPI.UserContacts.addIfNotExists(from: l.array);
-                        VSMConversation.contacts.addIfNotExists(from: l.array);
-                        delegate();}()})
-                Data.loadAll()
-            }
+        public static func logIn(user:String, hash: String/*, delegate: @escaping ()->Void */){
             if(VSMAPI.Settings.login) {
-                fill(delegate)
+                Data.loadAll()
                 return;
             }
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
@@ -84,7 +69,7 @@ public class VSMAPI{
                         switch result {
                         case "0":
                             Settings.user = user; Settings.hash = hash; Settings.login = true;
-                            fill(delegate)
+                            Data.loadAll()
                         case "1":
                             let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                             button2Alert.show()
@@ -204,40 +189,10 @@ public class VSMAPI{
             }
     }
     //----------------------------------------------------------------------------------------
-    //
-    //
-    //
-    //
-    //
-    
-    
-    public static var UserContacts = VSMContacts()
-    public static var UserConversations = VSMConversations()
-    public static var Profile : VSMProfile?
-    public static var Contact : VSMContact?
-    
+   
     public static var Data = VSMData()
     
     public struct VSMChatsCommunication{
         public static var conversetionId = ""
-    }
-    
-/////////////////////
-    private static func getUserContact(){
-        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
-        
-        if(!z.1){
-            UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
-        }
-        else{
-            if z.0 is Data {
-                let data = z.0 as! Data
-                if let json = try? JSON(data: data) {
-                    let dict = json.dictionary!
-                    VSMAPI.Contact = VSMConversation.contacts.findOrCreate(what: dict)
-                    VSMAPI.Contact!.isOwnContact = true
-                }
-            }
-        }
     }
 }

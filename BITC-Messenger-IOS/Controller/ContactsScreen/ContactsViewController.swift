@@ -9,22 +9,15 @@
 import UIKit
 
 class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+    
+    private var EInitHandler: Disposable?
+    
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var Search: UISearchBar!
     
     
-    //tst-->
-    private func say(_ c:Bool){
-        if(c){
-            print(self.mess!)
-        }
-    }
-    private var conv =  VSMConversations()
-    private var mess : VSMMessages?
-    //tst--<
-
     private var cArray   = [VSMContact]()
+    
     var refreshControl:UIRefreshControl!
  
     
@@ -37,10 +30,12 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
-        LoadContacts()
-        
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: ContactsViewController.Load)}
+        Load()
     }
-
+    deinit {
+        EInitHandler?.dispose()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -83,17 +78,18 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
        else{
 
         }
-        self.cArray = VSMAPI.UserContacts.getContacts(searchBar.text)
+        self.cArray = VSMAPI.Data.getContacts(type: VSMContact.ContactType.Cont, filter: searchBar.text ?? "")
         
         Table.reloadData()
     }
 
-    private func LoadContacts() {
-            VSMContacts.VSMContactsAssync(loadingDelegate:{(l) in{
-                VSMAPI.UserContacts = l
-                VSMConversation.contacts.addIfNotExists(from: l.array)
-                self.cArray = l.getContacts()
-                self.Table.reloadData()
-            }()})
+    private func Load(_ b:Bool=true) {
+        if(b){
+            cArray = VSMAPI.Data.getContacts(type: VSMContact.ContactType.Cont)
+        }
+        else{
+            cArray.removeAll()
+        }
+        self.Table.reloadData()
     }
 }
