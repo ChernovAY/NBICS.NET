@@ -32,7 +32,7 @@ public class ContactCell : UITableViewCell {
 
 public class MessageCell : UITableViewCell {
     
-    private var mMessage: VSMMessage!
+    public var mMessage: VSMMessage!
     
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverMessageLabel: UILabel!

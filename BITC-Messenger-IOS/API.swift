@@ -115,6 +115,8 @@ public class VSMAPI{
         
         case NNotReadedMsgs         = "VSM.Web.Plugins.Contacts/ContactsHome/GetNotReadedMessagesCount"
         case NContReqs              = "VSM.Web.Plugins.Contacts/ContactsHome/GetInContactsRequestsCount"
+        
+        case ContactsRequests       = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsRequests"
     
     }
     // Session Manager Configurations!!!!!!!
