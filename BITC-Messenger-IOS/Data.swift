@@ -89,9 +89,11 @@ public class VSMData{
     private func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
+            let _NNotReadedMessages = NNotReadedMessages
+            let _NNewRequests       = NNewRequests
+            
             loadAll()///!!!!!!!!tst
         }
-        ETimerAction.raise(data: false)
     }
     private func timerHandlerFunc(_ data: Bool){
         isWorking = data

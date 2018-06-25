@@ -88,17 +88,16 @@ public class VSMAPI{
     }
 
     public enum WebAPIEntry:String{
-    
         case login                  = "Account/Login" //+++
-        case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"
-        case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"
+        case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"//---
+        case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"//---
     
         case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation" //+++
         case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"  //+++
-        case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfileApi"
+        case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfileApi" //+++
         
         case contatcs               = "VSM.Web.Plugins.Contacts/ContactsHome/GetContacts"        //+++
-        case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"
+        case userContactAvatar      = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsPhotosByUrl"//----
         case getIcon                = ""    //+++
     
         case lastConversationList   = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserLastConversationList"   //+++
@@ -114,6 +113,8 @@ public class VSMAPI{
         case fileUpload             = "VSM.Web.Plugins.Contacts/ContactsHome/UploadMessageFileWithoutDraft" //+++
         case fileDrop               = "VSM.Web.Plugins.Contacts/ContactsHome/RemoveMessageFileFromServerWithoutDraft"   //+++
         
+        case NNotReadedMsgs         = "VSM.Web.Plugins.Contacts/ContactsHome/GetNotReadedMessagesCount"
+        case NContReqs              = "VSM.Web.Plugins.Contacts/ContactsHome/GetInContactsRequestsCount"
     
     }
     // Session Manager Configurations!!!!!!!

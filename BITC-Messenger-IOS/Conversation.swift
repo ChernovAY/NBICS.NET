@@ -69,7 +69,6 @@ public class VSMConversation{
                         if json.dictionary!["Success"]!.bool! {
                             VSMAPI.Data.loadAll()
                             //self.load(isAfter: true,loadingDelegate:sendDelegate)
-                            
                         }
                     }
                 }
