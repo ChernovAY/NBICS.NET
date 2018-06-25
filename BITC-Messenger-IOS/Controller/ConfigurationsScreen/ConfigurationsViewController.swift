@@ -90,9 +90,9 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
                     let indexPath = IndexPath(row: (self.Conversation.Messages.count)-1, section: 0)
                     self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
                     self.scrollN = false
-                    self.lastMessage = self.Conversation.Messages.last
                     //markReaded
                 }
+                self.lastMessage = self.Conversation.Messages.last
             }
         }
         Table.isHidden = false

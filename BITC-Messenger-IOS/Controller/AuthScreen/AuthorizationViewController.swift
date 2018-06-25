@@ -53,6 +53,7 @@ class AuthorizationViewController: UIViewController {
     }
   
     private func NavigateToChats(_ b: Bool=true) {
+        EInitHandler?.dispose()
         if b{performSegue(withIdentifier: "successfulAuthorization", sender: self)}
     }
 }
