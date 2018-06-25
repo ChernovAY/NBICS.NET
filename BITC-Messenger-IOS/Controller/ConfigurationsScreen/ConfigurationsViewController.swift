@@ -9,7 +9,9 @@
 import UIKit
 
 class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-
+    
+    private var scrollN = false
+    private var lastMessage:VSMMessage?
     private var EInitHandler: Disposable?
     private let Conversation: VSMConversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
     
@@ -30,7 +32,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Врееееменно!!!! пока нет файлов
             Conversation.Draft.Text = mt
-            Conversation.sendMessage(sendDelegate:Load)
+            if VSMAPI.Connectivity.isConn{
+                self.scrollN = true
+                Conversation.sendMessage(sendDelegate:Load)
+                MessageField.text = ""
+            }
         }
     }
     
@@ -56,7 +62,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(doSomething), for: .valueChanged)
         Table.refreshControl = refreshControl
+        scrollN = true
+        lastMessage = Conversation.Messages.last
         Load()
+        NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
+        
     }
     deinit {
         EInitHandler?.dispose()
@@ -75,10 +85,13 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         self.Table.reloadData()
         if b {
             DispatchQueue.main.async {
-                if (self.Conversation.Messages.count != 0){
+                let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell
+                if ((lastVisibleMSG?.mMessage === self.lastMessage) || self.scrollN) && self.Conversation.Messages.count > 0 /*&& self.Conversation.NotReadedMessagesCount > 0*/{
                     let indexPath = IndexPath(row: (self.Conversation.Messages.count)-1, section: 0)
                     self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                    
+                    self.scrollN = false
+                    self.lastMessage = self.Conversation.Messages.last
+                    //markReaded
                 }
             }
         }
@@ -132,7 +145,8 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     func Load(_ b:Bool = true){
         if b {
-            MessageField.text = self.Conversation.Draft.Text
+            //if()
+            //MessageField.text = self.Conversation.Draft.Text
             if self.Conversation.Messages.count > 0{
                 self.Conversation.load(isAfter:true, loadingDelegate: loadedMesseges)
             }

@@ -1157,7 +1157,7 @@
                     <connections>
                         <outlet property="ActivityIndicator" destination="PKv-zr-WiM" id="zjK-Xr-b0N"/>
                         <outlet property="MessageField" destination="2wL-hz-Imw" id="7aG-rL-GEf"/>
-                        <outlet property="NameChat" destination="unw-am-zGH" id="X7F-cZ-4Hb"/>
+                        <outlet property="NameChat" destination="unw-am-zGH" id="ch1-eX-Hnn"/>
                         <outlet property="Table" destination="CUZ-1W-PVh" id="d8g-wV-8bJ"/>
                     </connections>
                 </viewController>
