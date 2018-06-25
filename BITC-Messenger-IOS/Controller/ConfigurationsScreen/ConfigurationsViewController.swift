@@ -24,6 +24,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var NameChat: UINavigationItem!
     @IBAction func sendMessageButton(_ sender: Any) {
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -74,8 +75,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         self.Table.reloadData()
         if b {
             DispatchQueue.main.async {
-                let indexPath = IndexPath(row: (self.Conversation.Messages.count)-1, section: 0)
-                self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                if (self.Conversation.Messages.count != 0){
+                    let indexPath = IndexPath(row: (self.Conversation.Messages.count)-1, section: 0)
+                    self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    
+                }
             }
         }
         Table.isHidden = false

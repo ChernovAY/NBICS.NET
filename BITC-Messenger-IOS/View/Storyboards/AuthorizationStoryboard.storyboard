@@ -947,7 +947,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Профиль" id="BeO-hk-P82">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="edit" id="ycb-vh-iLI">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Item" image="edit" id="ycb-vh-iLI">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
@@ -969,7 +969,7 @@
             </objects>
             <point key="canvasLocation" x="1560" y="934.85915492957747"/>
         </scene>
-        <!--Конкретный чат-->
+        <!--Configurations View Controller-->
         <scene sceneID="9zx-6A-Ld9">
             <objects>
                 <viewController storyboardIdentifier="ConfigurationsViewController" id="cJv-ws-YBb" customClass="ConfigurationsViewController" customModule="BITC_Messenger_IOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -1152,11 +1152,12 @@
                             <constraint firstItem="5Bk-Ys-RVy" firstAttribute="top" secondItem="jHg-Zd-oT0" secondAttribute="top" id="zFl-JL-MpP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Конкретный чат" id="unw-am-zGH"/>
+                    <navigationItem key="navigationItem" id="unw-am-zGH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ActivityIndicator" destination="PKv-zr-WiM" id="zjK-Xr-b0N"/>
                         <outlet property="MessageField" destination="2wL-hz-Imw" id="7aG-rL-GEf"/>
+                        <outlet property="NameChat" destination="unw-am-zGH" id="X7F-cZ-4Hb"/>
                         <outlet property="Table" destination="CUZ-1W-PVh" id="d8g-wV-8bJ"/>
                     </connections>
                 </viewController>
@@ -1238,7 +1239,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Qw-VlD">
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Qw-VlD">
                                                     <rect key="frame" x="283" y="19" width="30" height="42"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="uuJ-bf-zkU"/>
