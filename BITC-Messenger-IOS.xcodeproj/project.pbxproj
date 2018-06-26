@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B220A995887C36CEB78A733 /* Pods_BITC_Messenger_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */; };
 		569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */; };
+		56A0E54320E2436C00AC29F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56A0E54220E2436C00AC29F7 /* GoogleService-Info.plist */; };
 		56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9E7E120C80B54009F48BE /* MessegesViewController.swift */; };
 		9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */; };
 		9B188F0120D8FF0F000177E5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188F0020D8FF0F000177E5 /* Event.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		462BA1434CFD9532DC3DDD58 /* Pods-BITC-Messenger-IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.release.xcconfig"; sourceTree = "<group>"; };
 		569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		56A0E54220E2436C00AC29F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		56F9E7E120C80B54009F48BE /* MessegesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessegesViewController.swift; path = Controller/MessegesViewController.swift; sourceTree = "<group>"; };
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				D438FF3A1F4C83FE003FC42D /* View */,
 				D4BE98EA1F4C8F7000AE9405 /* Controller */,
 				D4E3252B1F4C82DC00554DB2 /* AppDelegate.swift */,
+				56A0E54220E2436C00AC29F7 /* GoogleService-Info.plist */,
 				D4E325351F4C82DC00554DB2 /* Assets.xcassets */,
 				D4E3253A1F4C82DC00554DB2 /* Info.plist */,
 				D4FD6CBA1F55C07B0035FF66 /* Bridge.h */,
@@ -405,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4BE98E91F4C8A9100AE9405 /* StartStoryboard.storyboard in Resources */,
+				56A0E54320E2436C00AC29F7 /* GoogleService-Info.plist in Resources */,
 				D4E325361F4C82DC00554DB2 /* Assets.xcassets in Resources */,
 				D45D962E1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard in Resources */,
 			);
@@ -439,12 +443,20 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

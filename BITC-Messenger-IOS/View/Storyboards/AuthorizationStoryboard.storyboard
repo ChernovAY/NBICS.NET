@@ -1307,16 +1307,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.NET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DdC-UL-qcl">
-                                <rect key="frame" x="115" y="20" width="90" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="tHT-Xz-Usr"/>
-                                    <constraint firstAttribute="height" constant="21" id="zXh-qw-hEd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Это коммуникатор, сервис обмена сообщениями, конфигурациями и файлами сети NBICS.NET" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNy-er-cRB">
                                 <rect key="frame" x="7.5" y="374" width="305" height="76"/>
                                 <constraints>
@@ -1334,10 +1324,10 @@
                                     <constraint firstAttribute="width" constant="20" id="UDE-K0-cIx"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.Чат" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPS-be-tIh">
-                                <rect key="frame" x="98" y="273" width="124" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NBICS.NET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPS-be-tIh">
+                                <rect key="frame" x="95" y="273" width="131" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="124" id="uxd-B9-ohQ"/>
+                                    <constraint firstAttribute="width" constant="131" id="uxd-B9-ohQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1352,9 +1342,7 @@
                             <constraint firstItem="Gtg-bi-MHn" firstAttribute="top" secondItem="WPS-be-tIh" secondAttribute="bottom" constant="273" id="hlm-25-q6E"/>
                             <constraint firstItem="Gtg-bi-MHn" firstAttribute="top" secondItem="lNy-er-cRB" secondAttribute="bottom" constant="118" id="jZG-WA-T0q"/>
                             <constraint firstItem="lNy-er-cRB" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="kmp-Gb-kss"/>
-                            <constraint firstItem="DdC-UL-qcl" firstAttribute="top" secondItem="g7J-zM-cSx" secondAttribute="bottom" id="njL-TF-wrw"/>
                             <constraint firstItem="WPS-be-tIh" firstAttribute="centerY" secondItem="yvW-NO-nkb" secondAttribute="centerY" id="xW8-jE-p3K"/>
-                            <constraint firstItem="DdC-UL-qcl" firstAttribute="centerX" secondItem="yvW-NO-nkb" secondAttribute="centerX" id="xot-Ur-K19"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PRv-iC-YOW"/>
@@ -1366,7 +1354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5C-gP-j1n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1210" y="197"/>
+            <point key="canvasLocation" x="-1211.25" y="196.47887323943661"/>
         </scene>
     </scenes>
     <resources>
@@ -1383,7 +1371,7 @@
         <image name="write" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Doa-y2-I3h"/>
+        <segue reference="9Ci-wZ-i6i"/>
         <segue reference="iHP-2j-sc0"/>
     </inferredMetricsTieBreakers>
 </document>
