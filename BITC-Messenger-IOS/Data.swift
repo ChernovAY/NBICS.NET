@@ -51,7 +51,7 @@ public class VSMData{
     }
     public func getContacts(type: VSMContact.ContactType, filter:String = "" )->[VSMContact]{
         let f = filter.lowercased()
-        return self.Contacts.values.filter({ $0.ContType == type && (f == "" || $0.Name.lowercased().range(of: f) != nil) }).sorted(by: {$0.Name > $1.Name})
+        return self.Contacts.values.filter({ $0.ContType == type && (f == "" || $0.Name.lowercased().range(of: f) != nil) }).sorted(by: {$0.Name < $1.Name})
     }
     public func getConversations(filter:String = "" )->[VSMConversation]{
         let f = filter.lowercased()
@@ -65,18 +65,22 @@ public class VSMData{
         if Profile == nil{Profile = VSMProfile()}
         if Contact == nil{Contact = VSMContact()}
         Contacts[Contact!.Id] = Contact
-        DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
-            DataLoader.init(params:["IsIn":"True", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
-                DataLoader.init(params:["IsIn":"False", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
-                    DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
-                        Loader.init(delegate: { (A, B) in
-                            self.EInit.raise(data: true)
-                            self.ETimerAction.raise(data: false)
-                        })
+
+        DataLoader.init(entry: .NNotReadedMsgs, delegate: notreadedMessages, next:
+            DataLoader.init(entry: .NContReqs, delegate: newReq, next:
+                DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
+                    DataLoader.init(params:["IsIn":"True", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
+                        DataLoader.init(params:["IsIn":"False", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
+                            DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
+                                Loader.init(delegate: { (A, B) in
+                                    self.EInit.raise(data: true)
+                                    self.ETimerAction.raise(data: false)
+                                })
+                            )
+                        )
                     )
                 )
             )
-            
         ).exec()
     }
     public var EInit            =     Event<Bool>()
@@ -89,10 +93,21 @@ public class VSMData{
     private func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
-            //let _NNotReadedMessages = NNotReadedMessages
-            //let _NNewRequests       = NNewRequests
-            
-            loadAll()///!!!!!!!!tst
+            let _NNotReadedMessages = NNotReadedMessages
+            let _NNewRequests       = NNewRequests
+            DataLoader.init(entry: .NNotReadedMsgs, delegate: notreadedMessages, next:
+                DataLoader.init(entry: .NContReqs, delegate: newReq, next:
+                    Loader.init(delegate: { (A, B) in
+                        if _NNotReadedMessages != self.NNotReadedMessages || _NNewRequests != self.NNewRequests {
+                        self.EInit.raise(data: true)
+                             self.loadAll()
+                        }
+                        else{
+                            self.ETimerAction.raise(data: false)
+                        }
+                    })
+                )
+            ).exec()
         }
     }
     private func timerHandlerFunc(_ data: Bool){
@@ -102,6 +117,21 @@ public class VSMData{
         }
         else{
             timer.resume()
+        }
+    }
+    
+    private func notreadedMessages(_ _data:Any?, _ _opt:Any?){
+        let data = _data as! Data
+        if let json = try? JSON(data: data).dictionary! {
+            if let n = json["NotReadedMessagesCount"]?.int{
+                self.NNotReadedMessages = n
+            }
+        }
+    }
+    private func newReq(_ _data:Any?, _ _opt:Any?){
+        let data = _data as! Data
+        if let n = String(data: data, encoding: .utf8){
+            self.NNewRequests = Int(n)!
         }
     }
     private func internetStatusFlag()->Bool{
