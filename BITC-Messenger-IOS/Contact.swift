@@ -95,7 +95,7 @@ public class VSMContact {
                     let data = d as! Data
                     
                     if(data.count>0){
-                        _ = VSMAPI.savePicture(name:"Icon_\(self.Id).I", data: data)
+                        _ = VSMAPI.saveFile(name:"Icon_\(self.Id).I", data: data)
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class VSMContact {
         }
         else if Photo != "" {
             if let dataDecoded  = Data(base64Encoded: Photo, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
-                _ = VSMAPI.savePicture(name:"Icon_\(self.Id).I", data: dataDecoded)
+                _ = VSMAPI.saveFile(name:"Icon_\(self.Id).I", data: dataDecoded)
             }
         }
     }
@@ -125,7 +125,19 @@ public class VSMContact {
         )
     }
     public convenience init?(){
-        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+        var z : (Any, Bool)
+        if VSMAPI.Connectivity.isConn{
+            z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+            _ = VSMAPI.saveFile(name: VSMAPI.WebAPIEntry.userInformation.rawValue + ".I", data: z.0 as! Data)
+        }
+        else{
+            if let d = VSMAPI.getFile(name: VSMAPI.WebAPIEntry.userInformation.rawValue + ".I"){
+                z = (d,true)
+            }
+            else{
+                z = ("И интернета нет и данные не сохранены",false)
+            }
+        }
         if(!z.1){
             print("Ошибка \(z.0 as? String)")
         }

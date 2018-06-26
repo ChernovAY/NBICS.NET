@@ -17,7 +17,6 @@ public class VSMData{
     
     private var isWorking            = false
     private var internetStatus       = true
-
     
     public var NNotReadedMessages      = 0
     public var NNewRequests            = 0

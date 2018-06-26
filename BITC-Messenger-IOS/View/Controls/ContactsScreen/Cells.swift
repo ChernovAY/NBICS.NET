@@ -58,7 +58,7 @@ public class MessageCell : UITableViewCell {
         SenderMessageLabel.numberOfLines = 0
         ReceiverMessageLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         ReceiverMessageLabel.numberOfLines = 0
-        if (message.Text != ""){
+        //if (message.Text != ""){
             if (message.Sender?.isOwnContact == false) {
                 SenderMessageLabel.text = ""
                 SenderMessageTimeLabel.text = ""
@@ -76,7 +76,7 @@ public class MessageCell : UITableViewCell {
                 SenderView.isHidden = false
                 
             }
-        }
+        //}
         self.backgroundColor = UIColor.clear
     }
 }

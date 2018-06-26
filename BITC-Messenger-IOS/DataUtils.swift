@@ -34,16 +34,25 @@ class DataLoader:Loader{
         super.init(next:next, delegate:delegate, opt:opt)
     }
     override func exec(_ parm:Any?=nil){
-        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: entry, params: params, completionHandler: {(d,s) in{
-            if(!s){print("Ошибка \(d as? String)")}
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    super.exec(data)
-                    self.next?.exec()
+        if VSMAPI.Connectivity.isConn{
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: entry, params: params, completionHandler: {(d,s) in{
+                if(!s){print("Ошибка \(d as? String)")}
+                else{
+                    if d is Data {
+                        let data = d as! Data
+                        _ = VSMAPI.saveFile(name: self.entry.rawValue + ".I", data: data)
+                        super.exec(data)
+                        self.next?.exec()
+                    }
                 }
-            }
             }()}
-        )
+            )
+        }
+        else{
+            if let data = VSMAPI.getFile(name: self.entry.rawValue + ".I"){
+                super.exec(data)
+                self.next?.exec()
+            }
+        }
     }
 }

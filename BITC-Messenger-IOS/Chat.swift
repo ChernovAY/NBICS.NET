@@ -229,13 +229,13 @@ public class VSMAttachedFile{
     private func setPrevIcon(_ from : String){
         if(from != ""){
             let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            _ = VSMAPI.savePicture(name:"AIFile_\(self.Guid).I", data: dataDecoded)
+            _ = VSMAPI.saveFile(name:"AIFile_\(self.Guid).I", data: dataDecoded)
         }
     }
     private func setFileImage(_ from : String){
         if(from != ""){
             let dataDecoded  = Data(base64Encoded: from, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
-            _ = VSMAPI.savePicture(name:"APFile_\(self.Guid).I", data: dataDecoded)
+            _ = VSMAPI.saveFile(name:"APFile_\(self.Guid).I", data: dataDecoded)
         }
     }
     
