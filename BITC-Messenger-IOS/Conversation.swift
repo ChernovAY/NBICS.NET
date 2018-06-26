@@ -78,7 +78,26 @@ public class VSMConversation{
             }
             }()})
     }
-    
+    public func markReaded(){
+        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.messageReaded, params: ["ConversationId":self.Id, "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash]) { (d, s) in
+            if(!s){
+                print( "Ошибка \(d as? String)")
+            }
+            else{
+                if d is Data {
+                    let data = d as! Data
+                    if let json = try? JSON(data: data) {
+                        if json.dictionary!["Success"]!.bool! {
+                            VSMAPI.Data.ETimerAction.raise(data: true)
+                            VSMAPI.Data.NNotReadedMessages = VSMAPI.Data.NNotReadedMessages - self.NotReadedMessagesCount
+                            self.NotReadedMessagesCount = 0
+                            VSMAPI.Data.ETimerAction.raise(data: false)
+                        }
+                    }
+                }
+            }
+        }
+    }
     public func load(isAfter:Bool=false, loadingDelegate:((Bool)->Void)? = nil){
         let retFlag = isAfter || self.Last == ""
         let prms = ["ConversationId":Id, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]

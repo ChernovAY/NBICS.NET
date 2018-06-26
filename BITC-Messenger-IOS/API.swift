@@ -107,7 +107,7 @@ public class VSMAPI{
         case fileImage              = "VSM.Web.Plugins.Contacts/ContactsHome/GetFileImage"  //+++
         
         case conversationMessages   = "VSM.Web.Plugins.Contacts/ContactsHome/GetConversationNMessagesAfterOrBefore" //+++
-        case messageReaded          = "VSM.Web.Plugins.Contacts/ContactsHome/SetConversationMessagesReaded"
+        case messageReaded          = "VSM.Web.Plugins.Contacts/ContactsHome/SetConversationMessagesReaded" //+++
         case sendMessage            = "VSM.Web.Plugins.Contacts/ContactsHome/SendMessage"   //+++
         
         case fileUpload             = "VSM.Web.Plugins.Contacts/ContactsHome/UploadMessageFileWithoutDraft" //+++
@@ -116,7 +116,7 @@ public class VSMAPI{
         case NNotReadedMsgs         = "VSM.Web.Plugins.Contacts/ContactsHome/GetNotReadedMessagesCount"
         case NContReqs              = "VSM.Web.Plugins.Contacts/ContactsHome/GetInContactsRequestsCount"
         
-        case ContactsRequests       = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsRequests"
+        case ContactsRequests       = "VSM.Web.Plugins.Contacts/ContactsHome/GetContactsRequests"   //+++
     
     }
     // Session Manager Configurations!!!!!!!
