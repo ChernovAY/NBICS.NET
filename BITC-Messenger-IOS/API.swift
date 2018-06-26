@@ -19,17 +19,6 @@ public class VSMAPI{
         public class var isConn:Bool {
             return NetworkReachabilityManager()!.isReachable
         }
-        public class var fromServer:Bool{
-            if(NetworkReachabilityManager()!.isReachable){
-                Counter = Counter + 1
-                if Counter >= MaxN {
-                    Counter = 0
-                }
-            }
-            return (Counter == 0 && NetworkReachabilityManager()!.isReachable)
-        }
-        private static var Counter = -1
-        private static var MaxN = 10
     }
     
     public struct Settings{
@@ -50,10 +39,12 @@ public class VSMAPI{
             set(value){UserDefaults.standard.set(value, forKey: "login")}
         }
         public static func logOut(){
-           Settings.user = ""; Settings.hash = ""; Settings.login = false;
+            Data.ETimerAction.raise(data: true)
             VSMAPI.deleteCommunicatorFiles()
+            Settings.user = ""; Settings.hash = ""; Settings.login = false;
+            Data.deleteAll()
         }
-        public static func logIn(user:String, hash: String/*, delegate: @escaping ()->Void */){
+        public static func logIn(user:String, hash: String){
             if(VSMAPI.Settings.login) {
                 Data.loadAll()
                 return;
@@ -121,6 +112,7 @@ public class VSMAPI{
     }
     // Session Manager Configurations!!!!!!!
     public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
+        if !Connectivity.isConn {return("Интернета нету!", false)}
         let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
         let resp =  request.syncResponse()
         let succ = resp.error == nil
@@ -133,6 +125,7 @@ public class VSMAPI{
     }
     
     public static func Request (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
+        if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
         let addr = addres + entry.rawValue + postf
         let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
         
@@ -148,20 +141,30 @@ public class VSMAPI{
             completionHandler(res, succ)
         }
     }
-    public static func savePicture(name: String, data: Data)->Bool{
+    public static func saveFile(name: String, data: Data)->Bool{
         var ret = false
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/"+name
+        let filename = NSTemporaryDirectory() + "/"+name.replacingOccurrences(of: "/", with: "_")
         if(fm.createFile(atPath: filename, contents: data)){
                 ret = true
         }
         return ret
     }
-    
+    public static func getFile(name:String)->Data?{
+        var ret:Data?
+        let fm = FileManager.default
+        let filename = NSTemporaryDirectory() + "/" + name.replacingOccurrences(of: "/", with: "_")
+        if(fm.fileExists(atPath: filename)){
+            if let data = fm.contents(atPath: filename){
+                   ret = data
+            }
+        }
+        return ret
+    }
     public static func getPicture(name:String, empty:String)->UIImage?{
         var img:UIImage?
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/" + name
+        let filename = NSTemporaryDirectory() + "/" + name.replacingOccurrences(of: "/", with: "_")
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 img = UIImage(data: data)

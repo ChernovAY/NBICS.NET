@@ -98,8 +98,25 @@ public class VSMConversation{
             }
         }
     }
+    
+    //------------------------------
+   /* public func loadAllMsgsToFS(){
+        
+    }
+    //внутренняя обработка сообщений
+    //file MSG.[first].[last].[count].I
+    public func procMsgs(isAfter:Bool=false, loadingDelegate:@escaping((Bool)->Void)){
+        //var z = "dd.ddd.ddddd.".split(separator: ".")
+        if self.Last == "" {//еще нет ничего.надо грузить N свеженьких
+            
+        }
+        loadingDelegate(true)
+    }*/
+    //------------------------------
+    
     public func load(isAfter:Bool=false, loadingDelegate:((Bool)->Void)? = nil){
         let retFlag = isAfter || self.Last == ""
+        if !VSMAPI.Connectivity.isConn {if let ld = loadingDelegate { ld(retFlag)};return}
         let prms = ["ConversationId":Id, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             

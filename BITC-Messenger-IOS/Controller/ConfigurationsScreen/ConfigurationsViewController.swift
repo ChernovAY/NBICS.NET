@@ -28,6 +28,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     @IBOutlet weak var NameChat: UINavigationItem!
     @IBAction func sendMessageButton(_ sender: Any) {
+        if !VSMAPI.Connectivity.isConn {return}
         if let mt = MessageField.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Врееееменно!!!! пока нет файлов

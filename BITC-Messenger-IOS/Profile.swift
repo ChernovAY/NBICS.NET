@@ -57,20 +57,32 @@ public class VSMProfile{
                  if z.0 is Data {
                     let data = z.0 as! Data
                     if(data.count>0){
-                        _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: data)
+                        _ = VSMAPI.saveFile(name:"PIcon_\(self.Entity).I", data: data)
                     }
                 }
             }
         }
         else if Icon != "" {
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
-                _ = VSMAPI.savePicture(name:"PIcon_\(self.Entity).I", data: dataDecoded)
+                _ = VSMAPI.saveFile(name:"PIcon_\(self.Entity).I", data: dataDecoded)
             }
         }
         self.Icon = VSMAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")
     }
     public convenience init?(){
-        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.profile, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+        var z : (Any, Bool)
+        if VSMAPI.Connectivity.isConn{
+            z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.profile, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
+            _ = VSMAPI.saveFile(name: VSMAPI.WebAPIEntry.profile.rawValue + ".I", data: z.0 as! Data)
+        }
+        else{
+            if let d = VSMAPI.getFile(name: VSMAPI.WebAPIEntry.profile.rawValue + ".I"){
+                z = (d,true)
+            }
+            else{
+                z = ("И интернета нет и данные не сохранены",false)
+            }
+        }
         if(z.1){
             let d = z.0 as! Data
             if let json = try? JSON(data: d) {

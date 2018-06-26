@@ -12,6 +12,7 @@
 		56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9E7E120C80B54009F48BE /* MessegesViewController.swift */; };
 		9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */; };
 		9B188F0120D8FF0F000177E5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188F0020D8FF0F000177E5 /* Event.swift */; };
+		9B2BB25620E27F6400B27BAD /* FileDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2BB25520E27F6400B27BAD /* FileDataStore.swift */; };
 		9B5014CF20BC112F00790CAC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014CE20BC112F00790CAC /* Contact.swift */; };
 		9B5014D120BC121200790CAC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D020BC121200790CAC /* Chat.swift */; };
 		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
@@ -51,6 +52,7 @@
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
 		9B188F0020D8FF0F000177E5 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		9B2BB25520E27F6400B27BAD /* FileDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDataStore.swift; sourceTree = "<group>"; };
 		9B5014CE20BC112F00790CAC /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9B5014D020BC121200790CAC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		9B5014D220BC249A00790CAC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */,
 				9B188F0020D8FF0F000177E5 /* Event.swift */,
 				9B781B7820DA9A140060DCD9 /* DataUtils.swift */,
+				9B2BB25520E27F6400B27BAD /* FileDataStore.swift */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,
 				569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */,
 				D4DE426F1F632EED0076008B /* AllChatsViewController.swift in Sources */,
+				9B2BB25620E27F6400B27BAD /* FileDataStore.swift in Sources */,
 				D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */,
 				9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */,
 				9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */,
