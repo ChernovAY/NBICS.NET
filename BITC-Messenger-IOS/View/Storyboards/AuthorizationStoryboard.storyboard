@@ -946,11 +946,7 @@
                             <constraint firstAttribute="trailing" secondItem="Q1h-rY-5xp" secondAttribute="trailing" id="ysg-fK-qL3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Профиль" id="BeO-hk-P82">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Item" image="edit" id="ycb-vh-iLI">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Профиль" id="BeO-hk-P82"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="BirthDayLabel" destination="5Pn-bQ-GYj" id="j93-ba-4N6"/>
@@ -1384,7 +1380,6 @@
         <image name="NewChat" width="32" height="32"/>
         <image name="Password" width="280" height="40"/>
         <image name="Send" width="48" height="48"/>
-        <image name="edit" width="48" height="48"/>
         <image name="write" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
