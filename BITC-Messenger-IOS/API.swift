@@ -155,6 +155,11 @@ public class VSMAPI{
             completionHandler(res, succ)
         }
     }
+    public static func delFile(name: String)->Bool{
+        let fm = FileManager.default
+        let filename = VSMAPI.DBURL.path + "/"+name.replacingOccurrences(of: "/", with: "_")
+        return ((try? fm.removeItem(atPath: VSMAPI.DBURL.path+"/"+filename)) != nil)
+    }
     public static func saveFile(name: String, data: Data)->Bool{
         var ret = false
         let fm = FileManager.default
@@ -206,7 +211,7 @@ public class VSMAPI{
             let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: VSMAPI.DBURL.path)!
             while let element = enumerator.nextObject() as? String {
                 if element.hasSuffix(".I"){
-                    try? fm.removeItem(atPath: NSTemporaryDirectory()+"/"+element)
+                    try? fm.removeItem(atPath: VSMAPI.DBURL.path+"/"+element)
                 }
             }
     }
