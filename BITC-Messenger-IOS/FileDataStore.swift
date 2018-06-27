@@ -136,7 +136,7 @@ public class LocalMessageStore{
         }
         else if let part = db.first(where: {(isAfter ? $0.to : $0.from) == keyMsg}){
             let i = db.index(where: {(isAfter ? $0.to : $0.from) == keyMsg})
-            if
+            //if
         }
         else{//нет ничего
             loadPart()
