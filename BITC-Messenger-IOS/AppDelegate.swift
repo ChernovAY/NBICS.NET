@@ -21,17 +21,22 @@ import UserNotifications
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UIApplication.shared.statusBarStyle = .lightContent
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (isGranted, err) in
-            if err != nil{
-                print("У  спешная авторизация!")
-            } else {
-                UNUserNotificationCenter.current().delegate = self
-                Messaging.messaging().delegate = self
-                application.registerForRemoteNotifications()
-                
-                FirebaseApp.configure()
-            }
+        FirebaseApp.configure()
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
         }
+        
+        application.registerForRemoteNotifications()
         return true
     }
 
@@ -56,18 +61,12 @@ import UserNotifications
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        connectToFCM()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
-    }
-
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        let newToken = InstanceID.instanceID().token()
-        connectToFCM()
     }
     
     // MARK: - Core Data stack
