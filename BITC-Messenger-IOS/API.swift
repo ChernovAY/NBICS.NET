@@ -44,7 +44,21 @@ public class VSMAPI{
             Settings.user = ""; Settings.hash = ""; Settings.login = false;
             Data.deleteAll()
         }
+        
+        private static func checkDBDirectory(){
+            func directoryExistsAtPath(_ path: String) -> Bool {
+                var isDirectory = ObjCBool(true)
+                let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+                return exists && isDirectory.boolValue
+            }
+            
+            if !directoryExistsAtPath(VSMAPI.DBURL.path){
+                try? FileManager.default.createDirectory(at: VSMAPI.DBURL, withIntermediateDirectories: false)
+            }
+            
+        }
         public static func logIn(user:String, hash: String){
+            VSMAPI.Settings.checkDBDirectory()
             if(VSMAPI.Settings.login) {
                 Data.loadAll()
                 return;
@@ -144,7 +158,7 @@ public class VSMAPI{
     public static func saveFile(name: String, data: Data)->Bool{
         var ret = false
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/"+name.replacingOccurrences(of: "/", with: "_")
+        let filename = VSMAPI.DBURL.path + "/"+name.replacingOccurrences(of: "/", with: "_")
         if(fm.createFile(atPath: filename, contents: data)){
                 ret = true
         }
@@ -153,7 +167,7 @@ public class VSMAPI{
     public static func getFile(name:String)->Data?{
         var ret:Data?
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/" + name.replacingOccurrences(of: "/", with: "_")
+        let filename = VSMAPI.DBURL.path + "/" + name.replacingOccurrences(of: "/", with: "_")
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                    ret = data
@@ -164,7 +178,7 @@ public class VSMAPI{
     public static func getPicture(name:String, empty:String)->UIImage?{
         var img:UIImage?
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/" + name.replacingOccurrences(of: "/", with: "_")
+        let filename = VSMAPI.DBURL.path + "/" + name.replacingOccurrences(of: "/", with: "_")
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 img = UIImage(data: data)
@@ -183,19 +197,21 @@ public class VSMAPI{
     }
     public static func fileExists(_ name:String)->Bool{
         let fm = FileManager.default
-        let filename = NSTemporaryDirectory() + "/" + name
+        let filename = VSMAPI.DBURL.path + "/" + name
         return fm.fileExists(atPath: filename)
     }
     public static func deleteCommunicatorFiles(){
             let fm = FileManager.default
-            let url = URL(fileURLWithPath: NSTemporaryDirectory())
-            let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: url.path)!
-            while let element = enumerator.nextObject() as? String, element.hasSuffix(".I") {
-                try? fm.removeItem(atPath: NSTemporaryDirectory()+"/"+element)
+        
+            let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: VSMAPI.DBURL.path)!
+            while let element = enumerator.nextObject() as? String {
+                if element.hasSuffix(".I"){
+                    try? fm.removeItem(atPath: NSTemporaryDirectory()+"/"+element)
+                }
             }
     }
     //----------------------------------------------------------------------------------------
-   
+    public static let DBURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("DB", isDirectory: true)
     public static var Data = VSMData()
     
     public struct VSMChatsCommunication{

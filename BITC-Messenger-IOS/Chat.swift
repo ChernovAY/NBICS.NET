@@ -128,11 +128,49 @@ public class VSMAttachedFile{
     public let Name:        String
     public var PreviewIcon: UIImage?{
         get{
+            if !VSMAPI.fileExists("AIFile_\(self.Guid).I"){
+                let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":self.getJSON()])
+                var base64 = ""
+                if(z.1){
+                    let d = z.0 as! Data
+                    if let json = try? JSON(data: d) {
+                        if let dict = json.dictionary{
+                            if let dd = dict["FileMetaData"]?.dictionary{
+                                if let ddd = dd["PreviewIcon"]{
+                                    if let ds = ddd.string{
+                                        base64 = ds
+                                    }
+                                }
+                            }
+                        }
+                        self.setPrevIcon(base64)
+                    }
+                }
+                else{
+                    print(z.0)
+                }
+            }
             return VSMAPI.getPicture(name: "AIFile_\(self.Guid).I", empty: "AnyFile")
         }
     }
     public var ImageBase64: UIImage?{
         get{
+            if !VSMAPI.fileExists("APFile_\(self.Guid).I"){
+                if self.Extension.range(of: "(((?i)(jpg|png|gif|bmp))$)", options: .regularExpression, range: nil, locale: nil) != nil{
+                    let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": self.getJSON()])
+                    if(req.1){
+                        if let j = JSON(req.0).dictionary{
+                            if (j["Success"]?.bool!)!{
+                                let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
+                                self.setFileImage(base64!)
+                            }
+                        }
+                    }
+                    else{
+                        print(req.0)
+                    }
+                }
+            }
             return VSMAPI.getPicture(name: "APFile_\(self.Guid).I", empty: "")
         }
     }
@@ -144,43 +182,6 @@ public class VSMAttachedFile{
  
         if PreviewIcon != "" {
             self.setPrevIcon(PreviewIcon)
-        }
-        else if !VSMAPI.fileExists("APFile_\(self.Guid).I"){
-            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.filePreviewIcon, params: ["FileMetaData":self.getJSON()])
-            var base64 = ""
-            if(z.1){
-                let d = z.0 as! Data
-                if let json = try? JSON(data: d) {
-                    if let dict = json.dictionary{
-                        if let dd = dict["FileMetaData"]?.dictionary{
-                            if let ddd = dd["PreviewIcon"]{
-                                if let ds = ddd.string{
-                                    base64 = ds
-                                }
-                            }
-                        }
-                    }
-                    self.setPrevIcon(base64)
-                }
-            }
-            else{
-                print(z.0)
-            }
-           
-            if self.Extension.range(of: "(((?i)(jpg|png|gif|bmp))$)", options: .regularExpression, range: nil, locale: nil) != nil{
-            let req = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.fileImage, params: ["FileMetaData": self.getJSON()])
-            if(req.1){
-                if let j = JSON(req.0).dictionary{
-                    if (j["Success"]?.bool!)!{
-                        let base64 = j["FileMetaData"]!.dictionary!["ImageBase64"]!.string
-                        self.setFileImage(base64!)
-                    }
-                }
-            }
-            else{
-                print(req.0)
-            }
-        }
         }
      }
     public convenience init(from dict:[String:JSON]){
