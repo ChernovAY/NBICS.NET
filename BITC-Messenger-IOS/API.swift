@@ -65,7 +65,7 @@ public class VSMAPI{
             }
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
                 if(!s){
-                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
+                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
                 }
                 else{
                     if d is Data {
@@ -76,11 +76,11 @@ public class VSMAPI{
                             Settings.user = user; Settings.hash = hash; Settings.login = true;
                             Data.loadAll()
                         case "1":
-                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self, cancelButtonTitle: "OK")
                             button2Alert.show()
                             VSMAPI.Settings.logOut();
                         case "2":
-                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self, cancelButtonTitle: "OK")
                             button2Alert.show()
                             VSMAPI.Settings.logOut();
                         default: break

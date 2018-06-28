@@ -130,7 +130,9 @@ public class VSMData{
     private func newReq(_ _data:Any?, _ _opt:Any?){
         let data = _data as! Data
         if let n = String(data: data, encoding: .utf8){
-            self.NNewRequests = Int(n)!
+            if let newN = Int(n) {
+                self.NNewRequests = newN
+            }
         }
     }
     private func internetStatusFlag()->Bool{

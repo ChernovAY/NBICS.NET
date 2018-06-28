@@ -10,6 +10,7 @@ import UIKit
 
 class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    private var isScrolling = false
     private var scrollN = false
     private var lastMessage:VSMMessage?
     private var EInitHandler: Disposable?
@@ -77,6 +78,18 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @objc func doSomething(refreshControl: UIRefreshControl) {
         self.Conversation.load(loadingDelegate: loadedMesseges)
         refreshControl.endRefreshing()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = Int(scrollView.contentOffset.y)
+        let maximumOffset = Int(scrollView.contentSize.height - scrollView.frame.size.height)
+        let deltaOffset = maximumOffset - currentOffset
+        
+        if !isScrolling && maximumOffset > 0 && deltaOffset <= -60 {
+            isScrolling = true
+            print("loadMore()")
+            isScrolling = false// сделать refresh и функционал
+        }
     }
     
     override func didReceiveMemoryWarning() {
