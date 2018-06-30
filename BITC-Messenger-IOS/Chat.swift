@@ -13,9 +13,11 @@ import Alamofire
 
  public class VSMMessage{
 
-    public var isFileUploading = false
-    public  var AttachedFiles   =  Array<VSMAttachedFile>()
     
+    public var isFileUploading = false
+    public var AttachedFiles   =  Array<VSMAttachedFile>()
+    
+    public let part          :  Int?
     public let ConversationId:  String
     public let Draft:           Bool
     public let Id:              String
@@ -30,6 +32,7 @@ import Alamofire
         ,Text:            String
         ,Time:            Date
         ,AttachedFiles:   [VSMAttachedFile]?=nil
+        ,part:            Int?=nil
         )
     {
         self.ConversationId = ConversationId
@@ -38,12 +41,12 @@ import Alamofire
         self.Sender         = Sender
         self.Text           = Text
         self.Time           = Time
-        
+        self.part           = part
         if let af = AttachedFiles {
             self.AttachedFiles  = af
         }
     }
-    public convenience init (from dict:[String:JSON]){
+    public convenience init (from dict:[String:JSON], part:Int?=nil){
         self.init(
             ConversationId: dict["ConversationId"]!.string!
             ,Draft:         dict["Draft"]!.bool!
@@ -51,6 +54,7 @@ import Alamofire
             ,Sender:        VSMAPI.Data.Contacts[(dict["Sender"]!.dictionary?["Id"]?.int) ?? 0]
             ,Text:          dict["Text"]!.string!
             ,Time:          Date(fromString: dict["Time"]!.string!)
+            ,part:          part
         )
         
         if let jsonArr = dict["AttachedFiles"]?.array{

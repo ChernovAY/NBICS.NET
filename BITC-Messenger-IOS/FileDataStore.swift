@@ -13,72 +13,63 @@ public typealias lms = LocalMessageStore;
 
 public class LocalMessageStore{
     private class Part{
-        var prefix  : String = ""
-        var id      : String = ""
-        var from    : String = ""
-        var to      : String = ""
-        var N       : Int    = 0
+        var id      : String    = ""
+        var part    : Int       = 0
+        var N       : Int       = 0
         
-        init (prefix:String, id:String, from:String, to:String, N:Int){
-            self.prefix = prefix
-            self.id     = id
-            self.from   = from
-            self.to     = to
-            self.N      = N
+        init (id:String, part:Int, N:Int){
+            self.part     = part
+            self.N        = N
+            self.id       = id
         }
-        init(name:String,  s: String = "_"){
-            //msg_-123_-5_-1_18_.I
-            //msg_-123_-26_-6_20_1_.I
-          let s = name.split(separator: s.first!)
-            prefix  = String(s[0])
+        init(name:String){
+            //msg_-12345_0_18_.I
+            //msg_-12345_-2_20_.I
+          let s = name.split(separator: "_")
             id      = String(s[1])
-            from    = String(s[2])
-            to      = String(s[3])
-            N       = Int(String(s[4]))!
+            part    = Int(String(s[2]))!
+            N       = Int(String(s[3]))!
         }
         func deleteFile(){
-           _ = VSMAPI.delFile(name:"\(prefix)_\(id)_\(from)_\(to)_\(N)_.I")
+           _ = VSMAPI.delFile(name: "msg_\(id)_\(part)_\(N)_.I")
         }
         func saveFile(data:Data){
-            _ = VSMAPI.saveFile(name:"\(prefix)_\(id)_\(from)_\(to)_\(N)_.I", data: data)
+            _ = VSMAPI.saveFile(name: "msg_\(id)_\(part)_\(N)_.I", data: data)
         }
         func getFileData()->Data?{
-            return VSMAPI.getFile(name: "\(prefix)_\(id)_\(from)_\(to)_\(N)_.I")
+            return VSMAPI.getFile(name: "msg_\(id)_\(part)_\(N)_.I")
         }
     
     }
-    private var db = [Part]()
-    private let table       : String
-    private let separator   : String
+    private var db = Dictionary<Int,Part>()
     private let chank       : Int
     private let id          : String
-    
     private var isAfter     : Bool      = false
-    private var keyMsg      : String    = ""
     private var allNext     : Bool      = false
     private var jamp        : Bool      = false
-    private var delegate:([VSMMessage], Int) ->()
-    
+    private var filter      : String    = ""
+
+    public var array = [VSMMessage]()
     private func fillDB(){
         let fm = FileManager.default
-        
         let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: VSMAPI.DBURL.path)!
-        var tmparr = [Part]()
         while let element = enumerator.nextObject() as? String {
-            if element.hasSuffix(".I") && element.hasPrefix(table+separator+id+separator){
-                tmparr.append(Part(name:element, s:separator))
+            if element.hasSuffix(".I") && element.hasPrefix("msg_\(id)_"){
+                let p = Part(name:element)
+                db[p.part] = p
             }
         }
-        db = tmparr.sorted(by:{$0.from < $1.from || $0.from == ""})
     }
-    private func loadPart(){
+    
+    private func loadPart(key:(String,Int)){
         if VSMAPI.Connectivity.isConn{
-            let prms = ["ConversationId":id, "N":chank, "IsAfter":self.isAfter ? "True" : "False", "MessageId":self.keyMsg, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
+            let prms = ["ConversationId":id, "N":chank, "IsAfter":self.isAfter ? "True" : "False", "MessageId":key.0, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
         
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
             
                 if(!s){
                     print( "Ошибка \(d as? String)")
+                    VSMAPI.Data.EMessages.raise(data: (self.id, -1))
                 }
                 else{
                     if d is Data {
@@ -91,28 +82,25 @@ public class LocalMessageStore{
                             
                             if _N > 0{
                                 
-                                let newPart = Part(prefix: self.table, id: self.id, from: _from, to: _to, N: _N)
+                                let newPart = Part(id: self.id, part: key.1, N: _N)
                                 
-                                if let part = self.db.first(where:{$0.from == ""}){
+                                if let part = self.db[key.1]{
                                     part.deleteFile()
-                                    self.db = self.db.filter { $0 !== part }
                                 }
                                 newPart.saveFile(data: data)
-                            
-                                if(self.isAfter){
-                                    self.db.append(newPart)
-                                }
-                                else{
-                                    self.db.insert(newPart, at: 0)
-                                }
-                                if (self.allNext || self.isAfter) && _N > 0{
-                                    self.loadPart()
+                                self.db[key.1] = newPart
+                                
+                                if (self.allNext || self.isAfter){
+                                    let newKey = self.isAfter ? (_to, key.1+1) : (_from, key.1-1)
+                                    self.loadPart(key:newKey)
                                     return
                                 }
-                                else {
-                                    self.getData(ext:false, isAfter:self.isAfter, keyMsg: self.isAfter ? _to : _from, jamp : self.jamp)
-                                }
+//                                else {
+//                                    self.fillArray(key.1, true)
+//                                    return
+//                                }
                             }
+                            self.fillArray(key.1, true)
                         }
                     }
                 }
@@ -121,92 +109,102 @@ public class LocalMessageStore{
             )
         }
     }
-    private func filArrayFromFile(_ p:Part){
-        if let data = p.getFileData(){
+ 
+    private func filArrayFromFile(_ p:Part?){
+        if let data = p?.getFileData(){
             if let json = try? JSON(data: data) {
                 let arr = json["Messages"].array!
                 for c in arr{
                     if let dict = c.dictionary{
-                        Messages.append(VSMMessage(from:dict))
+                        array.append(VSMMessage(from:dict, part:p?.part))
                     }
                 }
             }
         }
-        
     }
-    private func fillArray(_ i:Int){
-        let wt = db[i]
-        let wu = i == 0             ?   nil : db[i+1]
-        let wd = i == db.count-1    ?   nil : db[i-1]
+    
+    private func fillArray(_ i:Int, _ raise:Bool = false){
+        var wu = db[i-1]
+        var wt = db[i]
+        var wd = db[i+1]
+        if wt == nil && wd != nil{
+            wu = db[i]
+            wt = db[i+1]
+            wd = db[i+2]
+        }
+        else if wt == nil && wu != nil{
+            wu = db[i-2]
+            wt = db[i-1]
+            wd = db[i]
+        }
+        let oldCurr = isAfter ? array.last : array.first
+        self.array.removeAll()
         
-        self.Messages.removeAll()
-        
-        /*filArrayFromFile(wu)
+        filArrayFromFile(wu)
         filArrayFromFile(wt)
-        filArrayFromFile(wd)*/
-        
-        let addr = self.jamp ? Messages.count - 1 : isAfter ? Messages.count - (wd?.N ?? 0) : 0 + (wu?.N ?? 0)
-        delegate(Messages, addr)
+        filArrayFromFile(wd)
+        if raise{
+           let addr = array.count == 0 ? -1 : (self.jamp ? array.count - 1 :
+            oldCurr != nil ? array.index(where: {$0.Id == oldCurr?.Id }) ?? -1 : -1
+            )
+            if self.jamp{
+                VSMAPI.Data.Conversations[self.id]?.markReaded()
+            }
+            VSMAPI.Data.EMessages.raise(data: (self.id, addr))
+        }
     }
-    public var Messages = [VSMMessage]()
-    public init(Id:String, Table:String = "MSG", Chank:Int = 20, Separator:String = "_", Delegate:@escaping ([VSMMessage], Int) ->()){
-        chank       = Chank
-        table       = Table
-        separator   = Separator
-        id          = Id
-        delegate    = Delegate
-        fillDB()
-    }
-    public func getData(ext:Bool = true, isAfter:Bool = false, keyMsg: String = "", jamp : Bool = false){
-        if ext{
-            self.isAfter = isAfter
-            self.keyMsg  = keyMsg
-            self.jamp    = jamp
-            self.allNext = false //true для поиска.
 
-            if db.count > 0 {
-                if let part = (self.keyMsg == "" || self.jamp) ? db.last : db.first(where: {(isAfter ? $0.to : $0.from) == keyMsg}){
-                if let i = db.index(where: {(isAfter ? $0.to == part.to : $0.from == part.from)}) {
-                    if part.N < self.chank && db.count > 1{// блок не заполнен и не единственный надо подкачать данные с сервера
-                        let fullPart = db[isAfter ? i - 1 : i + 1]
-                        self.keyMsg = isAfter ? fullPart.to : fullPart.from
-                        loadPart()
-                    }
-                    else if part.N < self.chank && db.count == 1{ //единственный блок не заполнен. надо подкачать данные с сервера
-                        self.keyMsg = ""
-                        loadPart()
-                    }
-                    else{//блок заполнен ищем сверху/снизу
-                        if i == 0 || i == db.count - 1 {// это самые старые сообщения или самые новые
-                            loadPart()
-                        }
-                        else{//берем из сохраненных
-                            fillArray(isAfter ? i - 1 : i + 1)
-                        }
-                        
+    public init(Id:String, Chank:Int = 20){
+        chank       = Chank
+        id          = Id
+        fillDB()
+        if let last = db.keys.sorted(by: <).last{
+            fillArray(last, false)
+        }
+    }
+    public var lastPArt: Int{
+        get{
+            return db.keys.sorted(by: <).last ?? 0
+        }
+    }
+    public func getData(isAfter:Bool = true, jamp:Bool = false){
+        self.isAfter    = isAfter
+        self.jamp       = jamp
+        self.allNext    = false
+        self.filter     = ""
+        var key         = ("",0)
+
+        if jamp {
+            if let last = db.keys.sorted(by: <).last{
+                fillArray(last, false)
+                if db[last]!.N == chank{
+                    key = (array.last!.Id, last + 1)
+                }
+                else{
+                    let af =  array.filter({$0.part == last-1})
+                    if let l  =  af.last{
+                        key = (l.Id, last)
                     }
                 }
             }
-            }
-            else{//нет ничего пробуем получить что нибудь
-                self.keyMsg = ""
-                loadPart()
-            }
         }
-        else{
-            if let part = (self.keyMsg == "" || self.jamp) ? db.last : db.first(where: {(isAfter ? $0.to : $0.from) == keyMsg}){
-                if let i = db.index(where: {(isAfter ? $0.to == part.to : $0.from == part.from)}) {
-                    fillArray(i)
+        else if let currentIndex = (isAfter ? array.last?.part : array.first?.part) {
+            let nextIndex = isAfter ? currentIndex+1 :  currentIndex-1
+            if db[nextIndex] != nil{
+                fillArray(nextIndex, true)
+                return
+            }
+            if db[currentIndex]!.N < chank && isAfter{
+                let af =  array.filter({$0.part == currentIndex - 1})
+                if let l  =  af.last{
+                    key = (l.Id, currentIndex)
                 }
             }
             else{
-                delegate(self.Messages, isAfter ? Messages.count - 1 : 0)
+                key = (isAfter ? array.last!.Id : array.first!.Id, nextIndex)
             }
         }
+        loadPart(key:key)
     }
-    public func getFilteredData(filter:String, isAfter:Bool = false, keyMsg: String = "", delegate:([VSMMessage], Int) ->()){
-        //это попожее
-    }
-    
 }
 

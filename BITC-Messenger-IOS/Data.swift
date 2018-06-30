@@ -89,6 +89,8 @@ public class VSMData{
     
     public var ETimerAction     =     Event<Bool>()
     
+    public var EMessages        =     Event<(String, Int)>()
+    
     private func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
@@ -98,7 +100,7 @@ public class VSMData{
                 DataLoader.init(entry: .NContReqs, delegate: newReq, next:
                     Loader.init(delegate: { (A, B) in
                         if _NNotReadedMessages != self.NNotReadedMessages || _NNewRequests != self.NNewRequests {
-                        self.EInit.raise(data: true)
+                        //self.EInit.raise(data: true)
                              self.loadAll()
                         }
                         else{
@@ -171,13 +173,6 @@ public class VSMData{
                 if let dict = c.dictionary{
                     let nc = makeConv(what:dict)
                     oldconv = oldconv.filter { $0.key != nc.Id }
-                    if let c = Conversations[nc.Id]{
-                        let msgs = c.Messages
-                        let draft = c.Draft
-                        nc.Draft = draft
-                        nc.Messages = msgs
-                    }
-                    Conversations[nc.Id] = nc
                 }
             }
             for dc in oldconv{
@@ -211,15 +206,34 @@ public class VSMData{
                 }
             }
         }
-        ret = VSMConversation(
-            Id:                     dict["Id"                      ]!.string!
-            ,IsDialog:              dict["IsDialog"                ]!.bool!
-            ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
-            ,Messages:              nil
-            ,Name:                  dict["Name"                    ]!.string!
-            ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
-            ,Users:                 usrs
-        )
+        
+        if let c = Conversations[dict["Id"]!.string!]{
+            let msgs    = c.Messages
+            let draft   = c.Draft
+            ret = VSMConversation(
+                Id:                     dict["Id"                      ]!.string!
+                ,IsDialog:              dict["IsDialog"                ]!.bool!
+                ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
+                ,Messages:              msgs
+                ,Name:                  dict["Name"                    ]!.string!
+                ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
+                ,Users:                 usrs
+                ,Draft:                 draft
+            )
+        }
+        else{
+            ret = VSMConversation(
+                Id:                     dict["Id"                      ]!.string!
+                ,IsDialog:              dict["IsDialog"                ]!.bool!
+                ,LastMessage:           dict["LastMessage"]!.dictionary != nil ? VSMMessage(from:dict["LastMessage"]!.dictionary!) : nil
+                ,Messages:              nil
+                ,Name:                  dict["Name"                    ]!.string!
+                ,NotReadedMessagesCount:dict["NotReadedMessagesCount"  ]!.int!
+                ,Users:                 usrs
+                ,Draft:                 nil
+            )
+        }
+        Conversations[ret.Id] = ret
         return ret
     }
 

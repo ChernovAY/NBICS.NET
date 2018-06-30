@@ -14,12 +14,12 @@ public class VSMConversation{
     private var N:Int = 20
     private var Last:String{
         get{
-            return Messages.last?.Id ?? ""
+            return Messages.array.last?.Id ?? ""
         }
     }
     private var First:String{
         get{
-            return Messages.first?.Id ?? ""
+            return Messages.array.first?.Id ?? ""
         }
     }
     
@@ -31,35 +31,37 @@ public class VSMConversation{
     public var LastMessage: VSMMessage?
     public var Draft: VSMMessage
     public var Users: [VSMContact]
-    public var Messages = [VSMMessage]()
+    public var Messages: lms
+    
     public init
         (Id:                        String
         ,IsDialog:                  Bool
         ,LastMessage:               VSMMessage?
-        ,Messages:                  [VSMMessage]?
+        ,Messages:                  lms?
         ,Name:                      String
         ,NotReadedMessagesCount:    Int
         ,Users:                     [VSMContact]
+        ,Draft:                      VSMMessage?
         ){
         self.Id                     = Id
         self.IsDialog               = IsDialog
         self.LastMessage            = LastMessage
-        self.Messages               = Messages ?? [VSMMessage]()
+        self.Messages               = Messages ?? lms(Id: Id)
         self.Name                   = Name
         self.NotReadedMessagesCount = NotReadedMessagesCount
         self.Users                  = Users
         self.Draft                  = VSMMessage(ConversationId: Id, Draft: false, Id: nil, Sender: Users.first(where: ({$0.ContType == VSMContact.ContactType.Own})), Text: "", Time: Date())
     }
-    public func sendMessage(sendDelegate: ((Bool)->Void)? = nil){
+    private func msgDelegate(_m:[VSMMessage], _ p:Int){
+        
+    }
+    public func sendMessage(){
         if self.Draft.isFileUploading || self.Draft.Id != "New" {return;}
         let p = ["Message":self.Draft.getJSON(), "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash, "UseDraft": "False"] as Params
         
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 print("Ошибка \(d as? String)")
-                if let ms = sendDelegate {
-                    ms(false)
-                }
             }
             else{
                 if d is Data {
@@ -67,13 +69,11 @@ public class VSMConversation{
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            VSMAPI.Data.loadAll()
-                            //self.load(isAfter: true,loadingDelegate:sendDelegate)
+                            self.Messages.getData(isAfter: true, jamp: true)
+                            //VSMAPI.Data.loadAll()
+                            return
                         }
                     }
-                }
-                if let ms = sendDelegate {
-                    ms(false)
                 }
             }
             }()})
@@ -97,56 +97,5 @@ public class VSMConversation{
                 }
             }
         }
-    }
-    
-    //------------------------------
-   /* public func loadAllMsgsToFS(){
-        
-    }
-    //внутренняя обработка сообщений
-    //file MSG.[first].[last].[count].I
-    public func procMsgs(isAfter:Bool=false, loadingDelegate:@escaping((Bool)->Void)){
-        //var z = "dd.ddd.ddddd.".split(separator: ".")
-        if self.Last == "" {//еще нет ничего.надо грузить N свеженьких
-            
-        }
-        loadingDelegate(true)
-    }*/
-    //------------------------------
-    
-    public func load(isAfter:Bool=false, loadingDelegate:((Bool)->Void)? = nil){
-        let retFlag = isAfter || self.Last == ""
-        if !VSMAPI.Connectivity.isConn {if let ld = loadingDelegate { ld(retFlag)};return}
-        let prms = ["ConversationId":Id, "N":N, "IsAfter":isAfter ? "True" : "False", "MessageId":isAfter ? Last : First, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash] as [String : Any]
-        VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.conversationMessages, params: prms, completionHandler: {(d,s) in{
-            
-            if(!s){
-                print( "Ошибка \(d as? String)")
-            }
-            else{
-                if d is Data {
-                    let data = d as! Data
-                    if let json = try? JSON(data: data) {
-                        let arr = json["Messages"].array!
-                        var arrMsg = [VSMMessage]()
-                        for c in arr{
-                            if let dict = c.dictionary{
-                                arrMsg.append(VSMMessage(from:dict))
-                            }
-                        }
-                        if isAfter{
-                            self.Messages.append(contentsOf: arrMsg)
-                        }
-                        else
-                        {
-                            self.Messages.insert(contentsOf: arrMsg, at: 0)
-                        }
-                        if let ld = loadingDelegate { ld(retFlag)}
-                    }
-                }
-            }
-            
-            }()}
-        )
     }
 }
