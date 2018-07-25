@@ -18,7 +18,6 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var UserNameLabel: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Table.delegate = self
         Table.dataSource = self
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AllChatsViewController.Load)}
@@ -30,7 +29,7 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return convs.count
     }
@@ -51,30 +50,25 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath) as? ConversationCell {
-            
             var conv: VSMConversation!
-            
             conv = convs[indexPath.row]
             cell.ConfigureCell(conversation: conv)
-            
             return cell
-            
         } else {
             return UITableViewCell()
         }
     }
     
     private func Load(_ b:Bool = true) {
-        if b{
+        if b {
             convs = VSMAPI.Data.getConversations()
             if VSMAPI.Settings.login{
-                if let usr = VSMAPI.Data.Profile{
+                if let usr = VSMAPI.Data.Profile {
                     self.UserNameLabel.setTitle("\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
                     self.UserPhoto.image = usr.Icon
                 }
             }
-        }
-        else{
+        } else {
             convs.removeAll()
         }
         self.Table.reloadData()

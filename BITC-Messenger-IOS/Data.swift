@@ -38,6 +38,47 @@ public class VSMData{
         timer.suspend()
         timerHandler?.dispose()
     }
+    public func newConversation(_ name:String)->VSMConversation?{
+        var retVal = nil as VSMConversation?
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.AddNewConversation, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "ConversationName" : name])
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if let dict = json.dictionary{
+                    if dict["Success"]!.bool!{
+                        retVal = makeConv(what:dict["Conversation"]!.dictionary!)
+                    }
+                }
+            }
+        }
+        else{
+            print(z.0)
+        }
+        return retVal
+    }
+    public func searchContacts(SearchString:String)->[VSMContact]{
+        var retVal = [VSMContact]()
+        let sstr = SearchString == "" ? SearchString : "%"+SearchString+"%"
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.SearchContacts, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "SearchString" : sstr])
+        if(z.1){
+            let d = z.0 as! Data
+            if let json = try? JSON(data: d) {
+                let arr = json["Contacts"].array!
+                for c in arr{
+                    if let dict = c.dictionary{
+                        let nc = VSMContact(from:dict)
+                        nc.ContType = .Out
+                        retVal.append(nc)
+                    }
+                }
+            }
+         }
+        else{
+            print(z.0)
+        }
+        return retVal
+    }
+    
     public func deleteAll(){
         EInit.raise(data: false)
         ETimerAction.raise(data: true)
@@ -48,13 +89,33 @@ public class VSMData{
         Profile = nil
         Contact = nil
     }
+    public func getConversationByContact (ContId: Int)->String{
+        if let conv = self.Conversations.values.first(where: {$0.Name == "" && $0.Users.filter({$0.Id == ContId}).count>0}){
+            return conv.Id
+        }
+        else{
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.newConversation, params: ["Sender":"{\"Id\":\"\(Contact!.Id)\"}", "Addressee": "{\"Id\":\"\(ContId)\"}", "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash])
+            if(z.1){
+                let d = z.0 as! Data
+                if let json = try? JSON(data: d) {
+                    if let dict = json.dictionary{
+                        return makeConv(what:dict).Id
+                    }
+                }
+            }
+            else{
+                print(z.0)
+            }
+        }
+        return ""
+    }
     public func getContacts(type: VSMContact.ContactType, filter:String = "" )->[VSMContact]{
         let f = filter.lowercased()
         return self.Contacts.values.filter({ $0.ContType == type && (f == "" || $0.Name.lowercased().range(of: f) != nil) }).sorted(by: {$0.Name < $1.Name})
     }
     public func getConversations(filter:String = "" )->[VSMConversation]{
         let f = filter.lowercased()
-        return self.Conversations.values.filter({(f == "" || ( ($0.Name == "" && $0.Users.first(where: ({!$0.isOwnContact}))!.Name.lowercased().range(of: f) != nil) || ($0.Name != "" && $0.Name.lowercased().range(of: f) != nil)))}).sorted(by: {$0.LastMessage?.Time ?? Date() > $1.LastMessage?.Time ?? Date()})
+        return self.Conversations.values.filter({$0.LastMessage != nil && (f == "" || ( ($0.Name == "" && $0.Users.first(where: ({!$0.isOwnContact}))!.Name.lowercased().range(of: f) != nil) || ($0.Name != "" && $0.Name.lowercased().range(of: f) != nil)))}).sorted(by: {$0.LastMessage?.Time ?? Date() > $1.LastMessage?.Time ?? Date()})
     }
     
     public func loadAll(){

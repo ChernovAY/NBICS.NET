@@ -154,9 +154,43 @@ public class VSMContact {
         }
         return nil
     }
-    
-    //Удалит контакт и пошлет сей факТ на сервер
-    /*public func remove()->Bool{
-        return false
-    }*/
+    public func UserContactOperations(_ what:VSMAPI.WebAPIEntry)->Bool{
+        if !String(describing: what).hasPrefix("Op_") {return false}
+        var retVal = false
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: what, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "UserId" : self.Id])
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if json.dictionary!["Success"]!.bool! {
+                    retVal = true
+                }
+            }
+        }
+        else{
+            print(z.0)
+        }
+        return retVal
+    }
+
+}
+public class VSMCheckedContact{
+    public /*weak*/ var Contact:VSMContact!
+    public /*weak*/ var Conversation:VSMConversation?
+    public var Checked:Bool = false{
+        didSet{
+            if let conv = Conversation{
+                let contInUsers = conv.Users.first(where:({$0.Id == Contact.Id}))
+                if Checked && contInUsers == nil{
+                  conv.Users.append(Contact)
+                }
+                else if !Checked && contInUsers != nil{
+                    conv.Users = conv.Users.filter({!($0 === contInUsers)})
+                }
+            }
+        }
+    }
+    public init(_ contact:VSMContact, _ chk:Bool){
+        Contact = contact
+        Checked = chk
+    }
 }

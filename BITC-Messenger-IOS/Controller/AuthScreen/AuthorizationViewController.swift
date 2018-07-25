@@ -11,30 +11,30 @@ import SwiftyJSON
 
 class AuthorizationViewController: UIViewController {
     
-    private var EInitHandler: Disposable?
-    
-    @IBOutlet weak var LoginField: StrickTextBox!
-    
-    @IBOutlet weak var PasswordField: StrickTextBox!
-
     private let mHasher: Hasher = Hasher()
+    private var EInitHandler: Disposable?
+    @IBOutlet weak var LoginField: StrickTextBox!
+    @IBOutlet weak var PasswordField: StrickTextBox!
+    @IBOutlet weak var ServersListView: UIView!
+    @IBOutlet weak var CheckServerButton: UIButton!
+    @IBOutlet weak var AuthorizationIndicator: UIActivityIndicatorView!
     
-  
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         self.hideKeyboardWhenTappedAround()
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AuthorizationViewController.NavigateToChats)}
+        AuthorizationIndicator.isHidden = true
     }
     deinit {
         EInitHandler?.dispose()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func EnterChat(_ sender: Any) {
+    @IBAction func authorization(_ sender: UIButton) {
+        AuthorizationIndicator.isHidden = false
         if !VSMAPI.Settings.login{
             if (!(PasswordField.text?.isEmpty)! && !(LoginField.text?.isEmpty)!){
                 if let hash = mHasher.GetMD5Hash(inputString: PasswordField.text!) {
@@ -45,13 +45,36 @@ class AuthorizationViewController: UIViewController {
             } else {
                 let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Логин или пароль не могут быть пустыми", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
                 button2Alert.show()
+                AuthorizationIndicator.isHidden = true
             }
         }
         else {
             VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }
-  
+    
+    @IBAction func checkServer(_ sender: UIButton) {
+        ServersListView.isHidden = false
+    }
+    
+    @IBAction func checkBGR(_ sender: UIButton) {
+        saveServer(server: "http://site.bgr39.ru/", serverName: "site.bgr39")
+    }
+    
+    @IBAction func checkGOV(_ sender: UIButton) {
+        saveServer(server: "https://sc.gov39.ru/", serverName: "sc.gov39")
+    }
+    
+    @IBAction func checkNBICS(_ sender: UIButton) {
+        saveServer(server: "https://nbics.net/", serverName: "nbics")
+    }
+    
+    func saveServer(server: String, serverName: String){
+        ServersListView.isHidden = true
+        CheckServerButton.titleLabel?.text = serverName
+        VSMAPI.Settings.caddress = server
+    }
+    
     private func NavigateToChats(_ b: Bool=true) {
         EInitHandler?.dispose()
         if b{performSegue(withIdentifier: "successfulAuthorization", sender: self)}

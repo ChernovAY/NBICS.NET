@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import QuartzCore
+import FileProvider
 
-class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
     private var isScrolling = false
     private var isNowOpen   = true
@@ -19,20 +21,73 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     private let Screen = UIScreen.main.scale
     private let ScreenHeight = UIScreen.main.bounds.height
-    private var MoveDistance = -203
-    private var refreshControl:UIRefreshControl!
+    private var MoveDistance = -253
+    private var refreshControl:UIRefreshControl!    
     
+    @IBOutlet weak var SettingChatButton: UIBarButtonItem!
     @IBOutlet weak var SendButton: UIButton!
-    @IBOutlet weak var MessageField: UITextField!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var NameChat: UINavigationItem!
+    @IBOutlet weak var MessageTextView: UITextView!
+    @IBOutlet weak var FileButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Table.delegate = self
+        Table.dataSource = self
+        Table.separatorStyle = UITableViewCellSeparatorStyle.none
+        MessageTextView?.layer.cornerRadius = 15
+        FileButton.layer.cornerRadius = 17
+        SendButton.layer.cornerRadius = 17
+        MessageTextView?.delegate = self
+        
+        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: ConfigurationsViewController.Load)}
+        if EMessageHandler == nil{EMessageHandler = VSMAPI.Data.EMessages.addHandler(target: self, handler: ConfigurationsViewController.MessagesRecieved)}
+
+        if (Screen == 2) {
+            if (ScreenHeight == 667){
+                MoveDistance = -258
+            }
+        }
+        else if (Screen == 3) {
+            MoveDistance = -272
+            if (ScreenHeight == 812) {
+                MoveDistance = -299
+            }
+        }
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(getOldMessages), for: .valueChanged)
+        Table.refreshControl = refreshControl
+        Load()
+    }
+    deinit {
+        EInitHandler?.dispose()
+        EMessageHandler?.dispose()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        if (Conversation.Name != ""){
+            SettingChatButton.isEnabled = true
+        } else {
+            SettingChatButton.isEnabled = false
+        }
+    }
+    
+    func moveTextView(_ textView: UITextView, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
     
     @IBAction func sendMessageButton(_ sender: Any) {
         if !VSMAPI.Connectivity.isConn {return}
-        if let mt = MessageField.text{
+        if let mt = MessageTextView.text{
             if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Врееееменно!!!! пока нет файлов
             //для файлов сделать контрол!!!!
@@ -40,43 +95,17 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             if VSMAPI.Connectivity.isConn{
                 self.isNowOpen = true
                 Conversation.sendMessage()
-                MessageField.text = ""
+                MessageTextView.text = ""
             }
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        Table.separatorStyle = UITableViewCellSeparatorStyle.none
-        Table.delegate = self
-        Table.dataSource = self
-        Table.rowHeight = UITableViewAutomaticDimension
-        Table.estimatedRowHeight = 300
-        
-        if EInitHandler     == nil{EInitHandler     = VSMAPI.Data.EInit.addHandler(target: self, handler: ConfigurationsViewController.Load)}
-        if EMessageHandler  == nil{EMessageHandler  = VSMAPI.Data.EMessages.addHandler(target: self, handler: ConfigurationsViewController.MessagesRecieved)}
-
-        if (Screen == 2){
-            if (ScreenHeight == 667){
-                MoveDistance = -209
-            }
-        }
-        else if (Screen == 3){
-            MoveDistance = -222
-            if (ScreenHeight == 812){
-                MoveDistance = -250
-            }
-        }
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(getOldMessages), for: .valueChanged)
-        Table.refreshControl = refreshControl
-        Load()
-        NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
-        
+    @IBAction func settingChat(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "settingChatSegue", sender: self)
     }
-    deinit {
-        EInitHandler?.dispose()
-        EMessageHandler?.dispose()
+    
+    @IBAction func attachFile(_ sender: UIButton) {
+
     }
     
     @objc func getOldMessages(refreshControl: UIRefreshControl) {
@@ -88,10 +117,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         let maximumOffset = Int(scrollView.contentSize.height - scrollView.frame.size.height)
         let deltaOffset = maximumOffset - Int(scrollView.contentOffset.y)
         
-        if !isScrolling && maximumOffset > 0 && deltaOffset <= -60 {
-            isScrolling = true
-            //Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
-            self.Conversation.Messages.getData(isAfter:true, jamp: self.jamp(true))
+        if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
+            if self.Conversation.Messages.array.last?.Id != self.Conversation.LastMessage?.Id && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && !isScrolling && maximumOffset > 0 && deltaOffset <= -30 {
+                isScrolling = true
+                self.Conversation.Messages.getData(isAfter:true, jamp: self.jamp(true))
+            }
         }
     }
     
@@ -99,49 +129,24 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         super.didReceiveMemoryWarning()
     }
     private func jamp(_ isAfter:Bool)->Bool{
-        if(isAfter){
+        if(isAfter) {
             if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
                 if isNowOpen || self.Conversation.NotReadedMessagesCount > 0 || (self.Conversation.Messages.array.count > 0 && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && self.Conversation.Messages.array.last?.part == self.Conversation.Messages.lastPArt) {
                     return true
-                }
-                else{
+                } else {
                     return false
                 }
-            }
-            else {
+            } else {
                 return true
             }
-        }
-        else{
+        } else {
             return false
         }
     }
-
-    // Start Editing The Text Field
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: MoveDistance, up: true)
-    }
     
-    // Finish Editing The Text Field
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: MoveDistance, up: false)
-    }
-    
-    // Hide the keyboard when the return key pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-    // Move the text field in a pretty animation!
-    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,27 +162,25 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
                 cell.ConfigureCell(message: message)
             }
             return cell
-            
         } else {
             return UITableViewCell()
         }
     }
+    
     func MessagesRecieved(_ parm: (String, Int)){
         if parm.0 != self.Conversation.Id {return}
         self.Table.reloadData()
-        if parm.1>=0{
+        if parm.1>=0 {
             DispatchQueue.main.async {
-                
-                    if self.Conversation.Messages.array.count > parm.1 {
-                        let indexPath = IndexPath(row: parm.1, section: 0)
-                        self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                        self.isScrolling = false
-                        self.Table.isHidden = false
-                        self.ActivityIndicator.isHidden = true
-                    }
+                if self.Conversation.Messages.array.count > parm.1 {
+                    let indexPath = IndexPath(row: parm.1, section: 0)
+                    self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self.isScrolling = false
+                    self.Table.isHidden = false
+                    self.ActivityIndicator.isHidden = true
+                }
             }
-        }
-        else{
+        } else {
             Table.isHidden = false
             ActivityIndicator.isHidden = true
             self.isScrolling = false
@@ -185,18 +188,20 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     func Load(_ b:Bool = true){
         if b {
-                Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
-                isScrolling = false
-                //MessageField.text = self.Conversation.Draft.Text
-                
-                if jamp(true){
-                            self.Conversation.Messages.getData(isAfter:true, jamp: true)
-                            isNowOpen = false
-                            self.Conversation.markReaded()
-                }
-                else{
-                    //self.Table.reloadData()
-                }
+            Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
+            NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
+            isScrolling = false
+            if jamp(true) {
+                self.Conversation.Messages.getData(isAfter:true, jamp: true)
+                isNowOpen = false
+                self.Conversation.markReaded()
             }
+        }
     }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        moveTextView(textView, moveDistance: MoveDistance, up: true)
+    }
+    
 }
+

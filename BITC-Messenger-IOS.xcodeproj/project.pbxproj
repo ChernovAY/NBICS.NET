@@ -10,7 +10,6 @@
 		2B220A995887C36CEB78A733 /* Pods_BITC_Messenger_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3645CCB002242CECE308382 /* Pods_BITC_Messenger_IOS.framework */; };
 		569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */; };
 		56A0E54320E2436C00AC29F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56A0E54220E2436C00AC29F7 /* GoogleService-Info.plist */; };
-		56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9E7E120C80B54009F48BE /* MessegesViewController.swift */; };
 		9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */; };
 		9B188F0120D8FF0F000177E5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B188F0020D8FF0F000177E5 /* Event.swift */; };
 		9B2BB25620E27F6400B27BAD /* FileDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2BB25520E27F6400B27BAD /* FileDataStore.swift */; };
@@ -19,10 +18,19 @@
 		9B5014D320BC249A00790CAC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D220BC249A00790CAC /* Conversation.swift */; };
 		9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D420BD8E8200790CAC /* DateExtension.swift */; };
 		9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D620C032F500790CAC /* AlamoFire.swift */; };
+		9B51937F20FE1C11003F80F9 /* SearchContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */; };
 		9B5E196020C5419000407868 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E195F20C5419000407868 /* Profile.swift */; };
+		9B6062F820ECD95700B570B9 /* ContactProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6062F720ECD95700B570B9 /* ContactProfileViewController.swift */; };
+		9B63AC952100C8E7000BC126 /* CreateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B63AC942100C8E7000BC126 /* CreateChatViewController.swift */; };
+		9B63AC972100E933000BC126 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B63AC962100E933000BC126 /* CheckBox.swift */; };
+		9B69DEEA210615D900DEB765 /* SelectDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B69DEE9210615D900DEB765 /* SelectDateViewController.swift */; };
+		9B69DEED21076D5900DEB765 /* ChatSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B69DEEC21076D5900DEB765 /* ChatSettingsViewController.swift */; };
+		9B69DEEF210772AF00DEB765 /* AddContactsToChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B69DEEE210772AF00DEB765 /* AddContactsToChatViewController.swift */; };
 		9B73740E20D7A4C900547CD6 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73740D20D7A4C900547CD6 /* Data.swift */; };
 		9B781B7920DA9A140060DCD9 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B781B7820DA9A140060DCD9 /* DataUtils.swift */; };
 		9BB9404720A9AF3200B60697 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB9404620A9AF3200B60697 /* API.swift */; };
+		9BD2C6B520F89D22005DE543 /* IncommingRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD2C6B420F89D22005DE543 /* IncommingRequestsViewController.swift */; };
+		9BD2C6B820F8A734005DE543 /* OutgoingRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD2C6B720F8A734005DE543 /* OutgoingRequestsViewController.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
 		D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D31F4D7DB7004874C8 /* Colors.swift */; };
@@ -51,7 +59,6 @@
 		5643776D20E2767900F3E481 /* BITC-Messenger-IOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BITC-Messenger-IOS.entitlements"; sourceTree = "<group>"; };
 		569D0D2120C6BD9F00B987C0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		56A0E54220E2436C00AC29F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		56F9E7E120C80B54009F48BE /* MessegesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessegesViewController.swift; path = Controller/MessegesViewController.swift; sourceTree = "<group>"; };
 		636E781BEE718E9A3168BB42 /* Pods-BITC-Messenger-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BITC-Messenger-IOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9B188EFC20D7E0A5000177E5 /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
 		9B188F0020D8FF0F000177E5 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -61,10 +68,19 @@
 		9B5014D220BC249A00790CAC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		9B5014D420BD8E8200790CAC /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		9B5014D620C032F500790CAC /* AlamoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamoFire.swift; sourceTree = "<group>"; };
+		9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactsViewController.swift; sourceTree = "<group>"; };
 		9B5E195F20C5419000407868 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		9B6062F720ECD95700B570B9 /* ContactProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactProfileViewController.swift; sourceTree = "<group>"; };
+		9B63AC942100C8E7000BC126 /* CreateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatViewController.swift; sourceTree = "<group>"; };
+		9B63AC962100E933000BC126 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		9B69DEE9210615D900DEB765 /* SelectDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDateViewController.swift; sourceTree = "<group>"; };
+		9B69DEEC21076D5900DEB765 /* ChatSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsViewController.swift; sourceTree = "<group>"; };
+		9B69DEEE210772AF00DEB765 /* AddContactsToChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsToChatViewController.swift; sourceTree = "<group>"; };
 		9B73740D20D7A4C900547CD6 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		9B781B7820DA9A140060DCD9 /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		9BB9404620A9AF3200B60697 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		9BD2C6B420F89D22005DE543 /* IncommingRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncommingRequestsViewController.swift; sourceTree = "<group>"; };
+		9BD2C6B720F8A734005DE543 /* OutgoingRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingRequestsViewController.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
 		D44DC7D31F4D7DB7004874C8 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = View/Colors/Colors.swift; sourceTree = "<group>"; };
@@ -130,12 +146,61 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
-		56F9E7E020C80B14009F48BE /* MessegesScreen */ = {
+		9B51937D20FE1BD0003F80F9 /* SearchContactsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				56F9E7E120C80B54009F48BE /* MessegesViewController.swift */,
+				9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */,
 			);
-			name = MessegesScreen;
+			name = SearchContactsScreen;
+			sourceTree = "<group>";
+		};
+		9B6062F620ECD8F400B570B9 /* ContactProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B6062F720ECD95700B570B9 /* ContactProfileViewController.swift */,
+			);
+			path = ContactProfileScreen;
+			sourceTree = "<group>";
+		};
+		9B63AC932100C8A8000BC126 /* CreateChatScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B63AC942100C8E7000BC126 /* CreateChatViewController.swift */,
+			);
+			name = CreateChatScreen;
+			sourceTree = "<group>";
+		};
+		9B69DEE8210615AF00DEB765 /* SelectDateScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B69DEE9210615D900DEB765 /* SelectDateViewController.swift */,
+			);
+			name = SelectDateScreen;
+			sourceTree = "<group>";
+		};
+		9B69DEEB21076D2900DEB765 /* ChatSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B69DEEC21076D5900DEB765 /* ChatSettingsViewController.swift */,
+				9B69DEEE210772AF00DEB765 /* AddContactsToChatViewController.swift */,
+			);
+			name = ChatSettingsScreen;
+			sourceTree = "<group>";
+		};
+		9BD2C6B320F89CC2005DE543 /* IncommingRequestsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9BD2C6B420F89D22005DE543 /* IncommingRequestsViewController.swift */,
+			);
+			name = IncommingRequestsScreen;
+			sourceTree = "<group>";
+		};
+		9BD2C6B620F8A6F5005DE543 /* OutgoingRequestsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9BD2C6B720F8A734005DE543 /* OutgoingRequestsViewController.swift */,
+			);
+			name = OutgoingRequestsScreen;
 			sourceTree = "<group>";
 		};
 		D438FF3A1F4C83FE003FC42D /* View */ = {
@@ -226,6 +291,7 @@
 				D4BC619E1F86AF2700388173 /* CircleImageView.swift */,
 				D4C3D48E1F798B41008F9CE2 /* Cells.swift */,
 				D4D43D0B1F86BDA90046E8E5 /* SearchBarBorderless.swift */,
+				9B63AC962100E933000BC126 /* CheckBox.swift */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -241,7 +307,13 @@
 		D4BE98EA1F4C8F7000AE9405 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				56F9E7E020C80B14009F48BE /* MessegesScreen */,
+				9B69DEEB21076D2900DEB765 /* ChatSettingsScreen */,
+				9B69DEE8210615AF00DEB765 /* SelectDateScreen */,
+				9B63AC932100C8A8000BC126 /* CreateChatScreen */,
+				9B51937D20FE1BD0003F80F9 /* SearchContactsScreen */,
+				9BD2C6B620F8A6F5005DE543 /* OutgoingRequestsScreen */,
+				9BD2C6B320F89CC2005DE543 /* IncommingRequestsScreen */,
+				9B6062F620ECD8F400B570B9 /* ContactProfileScreen */,
 				569D0D2020C6BD4A00B987C0 /* ProfileScreen */,
 				D4568CA71F71909500AA0D64 /* SettingsScreen */,
 				D4568CA21F718F0200AA0D64 /* ConfigurationsScreen */,
@@ -350,6 +422,7 @@
 				D4E325251F4C82DC00554DB2 /* Frameworks */,
 				D4E325261F4C82DC00554DB2 /* Resources */,
 				DD4670FB146F5438FDF40CB8 /* [CP] Embed Pods Frameworks */,
+				EB5D8D3DD7A3E1AA4EB42B1A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -468,6 +541,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EB5D8D3DD7A3E1AA4EB42B1A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BITC-Messenger-IOS/Pods-BITC-Messenger-IOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -475,13 +563,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56F9E7E220C80B54009F48BE /* MessegesViewController.swift in Sources */,
 				D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */,
+				9BD2C6B520F89D22005DE543 /* IncommingRequestsViewController.swift in Sources */,
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
+				9B51937F20FE1C11003F80F9 /* SearchContactsViewController.swift in Sources */,
 				D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */,
 				9B188F0120D8FF0F000177E5 /* Event.swift in Sources */,
 				D4C3D48F1F798B41008F9CE2 /* Cells.swift in Sources */,
 				9B5014D320BC249A00790CAC /* Conversation.swift in Sources */,
+				9B63AC952100C8E7000BC126 /* CreateChatViewController.swift in Sources */,
 				9B5014D120BC121200790CAC /* Chat.swift in Sources */,
 				D4D43D0C1F86BDA90046E8E5 /* SearchBarBorderless.swift in Sources */,
 				D4FD6CBC1F55C0C10035FF66 /* Hasher.swift in Sources */,
@@ -496,13 +586,19 @@
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,
 				569D0D2220C6BD9F00B987C0 /* ProfileViewController.swift in Sources */,
 				D4DE426F1F632EED0076008B /* AllChatsViewController.swift in Sources */,
+				9BD2C6B820F8A734005DE543 /* OutgoingRequestsViewController.swift in Sources */,
+				9B69DEEA210615D900DEB765 /* SelectDateViewController.swift in Sources */,
+				9B63AC972100E933000BC126 /* CheckBox.swift in Sources */,
+				9B69DEEF210772AF00DEB765 /* AddContactsToChatViewController.swift in Sources */,
 				9B2BB25620E27F6400B27BAD /* FileDataStore.swift in Sources */,
 				D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */,
 				9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */,
 				9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */,
+				9B6062F820ECD95700B570B9 /* ContactProfileViewController.swift in Sources */,
 				D4BC61A11F86B6BD00388173 /* ViewControllerExtension.swift in Sources */,
 				D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */,
 				D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */,
+				9B69DEED21076D5900DEB765 /* ChatSettingsViewController.swift in Sources */,
 				D4BE98EF1F4C952C00AE9405 /* StartScreenViewController.swift in Sources */,
 				9B5E196020C5419000407868 /* Profile.swift in Sources */,
 				9B781B7920DA9A140060DCD9 /* DataUtils.swift in Sources */,

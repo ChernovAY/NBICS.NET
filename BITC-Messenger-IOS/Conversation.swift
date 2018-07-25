@@ -69,14 +69,53 @@ public class VSMConversation{
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            self.Messages.getData(isAfter: true, jamp: true)
-                            //VSMAPI.Data.loadAll()
+                            //self.Messages.getData(isAfter: true, jamp: true)
+                            VSMAPI.Data.loadAll()
                             return
                         }
                     }
                 }
             }
             }()})
+    }
+    public func Rename(_ newName:String)->Bool{
+        if self.Name == "" || newName == "" {return false}
+        var retVal = false
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.ConversationRename, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "ConversationId" : self.Id, "NewName" : newName])
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if json.dictionary!["Success"]!.bool! {
+                    retVal = true
+                }
+            }
+        }
+        else{
+            print(z.0)
+        }
+        return retVal
+    }
+    public func sendMembers()->Bool{
+        if self.Name == "" {return false}
+        var retVal = false
+        var usersList = "["
+        for z in self.Users{
+            usersList = usersList + "{\"Id\":\"\(z.Id)\"}, "
+        }
+        usersList = String((usersList + "#]").replacingOccurrences(of: ", #", with: ""))
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.ConversationUsersIncludeOrExclude, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "ConversationId" : self.Id, "UsersList" : usersList])
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if json.dictionary!["Success"]!.bool! {
+                    retVal = true
+                }
+            }
+        }
+        else{
+            print(z.0)
+        }
+        return retVal
     }
     public func markReaded(){
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.messageReaded, params: ["ConversationId":self.Id, "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash]) { (d, s) in

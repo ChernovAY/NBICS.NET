@@ -9,8 +9,10 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UITabBarDelegate {
+    
     let servers = ["https://nbics.net", "http://sc.gov39.ru", "http://sc.miroland.su", "http://10.10.10.11:8083"]
     var server:String = "https://nbics.net"
+    
     @IBOutlet weak var ServersPickerView: UIPickerView!
     
     override func viewDidLoad() {

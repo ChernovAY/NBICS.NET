@@ -21,10 +21,9 @@ class StartScreenViewController: UIViewController{
         EInitHandler?.dispose()
     }
     override func viewDidAppear(_ animated: Bool) {
-        if !VSMAPI.Settings.login{
+        if !VSMAPI.Settings.login {
             performSegue(withIdentifier: "showAuthorizationScreen", sender: self)
-        }
-        else {
+        } else {
             VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }

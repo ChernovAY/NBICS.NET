@@ -10,20 +10,20 @@ import Foundation
 import SwiftyJSON
 
 public class VSMProfile{
-    private var p               = [String:Any]()
+    private var p               = Dictionary<String,Any>()
     private var newPasswordHash = ""{didSet{p["newPasswordHash"] = newPasswordHash  ;   p["oldPasswordHash"] = VSMAPI.Settings.hash }}
     
     public let Email:       String
     public let Entity:      Int
     public let IconUrl:     String
     
-    public var BirthDay:    Date    {didSet{p["birthDay"] = BirthDay                ;                                               }}
-    public var Name:        String  {didSet{p["name"] = Name                        ;   p["nameUpdateFlag"] = true                  }}
-    public var Patronymic:  String  {didSet{p["patronymic"] = Patronymic            ;   p["patronymicUpdateFlag"] = true            }}
-    public var Phone:       String  {didSet{p["phone"] = Phone                      ;   p["phoneUpdateFlag"] = true                 }}
-    public var Skype:       String  {didSet{p["skype"] = Skype                      ;   p["phoneUpdateFlag"] = true                 }}
-    public var FamilyName:  String  {didSet{p["familyName"] = FamilyName            ;   p["familyNameUpdateFlag"] = true            }}
-    public var Icon:        UIImage?{didSet{p["icon"] = Icon                        ;   p["photoUpdateFlag"] = true                 }}
+    public var BirthDay:    Date    {didSet{p["birthDay"] = BirthDay.toServerTimeString()                ;                                               }}
+    public var Name:        String  {didSet{p["name"] = Name                                             ;   p["nameUpdateFlag"] = true                  }}
+    public var Patronymic:  String  {didSet{p["patronymic"] = Patronymic                                 ;   p["patronymicUpdateFlag"] = true            }}
+    public var Phone:       String  {didSet{p["phone"] = Phone                                           ;   p["phoneUpdateFlag"] = true                 }}
+    public var Skype:       String  {didSet{p["skype"] = Skype                                           ;   p["phoneUpdateFlag"] = true                 }}
+    public var FamilyName:  String  {didSet{p["familyName"] = FamilyName                                 ;   p["familyNameUpdateFlag"] = true            }}
+    public var Icon:        UIImage?{didSet{p["icon"] = Icon                                             ;   p["photoUpdateFlag"] = true                 }}
     //public let Organizations: [Object] пока без них
     
     public init (
@@ -69,6 +69,37 @@ public class VSMProfile{
         }
         self.Icon = VSMAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")
     }
+    public convenience init?(UserId:Int){
+        var z : (Any, Bool)
+        if VSMAPI.Connectivity.isConn{
+            z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.contactProfile, params: ["UserId":UserId, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash])
+            if(z.1){
+                let d = z.0 as! Data
+                if let json = try? JSON(data: d) {
+                    if let dict = json.dictionary{
+                        
+                        self.init(
+                            BirthDay: Date.init(fromString: dict["BirthDay"]!.string!)
+                            , Email: dict["Email"]!.string ?? ""
+                            , Entity: dict["EntityId"]!.int!
+                            , FamilyName: dict["FamilyName"]!.string ?? ""
+                            , Icon: ""
+                            , IconUrl: dict["PhotoUrl"]!.string!
+                            , Name: dict["Name"]!.string ?? ""
+                            , Patronymic: dict["Patronymic"]!.string ?? ""
+                            , Phone: dict["Phone"]!.string ?? ""
+                            , Skype: dict["Skype"]!.string ?? ""
+                        )
+                        return
+                    }
+                }
+            }
+            else{
+                print(z.0)
+            }
+        }
+            return nil
+    }
     public convenience init?(){
         var z : (Any, Bool)
         if VSMAPI.Connectivity.isConn{
@@ -90,7 +121,7 @@ public class VSMProfile{
                     
                       self.init(
                         BirthDay: Date.init(fromString: dict["BirthDay"]!.string!)
-                        , Email: dict["Email"]!.string!
+                        , Email: dict["Email"]!.string ?? ""
                         , Entity: dict["Entity"]!.int!
                         , FamilyName: dict["FamilyName"]!.string!
                         , Icon: ""
@@ -109,7 +140,7 @@ public class VSMProfile{
         }
         return nil
     }
-    public func set()->Bool{
+    public func setChanges()->Bool{
         if self.p.count != 0 {
             p["Email"] = VSMAPI.Settings.user
             p["PasswordHash"] = VSMAPI.Settings.hash
@@ -124,6 +155,7 @@ public class VSMProfile{
                 if let nph = p["newPasswordHash"]{ //!!!!!!Может не сработать!!!
                     VSMAPI.Settings.hash = nph as! String
                 }
+                p = Dictionary<String,Any>()
                 return true
             }
         }

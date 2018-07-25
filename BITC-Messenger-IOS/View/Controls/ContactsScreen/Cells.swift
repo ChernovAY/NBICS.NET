@@ -33,51 +33,49 @@ public class ContactCell : UITableViewCell {
 public class MessageCell : UITableViewCell {
     
     public var mMessage: VSMMessage!
-    
+
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverMessageLabel: UILabel!
     @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
     @IBOutlet weak var SenderView: UIView!
+    @IBOutlet weak var ReceiverImage: UIImageView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
     @IBOutlet weak var SenderMessageTimeLabel: UILabel!
-    @IBOutlet weak var ReceiverImage: UIImageView!
-    
+    @IBOutlet weak var SenderAttachedFilesView: UIView!
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     public func ConfigureCell(message: VSMMessage) {
         mMessage = message
-        self.ReceiverView?.clipsToBounds = true
-        self.ReceiverView!.layer.cornerRadius = 10
-        self.ReceiverImage?.clipsToBounds = true
-        self.ReceiverImage.layer.cornerRadius = 10
-        self.SenderView?.clipsToBounds = true
-        self.SenderView!.layer.cornerRadius = 10
-        SenderMessageLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        SenderMessageLabel.numberOfLines = 0
-        ReceiverMessageLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        ReceiverMessageLabel.numberOfLines = 0
-        //if (message.Text != ""){
+        
+        ReceiverView?.clipsToBounds = true
+        ReceiverView!.layer.cornerRadius = 10
+        
+        SenderView?.clipsToBounds = true
+        SenderView!.layer.cornerRadius = 10
+        if (message.Text != "") {
+            SenderMessageLabel.text = ""
+            SenderMessageTimeLabel.text = ""
+            ReceiverMessageLabel.text = ""
+            ReceiverMessageTimeLabel.text = ""
+            
+            SenderView.isHidden = true
+            ReceiverView.isHidden = true
+    
             if (message.Sender?.isOwnContact == false) {
-                SenderMessageLabel.text = ""
-                SenderMessageTimeLabel.text = ""
-                SenderView.isHidden = true
-                ReceiverImage.image = message.Sender?.Photo
+                ReceiverView.isHidden = false
                 ReceiverMessageLabel.text = message.Text
                 ReceiverMessageTimeLabel.text = message.Time.toTimeString();
-                ReceiverView.isHidden = false;
+                ReceiverImage.image = message.Sender?.Photo
             } else {
-                ReceiverMessageLabel.text = ""
-                ReceiverMessageTimeLabel.text = ""
-                ReceiverView.isHidden = true
+                SenderView.isHidden = false
                 SenderMessageLabel.text = message.Text
                 SenderMessageTimeLabel.text = message.Time.toTimeString();
-                SenderView.isHidden = false
-                
             }
-        //}
-        self.backgroundColor = UIColor.clear
+            self.backgroundColor = UIColor.clear
+        }
     }
 }
 
@@ -101,10 +99,9 @@ public class ConversationCell : UITableViewCell {
         
         self.backgroundColor = UIColor.clear
     }
-//-------------------------
+    
     private func buildName()->String{
-        if mConv.Name != ""
-        {
+        if mConv.Name != "" {
             return mConv.Name
         }
         if let r = mConv.Users.first(where: ({!$0.isOwnContact}))?.Name {
@@ -112,10 +109,132 @@ public class ConversationCell : UITableViewCell {
         }
         return "Фигня какая то"
     }
-    private func buildImage()->UIImage{
+    private func buildImage()->UIImage {
         if let r = mConv.Users.first(where: ({!$0.isOwnContact}))?.Photo {
             return r
         }
         return UIImage(named: "EmptyUser")!
     }
+}
+
+public class IncommingCell : UITableViewCell {
+    
+    @IBOutlet weak var PhotoImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    private var contact: VSMContact!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(contact: VSMContact) {
+        PhotoImage.image = contact.Photo
+        NameLabel.text = contact.Name
+        
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class OutgoingCell : UITableViewCell {
+    
+    @IBOutlet weak var PhotoImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    private var contact: VSMContact!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(contact: VSMContact) {
+        PhotoImage.image = contact.Photo
+        NameLabel.text = contact.Name
+        
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class SearchContactCell : UITableViewCell {
+    
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var PhotoImage: UIImageView!
+    
+    private var contact: VSMContact!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(contact: VSMContact) {
+        PhotoImage.image = contact.Photo
+        NameLabel.text = contact.Name
+        
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class CreateChatСontactCell : UITableViewCell {
+    private var contact: VSMCheckedContact!
+    @IBOutlet weak var PhotoImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    @IBOutlet weak var CheckButton: CheckBox!
+    
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    public func chkChange(_ b: Bool){
+        self.contact.Checked = b
+    }
+    
+    public func ConfigureCell(contact: VSMCheckedContact) {
+        self.contact = contact
+        PhotoImage.image = contact.Contact.Photo
+        NameLabel.text = contact.Contact.Name
+        CheckButton.isChecked = contact.Checked
+        CheckButton.checkdelegate = chkChange
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class DeleteContactFromChatCell : UITableViewCell {
+    
+    private var contact: VSMCheckedContact!
+    @IBOutlet weak var PhotoImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(contact: VSMCheckedContact) {
+        self.contact = contact
+        PhotoImage.image = contact.Contact.Photo
+        NameLabel.text = contact.Contact.Name
+        self.backgroundColor = UIColor.clear
+    }
+ 
+}
+
+public class AddContactToChatCell : UITableViewCell {
+    
+    private var contact: VSMCheckedContact!
+    @IBOutlet weak var PhotoImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(contact: VSMCheckedContact) {
+        self.contact = contact
+        PhotoImage.image = contact.Contact.Photo
+        NameLabel.text = contact.Contact.Name
+        self.backgroundColor = UIColor.clear
+    }
+    
 }

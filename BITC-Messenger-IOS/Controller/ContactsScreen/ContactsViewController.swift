@@ -15,7 +15,6 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var Search: UISearchBar!
     
-    
     private var cArray   = [VSMContact]()
     
     var refreshControl:UIRefreshControl!
@@ -23,11 +22,8 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         Table.delegate = self
         Table.dataSource = self
-        
         Search.delegate = self
         Search.returnKeyType = UIReturnKeyType.done
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: ContactsViewController.Load)}
@@ -36,19 +32,20 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
     deinit {
         EInitHandler?.dispose()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cont = cArray[indexPath.row]
+        VSMAPI.VSMChatsCommunication.contactId = cont.Id
+        performSegue(withIdentifier: "showContactProfile", sender: self)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as? ContactCell {
-            
             var contact: VSMContact!
-            
             contact = cArray[indexPath.row]
             cell.ConfigureCell(contact: contact)
             
@@ -71,23 +68,39 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         return 1
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, completion) in
+            let c = self.cArray[indexPath.row]
+            if c.UserContactOperations(VSMAPI.WebAPIEntry.Op_DeleteUserFromContacts){
+                VSMAPI.Data.loadAll()
+            }
+        }
+        action.image = #imageLiteral(resourceName: "delete")
+        action.backgroundColor = .red
+        return action
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
        if Search.text == nil || Search.text == "" {
             view.endEditing(true)
         }
-       else{
-
-        }
         self.cArray = VSMAPI.Data.getContacts(type: VSMContact.ContactType.Cont, filter: searchBar.text ?? "")
-        
         Table.reloadData()
     }
 
     private func Load(_ b:Bool=true) {
-        if(b){
+        if(b) {
             cArray = VSMAPI.Data.getContacts(type: VSMContact.ContactType.Cont)
-        }
-        else{
+        } else {
             cArray.removeAll()
         }
         self.Table.reloadData()

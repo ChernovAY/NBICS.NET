@@ -9,6 +9,15 @@
 import Foundation
 
 extension Date{
+    public init(fromLocalString: String){
+        
+        let s = String(fromLocalString.replacingOccurrences(of: "+0000", with: ""))
+        self.init()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"
+        let date = dateFormatter.date(from: s)!
+        self = date
+    }
     public init(fromString: String){
         self.init()
         let dateFormatter = DateFormatter()
@@ -26,4 +35,10 @@ extension Date{
         dateformatter.dateFormat = format
         return dateformatter.string(from:self)
     }
+    public func toServerTimeString(_ format:String = "yyyy-MM-dd'T'HH:mm:ss")->String{
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = format
+        return dateformatter.string(from:self)
+    }
+    
 }
