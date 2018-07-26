@@ -282,5 +282,6 @@ public class VSMAPI{
         public static var contactId         = 0
         public static var BDayDelegate: ()->() = {() in print(VSMAPI.Data.Profile!.BirthDay.toString()) }
         public static var checkedContactForConversation = [VSMCheckedContact]()
+        public static var AttMessageId      = ""
     }
 }

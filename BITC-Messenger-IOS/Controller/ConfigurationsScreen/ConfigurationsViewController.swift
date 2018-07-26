@@ -66,6 +66,10 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         EInitHandler?.dispose()
         EMessageHandler?.dispose()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         if (Conversation.Name != ""){
@@ -105,7 +109,10 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     @IBAction func attachFile(_ sender: UIButton) {
-
+    }
+    
+    private func showAttachedFiles(){
+        performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
     }
     
     @objc func getOldMessages(refreshControl: UIRefreshControl) {
@@ -125,9 +132,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+
     private func jamp(_ isAfter:Bool)->Bool{
         if(isAfter) {
             if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
@@ -159,7 +164,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
            
             if indexPath.row < Conversation.Messages.array.count{
                 message = Conversation.Messages.array[indexPath.row]
-                cell.ConfigureCell(message: message)
+                cell.ConfigureCell(message: message, AttchsDelegate: showAttachedFiles)
             }
             return cell
         } else {

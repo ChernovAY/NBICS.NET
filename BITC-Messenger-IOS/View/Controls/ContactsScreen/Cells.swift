@@ -11,10 +11,10 @@ import UIKit
 
 public class ContactCell : UITableViewCell {
     
+    private var mContact: VSMContact!
+    
     @IBOutlet weak var NameLbl : UILabel!
     @IBOutlet weak var ThumbImage: UIImageView!
-    
-    private var mContact: VSMContact!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,7 +33,8 @@ public class ContactCell : UITableViewCell {
 public class MessageCell : UITableViewCell {
     
     public var mMessage: VSMMessage!
-
+    private var delegate:(()->Void)?
+    
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverMessageLabel: UILabel!
     @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
@@ -41,13 +42,15 @@ public class MessageCell : UITableViewCell {
     @IBOutlet weak var ReceiverImage: UIImageView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
     @IBOutlet weak var SenderMessageTimeLabel: UILabel!
-    @IBOutlet weak var SenderAttachedFilesView: UIView!
-
+    @IBOutlet weak var SenderAttachedFilesButton: UIButton!
+    @IBOutlet weak var ReceiverAttachedFilesButton: UIButton!
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(message: VSMMessage) {
+    public func ConfigureCell(message: VSMMessage, AttchsDelegate:(()->Void)? = nil) {
+        delegate = AttchsDelegate
         mMessage = message
         
         ReceiverView?.clipsToBounds = true
@@ -55,36 +58,60 @@ public class MessageCell : UITableViewCell {
         
         SenderView?.clipsToBounds = true
         SenderView!.layer.cornerRadius = 10
-        if (message.Text != "") {
-            SenderMessageLabel.text = ""
-            SenderMessageTimeLabel.text = ""
-            ReceiverMessageLabel.text = ""
-            ReceiverMessageTimeLabel.text = ""
+        
+        SenderMessageLabel.text = ""
+        SenderMessageTimeLabel.text = ""
+        ReceiverMessageLabel.text = ""
+        ReceiverMessageTimeLabel.text = ""
             
-            SenderView.isHidden = true
-            ReceiverView.isHidden = true
+        SenderView.isHidden = true
+        ReceiverView.isHidden = true
+        
+        SenderAttachedFilesButton.isHidden = true
+        ReceiverAttachedFilesButton.isHidden = true
     
-            if (message.Sender?.isOwnContact == false) {
-                ReceiverView.isHidden = false
-                ReceiverMessageLabel.text = message.Text
-                ReceiverMessageTimeLabel.text = message.Time.toTimeString();
-                ReceiverImage.image = message.Sender?.Photo
-            } else {
-                SenderView.isHidden = false
-                SenderMessageLabel.text = message.Text
-                SenderMessageTimeLabel.text = message.Time.toTimeString();
+        if (message.Sender?.isOwnContact == false) {
+            ReceiverView.isHidden = false
+            ReceiverMessageLabel.text = message.Text
+            ReceiverMessageTimeLabel.text = message.Time.toTimeString();
+            ReceiverImage.image = message.Sender?.Photo
+            if (message.AttachedFiles.count > 0){
+                ReceiverAttachedFilesButton.isHidden = false
             }
-            self.backgroundColor = UIColor.clear
+        } else {
+            SenderView.isHidden = false
+            SenderMessageLabel.text = message.Text
+            SenderMessageTimeLabel.text = message.Time.toTimeString();
+            if (message.AttachedFiles.count > 0){
+                SenderAttachedFilesButton.isHidden = false
+            }
+        }
+        self.backgroundColor = UIColor.clear
+    }
+    
+    @IBAction func showReceiverAttachedFiles(_ sender: UIButton) {
+        setAttachsMessage()
+    }
+    @IBAction func showSenderAttachedFiles(_ sender: UIButton) {
+        setAttachsMessage()
+    }
+    func setAttachsMessage(){
+        VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
+        if let d = self.delegate{
+            if self.mMessage.AttachedFiles.count>0{
+                d()
+            }
         }
     }
+    
 }
 
 public class ConversationCell : UITableViewCell {
     
+    private var mConv: VSMConversation!
+    
     @IBOutlet weak var NameLbl : UILabel!
     @IBOutlet weak var ThumbImage: UIImageView!
-    
-    private var mConv: VSMConversation!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -118,11 +145,11 @@ public class ConversationCell : UITableViewCell {
 }
 
 public class IncommingCell : UITableViewCell {
+
+    private var contact: VSMContact!
     
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
-    
-    private var contact: VSMContact!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -138,10 +165,10 @@ public class IncommingCell : UITableViewCell {
 
 public class OutgoingCell : UITableViewCell {
     
+    private var contact: VSMContact!
+    
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
-    
-    private var contact: VSMContact!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -157,10 +184,10 @@ public class OutgoingCell : UITableViewCell {
 
 public class SearchContactCell : UITableViewCell {
     
+    private var contact: VSMContact!
+    
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var PhotoImage: UIImageView!
-    
-    private var contact: VSMContact!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -175,10 +202,11 @@ public class SearchContactCell : UITableViewCell {
 }
 
 public class CreateChatСontactCell : UITableViewCell {
+    
     private var contact: VSMCheckedContact!
+    
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
-    
     @IBOutlet weak var CheckButton: CheckBox!
     
     
@@ -202,6 +230,7 @@ public class CreateChatСontactCell : UITableViewCell {
 public class DeleteContactFromChatCell : UITableViewCell {
     
     private var contact: VSMCheckedContact!
+    
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     
@@ -222,6 +251,7 @@ public class DeleteContactFromChatCell : UITableViewCell {
 public class AddContactToChatCell : UITableViewCell {
     
     private var contact: VSMCheckedContact!
+    
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     
@@ -236,5 +266,30 @@ public class AddContactToChatCell : UITableViewCell {
         NameLabel.text = contact.Contact.Name
         self.backgroundColor = UIColor.clear
     }
+
+}
+
+public class MessageAttachmentsCell : UITableViewCell {
     
+    private var file: VSMAttachedFile!
+    
+    //@IBOutlet weak var DownloadFileButton: UIButton!
+   // @IBOutlet weak var NameFileLabel: UILabel!
+    @IBOutlet weak var FileImage: UIImageView!
+    
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(file: VSMAttachedFile) {
+        self.file = file
+        //NameFileLabel.text = file.Name
+        FileImage.image = file.PreviewIcon
+        FileImage.backgroundColor = UIColor.darkGray
+        
+        //FileImage.sizeToFit()
+        
+        self.backgroundColor = UIColor.darkGray
+    }
 }

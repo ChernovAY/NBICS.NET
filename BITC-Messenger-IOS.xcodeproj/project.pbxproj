@@ -19,6 +19,7 @@
 		9B5014D520BD8E8200790CAC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D420BD8E8200790CAC /* DateExtension.swift */; };
 		9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5014D620C032F500790CAC /* AlamoFire.swift */; };
 		9B51937F20FE1C11003F80F9 /* SearchContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */; };
+		9B56F44D2108C7C200CB4982 /* MessageAttachmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B56F44C2108C7C200CB4982 /* MessageAttachmentsViewController.swift */; };
 		9B5E196020C5419000407868 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E195F20C5419000407868 /* Profile.swift */; };
 		9B6062F820ECD95700B570B9 /* ContactProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6062F720ECD95700B570B9 /* ContactProfileViewController.swift */; };
 		9B63AC952100C8E7000BC126 /* CreateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B63AC942100C8E7000BC126 /* CreateChatViewController.swift */; };
@@ -69,6 +70,7 @@
 		9B5014D420BD8E8200790CAC /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		9B5014D620C032F500790CAC /* AlamoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamoFire.swift; sourceTree = "<group>"; };
 		9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactsViewController.swift; sourceTree = "<group>"; };
+		9B56F44C2108C7C200CB4982 /* MessageAttachmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAttachmentsViewController.swift; sourceTree = "<group>"; };
 		9B5E195F20C5419000407868 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9B6062F720ECD95700B570B9 /* ContactProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactProfileViewController.swift; sourceTree = "<group>"; };
 		9B63AC942100C8E7000BC126 /* CreateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 				9B51937E20FE1C11003F80F9 /* SearchContactsViewController.swift */,
 			);
 			name = SearchContactsScreen;
+			sourceTree = "<group>";
+		};
+		9B56F44B2108C6FD00CB4982 /* AttachmentsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B56F44C2108C7C200CB4982 /* MessageAttachmentsViewController.swift */,
+			);
+			name = AttachmentsScreen;
 			sourceTree = "<group>";
 		};
 		9B6062F620ECD8F400B570B9 /* ContactProfileScreen */ = {
@@ -307,6 +317,7 @@
 		D4BE98EA1F4C8F7000AE9405 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9B56F44B2108C6FD00CB4982 /* AttachmentsScreen */,
 				9B69DEEB21076D2900DEB765 /* ChatSettingsScreen */,
 				9B69DEE8210615AF00DEB765 /* SelectDateScreen */,
 				9B63AC932100C8A8000BC126 /* CreateChatScreen */,
@@ -566,6 +577,7 @@
 				D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */,
 				9BD2C6B520F89D22005DE543 /* IncommingRequestsViewController.swift in Sources */,
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
+				9B56F44D2108C7C200CB4982 /* MessageAttachmentsViewController.swift in Sources */,
 				9B51937F20FE1C11003F80F9 /* SearchContactsViewController.swift in Sources */,
 				D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */,
 				9B188F0120D8FF0F000177E5 /* Event.swift in Sources */,
