@@ -92,9 +92,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBAction func sendMessageButton(_ sender: Any) {
         if !VSMAPI.Connectivity.isConn {return}
         if let mt = MessageTextView.text{
-            if mt == ""{return}//Сделать проверку на пустую строку и строку из пробелов !!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //Врееееменно!!!! пока нет файлов
-            //для файлов сделать контрол!!!!
+            if mt == ""{return}
             Conversation.Draft.Text = mt
             if VSMAPI.Connectivity.isConn{
                 self.isNowOpen = true
@@ -109,6 +107,8 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     @IBAction func attachFile(_ sender: UIButton) {
+        VSMAPI.VSMChatsCommunication.AttMessageId = "New"
+        performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
     }
     
     private func showAttachedFiles(){

@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class MessageAttachmentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MessageAttachmentsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate, UIDocumentPickerDelegate {
+   
+    private var docController:UIDocumentInteractionController!
     private var cArray = [VSMAttachedFile]()
-    @IBOutlet weak var Table: UITableView!
+    
+    @IBOutlet weak var Table: UICollectionView!
+    @IBOutlet weak var AttachFileButton: UIButton!
+    //@IBOutlet weak var AttachFileButton: UIButton!
+    @IBOutlet weak var NavigationTitle: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,37 +25,86 @@ class MessageAttachmentsViewController: UIViewController, UITableViewDataSource,
         Table.dataSource = self
         Load()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if urls.count > 0 {swichNavigationBar(state: true);}
+        for f in urls{
+            let myURL = f as URL
+            print("import result : \(myURL)")
+        }
+    }
+   
+  
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("view was cancelled")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cArray.count
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageAttachmentsCell", for: indexPath) as? MessageAttachmentsCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageAttachmentsCell", for: indexPath) as? MessageAttachmentsCell {
             var file: VSMAttachedFile!
             file = cArray[indexPath.row]
-            cell.ConfigureCell(file: file)
+            cell.ConfigureCell(file: file, previewDelegate: preview, stateDelegate: swichNavigationBar)
             
             return cell
             
         } else {
-            return UITableViewCell()
+            return UICollectionViewCell()
         }
     }
+    public func preview(url:URL){
+        docController = UIDocumentInteractionController(url: url)
+        docController.name = url.lastPathComponent
+        docController.delegate = self
+        docController.presentPreview(animated: true)
+    }
+    
     func Load(_ b:Bool = true){
         if b {
-            cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Messages.array.first(where: {$0.Id == VSMAPI.VSMChatsCommunication.AttMessageId})!.AttachedFiles)!
+            if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
+                cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles)!
+                AttachFileButton.isHidden = false
+            }
+            else{    cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Messages.array.first(where: {$0.Id == VSMAPI.VSMChatsCommunication.AttMessageId})!.AttachedFiles)!
+            }
         }
         else{
             cArray.removeAll()
         }
         self.Table.reloadData()
     }
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
+        docController = nil
+    }
+    
+    public func swichNavigationBar(state: Bool){
+        if (state == true){
+            navigationItem.hidesBackButton = true
+            NavigationTitle.title = "Подождите..."
+        } else {
+            navigationItem.hidesBackButton = false
+            NavigationTitle.title = ""
+        }
+    }
+    
+    @IBAction func attachFile(_ sender: UIButton) {
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.content","public.data"], in: .import)
+        documentPicker.delegate = self
+        documentPicker.modalPresentationStyle = .pageSheet
+        documentPicker.allowsMultipleSelection = true
+        self.present(documentPicker, animated: true, completion: nil)
+    }
+
+    
 }

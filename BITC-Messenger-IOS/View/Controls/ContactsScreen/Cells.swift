@@ -269,27 +269,58 @@ public class AddContactToChatCell : UITableViewCell {
 
 }
 
-public class MessageAttachmentsCell : UITableViewCell {
+public class MessageAttachmentsCell : UICollectionViewCell {
     
     private var file: VSMAttachedFile!
-    
-    //@IBOutlet weak var DownloadFileButton: UIButton!
-   // @IBOutlet weak var NameFileLabel: UILabel!
+    private var previewDelegate: ((URL)->Void)?
+    private var stateDelegate:((Bool)->Void)?
+    @IBOutlet weak var NameFileLabel: UILabel!
     @IBOutlet weak var FileImage: UIImageView!
-    
+    @IBOutlet weak var FileView: UIView!
+    @IBOutlet weak var ProgressView: UIProgressView!
+    @IBOutlet weak var DeleteFileButton: UIButton!
+    @IBOutlet weak var DownloadFileButton: UIButton!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(file: VSMAttachedFile) {
+    public func ConfigureCell(file: VSMAttachedFile, previewDelegate:((URL)->Void)?, stateDelegate:((Bool)->Void)?) {
+        self.stateDelegate = stateDelegate
+        self.previewDelegate = previewDelegate
         self.file = file
-        //NameFileLabel.text = file.Name
+        FileView?.clipsToBounds = true
+        FileView!.layer.cornerRadius = 5
+        NameFileLabel.text = file.Name
         FileImage.image = file.PreviewIcon
-        FileImage.backgroundColor = UIColor.darkGray
+        if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
+            DeleteFileButton.isHidden = false
+            DownloadFileButton.isHidden = true
+        }
+    }
+    
+    @IBAction func downloadFile(_ sender: Any) {
+        ProgressView.progress = 0
+        ProgressView.isHidden = false
+        if let d = self.stateDelegate{
+            d(true)
+        }
+        self.file.download(loadedDelegate: loaded, progressDelegate: progress)
+    }
+    private func loaded(url:URL?){
+        if let d = self.stateDelegate{
+            d(false)
+        }
         
-        //FileImage.sizeToFit()
-        
-        self.backgroundColor = UIColor.darkGray
+        if let u = url {
+            if let d = previewDelegate{
+                d(u)
+            }
+        }
+        ProgressView.isHidden = true
+        ProgressView.progress = 0
+    }
+    private func progress(progress:Double){
+        ProgressView.progress = Float(progress)
     }
 }
