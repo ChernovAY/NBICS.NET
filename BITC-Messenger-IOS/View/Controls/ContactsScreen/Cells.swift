@@ -255,7 +255,6 @@ public class AddContactToChatCell : UITableViewCell {
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -266,7 +265,6 @@ public class AddContactToChatCell : UITableViewCell {
         NameLabel.text = contact.Contact.Name
         self.backgroundColor = UIColor.clear
     }
-
 }
 
 public class MessageAttachmentsCell : UICollectionViewCell {
@@ -278,7 +276,6 @@ public class MessageAttachmentsCell : UICollectionViewCell {
     @IBOutlet weak var FileImage: UIImageView!
     @IBOutlet weak var FileView: UIView!
     @IBOutlet weak var ProgressView: UIProgressView!
-    @IBOutlet weak var DeleteFileButton: UIButton!
     @IBOutlet weak var DownloadFileButton: UIButton!
     
     required public init?(coder aDecoder: NSCoder) {
@@ -288,24 +285,55 @@ public class MessageAttachmentsCell : UICollectionViewCell {
     public func ConfigureCell(file: VSMAttachedFile, previewDelegate:((URL)->Void)?, stateDelegate:((Bool)->Void)?) {
         self.stateDelegate = stateDelegate
         self.previewDelegate = previewDelegate
+        
         self.file = file
         FileView?.clipsToBounds = true
         FileView!.layer.cornerRadius = 5
         NameFileLabel.text = file.Name
         FileImage.image = file.PreviewIcon
+        
         if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
-            DeleteFileButton.isHidden = false
-            DownloadFileButton.isHidden = true
+            DownloadFileButton.setImage(UIImage(named: "delete"), for: .normal)
+            DownloadFileButton.setImage(UIImage(named: "delete"), for: .selected)
+            DownloadFileButton.setImage(UIImage(named: "delete"), for: .focused)
+            self.file.progressDelegate  = progress
+            self.file.loadedDelegate    = uploaded
+        }
+    }
+
+    @IBAction func downloadFile(_ sender: UIButton) {
+        if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
+            if file.dropFile(){
+                VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles = (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles.filter({!($0 === file)}))!
+                if let s = stateDelegate{
+                    s(false)
+                }
+            }
+        } else {
+            ProgressView.progress = 0
+            ProgressView.isHidden = false
+            if let d = self.stateDelegate{
+                d(true)
+            }
+            self.file.download(loadedDelegate: loaded, progressDelegate: progress)
         }
     }
     
-    @IBAction func downloadFile(_ sender: Any) {
-        ProgressView.progress = 0
-        ProgressView.isHidden = false
-        if let d = self.stateDelegate{
-            d(true)
+    private func uploaded(B:Bool){
+        if B{
+            NameFileLabel.text = file.Name
+            FileImage.image = file.PreviewIcon
+            ProgressView.isHidden = true
+            if let msg = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft{
+                if msg.AttachedFiles.first(where: {$0.Guid == ""}) == nil {
+                    msg.isFileUploading = false
+                    if let s = stateDelegate{
+                        s(false)
+                    }
+                }
+                DownloadFileButton.isHidden = false
+            }
         }
-        self.file.download(loadedDelegate: loaded, progressDelegate: progress)
     }
     private func loaded(url:URL?){
         if let d = self.stateDelegate{
@@ -322,5 +350,23 @@ public class MessageAttachmentsCell : UICollectionViewCell {
     }
     private func progress(progress:Double){
         ProgressView.progress = Float(progress)
+        if !DownloadFileButton.isHidden {DownloadFileButton.isHidden = true}
+        if ProgressView.isHidden {ProgressView.isHidden = false}
+    }
+}
+
+public class CommonConfigurationCell : UITableViewCell {
+    
+    private var configuration: VSMConfiguration!
+    
+    @IBOutlet weak var NameLabel: UILabel!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(configuration: VSMConfiguration) {
+        NameLabel.text = configuration.Name
+        self.backgroundColor = UIColor.clear
     }
 }

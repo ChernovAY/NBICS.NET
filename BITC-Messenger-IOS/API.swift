@@ -162,7 +162,11 @@ public class VSMAPI{
         
         case AddNewConversation                 = "VSM.Web.Plugins.Contacts/ContactsHome/AddNewConversation"    //+++
         case ConversationRename                 = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationRename"
-        case ConversationUsersIncludeOrExclude  = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationUsersIncludeOrExclude"
+        case ConversationUsersIncludeOrExclude  = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationUsersIncludeOrExclude"     //+++
+        
+        case Configurations             = "Workplace/GetConfigurations" //+++
+        case ProfileWithConf            = "Workplace/GetProfileWithConfigurations" // Уточнить// Переделать!!!!!!!!!!!
+        case CopyConfiguration          = "Workplace/CopyConfiguration" // Уточнить
     }
     // Session Manager Configurations!!!!!!!
     public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){

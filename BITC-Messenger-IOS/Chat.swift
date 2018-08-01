@@ -13,10 +13,9 @@ import Alamofire
 
  public class VSMMessage{
 
-    
     public var isFileUploading = false
     public var AttachedFiles   =  Array<VSMAttachedFile>()
-    
+    public var AttachedConfs   =  Array<VSMConfiguration>()
     public let part          :  Int?
     public let ConversationId:  String
     public let Draft:           Bool
@@ -63,34 +62,35 @@ import Alamofire
                     AttachedFiles.append(VSMAttachedFile(from:af))
                 }
             }
-            
+        }
+        if let jsonArr = dict["AttachedConfigurations"]?.array{
+            for jaf in jsonArr{
+                if let af = jaf.dictionary{
+                    AttachedConfs.append(VSMConfiguration(from:af))
+                }
+            }
         }
     }
     
      
-    public func attachFile(filePath: String, loadedDelegate: @escaping (Bool)->Void, progressDelegate: @escaping (Double)->Void)->VSMAttachedFile?{
-        if self.Id == "New" {return nil}
+    public func attachFile(fileURL: URL){
+        if self.Id != "New" {return;}
         self.isFileUploading = true
-        let fileParts = filePath.split(separator: ".")
+        let fileName = fileURL.lastPathComponent
+        let fileParts = fileName.split(separator: ".")
         let fileExtension = String(fileParts[fileParts.count-1])
-        let fileName = String(filePath.replacingOccurrences(of: "."+fileExtension, with: ""))
         
         let newAttFile = VSMAttachedFile(Extension: fileExtension, Guid: "", Name: fileName)
         
-        newAttFile.upload(filePath: filePath, loadedDelegate: {B in {
-            if self.AttachedFiles.first(where: {$0.Guid == ""}) == nil {
-                self.isFileUploading = false
-            }
-            loadedDelegate(B)
-            }()}, progressDelegate: progressDelegate)
-        return newAttFile
+        newAttFile.upload(fileURL: fileURL)
+        self.AttachedFiles.append(newAttFile)
     }
     
     public func getJSON()->String{
         var j:[String:Any]
         var attArray = [Any]()
         for a in self.AttachedFiles{
-            attArray.append(a.getJSON())
+            attArray.append(a.getDictionary())
         }
         j =
         ["ConversationId": ConversationId
@@ -105,6 +105,9 @@ import Alamofire
 }
 
 public class VSMAttachedFile{
+    
+    public var loadedDelegate:     ((Bool)->Void)?
+    public var progressDelegate:  ((Double)->Void)?
     
     public var Extension:   String
     public var Guid:        String
@@ -163,11 +166,14 @@ public class VSMAttachedFile{
         }
     }
     
-    public init (Extension: String, Guid: String, Name: String, PreviewIcon:String = ""){
+    public init (Extension: String, Guid: String, Name: String, PreviewIcon:String = "", loadedDelegate: ((Bool)->Void)? = nil, progressDelegate:  ((Double)->Void)? = nil){
         self.Extension      = Extension
         self.Guid           = Guid
         self.Name           = Name
  
+        self.loadedDelegate     = loadedDelegate
+        self.progressDelegate   = progressDelegate
+        
         if PreviewIcon != "" {
             self.setPrevIcon(PreviewIcon)
         }
@@ -183,9 +189,12 @@ public class VSMAttachedFile{
     public func getJSON()->String{
         return JSON(["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]).rawString([.castNilToNSNull: true])!
     }
-    
-    public func upload(filePath:String, loadedDelegate: @escaping (Bool)->Void, progressDelegate: @escaping (Double)->Void){
-        let url = URL(fileURLWithPath: filePath)
+    public func getDictionary()->Dictionary<String, Any?>{
+        return ["Extension":self.Extension, "Guid": self.Guid, "Name":self.Name, "PreviewIcon": nil]
+    }
+    public func upload(fileURL:URL){
+     
+        let url = fileURL
         let hostUrl = "\(VSMAPI.Settings.caddress)\(VSMAPI.WebAPIEntry.fileUpload.rawValue)"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
@@ -198,7 +207,9 @@ public class VSMAttachedFile{
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.uploadProgress { progress in // main queue by default
-                        progressDelegate(progress.fractionCompleted)
+                        if let p = self.progressDelegate{
+                            p(progress.fractionCompleted)
+                        }
                     }
                     upload.response{ response in
                         if let data = response.data{
@@ -211,7 +222,9 @@ public class VSMAttachedFile{
                                 if pi != "" && self.Extension.range(of: "(((?i)(jpg|png|gif|bmp))$)", options: .regularExpression, range: nil, locale: nil) != nil {
                                     self.setPrevIcon(pi)
                                 }
-                                loadedDelegate(true)
+                                if let l = self.loadedDelegate{
+                                    l(true)
+                                }
                             }
                         }
                     }

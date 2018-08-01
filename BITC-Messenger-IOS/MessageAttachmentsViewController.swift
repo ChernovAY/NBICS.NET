@@ -32,9 +32,15 @@ class MessageAttachmentsViewController: UIViewController, UICollectionViewDataSo
     
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         if urls.count > 0 {swichNavigationBar(state: true);}
-        for f in urls{
-            let myURL = f as URL
-            print("import result : \(myURL)")
+        if let MSG = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft{
+            for f in urls{
+                var isDirectory = ObjCBool(false)
+                let isExists = FileManager.default.fileExists(atPath: f.path, isDirectory: &isDirectory)
+                if !isDirectory.boolValue && isExists{
+                    MSG.attachFile(fileURL: f)
+                }
+            }
+            Load()
         }
     }
    
@@ -92,9 +98,11 @@ class MessageAttachmentsViewController: UIViewController, UICollectionViewDataSo
         if (state == true){
             navigationItem.hidesBackButton = true
             NavigationTitle.title = "Подождите..."
+            
         } else {
             navigationItem.hidesBackButton = false
             NavigationTitle.title = ""
+            Load()
         }
     }
     

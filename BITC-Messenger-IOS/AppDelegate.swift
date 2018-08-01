@@ -24,7 +24,6 @@ import Foundation
         FirebaseApp.configure()
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().delegate = self
-            
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(
                 options: authOptions,
@@ -34,8 +33,10 @@ import Foundation
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
         }
+        Messaging.messaging().delegate = self
         application.registerForRemoteNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
+
         return true
     }
 
@@ -59,28 +60,31 @@ import Foundation
         return container
     }()
     //------>
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        print("foreground")
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        print("background")
-    }
-    
+
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         print(messaging)
         print(remoteMessage)
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print (response)
-        completionHandler()
-    }
+    /*func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print(fcmToken)
+    }*/
     
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(response.notification.request.content.userInfo)
+        completionHandler()//OPEN_CHAT -
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print(notification.request.content.userInfo)
+        completionHandler(.sound)
+    }
+    /*
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(userInfo)
         completionHandler(.newData)
-    }
+    }*/
     //------<
     
     func saveContext () {

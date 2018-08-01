@@ -92,7 +92,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBAction func sendMessageButton(_ sender: Any) {
         if !VSMAPI.Connectivity.isConn {return}
         if let mt = MessageTextView.text{
-            if mt == ""{return}
+            if mt == "" && Conversation.Draft.AttachedFiles.count == 0 {return}
             Conversation.Draft.Text = mt
             if VSMAPI.Connectivity.isConn{
                 self.isNowOpen = true

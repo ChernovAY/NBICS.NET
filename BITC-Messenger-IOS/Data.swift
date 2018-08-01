@@ -26,6 +26,8 @@ public class VSMData{
     
     public var Contacts                = Dictionary<Int, VSMContact>()
     public var Conversations           = Dictionary<String,VSMConversation>()
+    public var Configurations          = Dictionary<Int,VSMConfiguration>()
+    public var PublicConfigurations    = Dictionary<Int,VSMConfiguration>()
     
     public var Profile : VSMProfile?
     public var Contact : VSMContact?
@@ -129,13 +131,17 @@ public class VSMData{
         DataLoader.init(entry: .NNotReadedMsgs, delegate: notreadedMessages, next:
             DataLoader.init(entry: .NContReqs, delegate: newReq, next:
                 DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
-                    DataLoader.init(params:["IsIn":"True", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
-                        DataLoader.init(params:["IsIn":"False", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
-                            DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
-                                Loader.init(delegate: { (A, B) in
-                                    self.EInit.raise(data: true)
-                                    self.ETimerAction.raise(data: false)
-                                })
+                    DataLoader.init(entry: .Configurations, delegate: loadConfigurations, next:
+                        DataLoader.init(entry: .Configurations, delegate: loadPublicConfigurations, next: // Переделать!!!!!!!!!!!
+                            DataLoader.init(params:["IsIn":"True", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
+                                DataLoader.init(params:["IsIn":"False", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
+                                    DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
+                                        Loader.init(delegate: { (A, B) in
+                                            self.EInit.raise(data: true)
+                                            self.ETimerAction.raise(data: false)
+                                        })
+                                    )
+                                )
                             )
                         )
                     )
@@ -225,6 +231,46 @@ public class VSMData{
             }
         }
     }
+    private func loadConfigurations(_ _data:Any?, _ _opt:Any?){
+        let data = _data as! Data
+        
+        if let json = try? JSON(data: data) {
+            let arr = json.array!
+            var oldconf = self.Configurations
+            for c in arr{
+                if let dict = c.dictionary{
+                    let nc = VSMConfiguration(from:dict)
+                    
+                    oldconf = oldconf.filter { $0.key != nc.Id }
+                    Configurations[nc.Id] = nc
+                }
+            }
+            for dc in oldconf{
+                Configurations = Configurations.filter { $0.key != dc.value.Id }
+            }
+        }
+    }
+
+    private func loadPublicConfigurations(_ _data:Any?, _ _opt:Any?){ ///переделать!!!!!!!!!!!!!!
+        let data = _data as! Data
+        
+        if let json = try? JSON(data: data) {
+            let arr = json.array!
+            var oldconf = self.PublicConfigurations
+            for c in arr{
+                if let dict = c.dictionary{
+                    let nc = VSMConfiguration(from:dict)
+                    
+                    oldconf = oldconf.filter { $0.key != nc.Id }
+                    PublicConfigurations[nc.Id] = nc
+                }
+            }
+            for dc in oldconf{
+                PublicConfigurations = PublicConfigurations.filter { $0.key != dc.value.Id }
+            }
+        }
+    }
+    
     private func loadConversations(_ _data:Any, _ _opt:Any){
         let data = _data as! Data
         if let json = try? JSON(data: data) {

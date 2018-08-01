@@ -11,8 +11,8 @@ import UIKit
 class SearchContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var Table: UITableView!
-    
-    @IBOutlet weak var Search: UISearchBar!
+    @IBOutlet weak var SearchButton: UIButton!
+    @IBOutlet weak var SearchTextField: UITextField!
     private var cArray   = [VSMContact]()
     private var EInitHandler: Disposable?
     var refreshControl:UIRefreshControl!
@@ -22,8 +22,7 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
-        Search.delegate = self
-        Search.returnKeyType = UIReturnKeyType.done
+        SearchButton.layer.cornerRadius = 5
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: SearchContactsViewController.Load)}
         Load()
     }
@@ -77,12 +76,12 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
         return action
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if Search.text == nil || Search.text == "" {
-            view.endEditing(true)
+    @IBAction func searchContact(_ sender: UIButton) {
+        let searchText = SearchTextField.text
+        if searchText != nil || searchText != "" {
+            self.cArray = VSMAPI.Data.searchContacts(SearchString: searchText ?? "")
+            Table.reloadData()
         }
-        self.cArray = VSMAPI.Data.searchContacts(SearchString: searchBar.text ?? "")
-        Table.reloadData()
     }
     
     private func Load(_ b:Bool=true) {
