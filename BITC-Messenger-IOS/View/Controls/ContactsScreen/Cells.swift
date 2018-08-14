@@ -25,7 +25,6 @@ public class ContactCell : UITableViewCell {
         
         NameLbl.text = contact.Name
         ThumbImage.image = contact.Photo
-        
         self.backgroundColor = UIColor.clear
     }
 }
@@ -110,8 +109,10 @@ public class ConversationCell : UITableViewCell {
     
     private var mConv: VSMConversation!
     
+    @IBOutlet weak var LastMessageLbl: UILabel!
     @IBOutlet weak var NameLbl : UILabel!
     @IBOutlet weak var ThumbImage: UIImageView!
+    @IBOutlet weak var CountNotificationsLbl: UILabel!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -119,11 +120,21 @@ public class ConversationCell : UITableViewCell {
     
     public func ConfigureCell(conversation: VSMConversation) {
         mConv = conversation
-        
-        
+        CountNotificationsLbl.layer.masksToBounds = true
+        CountNotificationsLbl.layer.cornerRadius = 8
+        if (mConv.NotReadedMessagesCount > 0) {
+            CountNotificationsLbl.isHidden = false
+            if (mConv.NotReadedMessagesCount < 100) {
+                CountNotificationsLbl.text = String(mConv.NotReadedMessagesCount)
+            } else {
+                CountNotificationsLbl.text = "99+"
+            }
+        } else  {
+            CountNotificationsLbl.isHidden = true
+        }
         NameLbl.text = buildName()
         ThumbImage.image = buildImage()
-        
+        LastMessageLbl.text = mConv.LastMessage?.Text
         self.backgroundColor = UIColor.clear
     }
     
@@ -132,9 +143,9 @@ public class ConversationCell : UITableViewCell {
             return mConv.Name
         }
         if let r = mConv.Users.first(where: ({!$0.isOwnContact}))?.Name {
-                return r
+            return r
         }
-        return "Фигня какая то"
+        return "name"
     }
     private func buildImage()->UIImage {
         if let r = mConv.Users.first(where: ({!$0.isOwnContact}))?.Photo {
@@ -357,15 +368,90 @@ public class MessageAttachmentsCell : UICollectionViewCell {
 
 public class CommonConfigurationCell : UITableViewCell {
     
+    private var tree: VSMSimpleTree!
     private var configuration: VSMConfiguration!
     
     @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var ConfView: UIView!
+    @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(configuration: VSMConfiguration) {
+    public func ConfigureCell(treenode: VSMSimpleTree) {
+        tree = treenode
+        configuration = tree.content as! VSMConfiguration
+        
+        ConfView?.clipsToBounds = true
+        ConfView!.layer.cornerRadius = 10
+        if (configuration.CType == "Folder"){
+            ConfView.backgroundColor = nil
+            NameLabel.textColor = UIColor.white
+        }
+        ConfViewLeading.constant = CGFloat(tree.level * 30)
+        NameLabel.text = configuration.Name
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class PrivateConfigurationCell : UITableViewCell {
+    
+    private var tree: VSMSimpleTree!
+    private var configuration: VSMConfiguration!
+    
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var ConfView: UIView!
+    @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(treenode: VSMSimpleTree) {
+        tree = treenode
+        configuration = tree.content as! VSMConfiguration
+        
+        ConfView?.clipsToBounds = true
+        ConfView!.layer.cornerRadius = 10
+        if (configuration.CType == "Folder"){
+            ConfView.backgroundColor = nil
+            NameLabel.textColor = UIColor.white
+        }
+        ConfViewLeading.constant = CGFloat(tree.level * 30)
+        NameLabel.text = configuration.Name
+        self.backgroundColor = UIColor.clear
+    }
+}
+
+public class AttachConfigurationCell : UITableViewCell {
+    
+    private var tree: VSMSimpleTree!
+    private var configuration: VSMConfiguration!
+    
+    @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var ConfView: UIView!
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var CheckButton: CheckBox!
+    @IBOutlet weak var LockButton: LockButton!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(treenode: VSMSimpleTree) {
+        tree = treenode
+        configuration = tree.content as! VSMConfiguration
+        
+        ConfView?.clipsToBounds = true
+        ConfView!.layer.cornerRadius = 10
+        if (configuration.CType == "Folder"){
+            CheckButton.isHidden = true
+            LockButton.isHidden = true
+            ConfView.backgroundColor = nil
+            NameLabel.textColor = UIColor.white
+        }
+        ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
     }

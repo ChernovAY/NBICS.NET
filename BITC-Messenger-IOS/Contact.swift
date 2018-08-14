@@ -87,14 +87,13 @@ public class VSMContact {
         
         if (self.PhotoUrl != "") {
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
-            if(!s){
+            if (!s){
                 print(d as! String)
-            }
-            else{
+            } else {
                 if d is Data {
                     let data = d as! Data
                     
-                    if(data.count>0){
+                    if (data.count>0){
                         _ = VSMAPI.saveFile(name:"Icon_\(self.Id).I", data: data)
                     }
                 }

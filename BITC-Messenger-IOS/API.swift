@@ -16,7 +16,7 @@ import FirebaseInstanceID
 public typealias Params = [String:Any];
 
 public class VSMAPI{
-    public static var sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru", "http://site.bgr39.ru", "http://dev.nbics.net"]
+    public static var sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru/", "http://site.bgr39.ru/", "http://dev.nbics.net/", "http://education.nbics.net/"]
     
     public class Connectivity {
         public class var isConn:Bool {
@@ -52,7 +52,31 @@ public class VSMAPI{
                     VSMAPI.deleteCommunicatorFiles()
                     Settings.user = ""; Settings.hash = ""; Settings.login = false;
                     Data.deleteAll()
+                    UIApplication.shared.applicationIconBadgeNumber  = 0
                     })
+            }
+        }
+        public static func refreshFB(fcmToken:String){
+            if VSMAPI.Settings.refreshToken != fcmToken{
+                if Settings.login{
+                    Data.ETimerAction.raise(data: true)
+                    VSMAPI.Request(addres: Settings.caddress, entry: .DisconnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"]) { (d, b) in
+                        VSMAPI.Request(addres: Settings.caddress, entry: .UnregisterDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"], completionHandler: { (d, b) in
+                            
+                                VSMAPI.Settings.refreshToken = fcmToken
+                                VSMAPI.Request(addres: Settings.caddress, entry: .RegisterNewDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(UIDevice.current.identifierForVendor!.uuidString)&\(Settings.refreshToken)", "DeviceOS":"2"], completionHandler: { (d, b) in
+                                    VSMAPI.Request(addres: Settings.caddress, entry: .ConnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"Device":
+                                        JSON(["Id":Settings.refreshToken, "OS":2, "IsOnline":"True"]).rawString([.castNilToNSNull: true])!]
+                                        ,completionHandler: { (d, b) in
+                                            Data.loadAll()
+                                    })
+                                    
+                                })
+                        })
+                    }
+                } else {
+                    VSMAPI.Settings.refreshToken = fcmToken
+                }
             }
         }
         private static func preLoadAll(){
@@ -87,8 +111,7 @@ public class VSMAPI{
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
-                }
-                else{
+                } else {
                     if d is Data {
                         let data = d as! Data
                         let result = String(data: data, encoding: .utf8)
@@ -165,8 +188,9 @@ public class VSMAPI{
         case ConversationUsersIncludeOrExclude  = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationUsersIncludeOrExclude"     //+++
         
         case Configurations             = "Workplace/GetConfigurations" //+++
-        case ProfileWithConf            = "Workplace/GetProfileWithConfigurations" // Уточнить// Переделать!!!!!!!!!!!
-        case CopyConfiguration          = "Workplace/CopyConfiguration" // Уточнить
+        case PublicConfigurations       = "Workplace/GetUserRolesWithConfigurations"
+        case CopyConfiguration          = "Workplace/CopyNode"
+        case DeleteConfiguration        = "Workplace/DeleteNode"
     }
     // Session Manager Configurations!!!!!!!
     public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
@@ -176,8 +200,7 @@ public class VSMAPI{
         let succ = resp.error == nil
         if(succ){
             return (resp.data!, true)
-        }
-        else{
+        } else {
             return (resp.error.unsafelyUnwrapped.localizedDescription, false)
         }
     }
@@ -192,8 +215,7 @@ public class VSMAPI{
             let succ = response.error == nil
             if(succ){
                     res = response.data!
-            }
-            else{
+            } else {
                 res = response.error.unsafelyUnwrapped.localizedDescription
             }
             completionHandler(res, succ)
@@ -209,7 +231,7 @@ public class VSMAPI{
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/"+name.replacingOccurrences(of: "/", with: "_")
         if(fm.createFile(atPath: filename, contents: data)){
-                ret = true
+            ret = true
         }
         return ret
     }
@@ -231,12 +253,10 @@ public class VSMAPI{
         if(fm.fileExists(atPath: filename)){
             if let data = fm.contents(atPath: filename){
                 img = UIImage(data: data)
-            }
-            else if empty != ""{
+            } else if empty != ""{
                 img = UIImage(named: empty)
             }
-        }
-        else if empty != ""{
+        } else if empty != ""{
             img = UIImage(named: empty)
         }
         if img == nil && empty != "" {
@@ -287,5 +307,7 @@ public class VSMAPI{
         public static var BDayDelegate: ()->() = {() in print(VSMAPI.Data.Profile!.BirthDay.toString()) }
         public static var checkedContactForConversation = [VSMCheckedContact]()
         public static var AttMessageId      = ""
+        public static var tabBarChats           :UITabBarItem? = UITabBarItem()
+        public static var tabBarApplications    :UITabBarItem? = UITabBarItem()
     }
 }

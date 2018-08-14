@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class VSMConfiguration : tree<Int>{
+public class VSMConfiguration : tree{
     //public let Guid: String
     public let Name                     :String
     public let Code                     :String
@@ -27,7 +27,8 @@ public class VSMConfiguration : tree<Int>{
     //public VSMConfigSettings Settings = new VSMConfigSettings();
 
     public init
-    (Id:Int
+    (npp:Int
+    ,Id:Int
     ,Parent:Int?
     ,Name: String
     ,Code: String
@@ -36,6 +37,7 @@ public class VSMConfiguration : tree<Int>{
     ,Editor:Int?
     ,Index:Int
     ,ReadOnly:Bool
+    
     ){
         self.Name       = Name
         self.Code       = Code
@@ -44,12 +46,12 @@ public class VSMConfiguration : tree<Int>{
         self.Editor     = Editor
         self.Index      = Index
         self.ReadOnly   = ReadOnly
-        
-        super.init(Id: Id, Parent: Parent)
+        super.init(npp: npp, Id: Id, Parent: Parent)
     }
-    public convenience init(from dict:[String:JSON]){
+    public convenience init(from dict:[String:JSON], npp:Int = 0){
         self.init(
-            Id:             dict["Id"           ]!.int!
+            npp:            npp
+        ,   Id:             dict["Id"           ]!.int!
         ,   Parent:         dict["Parent"       ]!.int
         ,   Name:           dict["Name"         ]!.string!
         ,   Code:           dict["Code"         ]!.string!
@@ -59,6 +61,41 @@ public class VSMConfiguration : tree<Int>{
         ,   Index:          dict["Index"        ]!.int!
         ,   ReadOnly:       dict["ReadOnly"     ]!.bool!
         )
+    }
+    public func DeleteConfiguration()->Bool{
+        var retVal = false
+        let conf = "{\"Id\":\(self.Id))}"
+        let parm = ["MetaData":conf, "Email": VSMAPI.Settings.login, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: .DeleteConfiguration, params: parm)
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if json.dictionary!["Success"]!.bool! {
+                    retVal = true
+                }
+            }
+        } else {
+            print(z.0)
+        }
+        return retVal
+    }
+    
+    public func CopyConfiguration()->Bool{
+        var retVal = false
+
+        let parm = ["NodeId":self.Id, "CopyWithChildren":"False", "Email": VSMAPI.Settings.login, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
+        let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: .CopyConfiguration, params: parm)
+        if(z.1){
+            let data = z.0 as! Data
+            if let json = try? JSON(data: data) {
+                if json.dictionary!["Success"]!.bool! {
+                    retVal = true
+                }
+            }
+        } else {
+            print(z.0)
+        }
+        return retVal
     }
     
 }
@@ -71,8 +108,7 @@ public class VSMCheckedConfiguration{
                 let confInMsg = m.AttachedConfs.first(where:({$0.Id == Conf.Id}))
                 if Checked && confInMsg == nil{
                     m.AttachedConfs.append(Conf)
-                }
-                else if !Checked && confInMsg != nil{
+                } else if !Checked && confInMsg != nil{
                     m.AttachedConfs = m.AttachedConfs.filter({!($0 === confInMsg)})
                 }
             }

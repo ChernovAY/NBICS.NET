@@ -66,7 +66,12 @@ import Alamofire
         if let jsonArr = dict["AttachedConfigurations"]?.array{
             for jaf in jsonArr{
                 if let af = jaf.dictionary{
-                    AttachedConfs.append(VSMConfiguration(from:af))
+                    if af.count>0{
+                        AttachedConfs.append(VSMConfiguration(from:af))
+                        if (af["Children"]?.array?.count)!>0{
+                            print(af["Children"]?.array)
+                        }
+                    }
                 }
             }
         }

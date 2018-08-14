@@ -1,19 +1,19 @@
 //
-//  PrivateConfigurationsViewController.swift
+//  MessageAttachmentsConfigViewController.swift
 //  BITC-Messenger-IOS
 //
-//  Created by Анна Гринер on 31.07.2018.
+//  Created by Анна Гринер on 07.08.2018.
 //  Copyright © 2018 riktus. All rights reserved.
 //
 
 import UIKit
 
-class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MessageAttachmentsConfigViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var cArray = [VSMSimpleTree]()
     private var Tree: VSMSimpleTree!
-    @IBOutlet weak var Table: UITableView!
     
+    @IBOutlet weak var Table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "PrivateConfigurationCell", for: indexPath) as? PrivateConfigurationCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "AttachConfigurationCell", for: indexPath) as? AttachConfigurationCell {
             var tree: VSMSimpleTree!
             tree = cArray[indexPath.row]
             cell.ConfigureCell(treenode: tree)
@@ -54,7 +54,8 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
         if (conf.children?.count)!>0{
             if conf.isExpanded{
                 conf.collapse(show)
-            } else {
+            }
+            else{
                 conf.expandAll(show)
             }
         }
@@ -74,4 +75,5 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
             Tree = nil
         }
     }
+    
 }

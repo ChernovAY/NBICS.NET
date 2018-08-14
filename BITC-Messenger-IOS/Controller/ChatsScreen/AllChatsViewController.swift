@@ -21,10 +21,19 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         Table.delegate = self
         Table.dataSource = self
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AllChatsViewController.Load)}
+        if let tabItems = self.tabBarController?.tabBar.items as NSArray?{
+            VSMAPI.VSMChatsCommunication.tabBarApplications = (tabItems[2] as! UITabBarItem)
+            VSMAPI.VSMChatsCommunication.tabBarChats = (tabItems[0] as! UITabBarItem)
+            
+            VSMAPI.VSMChatsCommunication.tabBarApplications?.badgeValue = VSMAPI.Data.NNewRequests == 0 ? nil : String(VSMAPI.Data.NNewRequests)
+            VSMAPI.VSMChatsCommunication.tabBarChats?.badgeValue = VSMAPI.Data.NNotReadedMessages == 0 ? nil : String(VSMAPI.Data.NNotReadedMessages)
+        }
         Load()
     }
     deinit {
         EInitHandler?.dispose()
+        VSMAPI.VSMChatsCommunication.tabBarApplications = nil
+        VSMAPI.VSMChatsCommunication.tabBarChats = nil
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

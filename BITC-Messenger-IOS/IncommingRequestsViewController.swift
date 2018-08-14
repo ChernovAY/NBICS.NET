@@ -62,6 +62,12 @@ class IncommingRequestsViewController: UIViewController, UITableViewDelegate, UI
         let add = addAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete, add])
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cont = fArray[indexPath.row]
+        VSMAPI.VSMChatsCommunication.contactId = cont.Id
+        performSegue(withIdentifier: "showContactProfileFromIncome", sender: self)
+    }
      
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Отклонить") { (action, view, completion) in

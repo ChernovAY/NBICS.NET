@@ -64,6 +64,12 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
         return UISwipeActionsConfiguration(actions: [add])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cont = cArray[indexPath.row]
+        VSMAPI.VSMChatsCommunication.contactId = cont.Id
+        performSegue(withIdentifier: "showContactProfileFromSearchContact", sender: self)
+    }
+    
     func addAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Добавить") { (action, view, completion) in
             let c = self.cArray[indexPath.row]

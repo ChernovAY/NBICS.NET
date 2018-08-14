@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import UIKit
 
 public class VSMData{
     private let period:TimeInterval  = 2     // в секундах интервал опроса сервера на предмет наличия новых данных есть - обнавляем модель (без контактоа)
@@ -74,8 +75,7 @@ public class VSMData{
                     }
                 }
             }
-         }
-        else{
+        } else {
             print(z.0)
         }
         return retVal
@@ -94,8 +94,7 @@ public class VSMData{
     public func getConversationByContact (ContId: Int)->String{
         if let conv = self.Conversations.values.first(where: {$0.Name == "" && $0.Users.filter({$0.Id == ContId}).count>0}){
             return conv.Id
-        }
-        else{
+        } else {
             let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.newConversation, params: ["Sender":"{\"Id\":\"\(Contact!.Id)\"}", "Addressee": "{\"Id\":\"\(ContId)\"}", "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash])
             if(z.1){
                 let d = z.0 as! Data
@@ -104,8 +103,7 @@ public class VSMData{
                         return makeConv(what:dict).Id
                     }
                 }
-            }
-            else{
+            } else {
                 print(z.0)
             }
         }
@@ -132,13 +130,16 @@ public class VSMData{
             DataLoader.init(entry: .NContReqs, delegate: newReq, next:
                 DataLoader.init(entry: .contatcs, delegate: loadContacts, opt: VSMContact.ContactType.Cont, next:
                     DataLoader.init(entry: .Configurations, delegate: loadConfigurations, next:
-                        DataLoader.init(entry: .Configurations, delegate: loadPublicConfigurations, next: // Переделать!!!!!!!!!!!
+                        DataLoader.init(entry: .PublicConfigurations, delegate: loadPublicConfigurations, next:
                             DataLoader.init(params:["IsIn":"True", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.In, next:
                                 DataLoader.init(params:["IsIn":"False", "email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash], entry: .ContactsRequests, delegate: loadContacts, opt: VSMContact.ContactType.Out, next:
                                     DataLoader.init(entry: .lastConversationList, delegate: loadConversations, next:
                                         Loader.init(delegate: { (A, B) in
                                             self.EInit.raise(data: true)
                                             self.ETimerAction.raise(data: false)
+                                            VSMAPI.VSMChatsCommunication.tabBarApplications?.badgeValue = self.NNewRequests == 0 ? nil : String(self.NNewRequests)
+                                            VSMAPI.VSMChatsCommunication.tabBarChats?.badgeValue = self.NNotReadedMessages == 0 ? nil : String(self.NNotReadedMessages)
+                                            //UIApplication.shared.applicationIconBadgeNumber  = self.NNewRequests + self.NNotReadedMessages
                                         })
                                     )
                                 )
@@ -158,7 +159,7 @@ public class VSMData{
     
     public var EMessages        =     Event<(String, Int)>()
     
-    private func timerFired(){
+    public func timerFired(){
         ETimerAction.raise(data: true)
         if internetStatusFlag(){
             let _NNotReadedMessages = NNotReadedMessages
@@ -169,10 +170,12 @@ public class VSMData{
                         if _NNotReadedMessages != self.NNotReadedMessages || _NNewRequests != self.NNewRequests {
                         //self.EInit.raise(data: true)
                              self.loadAll()
-                        }
-                        else{
+                        } else {
                             self.ETimerAction.raise(data: false)
                         }
+                        //VSMAPI.VSMChatsCommunication.tabBarApplications?.badgeValue = self.NNewRequests == 0 ? nil : String(self.NNewRequests)
+                        //VSMAPI.VSMChatsCommunication.tabBarChats?.badgeValue = self.NNotReadedMessages == 0 ? nil : String(self.NNotReadedMessages)
+                        //UIApplication.shared.applicationIconBadgeNumber  = self.NNewRequests + self.NNotReadedMessages
                     })
                 )
             ).exec()
@@ -237,33 +240,38 @@ public class VSMData{
         if let json = try? JSON(data: data) {
             let arr = json.array!
             var oldconf = self.Configurations
-            for c in arr{
-                if let dict = c.dictionary{
-                    let nc = VSMConfiguration(from:dict)
-                    
-                    oldconf = oldconf.filter { $0.key != nc.Id }
-                    Configurations[nc.Id] = nc
-                }
-            }
+            var npp = 0
+            fillconf(from: arr, oldconf: &oldconf, npp: &npp, target: &Configurations)
             for dc in oldconf{
                 Configurations = Configurations.filter { $0.key != dc.value.Id }
             }
         }
     }
-
+    private func fillconf(from arr: [JSON], oldconf: inout Dictionary<Int,VSMConfiguration>, npp:inout Int, target: inout Dictionary<Int,VSMConfiguration>){
+        for c in arr{
+            if let dict = c.dictionary{
+                let nc = VSMConfiguration(from:dict, npp:npp)
+                npp = npp + 1
+                
+                oldconf = oldconf.filter { $0.key != nc.Id }
+                target[nc.Id] = nc
+                if let arrC = dict["Children"]?.array{
+                    fillconf(from: arrC, oldconf: &oldconf, npp:&npp, target: &target)
+                }
+            }
+        }
+    }
     private func loadPublicConfigurations(_ _data:Any?, _ _opt:Any?){ ///переделать!!!!!!!!!!!!!!
         let data = _data as! Data
         
         if let json = try? JSON(data: data) {
-            let arr = json.array!
+            let profiles = json.array!
+            
             var oldconf = self.PublicConfigurations
-            for c in arr{
-                if let dict = c.dictionary{
-                    let nc = VSMConfiguration(from:dict)
-                    
-                    oldconf = oldconf.filter { $0.key != nc.Id }
-                    PublicConfigurations[nc.Id] = nc
-                }
+            var npp = 0
+            for p in profiles{
+                let arr = p["Configurations"].array!
+                fillconf(from: arr, oldconf: &oldconf, npp: &npp, target: &PublicConfigurations)
             }
             for dc in oldconf{
                 PublicConfigurations = PublicConfigurations.filter { $0.key != dc.value.Id }
@@ -327,8 +335,7 @@ public class VSMData{
                 ,Users:                 usrs
                 ,Draft:                 draft
             )
-        }
-        else{
+        } else {
             ret = VSMConversation(
                 Id:                     dict["Id"                      ]!.string!
                 ,IsDialog:              dict["IsDialog"                ]!.bool!

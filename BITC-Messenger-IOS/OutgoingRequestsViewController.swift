@@ -61,6 +61,12 @@ class OutgoingRequestsViewController: UIViewController, UITableViewDelegate, UIT
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete])
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cont = fArray[indexPath.row]
+        VSMAPI.VSMChatsCommunication.contactId = cont.Id
+        performSegue(withIdentifier: "showContactProfileFromOutgo", sender: self)
+    }
 
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Отклонить") { (action, view, completion) in

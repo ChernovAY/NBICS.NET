@@ -118,6 +118,7 @@ public class VSMConversation{
         return retVal
     }
     public func markReaded(){
+        self.NotReadedMessagesCount = 0
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.messageReaded, params: ["ConversationId":self.Id, "Email":VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash]) { (d, s) in
             if(!s){
                 print( "Ошибка \(d as? String)")
@@ -130,6 +131,7 @@ public class VSMConversation{
                             VSMAPI.Data.ETimerAction.raise(data: true)
                             VSMAPI.Data.NNotReadedMessages = VSMAPI.Data.NNotReadedMessages - self.NotReadedMessagesCount
                             self.NotReadedMessagesCount = 0
+                            VSMAPI.Data.timerFired()
                             VSMAPI.Data.ETimerAction.raise(data: false)
                         }
                     }

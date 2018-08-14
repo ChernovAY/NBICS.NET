@@ -12,6 +12,7 @@ import FileProvider
 
 class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
+    private var isHidden    = true
     private var isScrolling = false
     private var isNowOpen   = true
     
@@ -32,6 +33,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var NameChat: UINavigationItem!
     @IBOutlet weak var MessageTextView: UITextView!
     @IBOutlet weak var FileButton: UIButton!
+    @IBOutlet weak var ConfigurationButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +41,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         Table.dataSource = self
         Table.separatorStyle = UITableViewCellSeparatorStyle.none
         MessageTextView?.layer.cornerRadius = 15
+        ConfigurationButton.layer.cornerRadius = 17
         FileButton.layer.cornerRadius = 17
         SendButton.layer.cornerRadius = 17
         MessageTextView?.delegate = self
@@ -60,6 +63,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(getOldMessages), for: .valueChanged)
         Table.refreshControl = refreshControl
+        isHidden = false
         Load()
     }
     deinit {
@@ -70,15 +74,18 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         if (Conversation.Name != ""){
             SettingChatButton.isEnabled = true
         } else {
             SettingChatButton.isEnabled = false
         }
+        isHidden = false
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        isHidden = true
+    }
     func moveTextView(_ textView: UITextView, moveDistance: Int, up: Bool) {
         let moveDuration = 0.3
         let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
@@ -199,7 +206,9 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             if jamp(true) {
                 self.Conversation.Messages.getData(isAfter:true, jamp: true)
                 isNowOpen = false
-                self.Conversation.markReaded()
+                if !isHidden{
+                    self.Conversation.markReaded()
+                }
             }
         }
     }

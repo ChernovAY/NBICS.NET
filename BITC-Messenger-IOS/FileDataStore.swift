@@ -147,9 +147,9 @@ public class LocalMessageStore{
            let addr = array.count == 0 ? -1 : (self.jamp ? array.count - 1 :
             oldCurr != nil ? array.index(where: {$0.Id == oldCurr?.Id }) ?? -1 : -1
             )
-            if self.jamp{
-                VSMAPI.Data.Conversations[self.id]?.markReaded()
-            }
+            //if self.jamp{
+            //    VSMAPI.Data.Conversations[self.id]?.markReaded()
+            //}
             VSMAPI.Data.EMessages.raise(data: (self.id, addr))
         }
     }
