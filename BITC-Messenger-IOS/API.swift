@@ -200,7 +200,8 @@ public class VSMAPI{
         let succ = resp.error == nil
         if(succ){
             return (resp.data!, true)
-        } else {
+        } else
+        {
             return (resp.error.unsafelyUnwrapped.localizedDescription, false)
         }
     }

@@ -62,8 +62,7 @@ public class VSMConversation{
         VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.sendMessage, params: p, completionHandler: {(d,s) in{
             if(!s){
                 print("Ошибка \(d as? String)")
-            }
-            else{
+            } else {
                 if d is Data {
                     self.Draft = VSMMessage(ConversationId: self.Id, Draft: false, Id: nil, Sender: self.Users.first(where: ({$0.ContType == VSMContact.ContactType.Own})), Text: "", Time: Date())
                     let data = d as! Data
@@ -89,8 +88,7 @@ public class VSMConversation{
                     retVal = true
                 }
             }
-        }
-        else{
+        } else {
             print(z.0)
         }
         return retVal

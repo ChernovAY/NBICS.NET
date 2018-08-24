@@ -79,7 +79,9 @@ public class VSMConfiguration : tree{
         }
         return retVal
     }
-    
+    public func getDictionary()->Dictionary<String, Any?>{
+        return ["Id":self.Id, "ReadOnly": self.ReadOnly ? "True" : "False"]
+    }
     public func CopyConfiguration()->Bool{
         var retVal = false
 
@@ -99,7 +101,7 @@ public class VSMConfiguration : tree{
     }
     
 }
-public class VSMCheckedConfiguration{
+public class VSMCheckedConfiguration : tree{
     public  var Conf:VSMConfiguration!
     public  var msg:VSMMessage?
     public var Checked:Bool = false{
@@ -114,7 +116,8 @@ public class VSMCheckedConfiguration{
             }
         }
     }
-    public init(_ conf:VSMConfiguration, _ chk:Bool){
+    public init(_ conf:VSMConfiguration, _ chk:Bool = false){
+        super.init(npp: conf.npp, Id: conf.Id, Parent: conf.Parent)
         Conf = conf
         Checked = chk
     }

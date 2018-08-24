@@ -93,9 +93,14 @@ import Alamofire
     
     public func getJSON()->String{
         var j:[String:Any]
+
         var attArray = [Any]()
         for a in self.AttachedFiles{
             attArray.append(a.getDictionary())
+        }
+        var attConfArray = [Any]()
+        for a in self.AttachedConfs{
+            attConfArray.append(a.getDictionary())
         }
         j =
         ["ConversationId": ConversationId
@@ -105,6 +110,10 @@ import Alamofire
         if attArray.count>0{
             j["AttachedFiles"] = attArray
         }
+        if attConfArray.count>0{
+            j["AttachedConfigurations"] = attConfArray
+        }
+        //return String(JSON(j).rawString([.castNilToNSNull: true])!.replacingOccurrences(of: " ", with: ""))
         return JSON(j).rawString([.castNilToNSNull: true])!
     }
 }

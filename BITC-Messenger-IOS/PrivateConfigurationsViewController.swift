@@ -12,23 +12,26 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
     
     private var cArray = [VSMSimpleTree]()
     private var Tree: VSMSimpleTree!
+    private var configurationURL: String!
     @IBOutlet weak var Table: UITableView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Table.dataSource = self
         Table.delegate = self
     }
-    override func viewDidAppear(_ animated: Bool) {
-        Load()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        Load(false)
-    }
     deinit {
         Load(false)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        Load()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        Load(false)
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -41,22 +44,23 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PrivateConfigurationCell", for: indexPath) as? PrivateConfigurationCell {
             var tree: VSMSimpleTree!
             tree = cArray[indexPath.row]
-            cell.ConfigureCell(treenode: tree)
+            cell.ConfigureCell(treenode: tree, delegate: show)
             return cell
         } else {
             return UITableViewCell()
         }
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conf = cArray[indexPath.row]
-        if (conf.children?.count)!>0{
-            if conf.isExpanded{
-                conf.collapse(show)
-            } else {
-                conf.expandAll(show)
-            }
+        //Здесь следует проверить, конфигурация это или папка и в первом случае менять переменную configurationURL и
+        //переходить в конфигурацию 'ConfigurationViewController'
+        performSegue(withIdentifier: "showPrivateConfiguration", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ConfigurationViewController{
+            //destination.configurationURL = configurationURL
+            destination.configurationURL = "http://nbics.net/#!ru/SOSH-33-Solnechnaya-sistema"
         }
     }
     
@@ -64,6 +68,7 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
         self.cArray = a!
         self.Table.reloadData()
     }
+    
     private func Load(_ b:Bool = true) {
         if b {
             Tree = VSMSimpleTree()

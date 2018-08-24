@@ -9,14 +9,14 @@
 import UIKit
 import SwiftyJSON
 
-class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
+public class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
     private var EInitHandler: Disposable?
     private var convs = [VSMConversation]()
     
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var UserPhoto: CircleImageView!
     @IBOutlet weak var UserNameLabel: UIButton!
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
@@ -28,6 +28,8 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             VSMAPI.VSMChatsCommunication.tabBarApplications?.badgeValue = VSMAPI.Data.NNewRequests == 0 ? nil : String(VSMAPI.Data.NNewRequests)
             VSMAPI.VSMChatsCommunication.tabBarChats?.badgeValue = VSMAPI.Data.NNotReadedMessages == 0 ? nil : String(VSMAPI.Data.NNotReadedMessages)
         }
+        VSMAPI.Data.chat =              self
+        VSMAPI.Data.tabBarController =  self.tabBarController
         Load()
     }
     deinit {
@@ -35,29 +37,29 @@ class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDel
         VSMAPI.VSMChatsCommunication.tabBarApplications = nil
         VSMAPI.VSMChatsCommunication.tabBarChats = nil
     }
-    override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return convs.count
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conv = convs[indexPath.row]
         VSMAPI.VSMChatsCommunication.conversetionId = conv.Id
         performSegue(withIdentifier: "showChat", sender: self)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath) as? ConversationCell {
             var conv: VSMConversation!
             conv = convs[indexPath.row]

@@ -10,16 +10,23 @@ import UIKit
 
 class ExpendButton: UIButton {
     public var checkdelegate:((Bool)->())?
+    public var isExpandable:Bool = false
     // Images
-    let checkedImage = #imageLiteral(resourceName: "turn")
-    let uncheckedImage = #imageLiteral(resourceName: "expand")
+    let checkedImage            = #imageLiteral(resourceName: "turn")
+    let uncheckedImage          = #imageLiteral(resourceName: "expand")
+    let emptyImage:UIImage?     = nil
     // Bool property
     public var isChecked: Bool = false {
         didSet{
-            if isChecked == true {
-                self.setImage(checkedImage, for: UIControlState.normal)
-            } else {
-                self.setImage(uncheckedImage, for: UIControlState.normal)
+            if isExpandable{
+                if isChecked == true {
+                    self.setImage(checkedImage, for: UIControlState.normal)
+                } else {
+                    self.setImage(uncheckedImage, for: UIControlState.normal)
+                }
+            }
+            else{
+                self.setImage(emptyImage, for: UIControlState.normal)
             }
         }
     }
@@ -30,7 +37,7 @@ class ExpendButton: UIButton {
     }
     
     @objc func buttonClicked(sender: UIButton) {
-        if sender == self {
+        if sender == self && isExpandable{
             isChecked = !isChecked
             if let d = checkdelegate{
                 d(isChecked)

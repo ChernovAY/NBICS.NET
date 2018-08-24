@@ -19,15 +19,18 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
         Table.dataSource = self
         Table.delegate = self
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         Load()
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         Load(false)
     }
     deinit {
         Load(false)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -47,8 +50,8 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
         }
     }
     
-    
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let conf = cArray[indexPath.row]
         if (conf.children?.count)!>0{
             if conf.isExpanded{
@@ -57,16 +60,32 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
                 conf.expandAll(show)
             }
         }
-     }
  
+        var configuration: VSMSimpleTree!
+        configuration = cArray[indexPath.row]
+        print(configuration)
+        */
+        //Здесь следует проверить, конфигурация это или папка и в первом случае менять переменную configurationURL и
+        //переходить в конфигурацию 'ConfigurationViewController'
+        performSegue(withIdentifier: "showCommonConfiguration", sender: self)
+    }
+ 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ConfigurationViewController{
+            //destination.configurationURL = configurationURL
+            destination.configurationURL = "http://nbics.net/#!ru/SOSH-33-Solnechnaya-sistema"
+        }
+    }
+    
     private func show(_ a:[VSMSimpleTree]?){
         self.cArray = a!
         self.Table.reloadData()
     }
+    
     private func Load(_ b:Bool = true) {
         if b {
             Tree = VSMSimpleTree()
-            Tree.fillTreee(root: Tree, from: VSMAPI.Data.Configurations.values.sorted(by: {$0.npp < $1.npp}))// gеределать на паблик
+            Tree.fillTreee(root: Tree, from: VSMAPI.Data.PublicConfigurations.values.sorted(by: {$0.npp < $1.npp}))
             Tree.expand(show)
         } else {
             cArray.removeAll()

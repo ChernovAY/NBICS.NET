@@ -34,6 +34,12 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBOutlet weak var MessageTextView: UITextView!
     @IBOutlet weak var FileButton: UIButton!
     @IBOutlet weak var ConfigurationButton: UIButton!
+    @IBOutlet weak var ConfigurationView: UIView!
+    @IBOutlet weak var FilesView: UIView!
+    @IBOutlet weak var HeightConstraintFilesView: NSLayoutConstraint!
+    @IBOutlet weak var CountFilesLabel: UILabel!
+    @IBOutlet weak var HeightConstraintConfigurationsView: NSLayoutConstraint!
+    @IBOutlet weak var CountConfigurationsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +72,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         isHidden = false
         Load()
     }
+    
     deinit {
         EInitHandler?.dispose()
         EMessageHandler?.dispose()
@@ -76,16 +83,49 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let countFiles = Conversation.Draft.AttachedFiles.count
+        let countConfigurations = Conversation.Draft.AttachedConfs.count
         if (Conversation.Name != ""){
             SettingChatButton.isEnabled = true
         } else {
             SettingChatButton.isEnabled = false
         }
-        isHidden = false
+        
+        //Количество прикрепленных файлов
+        HeightConstraintFilesView.constant = CGFloat(20)
+        FilesView.isHidden = false
+        
+        //Количество прикрепленных конфигураций
+        HeightConstraintConfigurationsView.constant = CGFloat(20)
+        ConfigurationView.isHidden = false
+        
+        if (countConfigurations == 0){
+            HeightConstraintConfigurationsView.constant = CGFloat(0)
+            ConfigurationView.isHidden = true
+        } else if (countFiles == 1){
+            CountConfigurationsLabel.text = String(countConfigurations) + " конфигурация"
+        } else if ((countFiles <= 4) && (countFiles != 1)){
+            CountConfigurationsLabel.text = String(countConfigurations) + " конфигурации"
+        } else if (countFiles >= 5){
+            CountConfigurationsLabel.text = String(countConfigurations) + " файлов"
+        }
+        
+        if (countFiles == 0){
+            HeightConstraintFilesView.constant = CGFloat(0)
+            FilesView.isHidden = true
+        } else if (countFiles == 1){
+            CountFilesLabel.text = String(countFiles) + " файл"
+        } else if ((countFiles <= 4) && (countFiles != 1)){
+            CountFilesLabel.text = String(countFiles) + " файла"
+        } else if (countFiles >= 5){
+            CountFilesLabel.text = String(countFiles) + " файлов"
+        }
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         isHidden = true
     }
+    
     func moveTextView(_ textView: UITextView, moveDistance: Int, up: Bool) {
         let moveDuration = 0.3
         let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
@@ -96,10 +136,18 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         UIView.commitAnimations()
     }
     
-    @IBAction func sendMessageButton(_ sender: Any) {
-        if !VSMAPI.Connectivity.isConn {return}
+    @IBAction func sendMessageButton(_ sender: Any){
+        HeightConstraintFilesView.constant = CGFloat(0)
+        FilesView.isHidden = true
+        HeightConstraintConfigurationsView.constant = CGFloat(0)
+        ConfigurationView.isHidden = true
+        if (!VSMAPI.Connectivity.isConn){
+            return
+        }
         if let mt = MessageTextView.text{
-            if mt == "" && Conversation.Draft.AttachedFiles.count == 0 {return}
+            if (mt == "" && Conversation.Draft.AttachedFiles.count == 0){
+                return
+            }
             Conversation.Draft.Text = mt
             if VSMAPI.Connectivity.isConn{
                 self.isNowOpen = true
@@ -116,6 +164,11 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     @IBAction func attachFile(_ sender: UIButton) {
         VSMAPI.VSMChatsCommunication.AttMessageId = "New"
         performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
+    }
+    
+    @IBAction func attachConfigurations(_ sender: UIButton) {
+        VSMAPI.VSMChatsCommunication.AttMessageId = "New"
+        performSegue(withIdentifier: "attachmentsConfigurationsSegue", sender: self)
     }
     
     private func showAttachedFiles(){
@@ -141,7 +194,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
 
     private func jamp(_ isAfter:Bool)->Bool{
-        if(isAfter) {
+        if (isAfter) {
             if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
                 if isNowOpen || self.Conversation.NotReadedMessagesCount > 0 || (self.Conversation.Messages.array.count > 0 && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && self.Conversation.Messages.array.last?.part == self.Conversation.Messages.lastPArt) {
                     return true
@@ -180,11 +233,13 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     }
     
     func MessagesRecieved(_ parm: (String, Int)){
-        if parm.0 != self.Conversation.Id {return}
+        if (parm.0 != self.Conversation.Id){
+            return
+        }
         self.Table.reloadData()
-        if parm.1>=0 {
+        if parm.1 >= 0 {
             DispatchQueue.main.async {
-                if self.Conversation.Messages.array.count > parm.1 {
+                if (self.Conversation.Messages.array.count > parm.1){
                     let indexPath = IndexPath(row: parm.1, section: 0)
                     self.Table.scrollToRow(at: indexPath, at: .bottom, animated: false)
                     self.isScrolling = false
@@ -198,15 +253,16 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
             self.isScrolling = false
         }
     }
+    
     func Load(_ b:Bool = true){
         if b {
             Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
             NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
             isScrolling = false
-            if jamp(true) {
+            if (jamp(true)){
                 self.Conversation.Messages.getData(isAfter:true, jamp: true)
                 isNowOpen = false
-                if !isHidden{
+                if (!isHidden){
                     self.Conversation.markReaded()
                 }
             }

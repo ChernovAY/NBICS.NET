@@ -16,6 +16,7 @@ class StartScreenViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: StartScreenViewController.NavigateToChats)}
+        
     }
     deinit {
         EInitHandler?.dispose()
@@ -31,7 +32,7 @@ class StartScreenViewController: UIViewController{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    public func NavigateToChats(_ b:Bool=true) {
+    func NavigateToChats(_ b:Bool=true) {
         EInitHandler?.dispose()
         if b{performSegue(withIdentifier: "showChatsScreen", sender: self)}
     }

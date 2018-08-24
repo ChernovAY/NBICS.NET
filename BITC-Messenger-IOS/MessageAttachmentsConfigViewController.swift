@@ -41,7 +41,7 @@ class MessageAttachmentsConfigViewController: UIViewController, UITableViewDeleg
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AttachConfigurationCell", for: indexPath) as? AttachConfigurationCell {
             var tree: VSMSimpleTree!
             tree = cArray[indexPath.row]
-            cell.ConfigureCell(treenode: tree)
+            cell.ConfigureCell(treenode: tree, delegate: show)
             return cell
         } else {
             return UITableViewCell()
@@ -68,8 +68,21 @@ class MessageAttachmentsConfigViewController: UIViewController, UITableViewDeleg
     private func Load(_ b:Bool = true) {
         if b {
             Tree = VSMSimpleTree()
-            Tree.fillTreee(root: Tree, from: VSMAPI.Data.Configurations.values.sorted(by: {$0.npp < $1.npp}))// gеределать на паблик
-            Tree.expand(show)
+            let _array = VSMAPI.Data.Configurations.values.sorted(by: {$0.npp < $1.npp})
+            var _array2 = [VSMCheckedConfiguration]()
+            for i in _array{
+                let ccfg = VSMCheckedConfiguration(i)
+                ccfg.msg = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft
+                if let _ = ccfg.msg?.AttachedConfs.first(where: {$0 === ccfg.Conf}){
+                    ccfg.Checked = true
+                }
+                else{
+                    ccfg.Checked = false
+                }
+                _array2.append(ccfg)
+            }
+            Tree.fillTreee(root: Tree, from: _array2)
+            Tree.expandAll(show)
         } else {
             cArray.removeAll()
             Tree = nil

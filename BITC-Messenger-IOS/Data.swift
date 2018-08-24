@@ -32,7 +32,10 @@ public class VSMData{
     
     public var Profile : VSMProfile?
     public var Contact : VSMContact?
-    
+    //
+    public weak var tabBarController:    UITabBarController?
+    public weak var chat:      AllChatsViewController?
+    //
     public init(){
         timer = RepeatingTimer(timeInterval: period)
         timer.eventHandler = timerFired
@@ -261,7 +264,7 @@ public class VSMData{
             }
         }
     }
-    private func loadPublicConfigurations(_ _data:Any?, _ _opt:Any?){ ///переделать!!!!!!!!!!!!!!
+    private func loadPublicConfigurations(_ _data:Any?, _ _opt:Any?){ 
         let data = _data as! Data
         
         if let json = try? JSON(data: data) {

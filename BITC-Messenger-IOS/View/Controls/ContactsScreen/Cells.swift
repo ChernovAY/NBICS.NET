@@ -35,14 +35,19 @@ public class MessageCell : UITableViewCell {
     private var delegate:(()->Void)?
     
     @IBOutlet weak var ReceiverView: UIView!
+    @IBOutlet weak var ReceiverImage: UIImageView!
     @IBOutlet weak var ReceiverMessageLabel: UILabel!
     @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
+    @IBOutlet weak var ReceiverAttachedFilesButton: UIButton!
+    @IBOutlet weak var ReceiverAttachedConfigurationsButton: UIButton!
+    @IBOutlet weak var ReceiverAttachedConfigurationsLeadingConstrainButton: NSLayoutConstraint!
+    
     @IBOutlet weak var SenderView: UIView!
-    @IBOutlet weak var ReceiverImage: UIImageView!
     @IBOutlet weak var SenderMessageLabel: UILabel!
     @IBOutlet weak var SenderMessageTimeLabel: UILabel!
     @IBOutlet weak var SenderAttachedFilesButton: UIButton!
-    @IBOutlet weak var ReceiverAttachedFilesButton: UIButton!
+    @IBOutlet weak var SenderAttachedConfigurationsButton: UIButton!
+    @IBOutlet weak var SenderAttachedConfigurationsLeadingConstrainButton: NSLayoutConstraint!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -66,23 +71,38 @@ public class MessageCell : UITableViewCell {
         SenderView.isHidden = true
         ReceiverView.isHidden = true
         
+        SenderAttachedConfigurationsButton.isHidden = true
         SenderAttachedFilesButton.isHidden = true
+        ReceiverAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(8)
+        
+        ReceiverAttachedConfigurationsButton.isHidden = true
         ReceiverAttachedFilesButton.isHidden = true
+        SenderAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(8)
     
         if (message.Sender?.isOwnContact == false) {
             ReceiverView.isHidden = false
             ReceiverMessageLabel.text = message.Text
             ReceiverMessageTimeLabel.text = message.Time.toTimeString();
             ReceiverImage.image = message.Sender?.Photo
+            if (message.AttachedConfs.count > 0){
+                ReceiverAttachedConfigurationsButton.isHidden = false
+            }
             if (message.AttachedFiles.count > 0){
                 ReceiverAttachedFilesButton.isHidden = false
+            } else {
+                ReceiverAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(-25)
             }
         } else {
             SenderView.isHidden = false
             SenderMessageLabel.text = message.Text
             SenderMessageTimeLabel.text = message.Time.toTimeString();
+            if (message.AttachedConfs.count > 0){
+                SenderAttachedConfigurationsButton.isHidden = false
+            }
             if (message.AttachedFiles.count > 0){
                 SenderAttachedFilesButton.isHidden = false
+            } else {
+                SenderAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(-25)
             }
         }
         self.backgroundColor = UIColor.clear
@@ -91,9 +111,17 @@ public class MessageCell : UITableViewCell {
     @IBAction func showReceiverAttachedFiles(_ sender: UIButton) {
         setAttachsMessage()
     }
+    
     @IBAction func showSenderAttachedFiles(_ sender: UIButton) {
         setAttachsMessage()
     }
+    
+    @IBAction func showSenderAttacherConfigurations(_ sender: UIButton) {
+    }
+    
+    @IBAction func showReceiverAttachedConfigurations(_ sender: UIButton) {
+    }
+    
     func setAttachsMessage(){
         VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
         if let d = self.delegate{
@@ -101,6 +129,17 @@ public class MessageCell : UITableViewCell {
                 d()
             }
         }
+    }
+    
+    func setAttachsConfigurationsMessage(){
+        /*
+        VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
+        if let d = self.delegate{
+            if self.mMessage.AttachedFiles.count>0{
+                d()
+            }
+        }
+        */
     }
     
 }
@@ -169,7 +208,7 @@ public class IncommingCell : UITableViewCell {
     public func ConfigureCell(contact: VSMContact) {
         PhotoImage.image = contact.Photo
         NameLabel.text = contact.Name
-        
+
         self.backgroundColor = UIColor.clear
     }
 }
@@ -224,6 +263,7 @@ public class CreateChatСontactCell : UITableViewCell {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
     public func chkChange(_ b: Bool){
         self.contact.Checked = b
     }
@@ -370,13 +410,28 @@ public class CommonConfigurationCell : UITableViewCell {
     
     private var tree: VSMSimpleTree!
     private var configuration: VSMConfiguration!
+    private var delegate: (([VSMSimpleTree]?)->())?
     
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ConfView: UIView!
     @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var OpenListButton: ExpendButton!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    public func chkChange(_ b: Bool){
+        if (self.tree.children?.count)!>0{
+            if !b{
+                tree.collapse(self.delegate)
+            } else {
+                tree.expandAll(self.delegate)
+            }
+        }
+    }
+    
+    @IBAction func openList(_ sender: ExpendButton) {
     }
     
     public func ConfigureCell(treenode: VSMSimpleTree) {
@@ -388,10 +443,18 @@ public class CommonConfigurationCell : UITableViewCell {
         if (configuration.CType == "Folder"){
             ConfView.backgroundColor = nil
             NameLabel.textColor = UIColor.white
+            OpenListButton.tintColor = UIColor.white
+        } else {
+            ConfView.backgroundColor = UIColor.white
+            NameLabel.textColor = UIColor.black
+            OpenListButton.tintColor = UIColor.black
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
+        OpenListButton.isExpandable = (tree.children?.count)! > 0 ? true : false
+        OpenListButton.checkdelegate = chkChange
+        OpenListButton.isChecked = tree.isExpanded
     }
 }
 
@@ -399,16 +462,32 @@ public class PrivateConfigurationCell : UITableViewCell {
     
     private var tree: VSMSimpleTree!
     private var configuration: VSMConfiguration!
+    private var delegate: (([VSMSimpleTree]?)->())?
     
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ConfView: UIView!
     @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var OpenListButton: ExpendButton!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(treenode: VSMSimpleTree) {
+    public func chkChange(_ b: Bool){
+        if ((self.tree.children?.count)!>0){
+            if !b{
+                tree.collapse(self.delegate)
+            } else {
+                tree.expandAll(self.delegate)
+            }
+        }
+    }
+    
+    @IBAction func openList(_ sender: ExpendButton) {
+    }
+    
+    public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
+        self.delegate = delegate
         tree = treenode
         configuration = tree.content as! VSMConfiguration
         
@@ -417,42 +496,92 @@ public class PrivateConfigurationCell : UITableViewCell {
         if (configuration.CType == "Folder"){
             ConfView.backgroundColor = nil
             NameLabel.textColor = UIColor.white
+            OpenListButton.tintColor = UIColor.white
+        } else {
+            ConfView.backgroundColor = UIColor.white
+            NameLabel.textColor = UIColor.black
+            OpenListButton.tintColor = UIColor.black
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
+        OpenListButton.isExpandable = (tree.children?.count)! > 0 ? true : false
+        OpenListButton.checkdelegate = chkChange
+        OpenListButton.isChecked = tree.isExpanded
     }
 }
 
 public class AttachConfigurationCell : UITableViewCell {
     
     private var tree: VSMSimpleTree!
-    private var configuration: VSMConfiguration!
+    private var configuration: VSMCheckedConfiguration!
+    private var delegate: (([VSMSimpleTree]?)->())?
     
     @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
     @IBOutlet weak var ConfView: UIView!
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var CheckButton: CheckBox!
     @IBOutlet weak var LockButton: LockButton!
+    @IBOutlet weak var OpenListButton: ExpendButton!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(treenode: VSMSimpleTree) {
+    @IBAction func lockConfiguration(_ sender: LockButton) {
+    }
+    
+    @IBAction func checkConfiguration(_ sender: CheckBox) {
+    }
+    
+    @IBAction func openList(_ sender: ExpendButton) {
+    }
+    public func lstChange(_ b: Bool){
+        if (self.tree.children?.count)!>0{
+            if !b{
+                tree.collapse(self.delegate)
+            } else {
+                tree.expandAll(self.delegate)
+            }
+        }
+    }
+    public func chkChange(_ b: Bool){
+        self.configuration.Checked = b
+    }
+    public func lockChange(_ b: Bool){
+        self.configuration.Conf.ReadOnly = !b
+    }
+    public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         tree = treenode
-        configuration = tree.content as! VSMConfiguration
+        self.delegate = delegate
+        configuration = tree.content as! VSMCheckedConfiguration
         
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 10
-        if (configuration.CType == "Folder"){
+        if (configuration.Conf.CType == "Folder"){
             CheckButton.isHidden = true
             LockButton.isHidden = true
             ConfView.backgroundColor = nil
             NameLabel.textColor = UIColor.white
+            OpenListButton.tintColor = UIColor.white
+        } else {
+            CheckButton.isHidden = false
+            LockButton.isHidden = false
+            ConfView.backgroundColor = UIColor.white
+            NameLabel.textColor = UIColor.black
+            OpenListButton.tintColor = UIColor.black
+            
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
-        NameLabel.text = configuration.Name
-        self.backgroundColor = UIColor.clear
+        NameLabel.text = configuration.Conf.Name
+        self.backgroundColor =  UIColor.clear
+        
+        CheckButton.checkdelegate    = chkChange
+        LockButton.checkdelegate     = lockChange
+        OpenListButton.checkdelegate = lstChange
+        OpenListButton.isExpandable = (tree.children?.count)! > 0 ? true : false
+        OpenListButton.isChecked = tree.isExpanded
+        LockButton.isChecked =  configuration.Conf.ReadOnly ? false : true
+        CheckButton.isChecked = configuration.Checked
     }
 }

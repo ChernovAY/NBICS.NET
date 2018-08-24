@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  NBICS-Messenger-IOS
@@ -48,7 +49,7 @@ import SwiftyJSON
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        VSMAPI.Settings.logOut()/////////!!!!!!!!!!!
+        VSMAPI.Settings.logOut()
         self.saveContext()
     }
     
@@ -64,15 +65,15 @@ import SwiftyJSON
     
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         let json = JSON(remoteMessage.appData)
-        print(json)
-        if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
+        //print(json)
+        /*if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
             let convId = json.dictionary!["ConversationId"]!.string!
             VSMAPI.VSMChatsCommunication.conversetionId = convId
-            //let rootViewController = self.window?.rootViewController as! StartScreenViewController//UINavigationController
-            //rootViewController.show(rootViewController, sender: rootViewController?)
-            //rootViewController.performSegue(withIdentifier: "showChatsScreen", sender: rootViewController)
-
-        }
+            if let v = VSMAPI.Data.chat, let c = VSMAPI.Data.tabBarController{
+                c.selectedIndex = 0//2
+                v.performSegue(withIdentifier: "showChat", sender: v)
+            }
+        }*/
         VSMAPI.Data.timerFired()
     }
     
@@ -84,31 +85,30 @@ import SwiftyJSON
    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         VSMAPI.Data.timerFired()
-        /*
+        
         let json = JSON(response.notification.request.content.userInfo)
         if let cat = json["aps"].dictionary!["category"]!.string{
             if cat == "OPEN_CHAT"{
                 let convId = json["ConversationId"].string!
                 VSMAPI.VSMChatsCommunication.conversetionId = convId
-                
-                let rootViewController = self.window?.rootViewController as! UINavigationController
-                let storyboard = UIStoryboard(name: "AuthorizationStoryboard", bundle: nil)
-                let mvc = storyboard.instantiateViewController(withIdentifier: "ConfigurationsViewController") as! ConfigurationsViewController
-                rootViewController.pushViewController(mvc, animated: true)
+                VSMAPI.VSMChatsCommunication.conversetionId = convId
+                if let v = VSMAPI.Data.chat, let c = VSMAPI.Data.tabBarController{
+                    c.selectedIndex = 0
+                    v.performSegue(withIdentifier: "showChat", sender: v)
+                }
             }
             else if cat == "OPEN_REQUESTS"{
-                let rootViewController = self.window?.rootViewController as! UINavigationController
-                let storyboard = UIStoryboard(name: "AuthorizationStoryboard", bundle: nil)
-                let mvc = storyboard.instantiateViewController(withIdentifier: "IncommingRequestsViewController") as! IncommingRequestsViewController
-                rootViewController.pushViewController(mvc, animated: true)
+                if let c = VSMAPI.Data.tabBarController{
+                    c.selectedIndex = 2
+                }
             }
         }
-        */
+        
         completionHandler()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print(notification.request.content.userInfo)
+        //print(notification.request.content.userInfo)
         completionHandler(.sound)
         //UIAlertView(title: "UNNotification", message: "\(notification.request.content.userInfo)", delegate: self, cancelButtonTitle: "OK").show()
         VSMAPI.Data.timerFired()
@@ -125,7 +125,7 @@ import SwiftyJSON
  
     // The callback to handle data message received via FCM for devices running iOS 10 or above.
     func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData)
+        //print(remoteMessage.appData)
     }
     
     func saveContext () {

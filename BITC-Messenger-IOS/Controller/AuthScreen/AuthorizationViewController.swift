@@ -85,23 +85,6 @@ class AuthorizationViewController: UIViewController {
         saveServer(server: "http://education.nbics.net/", serverName: "education")
     }
     
-    
-    /*
-    @IBAction func checkBGR(_ sender: UIButton) {
-        saveServer(server: "http://site.bgr39.ru/", serverName: "site.bgr39")
-    }
-    
-    @IBAction func checkGOV(_ sender: UIButton) {
-        saveServer(server: "https://sc.gov39.ru/", serverName: "sc.gov39")
-    }
-    
-    @IBAction func checkNBICS(_ sender: UIButton) {
-    }
-    
-    @IBAction func checkEducation(_ sender: UIButton) {
-        saveServer(server: "http://education.nbics.net/", serverName: "education")
-    }
-    */
     func saveServer(server: String, serverName: String){
         ServersListView.isHidden = true
         CheckServerButton.titleLabel?.text = serverName
