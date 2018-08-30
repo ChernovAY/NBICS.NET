@@ -52,16 +52,44 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //Здесь следует проверить, конфигурация это или папка и в первом случае менять переменную configurationURL и
-        //переходить в конфигурацию 'ConfigurationViewController'
-        performSegue(withIdentifier: "showPrivateConfiguration", sender: self)
+        if let u = cArray[indexPath.row].content as? VSMConfiguration{
+            if u.CType == "Configuration"{
+                configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
+                performSegue(withIdentifier: "showPrivateConfiguration", sender: self)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ConfigurationViewController{
-            //destination.configurationURL = configurationURL
-            destination.configurationURL = "http://nbics.net/#!ru/SOSH-33-Solnechnaya-sistema"
+            destination.configurationURL = configurationURL
         }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, completion) in
+            let c = self.cArray[indexPath.row]
+            if let conf = c.content as? VSMConfiguration
+            {
+                if conf.DeleteConfiguration(){
+                    c.delete(self.show)
+                    VSMAPI.Data.loadAll()
+                    
+                }
+            }
+        }
+        action.image = #imageLiteral(resourceName: "delete")
+        action.backgroundColor = .red
+        return action
     }
     
     private func show(_ a:[VSMSimpleTree]?){

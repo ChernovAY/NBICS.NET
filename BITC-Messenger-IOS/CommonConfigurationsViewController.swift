@@ -12,6 +12,7 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
 
     private var cArray = [VSMSimpleTree]()
     private var Tree: VSMSimpleTree!
+    private var configurationURL: String!
     @IBOutlet weak var Table: UITableView!
     
     override func viewDidLoad() {
@@ -19,15 +20,15 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
         Table.dataSource = self
         Table.delegate = self
     }
+    deinit {
+        Load(false)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         Load()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        Load(false)
-    }
-    deinit {
         Load(false)
     }
     
@@ -43,7 +44,7 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CommonConfigurationCell", for: indexPath) as? CommonConfigurationCell {
             var tree: VSMSimpleTree!
             tree = cArray[indexPath.row]
-            cell.ConfigureCell(treenode: tree)
+            cell.ConfigureCell(treenode: tree, delegate: show)
             return cell
         } else {
             return UITableViewCell()
@@ -51,29 +52,17 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-        let conf = cArray[indexPath.row]
-        if (conf.children?.count)!>0{
-            if conf.isExpanded{
-                conf.collapse(show)
-            } else {
-                conf.expandAll(show)
+        if let u = cArray[indexPath.row].content as? VSMConfiguration{
+            if u.CType == "Configuration"{
+                configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
+                performSegue(withIdentifier: "showCommonConfiguration", sender: self)
             }
         }
- 
-        var configuration: VSMSimpleTree!
-        configuration = cArray[indexPath.row]
-        print(configuration)
-        */
-        //Здесь следует проверить, конфигурация это или папка и в первом случае менять переменную configurationURL и
-        //переходить в конфигурацию 'ConfigurationViewController'
-        performSegue(withIdentifier: "showCommonConfiguration", sender: self)
     }
  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ConfigurationViewController{
-            //destination.configurationURL = configurationURL
-            destination.configurationURL = "http://nbics.net/#!ru/SOSH-33-Solnechnaya-sistema"
+            destination.configurationURL = configurationURL
         }
     }
     
@@ -92,5 +81,4 @@ class CommonConfigurationsViewController: UIViewController, UITableViewDelegate,
             Tree = nil
         }
     }
-    
 }

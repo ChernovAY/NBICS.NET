@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import SwiftyJSON
 
 class AuthorizationViewController: UIViewController {
     
     private let mHasher: Hasher = Hasher()
     private var EInitHandler: Disposable?
+    public  var email: String!
+    public  var password: String!
+    
     @IBOutlet weak var LoginField: StrickTextBox!
     @IBOutlet weak var PasswordField: StrickTextBox!
     @IBOutlet weak var ServersListView: UIView!
@@ -27,6 +29,11 @@ class AuthorizationViewController: UIViewController {
     }
     deinit {
         EInitHandler?.dispose()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        LoginField.text = email
+        PasswordField.text = password
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,8 +54,7 @@ class AuthorizationViewController: UIViewController {
                 button2Alert.show()
                 AuthorizationIndicator.isHidden = true
             }
-        }
-        else {
+        } else {
             VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }

@@ -68,9 +68,9 @@ import Alamofire
                 if let af = jaf.dictionary{
                     if af.count>0{
                         AttachedConfs.append(VSMConfiguration(from:af))
-                        if (af["Children"]?.array?.count)!>0{
+                        /*if (af["Children"]?.array?.count)!>0{
                             print(af["Children"]?.array)
-                        }
+                        }*/
                     }
                 }
             }

@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -81,8 +81,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4EM-Xd-cnY">
-                                <rect key="frame" x="112.5" y="594.5" width="150" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4EM-Xd-cnY">
+                                <rect key="frame" x="112.5" y="521.5" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Bvh-QR-A22"/>
                                     <constraint firstAttribute="height" constant="30" id="QVv-rC-6f7"/>
@@ -105,23 +105,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LY9-8F-eqm">
-                                <rect key="frame" x="47.5" y="501" width="73" height="1"/>
+                                <rect key="frame" x="47.5" y="496" width="73" height="1"/>
                                 <color key="backgroundColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="73" id="6QK-jS-1kq"/>
                                     <constraint firstAttribute="height" constant="1" id="g0v-nE-9kb"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Olo-xV-y58">
-                                <rect key="frame" x="254.5" y="501" width="73" height="1"/>
-                                <color key="backgroundColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="S6r-gO-2fu"/>
-                                    <constraint firstAttribute="width" constant="73" id="mey-pN-V1Y"/>
-                                </constraints>
-                            </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGk-tH-QOr">
-                                <rect key="frame" x="112.5" y="486.5" width="150" height="30"/>
+                                <rect key="frame" x="112.5" y="481.5" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Pig-en-6TW"/>
                                     <constraint firstAttribute="height" constant="30" id="aVq-cg-WMi"/>
@@ -134,7 +126,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uTM-I0-duR">
-                                <rect key="frame" x="177.5" y="493" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="488" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="AT9-nd-TPf"/>
                                     <constraint firstAttribute="height" constant="20" id="wSz-WA-65Y"/>
@@ -344,10 +336,18 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Olo-xV-y58">
+                                <rect key="frame" x="254.5" y="496" width="73" height="1"/>
+                                <color key="backgroundColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="S6r-gO-2fu"/>
+                                    <constraint firstAttribute="width" constant="73" id="mey-pN-V1Y"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Hp-wl-o4N" firstAttribute="centerY" secondItem="LY9-8F-eqm" secondAttribute="centerY" id="37b-iR-VdV"/>
+                            <constraint firstItem="6Hp-wl-o4N" firstAttribute="centerY" secondItem="LY9-8F-eqm" secondAttribute="centerY" constant="5" id="37b-iR-VdV"/>
                             <constraint firstItem="uO6-tx-oTS" firstAttribute="top" secondItem="glv-Ka-FEt" secondAttribute="bottom" constant="2" id="6bM-R1-nT2"/>
                             <constraint firstItem="glv-Ka-FEt" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="7p9-1v-W4P"/>
                             <constraint firstItem="Olo-xV-y58" firstAttribute="trailing" secondItem="6Hp-wl-o4N" secondAttribute="trailing" constant="80" id="8Yx-8C-jk8"/>
@@ -357,12 +357,12 @@
                             <constraint firstItem="6Hp-wl-o4N" firstAttribute="leading" secondItem="LY9-8F-eqm" secondAttribute="leading" constant="80" id="Q6U-Sz-foZ"/>
                             <constraint firstItem="glv-Ka-FEt" firstAttribute="top" secondItem="Rkt-Hn-PaX" secondAttribute="bottom" constant="16" id="QDA-nw-Fro"/>
                             <constraint firstItem="6Hp-wl-o4N" firstAttribute="top" secondItem="uO6-tx-oTS" secondAttribute="bottom" constant="30" id="S3z-U9-UWa"/>
-                            <constraint firstItem="4EM-Xd-cnY" firstAttribute="top" secondItem="bGk-tH-QOr" secondAttribute="bottom" constant="78" id="W6g-k1-l5J"/>
-                            <constraint firstItem="Olo-xV-y58" firstAttribute="centerY" secondItem="6Hp-wl-o4N" secondAttribute="centerY" id="eng-nF-BKZ"/>
+                            <constraint firstItem="4EM-Xd-cnY" firstAttribute="top" secondItem="bGk-tH-QOr" secondAttribute="bottom" constant="10" id="W6g-k1-l5J"/>
+                            <constraint firstItem="Olo-xV-y58" firstAttribute="centerY" secondItem="6Hp-wl-o4N" secondAttribute="centerY" constant="-5" id="eng-nF-BKZ"/>
                             <constraint firstItem="uTM-I0-duR" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="i71-KJ-APh"/>
-                            <constraint firstItem="uTM-I0-duR" firstAttribute="top" secondItem="uO6-tx-oTS" secondAttribute="bottom" constant="32" id="xNB-4v-Vpd"/>
+                            <constraint firstItem="uTM-I0-duR" firstAttribute="top" secondItem="uO6-tx-oTS" secondAttribute="bottom" constant="27" id="xNB-4v-Vpd"/>
                             <constraint firstItem="4EM-Xd-cnY" firstAttribute="centerX" secondItem="qWe-yx-wUi" secondAttribute="centerX" id="z9W-mJ-aZI"/>
-                            <constraint firstItem="bGk-tH-QOr" firstAttribute="top" secondItem="OdI-cT-LU3" secondAttribute="bottom" constant="25.5" id="zW5-Ww-2Ri"/>
+                            <constraint firstItem="bGk-tH-QOr" firstAttribute="top" secondItem="OdI-cT-LU3" secondAttribute="bottom" constant="20" id="zW5-Ww-2Ri"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5pD-5y-oNq"/>
@@ -391,20 +391,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Уже есть аккаунт?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="giQ-Xt-cfl">
-                                <rect key="frame" x="127.5" y="430" width="120" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="6WF-NY-eXx"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="E9p-4Y-zlB"/>
-                                    <constraint firstAttribute="width" constant="120" id="JM8-np-pwB"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="haN-Lp-1zL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Qg1-Yl-pfo">
-                                <rect key="frame" x="47.5" y="120" width="280" height="220"/>
+                                <rect key="frame" x="47.5" y="242" width="280" height="160"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Email" textAlignment="natural" minimumFontSize="17" background="Email" translatesAutoresizingMaskIntoConstraints="NO" id="LHM-Nx-Ovi" customClass="StrickTextBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
@@ -421,45 +409,30 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Логин" textAlignment="natural" minimumFontSize="17" background="Login" translatesAutoresizingMaskIntoConstraints="NO" id="n5y-ef-z7w" customClass="StrickTextBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="280" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="2xO-HT-Ye7"/>
-                                            <constraint firstAttribute="width" constant="280" id="vQz-mJ-9fT"/>
-                                        </constraints>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" background="Password" translatesAutoresizingMaskIntoConstraints="NO" id="hwV-t2-31b" customClass="StrickTextBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="280" height="40"/>
+                                        <rect key="frame" x="0.0" y="60" width="280" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="280" id="bom-bM-QRq"/>
                                             <constraint firstAttribute="height" constant="40" id="flh-vh-78u"/>
                                         </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                 <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Дата рождения" textAlignment="natural" minimumFontSize="17" background="Date" translatesAutoresizingMaskIntoConstraints="NO" id="PyK-Gd-rZ3" customClass="StrickTextBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="180" width="280" height="40"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Подтвердите пароль" textAlignment="natural" minimumFontSize="17" background="Password" translatesAutoresizingMaskIntoConstraints="NO" id="PyK-Gd-rZ3" customClass="StrickTextBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="120" width="280" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="N96-cl-JaL"/>
                                             <constraint firstAttribute="width" constant="280" id="j26-Oz-jDF"/>
                                         </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                 <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -469,7 +442,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50g-gG-Ud1">
-                                <rect key="frame" x="47.5" y="360" width="280" height="40"/>
+                                <rect key="frame" x="47.5" y="422" width="280" height="40"/>
                                 <color key="backgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="29U-aW-0ql"/>
@@ -479,9 +452,12 @@
                                 <state key="normal" title="Продолжить">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="RegistrationButton:" destination="HtR-zE-xBJ" eventType="touchUpInside" id="pdX-Rp-agT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vt-jb-FDy">
-                                <rect key="frame" x="152.5" y="557" width="70" height="30"/>
+                                <rect key="frame" x="152.5" y="522" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="MmU-wG-Pbe"/>
                                     <constraint firstAttribute="height" constant="30" id="b4R-N8-lpv"/>
@@ -505,45 +481,39 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b6t-HM-9jV">
-                                <rect key="frame" x="47.5" y="440" width="73" height="1"/>
-                                <color key="backgroundColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aWb-0i-Hn5">
+                                <rect key="frame" x="177.5" y="489" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="Ofn-HP-mwt"/>
-                                    <constraint firstAttribute="height" constant="1" id="wh6-5g-jba"/>
+                                    <constraint firstAttribute="height" constant="20" id="AG1-YZ-BW8"/>
+                                    <constraint firstAttribute="width" constant="20" id="Jrk-On-aRO"/>
                                 </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szB-wk-8Tg">
-                                <rect key="frame" x="254.5" y="439.5" width="73" height="1"/>
-                                <color key="backgroundColor" red="0.58431372550000005" green="0.59607843140000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="DeW-EQ-Rct"/>
-                                    <constraint firstAttribute="width" constant="73" id="JsF-4L-isx"/>
-                                </constraints>
-                            </view>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qg1-Yl-pfo" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="3Zx-SB-09P"/>
                             <constraint firstItem="50g-gG-Ud1" firstAttribute="bottom" secondItem="Qg1-Yl-pfo" secondAttribute="bottom" constant="60" id="4rd-hk-CYc"/>
+                            <constraint firstItem="Qg1-Yl-pfo" firstAttribute="top" secondItem="qs9-O5-BCl" secondAttribute="bottom" constant="201" id="L4g-N5-tAX"/>
                             <constraint firstItem="50g-gG-Ud1" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="L7h-X9-a4b"/>
-                            <constraint firstItem="giQ-Xt-cfl" firstAttribute="centerY" secondItem="b6t-HM-9jV" secondAttribute="centerY" id="OP6-Cr-W42"/>
                             <constraint firstAttribute="trailing" secondItem="qs9-O5-BCl" secondAttribute="trailing" constant="8" id="QHc-Fo-tmC"/>
-                            <constraint firstItem="3vt-jb-FDy" firstAttribute="top" secondItem="giQ-Xt-cfl" secondAttribute="bottom" constant="106" id="YaV-dX-Osc"/>
-                            <constraint firstItem="szB-wk-8Tg" firstAttribute="trailing" secondItem="giQ-Xt-cfl" secondAttribute="trailing" constant="80" id="Yak-PQ-hTq"/>
-                            <constraint firstItem="giQ-Xt-cfl" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="drZ-54-HHf"/>
-                            <constraint firstItem="giQ-Xt-cfl" firstAttribute="top" secondItem="50g-gG-Ud1" secondAttribute="bottom" constant="30" id="ezG-iZ-Jp2"/>
+                            <constraint firstItem="3vt-jb-FDy" firstAttribute="top" secondItem="aWb-0i-Hn5" secondAttribute="bottom" constant="13" id="SUs-KM-1tx"/>
+                            <constraint firstItem="aWb-0i-Hn5" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="TTd-Sd-0C1"/>
+                            <constraint firstItem="aWb-0i-Hn5" firstAttribute="top" secondItem="50g-gG-Ud1" secondAttribute="bottom" constant="27" id="W07-b2-HVc"/>
                             <constraint firstItem="qs9-O5-BCl" firstAttribute="top" secondItem="iRu-MQ-2RU" secondAttribute="bottom" id="flT-K3-Otd"/>
-                            <constraint firstItem="giQ-Xt-cfl" firstAttribute="leading" secondItem="b6t-HM-9jV" secondAttribute="leading" constant="80" id="hYz-J9-wpg"/>
                             <constraint firstItem="3vt-jb-FDy" firstAttribute="centerX" secondItem="1Jp-tH-Xqy" secondAttribute="centerX" id="iuX-El-QoW"/>
-                            <constraint firstItem="szB-wk-8Tg" firstAttribute="centerY" secondItem="giQ-Xt-cfl" secondAttribute="centerY" id="j1l-cT-EcJ"/>
-                            <constraint firstItem="Qg1-Yl-pfo" firstAttribute="top" secondItem="iRu-MQ-2RU" secondAttribute="bottom" constant="100" id="ohs-h2-hvk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="AuthorizationIndicator" destination="aWb-0i-Hn5" id="C1e-eL-MwV"/>
+                        <outlet property="EmailTextBox" destination="LHM-Nx-Ovi" id="GnZ-yJ-PI7"/>
+                        <outlet property="PasswordConfirmTextBox" destination="PyK-Gd-rZ3" id="CTG-9E-RQN"/>
+                        <outlet property="PasswordTextBox" destination="hwV-t2-31b" id="dUx-dj-Qka"/>
+                        <segue destination="RxM-K3-R6e" kind="show" identifier="successfulAthorizationSegue" id="I59-aF-w5v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VaP-nL-i1l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2297" y="-1490"/>
+            <point key="canvasLocation" x="2297" y="-1501"/>
         </scene>
         <!--Authorization View Controller-->
         <scene sceneID="J1T-nw-pqD">
@@ -703,7 +673,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="78" id="n2Z-R6-eXz" customClass="ConversationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="78" id="n2Z-R6-eXz" customClass="ConversationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n2Z-R6-eXz" id="aIF-P9-fBf">
@@ -1387,7 +1357,7 @@
                                                                 <action selector="showReceiverAttachedFiles:" destination="gx4-o1-p9A" eventType="touchUpInside" id="yJ1-Cq-360"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Th8-hZ-kqQ">
+                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Th8-hZ-kqQ">
                                                             <rect key="frame" x="234" y="68" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="Enz-5R-f2w"/>
@@ -1454,7 +1424,7 @@
                                                                 <action selector="showSenderAttachedFiles:" destination="gx4-o1-p9A" eventType="touchUpInside" id="8kg-vM-65e"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3T-Nt-IlF">
+                                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3T-Nt-IlF">
                                                             <rect key="frame" x="234" y="68" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="ZQt-Mm-DuU"/>
@@ -1632,7 +1602,7 @@
                         <segue destination="Beg-Jd-hzI" kind="show" identifier="settingChatSegue" id="tCU-02-cre"/>
                         <segue destination="vbt-do-5lY" kind="show" identifier="attachmentsFilesSegue" id="56f-tk-u4D"/>
                         <segue destination="XF8-5h-bmJ" kind="show" identifier="attachmentsConfigurationsSegue" id="A2f-Jo-mQl"/>
-                        <segue destination="sdY-v4-ipg" kind="show" id="1rZ-6J-3iQ"/>
+                        <segue destination="sdY-v4-ipg" kind="show" identifier="attachmentsConfSegue" id="1rZ-6J-3iQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fzC-ty-8lL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1659,7 +1629,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="598"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CommonConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AttachConfigurationCell" id="vsM-X1-1I9" customClass="AttachConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="CommonConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AttachConfigurationCell" id="vsM-X1-1I9" customClass="AttachConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vsM-X1-1I9" id="SSn-Fn-BfH">
@@ -1670,10 +1640,10 @@
                                                     <rect key="frame" x="0.0" y="4" width="371" height="35.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NoP-Zi-7nV" customClass="ExpendButton" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="3" width="30" height="30"/>
+                                                            <rect key="frame" x="8" y="0.5" width="35" height="35"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="EfB-fm-kCz"/>
-                                                                <constraint firstAttribute="width" constant="30" id="HPw-iI-nsi"/>
+                                                                <constraint firstAttribute="height" constant="35" id="EfB-fm-kCz"/>
+                                                                <constraint firstAttribute="width" constant="35" id="HPw-iI-nsi"/>
                                                             </constraints>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
@@ -1681,7 +1651,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название конфигурации" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPV-hW-h4C">
-                                                            <rect key="frame" x="49" y="7" width="238" height="22"/>
+                                                            <rect key="frame" x="54" y="7" width="228" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="h42-4m-jLZ"/>
                                                             </constraints>
@@ -1689,10 +1659,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAr-Pe-5Wa" customClass="CheckBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                            <rect key="frame" x="333" y="3" width="30" height="30"/>
+                                                            <rect key="frame" x="328" y="0.5" width="35" height="35"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="98u-DR-cQG"/>
-                                                                <constraint firstAttribute="width" constant="30" id="V4W-LM-qNR"/>
+                                                                <constraint firstAttribute="height" constant="35" id="98u-DR-cQG"/>
+                                                                <constraint firstAttribute="width" constant="35" id="V4W-LM-qNR"/>
                                                             </constraints>
                                                             <state key="normal">
                                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1701,13 +1671,12 @@
                                                                 <action selector="checkConfiguration:" destination="vsM-X1-1I9" eventType="touchUpInside" id="brR-bK-TXR"/>
                                                             </connections>
                                                         </button>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zA-rw-J5I" customClass="LockButton" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                            <rect key="frame" x="295" y="3" width="30" height="30"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zA-rw-J5I" customClass="LockButton" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                                            <rect key="frame" x="290" y="3" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="FMI-Zi-xhy"/>
                                                                 <constraint firstAttribute="width" constant="30" id="yMy-Ml-na7"/>
                                                             </constraints>
-                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
                                                                 <action selector="lockConfiguration:" destination="vsM-X1-1I9" eventType="touchUpInside" id="ckb-iY-27D"/>
                                                             </connections>
@@ -1856,7 +1825,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="DeleteContactFromChatCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="DeleteContactFromChatCell" rowHeight="80" id="QTi-lf-8As" customClass="DeleteContactFromChatCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="DeleteContactFromChatCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="DeleteContactFromChatCell" rowHeight="80" id="QTi-lf-8As" customClass="DeleteContactFromChatCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QTi-lf-8As" id="Qy0-VI-oCT">
@@ -1932,7 +1901,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vul-fx-QHs">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -1978,7 +1947,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="LQk-VL-xWG" customClass="ContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="ContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="LQk-VL-xWG" customClass="ContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LQk-VL-xWG" id="fG6-xR-jxQ">
@@ -2060,13 +2029,13 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8D0-93-iZW">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="U7B-nK-tCg" kind="relationship" relationship="rootViewController" id="HLj-iE-Ep9"/>
+                        <segue destination="apG-Ea-Oj0" kind="relationship" relationship="rootViewController" id="Uge-Of-wfc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5bP-Lg-nYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2081,7 +2050,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kNr-uQ-ITk">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -2107,14 +2076,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChatBackground" translatesAutoresizingMaskIntoConstraints="NO" id="VTX-cK-hd7">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nxt-6v-6mj">
-                                <rect key="frame" x="0.0" y="64" width="375" height="549"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="642"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PrivateConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivateConfigurationCell" id="T5N-xf-JTx" customClass="PrivateConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="PrivateConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivateConfigurationCell" id="T5N-xf-JTx" customClass="PrivateConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T5N-xf-JTx" id="Z0C-z4-0f1">
@@ -2122,13 +2091,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xc-tA-b70">
-                                                    <rect key="frame" x="4" y="4" width="347" height="35.5"/>
+                                                    <rect key="frame" x="4" y="4" width="367" height="35.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hu3-sH-Fgw" customClass="ExpendButton" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="3" width="30" height="30"/>
+                                                            <rect key="frame" x="8" y="0.5" width="35" height="35"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="JNj-Jm-Cbj"/>
-                                                                <constraint firstAttribute="width" constant="30" id="mes-rl-BV5"/>
+                                                                <constraint firstAttribute="height" constant="35" id="JNj-Jm-Cbj"/>
+                                                                <constraint firstAttribute="width" constant="35" id="mes-rl-BV5"/>
                                                             </constraints>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
@@ -2136,7 +2105,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название конфигурации" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vds-BR-ua0">
-                                                            <rect key="frame" x="49" y="7" width="290" height="22"/>
+                                                            <rect key="frame" x="54" y="7" width="305" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="UXs-fe-m79"/>
                                                             </constraints>
@@ -2186,13 +2155,7 @@
                             <constraint firstAttribute="trailing" secondItem="VTX-cK-hd7" secondAttribute="trailing" id="zla-fm-oIG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Личные конфигурации" id="PCg-cc-wZc">
-                        <barButtonItem key="rightBarButtonItem" title="Общие" id="g2u-yJ-WX6">
-                            <connections>
-                                <segue destination="apG-Ea-Oj0" kind="show" id="yCz-V0-41t"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Личные конфигурации" id="PCg-cc-wZc"/>
                     <connections>
                         <outlet property="Table" destination="nxt-6v-6mj" id="21v-Ms-ed8"/>
                         <segue destination="un1-7W-73Q" kind="show" identifier="showPrivateConfiguration" id="Lgz-H0-aGG"/>
@@ -2200,7 +2163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KTG-qS-kk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-231" y="3394"/>
+            <point key="canvasLocation" x="601" y="3394"/>
         </scene>
         <!--Входящие заявки-->
         <scene sceneID="qBw-Py-iyh">
@@ -2224,7 +2187,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="IncommingCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="IncommingCell" rowHeight="80" id="A6n-IL-5lm" customClass="IncommingCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="IncommingCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="IncommingCell" rowHeight="80" id="A6n-IL-5lm" customClass="IncommingCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A6n-IL-5lm" id="LgM-wz-DdJ">
@@ -2311,7 +2274,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="OutgoingCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="80" id="gfd-No-tMn" customClass="OutgoingCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="OutgoingCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="80" id="gfd-No-tMn" customClass="OutgoingCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gfd-No-tMn" id="nff-Vn-9vr">
@@ -2645,7 +2608,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SearchContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchContactCell" rowHeight="80" id="Jv4-Kv-n7s" customClass="SearchContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="SearchContactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchContactCell" rowHeight="80" id="Jv4-Kv-n7s" customClass="SearchContactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jv4-Kv-n7s" id="avT-fd-Nto">
@@ -2733,7 +2696,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CreateChatСontactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="CreateChatСontactCell" rowHeight="80" id="amW-mK-ORS" customClass="CreateChatСontactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="CreateChatСontactCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="CreateChatСontactCell" rowHeight="80" id="amW-mK-ORS" customClass="CreateChatСontactCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="amW-mK-ORS" id="yld-S0-BZq">
@@ -2741,17 +2704,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyUser" translatesAutoresizingMaskIntoConstraints="NO" id="yzr-Qr-rpq" customClass="CircleImageView" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                    <rect key="frame" x="53" y="20" width="40" height="40"/>
+                                                    <rect key="frame" x="58" y="20" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="V9X-zo-tCA"/>
                                                         <constraint firstAttribute="width" constant="40" id="Ywc-Ou-Dtp"/>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Z7-pU-NdW" customClass="CheckBox" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="25" width="30" height="30"/>
+                                                    <rect key="frame" x="15" y="22.5" width="35" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="ArM-uz-7FG"/>
-                                                        <constraint firstAttribute="width" constant="30" id="fLq-1e-lcL"/>
+                                                        <constraint firstAttribute="height" constant="35" id="ArM-uz-7FG"/>
+                                                        <constraint firstAttribute="width" constant="35" id="fLq-1e-lcL"/>
                                                     </constraints>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal">
@@ -2759,7 +2722,7 @@
                                                     </state>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя пользователя" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMy-di-jbc">
-                                                    <rect key="frame" x="103" y="31" width="257" height="17"/>
+                                                    <rect key="frame" x="108" y="31" width="252" height="17"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -2867,7 +2830,7 @@
                                 <color key="separatorColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.16862745100000001" green="0.80000000000000004" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AddContactToChatCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddContactToChatCell" rowHeight="80" id="iwz-VG-ChA" customClass="AddContactToChatCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="AddContactToChatCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddContactToChatCell" rowHeight="80" id="iwz-VG-ChA" customClass="AddContactToChatCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iwz-VG-ChA" id="3Fs-sA-Fdm">
@@ -3106,7 +3069,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="549"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CommonConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommonConfigurationCell" id="0fd-2R-UR6" customClass="CommonConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="CommonConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommonConfigurationCell" id="0fd-2R-UR6" customClass="CommonConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0fd-2R-UR6" id="s3W-m1-119">
@@ -3117,10 +3080,10 @@
                                                     <rect key="frame" x="4" y="4" width="367" height="35.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZ3-N6-Z7n" customClass="ExpendButton" customModule="BITC_Messenger_IOS" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="7" width="22" height="22"/>
+                                                            <rect key="frame" x="8" y="0.5" width="35" height="35"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="22" id="TXN-3p-UI9"/>
-                                                                <constraint firstAttribute="width" constant="22" id="dtt-vx-fpk"/>
+                                                                <constraint firstAttribute="height" constant="35" id="TXN-3p-UI9"/>
+                                                                <constraint firstAttribute="width" constant="35" id="dtt-vx-fpk"/>
                                                             </constraints>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
@@ -3128,7 +3091,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название конфигурации" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhI-vB-0jh">
-                                                            <rect key="frame" x="41" y="7" width="318" height="22"/>
+                                                            <rect key="frame" x="54" y="7" width="305" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="9E1-yV-0fG"/>
                                                             </constraints>
@@ -3178,7 +3141,9 @@
                             <constraint firstItem="A9G-uQ-a9w" firstAttribute="top" secondItem="Q0r-M3-cHv" secondAttribute="bottom" constant="5" id="zS2-Sf-RUI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Общие конфигурации" id="hzH-EY-dNF"/>
+                    <navigationItem key="navigationItem" title="Общие конфигурации" id="hzH-EY-dNF">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" id="OOi-PJ-uYM"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="Table" destination="Q0r-M3-cHv" id="FHD-rX-aaX"/>
                         <segue destination="un1-7W-73Q" kind="show" identifier="showCommonConfiguration" id="8D8-pS-5sV"/>
@@ -3186,7 +3151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5v-NO-WcA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="600.79999999999995" y="3393.5532233883059"/>
+            <point key="canvasLocation" x="-231" y="3394"/>
         </scene>
         <!--Configuration View Controller-->
         <scene sceneID="w3w-pj-b77">
@@ -3239,7 +3204,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="598"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="iUd-Ie-UIa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MessageConfigurationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageConfigurationCell" id="iUd-Ie-UIa" customClass="MessageConfigurationCell" customModule="BITC_Messenger_IOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iUd-Ie-UIa" id="UKh-xj-Lzr">
@@ -3257,14 +3222,28 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkP-SA-I9h">
+                                                            <rect key="frame" x="290" y="3" width="69" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="69" id="RD8-M5-ryE"/>
+                                                                <constraint firstAttribute="height" constant="30" id="VZs-ED-GQk"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Добавить"/>
+                                                            <connections>
+                                                                <action selector="addConfiguration:" destination="iUd-Ie-UIa" eventType="touchUpInside" id="MUs-zl-4Qc"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="xkP-SA-I9h" secondAttribute="bottom" constant="2.5" id="DL1-bA-hbC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xkP-SA-I9h" secondAttribute="trailing" constant="8" id="HxF-Tb-izJ"/>
                                                         <constraint firstItem="s8x-pD-xIz" firstAttribute="leading" secondItem="wTj-0x-hGs" secondAttribute="leading" constant="8" id="IVq-PQ-oy2"/>
                                                         <constraint firstItem="s8x-pD-xIz" firstAttribute="top" secondItem="wTj-0x-hGs" secondAttribute="top" constant="7" id="KIL-EY-2Qg"/>
                                                         <constraint firstAttribute="trailing" secondItem="s8x-pD-xIz" secondAttribute="trailing" constant="8" id="RCJ-ea-Iss"/>
                                                         <constraint firstAttribute="bottom" secondItem="s8x-pD-xIz" secondAttribute="bottom" constant="6.5" id="Sel-Y0-8OC"/>
                                                         <constraint firstAttribute="height" constant="35.5" id="jH3-Kv-0KK"/>
+                                                        <constraint firstItem="xkP-SA-I9h" firstAttribute="top" secondItem="wTj-0x-hGs" secondAttribute="top" constant="3" id="zmE-rV-gfm"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -3276,6 +3255,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="ConfView" destination="wTj-0x-hGs" id="EY4-DU-uod"/>
+                                            <outlet property="NameLabel" destination="s8x-pD-xIz" id="fgd-zA-ZBu"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -3294,6 +3277,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Конфигурации" id="rEN-3Z-u1I"/>
                     <connections>
+                        <outlet property="Table" destination="M4e-5g-Prz" id="h6i-YM-oxA"/>
                         <segue destination="un1-7W-73Q" kind="show" id="491-qg-N7Z"/>
                     </connections>
                 </viewController>
@@ -3308,7 +3292,6 @@
         <image name="ActiveContacts" width="48" height="48"/>
         <image name="ChatBackground" width="414" height="736"/>
         <image name="ChatSettings" width="32" height="32"/>
-        <image name="Date" width="280" height="40"/>
         <image name="Email" width="140" height="20"/>
         <image name="EmptyUser" width="48" height="48"/>
         <image name="Login" width="280" height="40"/>
@@ -3326,8 +3309,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="8D8-pS-5sV"/>
         <segue reference="liS-Li-iWz"/>
-        <segue reference="eGs-7Y-4AZ"/>
-        <segue reference="Doa-y2-I3h"/>
+        <segue reference="WIm-0L-obY"/>
+        <segue reference="6jQ-Xa-0Em"/>
         <segue reference="v3N-T5-UiY"/>
     </inferredMetricsTieBreakers>
 </document>

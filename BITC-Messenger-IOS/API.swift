@@ -134,6 +134,34 @@ public class VSMAPI{
                 }()}
             )
         }
+        public static func registration(email:String, passwordHash:String){
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.registration, params: ["email" : email, "passwordHash" : passwordHash, "captchaId" : -2147483648, "captchaText" : "137285"]) { (d, s) in
+                if(!s){
+                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
+                } else {
+                    if d is Data {
+                        let data = d as! Data
+                        let result = String(data: data, encoding: .utf8)
+                        switch result {
+                        case "0":
+                            break
+                            //Settings.user = user; Settings.hash = hash; Settings.login = true
+                            //preLoadAll()
+                        case "1":
+                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self, cancelButtonTitle: "OK")
+                            button2Alert.show()
+                            //VSMAPI.Settings.logOut();
+                        case "2":
+                            break
+                            //let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self, cancelButtonTitle: "OK")
+                            //button2Alert.show()
+                            //VSMAPI.Settings.logOut();
+                        default: break
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public enum WebAPIEntry:String{
@@ -195,7 +223,7 @@ public class VSMAPI{
     // Session Manager Configurations!!!!!!!
     public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
         if !Connectivity.isConn {return("Интернета нету!", false)}
-        let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params, headers: nil)
+        let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params/*, encoding: JSONEncoding.prettyPrinted*/, headers: nil)
         let resp =  request.syncResponse()
         let succ = resp.error == nil
         if(succ){
@@ -209,8 +237,11 @@ public class VSMAPI{
     public static func Request (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
         if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
         let addr = addres + entry.rawValue + postf
-        let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
+        let request = Alamofire.request(addr, method: method, parameters: params/*, encoding: URLEncoding(destination: .methodDependent)*/, headers: nil)
         
+        /*if entry == VSMAPI.WebAPIEntry.sendMessage{
+            print(request.debugDescription)
+        }*/
         request.response {  response in
             var res:Any
             let succ = response.error == nil

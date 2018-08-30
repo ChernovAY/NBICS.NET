@@ -64,7 +64,7 @@ public class VSMConfiguration : tree{
     }
     public func DeleteConfiguration()->Bool{
         var retVal = false
-        let conf = "{\"Id\":\(self.Id))}"
+        let conf = "{\"Id\":\(self.Id)}"
         let parm = ["MetaData":conf, "Email": VSMAPI.Settings.login, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
         let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: .DeleteConfiguration, params: parm)
         if(z.1){

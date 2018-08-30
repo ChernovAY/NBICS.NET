@@ -32,7 +32,7 @@ public class ContactCell : UITableViewCell {
 public class MessageCell : UITableViewCell {
     
     public var mMessage: VSMMessage!
-    private var delegate:(()->Void)?
+    private var delegate:((Bool)->Void)?
     
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverImage: UIImageView!
@@ -53,7 +53,7 @@ public class MessageCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func ConfigureCell(message: VSMMessage, AttchsDelegate:(()->Void)? = nil) {
+    public func ConfigureCell(message: VSMMessage, AttchsDelegate:((Bool)->Void)? = nil) {
         delegate = AttchsDelegate
         mMessage = message
         
@@ -117,29 +117,31 @@ public class MessageCell : UITableViewCell {
     }
     
     @IBAction func showSenderAttacherConfigurations(_ sender: UIButton) {
+        setAttachsConfigurationsMessage()
     }
     
     @IBAction func showReceiverAttachedConfigurations(_ sender: UIButton) {
+        setAttachsConfigurationsMessage()
     }
     
     func setAttachsMessage(){
         VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
         if let d = self.delegate{
             if self.mMessage.AttachedFiles.count>0{
-                d()
+                d(true)
             }
         }
     }
     
     func setAttachsConfigurationsMessage(){
-        /*
+        
         VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
         if let d = self.delegate{
-            if self.mMessage.AttachedFiles.count>0{
-                d()
+            if self.mMessage.AttachedConfs.count>0{
+                d(false)
             }
         }
-        */
+        
     }
     
 }
@@ -434,9 +436,10 @@ public class CommonConfigurationCell : UITableViewCell {
     @IBAction func openList(_ sender: ExpendButton) {
     }
     
-    public func ConfigureCell(treenode: VSMSimpleTree) {
+    public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         tree = treenode
         configuration = tree.content as! VSMConfiguration
+        self.delegate = delegate
         
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 10
@@ -585,3 +588,31 @@ public class AttachConfigurationCell : UITableViewCell {
         CheckButton.isChecked = configuration.Checked
     }
 }
+
+public class MessageConfigurationCell : UITableViewCell {
+    
+    private var configuration: VSMConfiguration!
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var ConfView: UIView!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func ConfigureCell(configuration: VSMConfiguration) {
+        self.configuration = configuration
+        ConfView?.clipsToBounds = true
+        ConfView!.layer.cornerRadius = 10
+        NameLabel.text = configuration.Name
+        self.backgroundColor =  UIColor.clear
+    }
+    
+    @IBAction func addConfiguration(_ sender: UIButton) {
+        if configuration.CopyConfiguration(){
+            VSMAPI.Data.loadAll()
+        }
+    }
+}
+
+
+

@@ -171,8 +171,13 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
         performSegue(withIdentifier: "attachmentsConfigurationsSegue", sender: self)
     }
     
-    private func showAttachedFiles(){
-        performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
+    private func showAttachedFilesOrConfs(_ B:Bool = true){
+        if B{
+            performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
+        }
+        else{
+            performSegue(withIdentifier: "attachmentsConfSegue", sender: self)
+        }
     }
     
     @objc func getOldMessages(refreshControl: UIRefreshControl) {
@@ -224,7 +229,7 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
            
             if indexPath.row < Conversation.Messages.array.count{
                 message = Conversation.Messages.array[indexPath.row]
-                cell.ConfigureCell(message: message, AttchsDelegate: showAttachedFiles)
+                cell.ConfigureCell(message: message, AttchsDelegate: showAttachedFilesOrConfs)
             }
             return cell
         } else {
