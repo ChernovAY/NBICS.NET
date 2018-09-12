@@ -39,8 +39,8 @@ import SwiftyJSON
             application.registerUserNotificationSettings(settings)
         }
         application.registerForRemoteNotifications()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
-
         return true
     }
     
@@ -64,7 +64,8 @@ import SwiftyJSON
     }()
     
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        let json = JSON(remoteMessage.appData)
+        //let json = JSON(remoteMessage.appData)
+        //print("убрать!!!")
         //print(json)
         /*if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
             let convId = json.dictionary!["ConversationId"]!.string!
@@ -82,7 +83,6 @@ import SwiftyJSON
         VSMAPI.Settings.refreshFB(fcmToken: fcmToken)
     }
     
-   
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         VSMAPI.Data.timerFired()
         
@@ -114,18 +114,20 @@ import SwiftyJSON
         VSMAPI.Data.timerFired()
     }
 
-    /*
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    
+    /*func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
                 //UIAlertView(title: "didReceiveRemoteNotification", message: "\(userInfo)", delegate: self, cancelButtonTitle: "OK").show()
         print(userInfo)
-        VSMAPI.Data.timerFired()
+        print("убрать!!!")
+        /*VSMAPI.Data.timerFired()*/
         completionHandler(.newData)
-    }
-    */
+    }*/
+ 
  
     // The callback to handle data message received via FCM for devices running iOS 10 or above.
     func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
-        //print(remoteMessage.appData)
+        print ("убрать!!!")
+        print(remoteMessage.appData)
     }
     
     func saveContext () {
@@ -139,7 +141,7 @@ import SwiftyJSON
             }
         }
     }
-    
+
     @objc func refreshToken(notification: NSNotification){
         let refreshToken = InstanceID.instanceID().token()!
         FBHandler()

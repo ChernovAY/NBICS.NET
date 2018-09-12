@@ -10,11 +10,14 @@ import UIKit
 import QuartzCore
 import FileProvider
 
-class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
+class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
     private var isHidden    = true
     private var isScrolling = false
     private var isNowOpen   = true
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var NewMessageView: UIView!
     
     private var EInitHandler: Disposable?
     private var EMessageHandler: Disposable?
@@ -261,14 +264,16 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     func Load(_ b:Bool = true){
         if b {
-            Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
-            NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
-            isScrolling = false
-            if (jamp(true)){
-                self.Conversation.Messages.getData(isAfter:true, jamp: true)
-                isNowOpen = false
-                if (!isHidden){
-                    self.Conversation.markReaded()
+            if VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId] != nil{
+                Conversation = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]!
+                NameChat.title = Conversation.Name == "" ? Conversation.Users.first(where: ({!$0.isOwnContact}))!.Name : Conversation.Name
+                isScrolling = false
+                if (jamp(true)){
+                    self.Conversation.Messages.getData(isAfter:true, jamp: true)
+                    isNowOpen = false
+                    if (!isHidden){
+                        self.Conversation.markReaded()
+                    }
                 }
             }
         }
@@ -276,6 +281,21 @@ class ConfigurationsViewController: UIViewController, UITabBarDelegate, UITableV
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         moveTextView(textView, moveDistance: MoveDistance, up: true)
+    }
+    
+    override func setColors(){
+        MainView.backgroundColor            = UIColor.VSMWhiteBlack
+        
+        NewMessageView.backgroundColor      = UIColor.VSMContentViewBackground
+        FilesView.backgroundColor           = UIColor.VSMNavigationTabBarBackground
+        FileButton.backgroundColor          = UIColor.VSMButton
+        CountFilesLabel.textColor           = UIColor.VSMBlackWhite
+        ConfigurationView.backgroundColor   = UIColor.VSMNavigationTabBarBackground
+        CountConfigurationsLabel.textColor  = UIColor.VSMBlackWhite
+        ConfigurationButton.backgroundColor = UIColor.VSMButton
+        SendButton.backgroundColor          = UIColor.VSMButton
+        
+        Load()
     }
     
 }

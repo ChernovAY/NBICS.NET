@@ -25,6 +25,8 @@ public class ContactCell : UITableViewCell {
         
         NameLbl.text = contact.Name
         ThumbImage.image = contact.Photo
+        
+        NameLbl.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -57,9 +59,11 @@ public class MessageCell : UITableViewCell {
         delegate = AttchsDelegate
         mMessage = message
         
+        ReceiverView.backgroundColor = UIColor.VSMReceiverMessageViewBackground
         ReceiverView?.clipsToBounds = true
         ReceiverView!.layer.cornerRadius = 10
         
+        SenderView.backgroundColor = UIColor.VSMSenderMessageViewBackground
         SenderView?.clipsToBounds = true
         SenderView!.layer.cornerRadius = 10
         
@@ -105,6 +109,7 @@ public class MessageCell : UITableViewCell {
                 SenderAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(-25)
             }
         }
+        
         self.backgroundColor = UIColor.clear
     }
     
@@ -176,6 +181,8 @@ public class ConversationCell : UITableViewCell {
         NameLbl.text = buildName()
         ThumbImage.image = buildImage()
         LastMessageLbl.text = mConv.LastMessage?.Text
+        
+        NameLbl.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
     
@@ -194,6 +201,7 @@ public class ConversationCell : UITableViewCell {
         }
         return UIImage(named: "EmptyUser")!
     }
+    
 }
 
 public class IncommingCell : UITableViewCell {
@@ -211,6 +219,7 @@ public class IncommingCell : UITableViewCell {
         PhotoImage.image = contact.Photo
         NameLabel.text = contact.Name
 
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -230,6 +239,7 @@ public class OutgoingCell : UITableViewCell {
         PhotoImage.image = contact.Photo
         NameLabel.text = contact.Name
         
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -276,6 +286,9 @@ public class CreateChatСontactCell : UITableViewCell {
         NameLabel.text = contact.Contact.Name
         CheckButton.isChecked = contact.Checked
         CheckButton.checkdelegate = chkChange
+        
+        CheckButton.tintColor = UIColor.VSMBlackWhite
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -296,6 +309,7 @@ public class DeleteContactFromChatCell : UITableViewCell {
         self.contact = contact
         PhotoImage.image = contact.Contact.Photo
         NameLabel.text = contact.Contact.Name
+        
         self.backgroundColor = UIColor.clear
     }
  
@@ -316,6 +330,7 @@ public class AddContactToChatCell : UITableViewCell {
         self.contact = contact
         PhotoImage.image = contact.Contact.Photo
         NameLabel.text = contact.Contact.Name
+        
         self.backgroundColor = UIColor.clear
     }
 }
@@ -340,9 +355,11 @@ public class MessageAttachmentsCell : UICollectionViewCell {
         self.previewDelegate = previewDelegate
         
         self.file = file
+        FileView?.backgroundColor = UIColor.VSMContentViewBackground
         FileView?.clipsToBounds = true
         FileView!.layer.cornerRadius = 5
         NameFileLabel.text = file.Name
+        NameFileLabel.textColor = UIColor.VSMBlackWhite
         FileImage.image = file.PreviewIcon
         
         if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
@@ -442,19 +459,20 @@ public class CommonConfigurationCell : UITableViewCell {
         self.delegate = delegate
         
         ConfView?.clipsToBounds = true
-        ConfView!.layer.cornerRadius = 10
+        ConfView!.layer.cornerRadius = 6
         if (configuration.CType == "Folder"){
             ConfView.backgroundColor = nil
-            NameLabel.textColor = UIColor.white
-            OpenListButton.tintColor = UIColor.white
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
         } else {
-            ConfView.backgroundColor = UIColor.white
-            NameLabel.textColor = UIColor.black
-            OpenListButton.tintColor = UIColor.black
+            ConfView.backgroundColor = UIColor.VSMContentViewBackground
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
+        
         OpenListButton.isExpandable = (tree.children?.count)! > 0 ? true : false
         OpenListButton.checkdelegate = chkChange
         OpenListButton.isChecked = tree.isExpanded
@@ -495,15 +513,15 @@ public class PrivateConfigurationCell : UITableViewCell {
         configuration = tree.content as! VSMConfiguration
         
         ConfView?.clipsToBounds = true
-        ConfView!.layer.cornerRadius = 10
+        ConfView!.layer.cornerRadius = 6
         if (configuration.CType == "Folder"){
             ConfView.backgroundColor = nil
-            NameLabel.textColor = UIColor.white
-            OpenListButton.tintColor = UIColor.white
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
         } else {
-            ConfView.backgroundColor = UIColor.white
-            NameLabel.textColor = UIColor.black
-            OpenListButton.tintColor = UIColor.black
+            ConfView.backgroundColor = UIColor.VSMContentViewBackground
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Name
@@ -560,23 +578,24 @@ public class AttachConfigurationCell : UITableViewCell {
         configuration = tree.content as! VSMCheckedConfiguration
         
         ConfView?.clipsToBounds = true
-        ConfView!.layer.cornerRadius = 10
+        ConfView!.layer.cornerRadius = 6
         if (configuration.Conf.CType == "Folder"){
             CheckButton.isHidden = true
             LockButton.isHidden = true
             ConfView.backgroundColor = nil
-            NameLabel.textColor = UIColor.white
-            OpenListButton.tintColor = UIColor.white
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
         } else {
             CheckButton.isHidden = false
             LockButton.isHidden = false
-            ConfView.backgroundColor = UIColor.white
-            NameLabel.textColor = UIColor.black
-            OpenListButton.tintColor = UIColor.black
-            
+            OpenListButton.tintColor = UIColor.VSMBlackWhite
+            NameLabel.textColor = UIColor.VSMBlackWhite
+            ConfView.backgroundColor = UIColor.VSMContentViewBackground
         }
         ConfViewLeading.constant = CGFloat(tree.level * 30)
         NameLabel.text = configuration.Conf.Name
+        
+
         self.backgroundColor =  UIColor.clear
         
         CheckButton.checkdelegate    = chkChange
@@ -592,8 +611,10 @@ public class AttachConfigurationCell : UITableViewCell {
 public class MessageConfigurationCell : UITableViewCell {
     
     private var configuration: VSMConfiguration!
+    private var checkAddConf = false
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ConfView: UIView!
+    @IBOutlet weak var AddConfButton: UIButton!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -601,15 +622,22 @@ public class MessageConfigurationCell : UITableViewCell {
     
     public func ConfigureCell(configuration: VSMConfiguration) {
         self.configuration = configuration
-        ConfView?.clipsToBounds = true
-        ConfView!.layer.cornerRadius = 10
         NameLabel.text = configuration.Name
+        
+        ConfView?.clipsToBounds = true
+        ConfView!.layer.cornerRadius = 6
+        ConfView.backgroundColor = UIColor.VSMContentViewBackground
         self.backgroundColor =  UIColor.clear
     }
     
     @IBAction func addConfiguration(_ sender: UIButton) {
-        if configuration.CopyConfiguration(){
-            VSMAPI.Data.loadAll()
+        if (checkAddConf == false){
+            AddConfButton.setImage(#imageLiteral(resourceName: "blackCheck"), for: UIControlState.normal)
+            checkAddConf = true
+            if configuration.CopyConfiguration(){
+                VSMAPI.Data.loadAll()
+                
+            }
         }
     }
 }

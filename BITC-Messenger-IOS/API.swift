@@ -23,7 +23,13 @@ public class VSMAPI{
             return NetworkReachabilityManager()!.isReachable
         }
     }
-    
+   /* public struct DefColors{
+        public static var backGroundColor:String{
+            get{return UserDefaults.standard.object(forKey: "backGroundColor") as? String ?? "#393939"}
+            set(value){UserDefaults.standard.set(value, forKey: "backGroundColor")}
+        }
+        
+    }*/
     public struct Settings{
         public static var refreshToken:String{
             get{return UserDefaults.standard.object(forKey: "refreshToken") as? String ?? ""}
@@ -45,12 +51,21 @@ public class VSMAPI{
             get{return UserDefaults.standard.object(forKey: "login") as? Bool ?? false}
             set(value){UserDefaults.standard.set(value, forKey: "login")}
         }
+        public static var darkSchreme:Bool{
+            //get{return UserDefaults.standard.object(forKey: "darkSchreme") as? Bool ?? false}
+            get{return UserDefaults.standard.object(forKey: "darkSchreme") as? Bool ?? true}
+            set(value){UserDefaults.standard.set(value, forKey: "darkSchreme")}
+        }
+        public static var alias:String{
+            get{return UserDefaults.standard.object(forKey: "alias") as? String ?? ""}
+            set(value){UserDefaults.standard.set(value, forKey: "alias")}
+        }
         public static func logOut(){
             Data.ETimerAction.raise(data: true)
             VSMAPI.Request(addres: Settings.caddress, entry: .DisconnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"]) { (d, b) in
                 VSMAPI.Request(addres: Settings.caddress, entry: .UnregisterDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"], completionHandler: { (d, b) in
                     VSMAPI.deleteCommunicatorFiles()
-                    Settings.user = ""; Settings.hash = ""; Settings.login = false;
+                    Settings.user = ""; Settings.hash = ""; Settings.login = false; Settings.alias = "";
                     Data.deleteAll()
                     UIApplication.shared.applicationIconBadgeNumber  = 0
                     })
@@ -108,16 +123,24 @@ public class VSMAPI{
                 preLoadAll()
                 return;
             }
-            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(d,s) in{
+            VSMAPI.RequestFull(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(r,s) in{
+                
                 if(!s){
-                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
-                } else {
-                    if d is Data {
-                        let data = d as! Data
+                        UIAlertView(title: "Ошибка", message: r as? String, delegate: self, cancelButtonTitle: "OK").show()
+                    }
+                else {
+                    if let d = (r as! DefaultDataResponse).data{
+                        let data = d as Data
                         let result = String(data: data, encoding: .utf8)
                         switch result {
                         case "0":
-                            Settings.user = user; Settings.hash = hash; Settings.login = true
+                            Settings.user = user; Settings.hash = hash; Settings.login = true; Settings.alias = "" ;
+                            if let headerFields = (r as! DefaultDataResponse).response?.allHeaderFields as? [String: String],
+                                let URL = (r as! DefaultDataResponse).request?.url
+                            {
+                                let c = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                                Settings.alias = c[2].value as String
+                            }
                             preLoadAll()
                         case "1":
                             let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self, cancelButtonTitle: "OK")
@@ -134,33 +157,23 @@ public class VSMAPI{
                 }()}
             )
         }
-        public static func registration(email:String, passwordHash:String){
+        public static func registration(email:String, passwordHash:String)->Int?{
+            var retval = nil as Int?
             VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.registration, params: ["email" : email, "passwordHash" : passwordHash, "captchaId" : -2147483648, "captchaText" : "137285"]) { (d, s) in
                 if(!s){
                     UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
                 } else {
                     if d is Data {
                         let data = d as! Data
-                        let result = String(data: data, encoding: .utf8)
-                        switch result {
-                        case "0":
-                            break
-                            //Settings.user = user; Settings.hash = hash; Settings.login = true
-                            //preLoadAll()
-                        case "1":
-                            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Такого логина не существует", delegate: self, cancelButtonTitle: "OK")
-                            button2Alert.show()
-                            //VSMAPI.Settings.logOut();
-                        case "2":
-                            break
-                            //let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Неверный пароль", delegate: self, cancelButtonTitle: "OK")
-                            //button2Alert.show()
-                            //VSMAPI.Settings.logOut();
-                        default: break
+                        if let result = try? JSON(data: data){
+                            if let res = result.dictionary!["Code"]?.int{
+                               retval = res
+                            }
                         }
                     }
                 }
             }
+            return retval
         }
     }
 
@@ -238,15 +251,26 @@ public class VSMAPI{
         if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
         let addr = addres + entry.rawValue + postf
         let request = Alamofire.request(addr, method: method, parameters: params/*, encoding: URLEncoding(destination: .methodDependent)*/, headers: nil)
-        
-        /*if entry == VSMAPI.WebAPIEntry.sendMessage{
-            print(request.debugDescription)
-        }*/
         request.response {  response in
             var res:Any
             let succ = response.error == nil
             if(succ){
                     res = response.data!
+            } else {
+                res = response.error.unsafelyUnwrapped.localizedDescription
+            }
+            completionHandler(res, succ)
+        }
+    }
+    public static func RequestFull (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
+        if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
+        let addr = addres + entry.rawValue + postf
+        let request = Alamofire.request(addr, method: method, parameters: params/*, encoding: URLEncoding(destination: .methodDependent)*/, headers: nil)
+        request.response {  response in
+            var res:Any
+            let succ = response.error == nil
+            if(succ){
+                res = response
             } else {
                 res = response.error.unsafelyUnwrapped.localizedDescription
             }
@@ -341,5 +365,6 @@ public class VSMAPI{
         public static var AttMessageId      = ""
         public static var tabBarChats           :UITabBarItem? = UITabBarItem()
         public static var tabBarApplications    :UITabBarItem? = UITabBarItem()
+        public static var nailIFirstOpenOfConfigurationBliad = true
     }
 }

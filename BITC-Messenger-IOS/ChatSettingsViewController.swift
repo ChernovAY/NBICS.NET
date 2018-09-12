@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var cArray   = [VSMCheckedContact]()
     private let conv = VSMAPI.VSMChatsCommunication.checkedContactForConversation[0].Conversation

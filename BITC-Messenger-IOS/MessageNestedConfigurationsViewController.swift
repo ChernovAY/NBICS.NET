@@ -8,9 +8,12 @@
 
 import UIKit
 
-class MessageNestedConfigurationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MessageNestedConfigurationsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var cArray = [VSMConfiguration]()
+    private var configurationURL:String?
+    
+    @IBOutlet var MainView: UIView!
     
     @IBOutlet weak var Table: UITableView!
     override func viewDidLoad() {
@@ -43,7 +46,17 @@ class MessageNestedConfigurationsViewController: UIViewController, UITableViewDe
         return 1
     }
     
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       let u = cArray[indexPath.row]
+        configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
+        performSegue(withIdentifier: "showNestedConfiguration", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ConfigurationViewController{
+            destination.configurationURL = configurationURL
+        }
+    }
     
     private func Load(_ b:Bool=true) {
         if(b) {
@@ -52,5 +65,9 @@ class MessageNestedConfigurationsViewController: UIViewController, UITableViewDe
             cArray.removeAll()
         }
         self.Table.reloadData()
+    }
+    
+    override func setColors(){
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
     }
 }

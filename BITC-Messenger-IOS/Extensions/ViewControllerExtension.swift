@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-extension UIViewController {
+
+extension UIViewController  {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -18,5 +19,27 @@ extension UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+}
+
+open class VSMUIViewController: UIViewController{
+    var DarkScheme: Bool? = VSMAPI.Settings.darkSchreme
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        setColors();
+    }
+    
+    open override func viewDidAppear(_ animated: Bool){
+        super.viewDidAppear(animated)
+        if DarkScheme != VSMAPI.Settings.darkSchreme{
+            setColors();
+            DarkScheme = VSMAPI.Settings.darkSchreme
+        }
+        
+    }
+    func setColors(){
+        
     }
 }

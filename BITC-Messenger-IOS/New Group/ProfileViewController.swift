@@ -31,7 +31,7 @@ extension UITextField {
     }
 }
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: VSMUIViewController {
     
     @IBOutlet weak var UserPhoto: UIImageView!
     @IBOutlet weak var NameField: UITextField!
@@ -42,6 +42,17 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var BirthdayButton: UIButton!
     @IBOutlet weak var SkypeField: UITextField!
     @IBOutlet weak var NewTextField: UITextField!
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var ExitButton: UIButton!
+    @IBOutlet weak var PhotoView: UIView!
+    @IBOutlet weak var InformationView: UIView!
+    @IBOutlet weak var ContactsView: UIView!
+    @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
+    @IBOutlet weak var InformaionLabel: UILabel!
+    @IBOutlet weak var ContactsLabel: UILabel!
+    
+    
     var effect:UIVisualEffect!
     
     override func viewDidLoad() {
@@ -55,7 +66,18 @@ class ProfileViewController: UIViewController {
             SkypeField.text = "\(usr.Skype)"
             VSMAPI.VSMChatsCommunication.BDayDelegate = setBDateButton
         }
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        UserPhoto.isUserInteractionEnabled = true
+        UserPhoto.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        if (EditButton.title == "Редактировать") {
+            //Загрузить новое фото
+        }
+    }
+    
     public func setBDateButton(){
         BirthdayButton.setTitle("\((VSMAPI.Data.Profile?.BirthDay.toString())!)", for: .normal)
     }
@@ -96,5 +118,25 @@ class ProfileViewController: UIViewController {
         VSMAPI.Settings.logOut()
         self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
-    
+    override func setColors(){
+        NavigationBarButton.tintColor = UIColor.VSMNavigationBarTitle
+        
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+ 
+        PhotoView.backgroundColor = UIColor.VSMContentViewBackground
+        
+        InformationView.backgroundColor = UIColor.VSMContentViewBackground
+        NameField.textColor = UIColor.VSMBlackWhite
+        PatronymicField.textColor = UIColor.VSMBlackWhite
+        FamilyField.textColor = UIColor.VSMBlackWhite
+        BirthdayButton.setTitleColor(UIColor.VSMBlackWhite, for: .normal)
+        InformaionLabel.textColor = UIColor.VSMButton
+        
+        ContactsView.backgroundColor = UIColor.VSMContentViewBackground
+        EmailField.textColor = UIColor.VSMBlackWhite
+        SkypeField.textColor = UIColor.VSMBlackWhite
+        ContactsLabel.textColor = UIColor.VSMButton
+        
+        ExitButton.backgroundColor = UIColor.VSMButton
+    }
 }

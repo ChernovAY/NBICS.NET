@@ -41,12 +41,13 @@
 		9BD579F22119D8BC00BC09A7 /* ExpandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD579F12119D8BC00BC09A7 /* ExpandButton.swift */; };
 		9BD579F42119EFCB00BC09A7 /* MessageAttachmentsConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD579F32119EFCB00BC09A7 /* MessageAttachmentsConfigViewController.swift */; };
 		9BD579F6211AEAEB00BC09A7 /* LockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD579F5211AEAEB00BC09A7 /* LockButton.swift */; };
+		9BF7DD68213D6E3B00EE92EA /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7DD67213D6E3B00EE92EA /* UIColor.swift */; };
+		9BF7DD6B213FFB6300EE92EA /* SettingScreenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7DD6A213FFB6300EE92EA /* SettingScreenTableViewController.swift */; };
 		D44DC7CE1F4D7942004874C8 /* StricktTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */; };
 		D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */; };
 		D44DC7D41F4D7DB7004874C8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D31F4D7DB7004874C8 /* Colors.swift */; };
 		D44DC7D61F4D8436004874C8 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */; };
 		D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4568CA31F718F2700AA0D64 /* ConfigurationsViewController.swift */; };
-		D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */; };
 		D45D962E1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */; settings = {ASSET_TAGS = (1, ); }; };
 		D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */; };
 		D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC619E1F86AF2700388173 /* CircleImageView.swift */; };
@@ -101,12 +102,13 @@
 		9BD579F12119D8BC00BC09A7 /* ExpandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandButton.swift; sourceTree = "<group>"; };
 		9BD579F32119EFCB00BC09A7 /* MessageAttachmentsConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAttachmentsConfigViewController.swift; sourceTree = "<group>"; };
 		9BD579F5211AEAEB00BC09A7 /* LockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockButton.swift; sourceTree = "<group>"; };
+		9BF7DD67213D6E3B00EE92EA /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		9BF7DD6A213FFB6300EE92EA /* SettingScreenTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScreenTableViewController.swift; sourceTree = "<group>"; };
 		D44DC7CD1F4D7942004874C8 /* StricktTextBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StricktTextBox.swift; path = View/Controls/Common/TextBox/StricktTextBox.swift; sourceTree = "<group>"; };
 		D44DC7D01F4D7D82004874C8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Extensions/UIColorExtension.swift; sourceTree = "<group>"; };
 		D44DC7D31F4D7DB7004874C8 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = View/Colors/Colors.swift; sourceTree = "<group>"; };
 		D44DC7D51F4D8436004874C8 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UITextFieldExtension.swift; path = Extensions/UITextFieldExtension.swift; sourceTree = "<group>"; };
 		D4568CA31F718F2700AA0D64 /* ConfigurationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurationsViewController.swift; path = Controller/ConfigurationsScreen/ConfigurationsViewController.swift; sourceTree = "<group>"; };
-		D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controller/SettingsScreen/SettingsViewController.swift; sourceTree = "<group>"; };
 		D45D962D1F4CA1D900500FD4 /* AuthorizationStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizationStoryboard.storyboard; path = View/Storyboards/AuthorizationStoryboard.storyboard; sourceTree = "<group>"; };
 		D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizationViewController.swift; path = Controller/AuthScreen/AuthorizationViewController.swift; sourceTree = "<group>"; };
 		D4BC619E1F86AF2700388173 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CircleImageView.swift; path = View/Controls/CircleImageView.swift; sourceTree = "<group>"; };
@@ -243,6 +245,14 @@
 			name = OutgoingRequestsScreen;
 			sourceTree = "<group>";
 		};
+		9BF7DD69213FFB2D00EE92EA /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9BF7DD6A213FFB6300EE92EA /* SettingScreenTableViewController.swift */,
+			);
+			name = SettingsScreen;
+			sourceTree = "<group>";
+		};
 		D438FF3A1F4C83FE003FC42D /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +296,7 @@
 				D4BC61A01F86B6BD00388173 /* ViewControllerExtension.swift */,
 				9B5014D420BD8E8200790CAC /* DateExtension.swift */,
 				9B5014D620C032F500790CAC /* AlamoFire.swift */,
+				9BF7DD67213D6E3B00EE92EA /* UIColor.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -304,14 +315,6 @@
 				D4568CA31F718F2700AA0D64 /* ConfigurationsViewController.swift */,
 			);
 			name = MessagesScreen;
-			sourceTree = "<group>";
-		};
-		D4568CA71F71909500AA0D64 /* SettingsScreen */ = {
-			isa = PBXGroup;
-			children = (
-				D4568CA81F7190B400AA0D64 /* SettingsViewController.swift */,
-			);
-			name = SettingsScreen;
 			sourceTree = "<group>";
 		};
 		D45D962F1F4CA1ED00500FD4 /* AuthScreen */ = {
@@ -349,6 +352,7 @@
 		D4BE98EA1F4C8F7000AE9405 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9BF7DD69213FFB2D00EE92EA /* SettingsScreen */,
 				9B9A8712211075890002312B /* СonfigurationScreen */,
 				9B56F44B2108C6FD00CB4982 /* AttachmentsScreen */,
 				9B69DEEB21076D2900DEB765 /* ChatSettingsScreen */,
@@ -359,7 +363,6 @@
 				9BD2C6B320F89CC2005DE543 /* IncommingRequestsScreen */,
 				9B6062F620ECD8F400B570B9 /* ContactProfileScreen */,
 				569D0D2020C6BD4A00B987C0 /* ProfileScreen */,
-				D4568CA71F71909500AA0D64 /* SettingsScreen */,
 				D4568CA21F718F0200AA0D64 /* MessagesScreen */,
 				D4DE42701F6332AD0076008B /* ContactsScreen */,
 				D4DE426D1F632ECF0076008B /* ChatsScreen */,
@@ -621,6 +624,7 @@
 				9BD579F6211AEAEB00BC09A7 /* LockButton.swift in Sources */,
 				D4568CA41F718F2700AA0D64 /* ConfigurationsViewController.swift in Sources */,
 				9BD2C6B520F89D22005DE543 /* IncommingRequestsViewController.swift in Sources */,
+				9BF7DD6B213FFB6300EE92EA /* SettingScreenTableViewController.swift in Sources */,
 				D45D96311F4CA21800500FD4 /* AuthorizationViewController.swift in Sources */,
 				9B56F44D2108C7C200CB4982 /* MessageAttachmentsViewController.swift in Sources */,
 				9B51937F20FE1C11003F80F9 /* SearchContactsViewController.swift in Sources */,
@@ -657,12 +661,12 @@
 				9B2BB25620E27F6400B27BAD /* FileDataStore.swift in Sources */,
 				D4E3252C1F4C82DC00554DB2 /* AppDelegate.swift in Sources */,
 				9B188EFD20D7E0A5000177E5 /* RepeatingTimer.swift in Sources */,
+				9BF7DD68213D6E3B00EE92EA /* UIColor.swift in Sources */,
 				9B5014D720C032F500790CAC /* AlamoFire.swift in Sources */,
 				9B9A8716211076630002312B /* PrivateConfigurationsViewController.swift in Sources */,
 				9B6062F820ECD95700B570B9 /* ContactProfileViewController.swift in Sources */,
 				D4BC61A11F86B6BD00388173 /* ViewControllerExtension.swift in Sources */,
 				D4BC619F1F86AF2700388173 /* CircleImageView.swift in Sources */,
-				D4568CA91F7190B400AA0D64 /* SettingsViewController.swift in Sources */,
 				9B69DEED21076D5900DEB765 /* ChatSettingsViewController.swift in Sources */,
 				D4BE98EF1F4C952C00AE9405 /* StartScreenViewController.swift in Sources */,
 				9B5E196020C5419000407868 /* Profile.swift in Sources */,

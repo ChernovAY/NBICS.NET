@@ -8,9 +8,16 @@
 
 import UIKit
 
-class ContactProfileViewController: UIViewController {
+class ContactProfileViewController: VSMUIViewController {
     
     private let profile = VSMProfile(UserId: VSMAPI.VSMChatsCommunication.contactId)
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var PhotoView: UIView!
+    @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var UserDataView: UIView!
+    
     @IBOutlet weak var ContactPhoto: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var BirthDayLabel: UILabel!
@@ -38,5 +45,15 @@ class ContactProfileViewController: UIViewController {
             performSegue(withIdentifier: "showChatFromContact", sender: self)
         }
     }
-    
+    override func setColors(){
+        NavigationBarButton.tintColor = UIColor.VSMNavigationBarTitle
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+        
+        PhotoView.backgroundColor    = UIColor.VSMContentViewBackground
+        UserDataView.backgroundColor = UIColor.VSMContentViewBackground
+        NameLabel.textColor          = UIColor.VSMBlackWhite
+        BirthDayLabel.textColor      = UIColor.VSMBlackWhite
+        SkypeLabel.textColor         = UIColor.VSMBlackWhite
+        EmailLabel.textColor         = UIColor.VSMBlackWhite
+    }
 }

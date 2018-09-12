@@ -9,13 +9,16 @@
 import UIKit
 import SwiftyJSON
 
-public class AllChatsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
+public class AllChatsViewController: VSMUIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource {
+    
     private var EInitHandler: Disposable?
     private var convs = [VSMConversation]()
     
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var AddChatButton: UIBarButtonItem!
+    
     @IBOutlet weak var Table: UITableView!
-    @IBOutlet weak var UserPhoto: CircleImageView!
-    @IBOutlet weak var UserNameLabel: UIButton!
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         Table.delegate = self
@@ -75,13 +78,27 @@ public class AllChatsViewController: UIViewController, UITabBarDelegate, UITable
             convs = VSMAPI.Data.getConversations()
             if VSMAPI.Settings.login{
                 if let usr = VSMAPI.Data.Profile {
-                    self.UserNameLabel.setTitle("\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
-                    self.UserPhoto.image = usr.Icon
+                    //self.UserNameLabel.setTitle("\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
+                    //self.UserPhoto.image = usr.Icon
                 }
             }
         } else {
             convs.removeAll()
         }
         self.Table.reloadData()
+    }
+    
+    override func setColors(){
+        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        AddChatButton.tintColor                                 = UIColor.VSMNavigationBarTitle
+        
+        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        
+        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        
+        Load()
     }
 }

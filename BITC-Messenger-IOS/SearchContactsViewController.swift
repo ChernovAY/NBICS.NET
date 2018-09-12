@@ -8,13 +8,17 @@
 
 import UIKit
 
-class SearchContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    
-    @IBOutlet weak var Table: UITableView!
-    @IBOutlet weak var SearchButton: UIButton!
-    @IBOutlet weak var SearchTextField: UITextField!
+class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+
     private var cArray   = [VSMContact]()
     private var EInitHandler: Disposable?
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var SearchBar: UISearchBar!
+    
+    @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var SearchTextField: UITextField!
+
     var refreshControl:UIRefreshControl!
     
     
@@ -22,7 +26,7 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
-        SearchButton.layer.cornerRadius = 5
+        //SearchButton.layer.cornerRadius = 5
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: SearchContactsViewController.Load)}
         Load()
     }
@@ -82,6 +86,7 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
         return action
     }
     
+    /*
     @IBAction func searchContact(_ sender: UIButton) {
         let searchText = SearchTextField.text
         if searchText != nil || searchText != "" {
@@ -89,7 +94,7 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
             Table.reloadData()
         }
     }
-    
+    */
     private func Load(_ b:Bool=true) {
         if(b) {
             cArray = VSMAPI.Data.searchContacts(SearchString: "")
@@ -97,5 +102,18 @@ class SearchContactsViewController: UIViewController, UITableViewDelegate, UITab
             cArray.removeAll()
         }
         self.Table.reloadData()
+    }
+    
+    override func setColors(){
+        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        
+        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        
+        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        
+        SearchBar.backgroundColor                               = UIColor.VSMSearchBarBackground
     }
 }

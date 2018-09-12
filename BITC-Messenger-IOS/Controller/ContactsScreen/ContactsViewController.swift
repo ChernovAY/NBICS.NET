@@ -8,17 +8,18 @@
 
 import UIKit
 
-class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class ContactsViewController: VSMUIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     private var EInitHandler: Disposable?
+    private var cArray   = [VSMContact]()
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var SearchContactButton: UIBarButtonItem!
     
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var Search: UISearchBar!
     
-    private var cArray   = [VSMContact]()
-    
     var refreshControl:UIRefreshControl!
- 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,5 +105,22 @@ class ContactsViewController: UIViewController, UITabBarDelegate, UITableViewDel
             cArray.removeAll()
         }
         self.Table.reloadData()
+    }
+    
+    override func setColors(){
+        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        
+        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        
+        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        
+        SearchContactButton.tintColor                           = UIColor.VSMNavigationBarTitle
+        
+        Search.backgroundColor                                  = UIColor.VSMSearchBarBackground
+        
+        Load()
     }
 }

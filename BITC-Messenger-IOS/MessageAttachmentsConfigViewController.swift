@@ -8,10 +8,12 @@
 
 import UIKit
 
-class MessageAttachmentsConfigViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MessageAttachmentsConfigViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var cArray = [VSMSimpleTree]()
     private var Tree: VSMSimpleTree!
+    
+    @IBOutlet var MainView: UIView!
     
     @IBOutlet weak var Table: UITableView!
     
@@ -89,4 +91,7 @@ class MessageAttachmentsConfigViewController: UIViewController, UITableViewDeleg
         }
     }
     
+    override func setColors(){
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+    }
 }

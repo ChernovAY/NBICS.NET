@@ -8,11 +8,14 @@
 
 import UIKit
 
-class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private var cArray = [VSMSimpleTree]()
     private var Tree: VSMSimpleTree!
     private var configurationURL: String!
+    
+    @IBOutlet var MainView: UIView!
+    
     @IBOutlet weak var Table: UITableView!
     
     override func viewDidLoad() {
@@ -106,5 +109,12 @@ class PrivateConfigurationsViewController: UIViewController, UITableViewDelegate
             cArray.removeAll()
             Tree = nil
         }
+    }
+    
+    override func setColors(){
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
     }
 }

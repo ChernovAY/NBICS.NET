@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectDateViewController: UIViewController {
+class SelectDateViewController: VSMUIViewController {
 
     @IBOutlet weak var BirthdayDatePicker: UIDatePicker!
 

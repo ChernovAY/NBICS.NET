@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "iOS_NBICS_Config_green.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "iOS_NBICS_Config_green@2x.png",
+      "filename" : "iOS_NBICS_Config_white@2x (1).png",
       "scale" : "2x"
     },
     {

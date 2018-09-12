@@ -8,14 +8,17 @@
 
 import UIKit
 
-class CreateChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CreateChatViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    private var cArray   = [VSMCheckedContact]()
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var NewChatView: UIView!
     
     @IBOutlet weak var NameChatField: UITextField!
     @IBOutlet weak var CreateChatButton: UIButton!
     @IBOutlet weak var Table: UITableView!
-    
-    private var cArray   = [VSMCheckedContact]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         CreateChatButton.layer.cornerRadius = 17
@@ -29,7 +32,6 @@ class CreateChatViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        NameChatField.text = "Новая беседа"
         Load()
     }
     
@@ -81,5 +83,12 @@ class CreateChatViewController: UIViewController, UITableViewDelegate, UITableVi
             VSMAPI.Data.loadAll()
         }
         _ = navigationController?.popToRootViewController(animated: true)
+    }
+    
+    override func setColors(){
+        MainView.backgroundColor         = UIColor.VSMMainViewBackground
+        NewChatView.backgroundColor      = UIColor.VSMContentViewBackground
+        NameChatField.textColor          = UIColor.VSMBlackWhite
+        CreateChatButton.backgroundColor = UIColor.VSMButton
     }
 }

@@ -8,12 +8,16 @@
 
 import UIKit
 
-class AuthorizationViewController: UIViewController {
+class AuthorizationViewController: VSMUIViewController {
     
     private let mHasher: Hasher = Hasher()
     private var EInitHandler: Disposable?
     public  var email: String!
     public  var password: String!
+    
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var AuthorizationButton: UIButton!
+    @IBOutlet weak var RegistrationButton: UIButton!
     
     @IBOutlet weak var LoginField: StrickTextBox!
     @IBOutlet weak var PasswordField: StrickTextBox!
@@ -32,6 +36,7 @@ class AuthorizationViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         LoginField.text = email
         PasswordField.text = password
     }
@@ -95,6 +100,19 @@ class AuthorizationViewController: UIViewController {
         ServersListView.isHidden = true
         CheckServerButton.titleLabel?.text = serverName
         VSMAPI.Settings.caddress = server
+    }
+    
+    override func setColors(){
+        /*
+        MainView.backgroundColor = UIColor.VSMBackgroundColor
+        AuthorizationButton.backgroundColor = UIColor.VSMText1Color
+        RegistrationButton.setTitleColor(UIColor.VSMText1Color, for: .normal)
+        LoginField.backgroundColor = UIColor.VSMText2Color
+        PasswordField.backgroundColor = UIColor.VSMText2Color
+        LoginField.textColor = UIColor.VSMBackgroundColor
+        PasswordField.textColor = UIColor.VSMBackgroundColor
+        AuthorizationIndicator.color = UIColor.VSMText2Color
+        */
     }
     
     private func NavigateToChats(_ b: Bool=true) {

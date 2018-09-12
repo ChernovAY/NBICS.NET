@@ -68,7 +68,7 @@ public class VSMConversation{
                     let data = d as! Data
                     if let json = try? JSON(data: data) {
                         if json.dictionary!["Success"]!.bool! {
-                            //self.Messages.getData(isAfter: true, jamp: true)
+                            self.Messages.getData(isAfter: true, jamp: true)
                             VSMAPI.Data.loadAll()
                             return
                         }

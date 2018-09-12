@@ -11,7 +11,7 @@ import SwiftyJSON
 import UIKit
 
 public class VSMData{
-    private let period:TimeInterval  = 2     // в секундах интервал опроса сервера на предмет наличия новых данных есть - обнавляем модель (без контактоа)
+    private let period:TimeInterval  = 10     // в секундах интервал опроса сервера на предмет наличия новых данных есть - обнавляем модель (без контактоа)
     
     private var timer:RepeatingTimer
     private var timerHandler: Disposable?
@@ -142,7 +142,7 @@ public class VSMData{
                                             self.ETimerAction.raise(data: false)
                                             VSMAPI.VSMChatsCommunication.tabBarApplications?.badgeValue = self.NNewRequests == 0 ? nil : String(self.NNewRequests)
                                             VSMAPI.VSMChatsCommunication.tabBarChats?.badgeValue = self.NNotReadedMessages == 0 ? nil : String(self.NNotReadedMessages)
-                                            //UIApplication.shared.applicationIconBadgeNumber  = self.NNewRequests + self.NNotReadedMessages
+                                            UIApplication.shared.applicationIconBadgeNumber  = self.NNewRequests + self.NNotReadedMessages
                                         })
                                     )
                                 )

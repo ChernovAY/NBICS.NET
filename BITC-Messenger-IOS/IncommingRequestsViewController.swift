@@ -8,13 +8,15 @@
 
 import UIKit
 
-class IncommingRequestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private var EInitHandler: Disposable?
-    
-    @IBOutlet weak var Table: UITableView!
     private var fArray = [VSMContact]()
     
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var Table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,5 +102,17 @@ class IncommingRequestsViewController: UIViewController, UITableViewDelegate, UI
             fArray.removeAll()
         }
         self.Table.reloadData()
+    }
+    
+    override func setColors(){
+        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        NavigationBarButton.tintColor                           = UIColor.VSMNavigationBarTitle
+        
+        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        
+        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
     }
 }

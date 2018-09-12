@@ -42,19 +42,15 @@ class RegistrationViewController: UIViewController {
             AuthorizationIndicator.isHidden = true
         } else {
             let passwordHash = mHasher.GetMD5Hash(inputString: password!)
-            //VSMAPI.Settings.registration(email: email!, passwordHash: passwordHash!)
-            let resultRegistrationCode = "0"
-            var resultRegistrationText = "Вы успешно создали ваш аккаунт. Инструкция по его активации отправлена по электронной почте"
-            if (resultRegistrationCode == "1") {
-                resultRegistrationText = "Почтовый ящик " + email! + " уже зарегистрирован в системе"
-            } else if (resultRegistrationCode != "0") {
-                resultRegistrationText = "Ошибка регистрации!"
-            }
-            let button2Alert: UIAlertView = UIAlertView(title: "", message: resultRegistrationText, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-            button2Alert.show()
-            if (resultRegistrationCode == "0") {
+            if let resultRegistrationCode = VSMAPI.Settings.registration(email: email!, passwordHash: passwordHash!){
+                let button2Alert: UIAlertView = UIAlertView(title: "", message: "Вы успешно создали ваш аккаунт. Инструкция по его активации отправлена по электронной почте", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                button2Alert.show()
                 performSegue(withIdentifier: "successfulAthorizationSegue", sender: self)
+            } else {
+                let button2Alert: UIAlertView = UIAlertView(title: "", message: "Ошибка регистрации", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+                button2Alert.show()
             }
+            AuthorizationIndicator.isHidden = true
         }
     }
     

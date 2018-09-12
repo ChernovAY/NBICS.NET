@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "iOS_NBICS_Chat_green.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "iOS_NBICS_Chat_green@2x.png",
+      "filename" : "iOS_NBICS_Chat_white@2x.png",
       "scale" : "2x"
     },
     {

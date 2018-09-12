@@ -9,14 +9,15 @@
 import UIKit
 import MobileCoreServices
 
-class MessageAttachmentsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate, UIDocumentPickerDelegate {
+class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate, UIDocumentPickerDelegate {
    
     private var docController:UIDocumentInteractionController!
     private var cArray = [VSMAttachedFile]()
     
+    @IBOutlet var MainView: UIView!
+    
     @IBOutlet weak var Table: UICollectionView!
     @IBOutlet weak var AttachFileButton: UIButton!
-    //@IBOutlet weak var AttachFileButton: UIButton!
     @IBOutlet weak var NavigationTitle: UINavigationItem!
     
     override func viewDidLoad() {
@@ -113,6 +114,9 @@ class MessageAttachmentsViewController: UIViewController, UICollectionViewDataSo
         documentPicker.allowsMultipleSelection = true
         self.present(documentPicker, animated: true, completion: nil)
     }
-
     
+    override func setColors(){
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+        AttachFileButton.backgroundColor = UIColor.VSMButton
+    }
 }
