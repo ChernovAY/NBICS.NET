@@ -61,6 +61,7 @@ public class VSMAPI{
             set(value){UserDefaults.standard.set(value, forKey: "alias")}
         }
         public static func logOut(){
+            if VSMAPI.Settings.user == "" || VSMAPI.Settings.hash == "" {return}
             Data.ETimerAction.raise(data: true)
             VSMAPI.Request(addres: Settings.caddress, entry: .DisconnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"]) { (d, b) in
                 VSMAPI.Request(addres: Settings.caddress, entry: .UnregisterDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"], completionHandler: { (d, b) in

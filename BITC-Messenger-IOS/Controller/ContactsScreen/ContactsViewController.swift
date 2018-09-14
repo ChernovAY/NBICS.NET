@@ -62,7 +62,7 @@ class ContactsViewController: VSMUIViewController, UITabBarDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 55
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

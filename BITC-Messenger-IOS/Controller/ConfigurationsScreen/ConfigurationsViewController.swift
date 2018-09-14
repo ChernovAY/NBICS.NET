@@ -89,8 +89,10 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         let countFiles = Conversation.Draft.AttachedFiles.count
         let countConfigurations = Conversation.Draft.AttachedConfs.count
         if (Conversation.Name != ""){
+            SettingChatButton.image = #imageLiteral(resourceName: "ChatSettings")
             SettingChatButton.isEnabled = true
         } else {
+            SettingChatButton.image = nil
             SettingChatButton.isEnabled = false
         }
         

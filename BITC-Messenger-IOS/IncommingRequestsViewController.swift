@@ -48,7 +48,7 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 55
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,5 +114,7 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
         tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
         
         MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        
+        Load()
     }
 }

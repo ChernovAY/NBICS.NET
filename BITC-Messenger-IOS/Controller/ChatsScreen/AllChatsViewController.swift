@@ -55,9 +55,9 @@ public class AllChatsViewController: VSMUIViewController, UITabBarDelegate, UITa
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 55
     }
-    
+ 
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -90,7 +90,7 @@ public class AllChatsViewController: VSMUIViewController, UITabBarDelegate, UITa
     
     override func setColors(){
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
-        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.tintColor           = UIColor.VSMBlackWhite
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
         AddChatButton.tintColor                                 = UIColor.VSMNavigationBarTitle
         

@@ -119,6 +119,12 @@ class SettingScreenTableViewController: UITableViewController {
     }
     */
     func setColors(){
+        if VSMAPI.Settings.darkSchreme {
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        } else {
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        }
+        
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]

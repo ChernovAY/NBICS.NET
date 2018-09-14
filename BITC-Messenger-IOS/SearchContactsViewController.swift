@@ -115,5 +115,7 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
         MainView.backgroundColor                                = UIColor.VSMMainViewBackground
         
         SearchBar.backgroundColor                               = UIColor.VSMSearchBarBackground
+        
+        Load()
     }
 }

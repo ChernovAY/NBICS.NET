@@ -54,7 +54,7 @@ class CreateChatViewController: VSMUIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 55
     }
     
     private func Load(_ b:Bool=true) {

@@ -259,6 +259,7 @@ public class SearchContactCell : UITableViewCell {
         PhotoImage.image = contact.Photo
         NameLabel.text = contact.Name
         
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -369,23 +370,26 @@ public class MessageAttachmentsCell : UICollectionViewCell {
             self.file.progressDelegate  = progress
             self.file.loadedDelegate    = uploaded
         }
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        FileImage.isUserInteractionEnabled = true
+        FileImage.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
+    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
+        ProgressView.progress = 0
+        ProgressView.isHidden = false
+        if let d = self.stateDelegate{
+            d(true)
+        }
+        self.file.download(loadedDelegate: loaded, progressDelegate: progress)
+    }
+    
     @IBAction func downloadFile(_ sender: UIButton) {
-        if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
-            if file.dropFile(){
-                VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles = (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles.filter({!($0 === file)}))!
-                if let s = stateDelegate{
-                    s(false)
-                }
+        if file.dropFile(){
+            VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles = (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles.filter({!($0 === file)}))!
+            if let s = stateDelegate{
+                s(false)
             }
-        } else {
-            ProgressView.progress = 0
-            ProgressView.isHidden = false
-            if let d = self.stateDelegate{
-                d(true)
-            }
-            self.file.download(loadedDelegate: loaded, progressDelegate: progress)
         }
     }
     

@@ -41,6 +41,11 @@ import SwiftyJSON
         application.registerForRemoteNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
+        if VSMAPI.Settings.darkSchreme {
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        } else {
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        }
         return true
     }
     

@@ -31,6 +31,7 @@
 		9B69DEEF210772AF00DEB765 /* AddContactsToChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B69DEEE210772AF00DEB765 /* AddContactsToChatViewController.swift */; };
 		9B73740E20D7A4C900547CD6 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B73740D20D7A4C900547CD6 /* Data.swift */; };
 		9B781B7920DA9A140060DCD9 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B781B7820DA9A140060DCD9 /* DataUtils.swift */; };
+		9B830307214BCAB200CA01CC /* RememberPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B830306214BCAB200CA01CC /* RememberPasswordViewController.swift */; };
 		9B9A87142110763C0002312B /* CommonConfigurationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A87132110763C0002312B /* CommonConfigurationsViewController.swift */; };
 		9B9A8716211076630002312B /* PrivateConfigurationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A8715211076630002312B /* PrivateConfigurationsViewController.swift */; };
 		9B9A871821108FEB0002312B /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A871721108FEB0002312B /* Configuration.swift */; };
@@ -92,6 +93,7 @@
 		9B69DEEE210772AF00DEB765 /* AddContactsToChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsToChatViewController.swift; sourceTree = "<group>"; };
 		9B73740D20D7A4C900547CD6 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		9B781B7820DA9A140060DCD9 /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
+		9B830306214BCAB200CA01CC /* RememberPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberPasswordViewController.swift; sourceTree = "<group>"; };
 		9B9A87132110763C0002312B /* CommonConfigurationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonConfigurationsViewController.swift; sourceTree = "<group>"; };
 		9B9A8715211076630002312B /* PrivateConfigurationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConfigurationsViewController.swift; sourceTree = "<group>"; };
 		9B9A871721108FEB0002312B /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				9BF7DD6A213FFB6300EE92EA /* SettingScreenTableViewController.swift */,
+				9B9A8712211075890002312B /* СonfigurationScreen */,
 			);
 			name = SettingsScreen;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			children = (
 				D45D96301F4CA21800500FD4 /* AuthorizationViewController.swift */,
 				D4EB22131F4DFA2F002846E7 /* RegistrationViewController.swift */,
+				9B830306214BCAB200CA01CC /* RememberPasswordViewController.swift */,
 			);
 			name = AuthScreen;
 			sourceTree = "<group>";
@@ -353,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				9BF7DD69213FFB2D00EE92EA /* SettingsScreen */,
-				9B9A8712211075890002312B /* СonfigurationScreen */,
 				9B56F44B2108C6FD00CB4982 /* AttachmentsScreen */,
 				9B69DEEB21076D2900DEB765 /* ChatSettingsScreen */,
 				9B69DEE8210615AF00DEB765 /* SelectDateScreen */,
@@ -649,6 +652,7 @@
 				D44DC7D11F4D7D82004874C8 /* UIColorExtension.swift in Sources */,
 				D4EB22141F4DFA2F002846E7 /* RegistrationViewController.swift in Sources */,
 				9BB46FBA2124326500800226 /* ConfigurationViewController.swift in Sources */,
+				9B830307214BCAB200CA01CC /* RememberPasswordViewController.swift in Sources */,
 				D4BE98E71F4C88D000AE9405 /* BottomPanelView.swift in Sources */,
 				9B73740E20D7A4C900547CD6 /* Data.swift in Sources */,
 				D4DE42721F6332CB0076008B /* ContactsViewController.swift in Sources */,

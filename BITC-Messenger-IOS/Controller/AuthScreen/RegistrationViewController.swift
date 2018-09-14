@@ -16,6 +16,8 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var PasswordTextBox: StrickTextBox!
     @IBOutlet weak var PasswordConfirmTextBox: StrickTextBox!
     @IBOutlet weak var AuthorizationIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var ServersListView: UIView!
+    @IBOutlet weak var CheckServerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,40 @@ class RegistrationViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
+    
+    @IBAction func checkServer(_ sender: UIButton) {
+        ServersListView.isHidden = false
+    }
+    
+    @IBAction func checkNBICS(_ sender: UIButton) {
+        saveServer(server: "https://nbics.net/", serverName: "nbics")
+    }
+    
+    @IBAction func checkSC(_ sender: UIButton) {
+        saveServer(server: "http://sc.nbics.net/", serverName: "sc.nbics")
+    }
+    
+    @IBAction func checkMarketing(_ sender: UIButton) {
+        saveServer(server: "http://marketing.nbics.net/", serverName: "marketing.nbics")
+    }
+    
+    @IBAction func checkDev(_ sender: UIButton) {
+        saveServer(server: "http://dev.nbics.net/", serverName: "dev.nbics")
+    }
+    
+    @IBAction func checkGOV(_ sender: UIButton) {
+        saveServer(server: "http://sc.gov39.ru/", serverName: "sc.gov39")
+    }
+    
+    @IBAction func checkBGR(_ sender: UIButton) {
+        saveServer(server: "http://site.bgr39.ru/", serverName: "site.bgr39")
+    }
+    
+    @IBAction func checkEducation(_ sender: UIButton) {
+        saveServer(server: "http://education.nbics.net/", serverName: "education")
+    }
+ 
     @IBAction func RegistrationButton(_ sender: UIButton) {
         let email           = EmailTextBox.text?.trimmingCharacters(in: .whitespaces)
         let password        = PasswordTextBox.text?.trimmingCharacters(in: .whitespaces)
@@ -52,6 +87,12 @@ class RegistrationViewController: UIViewController {
             }
             AuthorizationIndicator.isHidden = true
         }
+    }
+    
+    func saveServer(server: String, serverName: String){
+        ServersListView.isHidden = true
+        CheckServerButton.titleLabel?.text = serverName
+        VSMAPI.Settings.caddress = server
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

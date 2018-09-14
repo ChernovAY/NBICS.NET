@@ -100,5 +100,6 @@ class OutgoingRequestsViewController: VSMUIViewController, UITableViewDelegate, 
         
         MainView.backgroundColor                                = UIColor.VSMMainViewBackground
         
+        Load()
     }
 }
