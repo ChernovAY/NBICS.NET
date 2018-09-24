@@ -13,9 +13,16 @@ class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITa
     private var cArray   = [VSMCheckedContact]()
     private let conv = VSMAPI.VSMChatsCommunication.checkedContactForConversation[0].Conversation
     
+    @IBOutlet var MainView: UIView!
+    @IBOutlet weak var AddContactsButton: UIButton!
+    @IBOutlet weak var LeftChatButton: UIButton!
+    @IBOutlet weak var ChatNameView: UIView!
+    
     @IBOutlet weak var SaveNameChatButton: UIButton!
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var NameChat: UITextField!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,4 +107,17 @@ class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITa
             }
         }
     }
+    
+    override func setColors(){
+        AddContactsButton.backgroundColor = UIColor.VSMButton
+        SaveNameChatButton.backgroundColor = UIColor.VSMButton
+        NameChat.textColor = UIColor.VSMBlackWhite
+        LeftChatButton.backgroundColor = UIColor.VSMButton
+        ChatNameView.backgroundColor = UIColor.VSMContentViewBackground
+        
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
+        
+        Load()
+    }
+    
 }

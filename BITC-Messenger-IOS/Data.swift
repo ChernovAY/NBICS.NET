@@ -35,6 +35,7 @@ public class VSMData{
     //
     public weak var tabBarController:    UITabBarController?
     public weak var chat:      AllChatsViewController?
+    public weak var curConv:   ConfigurationsViewController?
     //
     public init(){
         timer = RepeatingTimer(timeInterval: period)

@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 public class VSMConversation{
-  
+    public var isSendNeeded = false
     private var N:Int = 20
     private var Last:String{
         get{
@@ -94,7 +94,7 @@ public class VSMConversation{
         return retVal
     }
     public func sendMembers()->Bool{
-        if self.Name == "" {return false}
+        if self.Name == "" || !isSendNeeded {return false}
         var retVal = false
         var usersList = "["
         for z in self.Users{
@@ -107,6 +107,7 @@ public class VSMConversation{
             if let json = try? JSON(data: data) {
                 if json.dictionary!["Success"]!.bool! {
                     retVal = true
+                    isSendNeeded = false
                 }
             }
         }

@@ -31,7 +31,8 @@ extension UITextField {
     }
 }
 
-class ProfileViewController: VSMUIViewController {
+class ProfileViewController: VSMUIViewController{
+    
     
     @IBOutlet weak var UserPhoto: UIImageView!
     @IBOutlet weak var NameField: UITextField!
@@ -70,11 +71,12 @@ class ProfileViewController: VSMUIViewController {
         UserPhoto.isUserInteractionEnabled = true
         UserPhoto.addGestureRecognizer(tapGestureRecognizer)
     }
-    
-    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
-        let tappedImage = tapGestureRecognizer.view as! UIImageView
-        if (EditButton.title == "Редактировать") {
+
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
+        //let tappedImage = tapGestureRecognizer.view as! UIImageView
+        if (EditButton.title == "Сохранить") {
             //Загрузить новое фото
+            performSegue(withIdentifier: "showPhotoEditor", sender: self)
         }
     }
     
@@ -87,6 +89,15 @@ class ProfileViewController: VSMUIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         BirthdayButton.setTitle("\((VSMAPI.Data.Profile?.BirthDay.toString())!)", for: .normal)
+        if let usr = VSMAPI.Data.Profile{
+            UserPhoto.image = usr.Icon
+            NameField.text = "\(usr.Name)"
+            FamilyField.text = "\(usr.FamilyName)"
+            PatronymicField.text = "\(usr.Patronymic)"
+            EmailField.text = "\(usr.Email)"
+            SkypeField.text = "\(usr.Skype)"
+            VSMAPI.VSMChatsCommunication.BDayDelegate = setBDateButton
+        }
     }
     
     @IBAction func EditProfile(_ sender: UIBarButtonItem) {

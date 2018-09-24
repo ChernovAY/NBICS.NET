@@ -69,15 +69,23 @@ import SwiftyJSON
     }()
     
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        //let json = JSON(remoteMessage.appData)
+        /*let json = JSON(remoteMessage.appData)
         //print("убрать!!!")
         //print(json)
-        /*if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
+        if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
             let convId = json.dictionary!["ConversationId"]!.string!
             VSMAPI.VSMChatsCommunication.conversetionId = convId
             if let v = VSMAPI.Data.chat, let c = VSMAPI.Data.tabBarController{
-                c.selectedIndex = 0//2
+                if let cur = VSMAPI.Data.curConv{
+                    cur.navigationController?.popViewController(animated: true)
+                }
+                c.selectedIndex = 0
                 v.performSegue(withIdentifier: "showChat", sender: v)
+            }
+        }
+        else if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_REQUESTS"{
+            if let c = VSMAPI.Data.tabBarController{
+                c.selectedIndex = 2
             }
         }*/
         VSMAPI.Data.timerFired()
@@ -96,8 +104,10 @@ import SwiftyJSON
             if cat == "OPEN_CHAT"{
                 let convId = json["ConversationId"].string!
                 VSMAPI.VSMChatsCommunication.conversetionId = convId
-                VSMAPI.VSMChatsCommunication.conversetionId = convId
                 if let v = VSMAPI.Data.chat, let c = VSMAPI.Data.tabBarController{
+                    if let cur = VSMAPI.Data.curConv{
+                        cur.navigationController?.popViewController(animated: true)
+                    }
                     c.selectedIndex = 0
                     v.performSegue(withIdentifier: "showChat", sender: v)
                 }

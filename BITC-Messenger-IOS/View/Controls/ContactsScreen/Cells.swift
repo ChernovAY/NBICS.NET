@@ -311,6 +311,7 @@ public class DeleteContactFromChatCell : UITableViewCell {
         PhotoImage.image = contact.Contact.Photo
         NameLabel.text = contact.Contact.Name
         
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
  
@@ -332,6 +333,7 @@ public class AddContactToChatCell : UITableViewCell {
         PhotoImage.image = contact.Contact.Photo
         NameLabel.text = contact.Contact.Name
         
+        NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
     }
 }
@@ -630,6 +632,9 @@ public class MessageConfigurationCell : UITableViewCell {
         
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 6
+        
+        AddConfButton.tintColor = UIColor.VSMBlackWhite
+        NameLabel.textColor = UIColor.VSMBlackWhite
         ConfView.backgroundColor = UIColor.VSMContentViewBackground
         self.backgroundColor =  UIColor.clear
     }

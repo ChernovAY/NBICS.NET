@@ -235,9 +235,9 @@ public class VSMAPI{
         case DeleteConfiguration        = "Workplace/DeleteNode"
     }
     // Session Manager Configurations!!!!!!!
-    public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", params:Params)->(Any,Bool){
+    public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params)->(Any,Bool){
         if !Connectivity.isConn {return("Интернета нету!", false)}
-        let request = Alamofire.request(addres + entry.rawValue + postf, method: HTTPMethod.get, parameters: params/*, encoding: JSONEncoding.prettyPrinted*/, headers: nil)
+        let request = Alamofire.request(addres + entry.rawValue + postf, method: method, parameters: params/*, encoding: JSONEncoding.prettyPrinted*/, headers: nil)
         let resp =  request.syncResponse()
         let succ = resp.error == nil
         if(succ){

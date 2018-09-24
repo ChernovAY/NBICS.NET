@@ -13,6 +13,8 @@ class AddContactsToChatViewController: VSMUIViewController, UITableViewDelegate,
     private var cArray   = [VSMCheckedContact]()
     private let conv = VSMAPI.VSMChatsCommunication.checkedContactForConversation[0].Conversation
     
+    @IBOutlet var MainView: UIView!
+    
     @IBOutlet weak var Table: UITableView!
     
     override func viewDidLoad() {
@@ -78,5 +80,11 @@ class AddContactsToChatViewController: VSMUIViewController, UITableViewDelegate,
     
     @IBAction func addContacts(_ sender: UIButton) {
         _ = navigationController?.popToViewController((navigationController?.viewControllers[2])! , animated: true)
+    }
+    
+    override func setColors(){
+        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        
+        Load()
     }
 }

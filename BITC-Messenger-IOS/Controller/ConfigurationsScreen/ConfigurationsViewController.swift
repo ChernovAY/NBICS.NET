@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import FileProvider
 
-class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
+public class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
     private var isHidden    = true
     private var isScrolling = false
@@ -44,16 +44,21 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
     @IBOutlet weak var HeightConstraintConfigurationsView: NSLayoutConstraint!
     @IBOutlet weak var CountConfigurationsLabel: UILabel!
     
-    override func viewDidLoad() {
+    @IBOutlet weak var MessageTextViewHC: NSLayoutConstraint!
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
+        VSMAPI.Data.curConv = self
         Table.separatorStyle = UITableViewCellSeparatorStyle.none
         MessageTextView?.layer.cornerRadius = 15
         ConfigurationButton.layer.cornerRadius = 17
         FileButton.layer.cornerRadius = 17
         SendButton.layer.cornerRadius = 17
         MessageTextView?.delegate = self
+        
+
         
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: ConfigurationsViewController.Load)}
         if EMessageHandler == nil{EMessageHandler = VSMAPI.Data.EMessages.addHandler(target: self, handler: ConfigurationsViewController.MessagesRecieved)}
@@ -81,11 +86,11 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         EMessageHandler?.dispose()
     }
     
-    override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         let countFiles = Conversation.Draft.AttachedFiles.count
         let countConfigurations = Conversation.Draft.AttachedConfs.count
         if (Conversation.Name != ""){
@@ -107,11 +112,11 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         if (countConfigurations == 0){
             HeightConstraintConfigurationsView.constant = CGFloat(0)
             ConfigurationView.isHidden = true
-        } else if (countFiles == 1){
+        } else if (countConfigurations == 1){
             CountConfigurationsLabel.text = String(countConfigurations) + " конфигурация"
-        } else if ((countFiles <= 4) && (countFiles != 1)){
+        } else if ((countConfigurations <= 4) && (countConfigurations != 1)){
             CountConfigurationsLabel.text = String(countConfigurations) + " конфигурации"
-        } else if (countFiles >= 5){
+        } else if (countConfigurations >= 5){
             CountConfigurationsLabel.text = String(countConfigurations) + " файлов"
         }
         
@@ -127,18 +132,9 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
+        self.view.endEditing(true)
         isHidden = true
-    }
-    
-    func moveTextView(_ textView: UITextView, moveDistance: Int, up: Bool) {
-        let moveDuration = 0.3
-        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(moveDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
     }
     
     @IBAction func sendMessageButton(_ sender: Any){
@@ -160,6 +156,7 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
                 MessageTextView.text = ""
             }
         }
+        MessageTextViewHC.constant = 36
     }
     
     @IBAction func settingChat(_ sender: UIBarButtonItem) {
@@ -176,59 +173,30 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         performSegue(withIdentifier: "attachmentsConfigurationsSegue", sender: self)
     }
     
-    private func showAttachedFilesOrConfs(_ B:Bool = true){
-        if B{
-            performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
-        }
-        else{
-            performSegue(withIdentifier: "attachmentsConfSegue", sender: self)
-        }
-    }
-    
     @objc func getOldMessages(refreshControl: UIRefreshControl) {
         self.Conversation.Messages.getData(isAfter:false, jamp: false)
         refreshControl.endRefreshing()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let maximumOffset = Int(scrollView.contentSize.height - scrollView.frame.size.height)
-        let deltaOffset = maximumOffset - Int(scrollView.contentOffset.y)
+    public func textViewDidChange(_ textView: UITextView) {
         
-        if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
-            if self.Conversation.Messages.array.last?.Id != self.Conversation.LastMessage?.Id && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && !isScrolling && maximumOffset > 0 && deltaOffset <= -30 {
-                isScrolling = true
-                self.Conversation.Messages.getData(isAfter:true, jamp: self.jamp(true))
-            }
+        let currHeight = self.MessageTextView.contentSize.height + 3
+        if (currHeight < 74){
+            MessageTextViewHC.constant = currHeight
         }
+        print(currHeight)
     }
     
-
-    private func jamp(_ isAfter:Bool)->Bool{
-        if (isAfter) {
-            if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
-                if isNowOpen || self.Conversation.NotReadedMessagesCount > 0 || (self.Conversation.Messages.array.count > 0 && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && self.Conversation.Messages.array.last?.part == self.Conversation.Messages.lastPArt) {
-                    return true
-                } else {
-                    return false
-                }
-            } else {
-                return true
-            }
-        } else {
-            return false
-        }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (Conversation.Messages.array.count)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageCell {
             var message: VSMMessage!
            
@@ -281,8 +249,55 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         }
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    private func jamp(_ isAfter:Bool)->Bool{
+        if (isAfter) {
+            if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
+                if isNowOpen || self.Conversation.NotReadedMessagesCount > 0 || (self.Conversation.Messages.array.count > 0 && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && self.Conversation.Messages.array.last?.part == self.Conversation.Messages.lastPArt) {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func moveTextView(_ textView: UITextView, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
+    
+    public func textViewDidBeginEditing(_ textView: UITextView) {
         moveTextView(textView, moveDistance: MoveDistance, up: true)
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let maximumOffset = Int(scrollView.contentSize.height - scrollView.frame.size.height)
+        let deltaOffset = maximumOffset - Int(scrollView.contentOffset.y)
+        
+        if let lastVisibleMSG = self.Table.visibleCells.last as? MessageCell{
+            if self.Conversation.Messages.array.last?.Id != self.Conversation.LastMessage?.Id && lastVisibleMSG.mMessage.Id == self.Conversation.Messages.array.last?.Id && !isScrolling && maximumOffset > 0 && deltaOffset <= -30 {
+                isScrolling = true
+                self.Conversation.Messages.getData(isAfter:true, jamp: self.jamp(true))
+            }
+        }
+    }
+    
+    private func showAttachedFilesOrConfs(_ B:Bool = true){
+        if B{
+            performSegue(withIdentifier: "attachmentsFilesSegue", sender: self)
+        }
+        else{
+            performSegue(withIdentifier: "attachmentsConfSegue", sender: self)
+        }
     }
     
     override func setColors(){
@@ -296,6 +311,7 @@ class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate, UITab
         CountConfigurationsLabel.textColor  = UIColor.VSMBlackWhite
         ConfigurationButton.backgroundColor = UIColor.VSMButton
         SendButton.backgroundColor          = UIColor.VSMButton
+        SettingChatButton.tintColor         = UIColor.VSMBlackWhite
         
         Load()
     }

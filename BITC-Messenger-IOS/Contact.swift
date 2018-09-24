@@ -173,11 +173,14 @@ public class VSMContact {
 
 }
 public class VSMCheckedContact{
-    public /*weak*/ var Contact:VSMContact!
-    public /*weak*/ var Conversation:VSMConversation?
+    public var Contact:VSMContact!
+    public var Conversation:VSMConversation?
+
     public var Checked:Bool = false{
         didSet{
+
             if let conv = Conversation{
+                conv.isSendNeeded = true
                 let contInUsers = conv.Users.first(where:({$0.Id == Contact.Id}))
                 if Checked && contInUsers == nil{
                   conv.Users.append(Contact)

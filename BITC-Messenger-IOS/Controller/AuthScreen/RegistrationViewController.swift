@@ -36,24 +36,12 @@ class RegistrationViewController: UIViewController {
         saveServer(server: "https://nbics.net/", serverName: "nbics")
     }
     
-    @IBAction func checkSC(_ sender: UIButton) {
-        saveServer(server: "http://sc.nbics.net/", serverName: "sc.nbics")
-    }
-    
     @IBAction func checkMarketing(_ sender: UIButton) {
         saveServer(server: "http://marketing.nbics.net/", serverName: "marketing.nbics")
     }
     
-    @IBAction func checkDev(_ sender: UIButton) {
-        saveServer(server: "http://dev.nbics.net/", serverName: "dev.nbics")
-    }
-    
     @IBAction func checkGOV(_ sender: UIButton) {
         saveServer(server: "http://sc.gov39.ru/", serverName: "sc.gov39")
-    }
-    
-    @IBAction func checkBGR(_ sender: UIButton) {
-        saveServer(server: "http://site.bgr39.ru/", serverName: "site.bgr39")
     }
     
     @IBAction func checkEducation(_ sender: UIButton) {

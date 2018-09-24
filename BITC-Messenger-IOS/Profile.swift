@@ -23,7 +23,18 @@ public class VSMProfile{
     public var Phone:       String  {didSet{p["phone"] = Phone                                           ;   p["phoneUpdateFlag"] = true                 }}
     public var Skype:       String  {didSet{p["skype"] = Skype                                           ;   p["phoneUpdateFlag"] = true                 }}
     public var FamilyName:  String  {didSet{p["familyName"] = FamilyName                                 ;   p["familyNameUpdateFlag"] = true            }}
-    public var Icon:        UIImage?{didSet{p["icon"] = Icon                                             ;   p["photoUpdateFlag"] = true                 }}
+    public var Icon:        UIImage?{
+        didSet{
+            if let i = Icon{
+                let imageData = UIImagePNGRepresentation(i)
+                let idString = imageData?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+                p["icon"] =  idString
+                p["photo"] = idString
+                p["photoUpdateFlag"] = true
+            }
+        }
+        
+    }
     //public let Organizations: [Object] пока без них
     
     public init (
@@ -61,6 +72,7 @@ public class VSMProfile{
                 }
             }
         } else if Icon != "" {
+
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
                 _ = VSMAPI.saveFile(name:"PIcon_\(self.Entity).I", data: dataDecoded)
             }
@@ -137,19 +149,24 @@ public class VSMProfile{
             p["Email"] = VSMAPI.Settings.user
             p["PasswordHash"] = VSMAPI.Settings.hash
             p["byMobile"] = true
-            let r = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.setProfile, params: ["ProfileItem" : JSON(p).rawString([.castNilToNSNull: true])!])
+            let r = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.setProfile, method: .post, params: ["ProfileItem" : JSON(p).rawString([.castNilToNSNull: true])!])
             if !r.1{
                 UIAlertView(title: "Ошибка", message: r.0 as? String, delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK").show()
                 return false
             } else {
-                print(r.0 as! Data)
-                if let nph = p["newPasswordHash"]{ //!!!!!!Может не сработать!!!
-                    VSMAPI.Settings.hash = nph as! String
+                if let d = r.0 as? Data{
+                    if let json = try? JSON(data: d){
+                        print(json)
+                    }
+                    if let nph = p["newPasswordHash"]{ //!!!!!!Может не сработать!!!
+                        VSMAPI.Settings.hash = nph as! String
+                    }
+
+                    return true
                 }
-                p = Dictionary<String,Any>()
-                return true
             }
         }
+        p = Dictionary<String,Any>()
         return false
     }
     

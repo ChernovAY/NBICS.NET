@@ -40,7 +40,14 @@ class SettingScreenTableViewController: UITableViewController {
             DarkThemeSwitch.isOn = false
         }
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        if let usr = VSMAPI.Data.Profile{
+            UserPhoto.image = usr.Icon
+            NameLabel.text = "\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)"
+            EmailLabel.text = "\(usr.Email)"
+            PhoneLabel.text = "\(usr.Phone)"
+        }
+    }
     @IBAction func switchDarkTheme(_ sender: UISwitch) {
         if (DarkThemeSwitch.isOn == true){
             VSMAPI.Settings.darkSchreme = false
