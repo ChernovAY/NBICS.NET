@@ -3614,7 +3614,7 @@
                                             <action selector="album:" destination="U0G-qN-5du" id="MVz-ht-kYb"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Применить" width="243" id="Op2-w7-7BE">
+                                    <barButtonItem title="Сохранить" width="243" id="Op2-w7-7BE">
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="cropping:" destination="U0G-qN-5du" id="4yJ-GM-Rrv"/>

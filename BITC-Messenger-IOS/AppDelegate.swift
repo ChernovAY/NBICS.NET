@@ -158,7 +158,7 @@ import SwiftyJSON
     }
 
     @objc func refreshToken(notification: NSNotification){
-        let refreshToken = InstanceID.instanceID().token()!
+        _ = InstanceID.instanceID().token()!
         FBHandler()
     }
     

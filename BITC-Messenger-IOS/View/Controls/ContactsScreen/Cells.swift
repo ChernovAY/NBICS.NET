@@ -377,7 +377,7 @@ public class MessageAttachmentsCell : UICollectionViewCell {
         FileImage.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         ProgressView.progress = 0
         ProgressView.isHidden = false
         if let d = self.stateDelegate{
@@ -461,7 +461,7 @@ public class CommonConfigurationCell : UITableViewCell {
     
     public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         tree = treenode
-        configuration = tree.content as! VSMConfiguration
+        configuration = tree.content as? VSMConfiguration
         self.delegate = delegate
         
         ConfView?.clipsToBounds = true
@@ -516,7 +516,7 @@ public class PrivateConfigurationCell : UITableViewCell {
     public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         self.delegate = delegate
         tree = treenode
-        configuration = tree.content as! VSMConfiguration
+        configuration = tree.content as? VSMConfiguration
         
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 6
@@ -581,7 +581,7 @@ public class AttachConfigurationCell : UITableViewCell {
     public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         tree = treenode
         self.delegate = delegate
-        configuration = tree.content as! VSMCheckedConfiguration
+        configuration = tree.content as? VSMCheckedConfiguration
         
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 6

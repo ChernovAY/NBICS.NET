@@ -23,7 +23,7 @@ class RememberPasswordViewController: UIViewController {
     }
     
     @IBAction func rememberPasswordButtonClickHandler(_ sender: UIButton) {
-        let email = EmailField.text
+        //let email = EmailField.text
     }
     
     @IBAction func checkServer(_ sender: UIButton) {

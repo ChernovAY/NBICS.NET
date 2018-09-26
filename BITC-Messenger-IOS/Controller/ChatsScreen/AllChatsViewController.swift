@@ -76,12 +76,6 @@ public class AllChatsViewController: VSMUIViewController, UITabBarDelegate, UITa
     private func Load(_ b:Bool = true) {
         if b {
             convs = VSMAPI.Data.getConversations()
-            if VSMAPI.Settings.login{
-                if let usr = VSMAPI.Data.Profile {
-                    //self.UserNameLabel.setTitle("\(usr.FamilyName) \(usr.Name) \(usr.Patronymic)", for: .normal)
-                    //self.UserPhoto.image = usr.Icon
-                }
-            }
         } else {
             convs.removeAll()
         }

@@ -67,17 +67,17 @@ public class VSMProfile{
                  if z.0 is Data {
                     let data = z.0 as! Data
                     if(data.count>0){
-                        _ = VSMAPI.saveFile(name:"PIcon_\(self.Entity).I", data: data)
+                        _ = VSMAPI.saveFile(name:"PIcon_\(String(describing: self.Entity)).I", data: data)
                     }
                 }
             }
         } else if Icon != "" {
 
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
-                _ = VSMAPI.saveFile(name:"PIcon_\(self.Entity).I", data: dataDecoded)
+                _ = VSMAPI.saveFile(name:"PIcon_\(String(describing: self.Entity)).I", data: dataDecoded)
             }
         }
-        self.Icon = VSMAPI.getPicture(name: "PIcon_\(self.Entity).I", empty: "EmptyUser")
+        self.Icon = VSMAPI.getPicture(name: "PIcon_\(String(describing: self.Entity)).I", empty: "EmptyUser")
     }
     public convenience init?(UserId:Int){
         var z : (Any, Bool)
