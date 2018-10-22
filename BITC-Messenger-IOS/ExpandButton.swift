@@ -20,19 +20,19 @@ class ExpendButton: UIButton {
         didSet{
             if isExpandable{
                 if isChecked == true {
-                    self.setImage(checkedImage, for: UIControlState.normal)
+                    self.setImage(checkedImage, for: UIControl.State.normal)
                 } else {
-                    self.setImage(uncheckedImage, for: UIControlState.normal)
+                    self.setImage(uncheckedImage, for: UIControl.State.normal)
                 }
             }
             else{
-                self.setImage(emptyImage, for: UIControlState.normal)
+                self.setImage(emptyImage, for: UIControl.State.normal)
             }
         }
     }
     
     override func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
         self.isChecked = false
     }
     

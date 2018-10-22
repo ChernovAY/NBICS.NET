@@ -507,7 +507,7 @@
 					D4E325271F4C82DC00554DB2 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = MUKKBBV225;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -812,8 +812,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NBICS.Messenger-IOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "BITC-Messenger-IOS/Bridge.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -830,8 +829,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NBICS.Messenger-IOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "BITC-Messenger-IOS/Bridge.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

@@ -641,7 +641,7 @@ public class MessageConfigurationCell : UITableViewCell {
     
     @IBAction func addConfiguration(_ sender: UIButton) {
         if (checkAddConf == false){
-            AddConfButton.setImage(#imageLiteral(resourceName: "blackCheck"), for: UIControlState.normal)
+            AddConfButton.setImage(#imageLiteral(resourceName: "blackCheck"), for: UIControl.State.normal)
             checkAddConf = true
             if configuration.CopyConfiguration(){
                 VSMAPI.Data.loadAll()

@@ -52,7 +52,7 @@ class PhotoEditorViewController: UIViewController,UIImagePickerControllerDelegat
         path.usesEvenOddFillRule = true
         let fillLayer = CAShapeLayer()
         fillLayer.path = path.cgPath
-        fillLayer.fillRule = kCAFillRuleEvenOdd
+        fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
         fillLayer.opacity = 0.7
         fillLayer.fillColor = UIColor.lightGray.cgColor
         view.layer.addSublayer(fillLayer)
@@ -108,9 +108,12 @@ class PhotoEditorViewController: UIViewController,UIImagePickerControllerDelegat
     
     //MARK: -UIImagePickerControllerDelegate
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        let chosenImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
         imageView.contentMode = .scaleAspectFit
         imageView.image = chosenImage.resizeImage(image: chosenImage, targetSize: CGSize(width: 3024 , height: 4032))
         //imageView.image = chosenImage
@@ -137,8 +140,8 @@ class PhotoEditorViewController: UIViewController,UIImagePickerControllerDelegat
     @IBAction func shoot(_ sender: UIBarButtonItem)
     {
         if UIImagePickerController.isSourceTypeAvailable(.camera)
-        {  picker.sourceType = UIImagePickerControllerSourceType.camera
-            picker.cameraCaptureMode =  UIImagePickerControllerCameraCaptureMode.photo
+        {  picker.sourceType = UIImagePickerController.SourceType.camera
+            picker.cameraCaptureMode =  UIImagePickerController.CameraCaptureMode.photo
             picker.modalPresentationStyle = .custom
             present(picker,animated: true,completion: nil)
         }
@@ -209,4 +212,14 @@ extension UIImage
         UIGraphicsEndImageContext()
         return newImage!
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

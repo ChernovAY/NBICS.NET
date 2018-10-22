@@ -26,7 +26,7 @@ public class VSMProfile{
     public var Icon:        UIImage?{
         didSet{
             if let i = Icon{
-                let imageData = UIImagePNGRepresentation(i)
+                let imageData = i.pngData()
                 let idString = imageData?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
                 p["icon"] =  idString
                 p["photo"] = idString

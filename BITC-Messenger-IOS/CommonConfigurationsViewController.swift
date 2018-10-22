@@ -90,7 +90,7 @@ class CommonConfigurationsViewController: VSMUIViewController, UITableViewDelega
         
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
     }
     
 }

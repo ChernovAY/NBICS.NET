@@ -51,7 +51,7 @@ public class ConfigurationsViewController: VSMUIViewController, UITabBarDelegate
         Table.delegate = self
         Table.dataSource = self
         VSMAPI.Data.curConv = self
-        Table.separatorStyle = UITableViewCellSeparatorStyle.none
+        Table.separatorStyle = UITableViewCell.SeparatorStyle.none
         MessageTextView?.layer.cornerRadius = 15
         ConfigurationButton.layer.cornerRadius = 17
         FileButton.layer.cornerRadius = 17

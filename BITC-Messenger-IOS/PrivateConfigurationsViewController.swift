@@ -115,6 +115,6 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
         MainView.backgroundColor = UIColor.VSMMainViewBackground
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
     }
 }

@@ -85,7 +85,7 @@ public class AllChatsViewController: VSMUIViewController, UITabBarDelegate, UITa
     override func setColors(){
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMBlackWhite
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
         AddChatButton.tintColor                                 = UIColor.VSMNavigationBarTitle
         
         tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground

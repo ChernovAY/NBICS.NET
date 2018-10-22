@@ -107,7 +107,7 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
     override func setColors(){
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.VSMNavigationBarTitle]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
         
         tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
         tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
