@@ -10,22 +10,14 @@ import Foundation
 import SwiftyJSON
 
 public class VSMConfiguration : tree{
-    //public let Guid: String
     public let Name                     :String
     public let Code                     :String
-    //public List<Configuration> Children = new List<Configuration>();
     public let CType                    :String
     public let Author                   :Int?
     public let Editor                   :Int?
-    //public DateTime? CreationTime;
-    //public DateTime? LastModifyTime;
+
     public let Index                    :Int
     public var ReadOnly                 :Bool // Признак который выставляет автор конфигурации
-    //public var Editable                 :Bool // Признак который показывает можно ли редактировать конфигурацию текущему пользователю
-    //public var IsTemplateConfiguration  :Bool // Признак который показывает является ли конфигурация шаблоном
-    //public var CreatedFromTemplate      :Bool // Признак который показывает что конфигурация создана из шаблона
-    //public VSMConfigSettings Settings = new VSMConfigSettings();
-
     public init
     (npp:Int
     ,Id:Int
@@ -48,6 +40,7 @@ public class VSMConfiguration : tree{
         self.ReadOnly   = ReadOnly
         super.init(npp: npp, Id: Id, Parent: Parent)
     }
+    
     public convenience init(from dict:[String:JSON], npp:Int = 0){
         self.init(
             npp:            npp
@@ -62,10 +55,11 @@ public class VSMConfiguration : tree{
         ,   ReadOnly:       dict["ReadOnly"     ]!.bool!
         )
     }
+    
     public func DeleteConfiguration()->Bool{
         var retVal = false
         let conf = "{\"Id\":\(self.Id)}"
-        let parm = ["MetaData":conf, "Email": VSMAPI.Settings.login, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
+        let parm = ["MetaData":conf, "Email": VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
         let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: .DeleteConfiguration, params: parm)
         if(z.1){
             let data = z.0 as! Data
@@ -79,13 +73,15 @@ public class VSMConfiguration : tree{
         }
         return retVal
     }
+    
     public func getDictionary()->Dictionary<String, Any?>{
         return ["Id":self.Id, "ReadOnly": self.ReadOnly ? "True" : "False"]
     }
+    
     public func CopyConfiguration()->Bool{
         var retVal = false
 
-        let parm = ["NodeId":self.Id, "CopyWithChildren":"False", "Email": VSMAPI.Settings.login, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
+        let parm = ["NodeId":self.Id, "CopyWithChildren":"False", "Email": VSMAPI.Settings.user, "PasswordHash":VSMAPI.Settings.hash] as [String : Any]
         let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: .CopyConfiguration, params: parm)
         if(z.1){
             let data = z.0 as! Data
@@ -101,6 +97,7 @@ public class VSMConfiguration : tree{
     }
     
 }
+
 public class VSMCheckedConfiguration : tree{
     public  var Conf:VSMConfiguration!
     public  var msg:VSMMessage?
@@ -116,6 +113,7 @@ public class VSMCheckedConfiguration : tree{
             }
         }
     }
+    
     public init(_ conf:VSMConfiguration, _ chk:Bool = false){
         super.init(npp: conf.npp, Id: conf.Id, Parent: conf.Parent)
         Conf = conf

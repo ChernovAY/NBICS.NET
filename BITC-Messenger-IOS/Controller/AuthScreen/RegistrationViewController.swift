@@ -11,6 +11,8 @@ import UIKit
 class RegistrationViewController: UIViewController {
 
     private let mHasher: Hasher = Hasher()
+    private var globalServerName: String!
+    private var globalServer: String!
     
     @IBOutlet weak var EmailTextBox: StrickTextBox!
     @IBOutlet weak var PasswordTextBox: StrickTextBox!
@@ -22,11 +24,14 @@ class RegistrationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        AuthorizationIndicator.isHidden = true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
     
     @IBAction func checkServer(_ sender: UIButton) {
         ServersListView.isHidden = false
@@ -49,44 +54,60 @@ class RegistrationViewController: UIViewController {
     }
  
     @IBAction func RegistrationButton(_ sender: UIButton) {
-        let email           = EmailTextBox.text?.trimmingCharacters(in: .whitespaces)
-        let password        = PasswordTextBox.text?.trimmingCharacters(in: .whitespaces)
-        let passwordConfirm = PasswordConfirmTextBox.text?.trimmingCharacters(in: .whitespaces)
-        
         AuthorizationIndicator.isHidden = false
-        
-        if ((email == "") || (password == "") || (passwordConfirm == "")){
-            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Поля не могут быть пустыми", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-            button2Alert.show()
-            AuthorizationIndicator.isHidden = true
-        } else if (password != passwordConfirm) {
-            let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Пароли не совпадают", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-            button2Alert.show()
-            AuthorizationIndicator.isHidden = true
-        } else {
-            let passwordHash = mHasher.GetMD5Hash(inputString: password!)
-            if VSMAPI.Settings.registration(email: email!, passwordHash: passwordHash!) != nil{
-                let button2Alert: UIAlertView = UIAlertView(title: "", message: "Вы успешно создали ваш аккаунт. Инструкция по его активации отправлена по электронной почте", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-                button2Alert.show()
-                performSegue(withIdentifier: "successfulAthorizationSegue", sender: self)
+        if (inet.isConn) {
+            let email           = EmailTextBox.text?.trimmingCharacters(in: .whitespaces)
+            let password        = PasswordTextBox.text?.trimmingCharacters(in: .whitespaces)
+            let passwordConfirm = PasswordConfirmTextBox.text?.trimmingCharacters(in: .whitespaces)
+            if ((email == "") || (password == "") || (passwordConfirm == "")){
+                let alert = UIAlertController(title: "Ошибка регистрации", message: "Поля не могут быть пустыми", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            } else if (password != passwordConfirm) {
+                let alert = UIAlertController(title: "Ошибка регистрации", message: "Пароли не совпадают", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
             } else {
-                let button2Alert: UIAlertView = UIAlertView(title: "", message: "Ошибка регистрации", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-                button2Alert.show()
+                let passwordHash = mHasher.GetMD5Hash(inputString: password!)
+                let result = VSMAPI.Settings.registration(email: email!, passwordHash: passwordHash!)
+                if (result == 0) {
+                    performSegue(withIdentifier: "successfulAthorizationSegue", sender: self)
+                    let alert = UIAlertController(title: "", message: "Вы успешно создали ваш аккаунт. Инструкция по его активации отправлена по электронной почте", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                } else if (result == 1) {
+                    let alert = UIAlertController(title: "Ошибка регистрации", message: "Данный почтовый адрес уже зарегистрирован в системе", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "Ошибка регистрации", message: "Не удалось отправить письмо на почту", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
-            AuthorizationIndicator.isHidden = true
+        } else {
+            let alert = UIAlertController(title: "Ошибка регистрации", message: "Нет связи с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
+        AuthorizationIndicator.isHidden = true
     }
     
     func saveServer(server: String, serverName: String){
         ServersListView.isHidden = true
         CheckServerButton.titleLabel?.text = serverName
         VSMAPI.Settings.caddress = server
+        globalServerName = serverName
+        globalServer = server
     }
     
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? AuthorizationViewController{
-            destination.email = EmailTextBox.text
-            destination.password = PasswordTextBox.text
+            destination.email            = EmailTextBox.text
+            destination.password         = PasswordTextBox.text
+            destination.globalServerName = globalServerName
+            destination.globalServer     = globalServer
         }
     }
 }

@@ -16,7 +16,6 @@ public class VSMProfile{
     public let Email:       String
     public let Entity:      Int?
     public let IconUrl:     String
-    
     public var BirthDay:    Date    {didSet{p["birthDay"] = BirthDay.toServerTimeString()                ;                                               }}
     public var Name:        String  {didSet{p["name"] = Name                                             ;   p["nameUpdateFlag"] = true                  }}
     public var Patronymic:  String  {didSet{p["patronymic"] = Patronymic                                 ;   p["patronymicUpdateFlag"] = true            }}
@@ -24,8 +23,8 @@ public class VSMProfile{
     public var Skype:       String  {didSet{p["skype"] = Skype                                           ;   p["phoneUpdateFlag"] = true                 }}
     public var FamilyName:  String  {didSet{p["familyName"] = FamilyName                                 ;   p["familyNameUpdateFlag"] = true            }}
     public var Icon:        UIImage?{
-        didSet{
-            if let i = Icon{
+        didSet {
+            if let i = Icon {
                 let imageData = i.pngData()
                 let idString = imageData?.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
                 p["icon"] =  idString
@@ -35,8 +34,7 @@ public class VSMProfile{
         }
         
     }
-    //public let Organizations: [Object] пока без них
-    
+
     public init (
         BirthDay: Date
         ,Email: String
@@ -58,7 +56,7 @@ public class VSMProfile{
             self.Patronymic = Patronymic
             self.Phone      = Phone
             self.Skype      = Skype
-
+        
         if (self.IconUrl != "") {
             let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.IconUrl, params: [:])
             if(!z.1){
@@ -72,23 +70,23 @@ public class VSMProfile{
                 }
             }
         } else if Icon != "" {
-
             if let dataDecoded  = Data(base64Encoded: Icon, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
                 _ = VSMAPI.saveFile(name:"PIcon_\(String(describing: self.Entity)).I", data: dataDecoded)
             }
         }
         self.Icon = VSMAPI.getPicture(name: "PIcon_\(String(describing: self.Entity)).I", empty: "EmptyUser")
     }
+    
     public convenience init?(UserId:Int){
         var z : (Any, Bool)
         if VSMAPI.Connectivity.isConn{
             z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.contactProfile, params: ["UserId":UserId, "Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash])
-            if(z.1){
+            if (z.1) {
                 let d = z.0 as! Data
                 if let json = try? JSON(data: d) {
-                    if let dict = json.dictionary{
+                    if let dict = json.dictionary {
                         self.init(
-                            BirthDay: Date.init(fromString: dict["BirthDay"]!.string!)
+                            BirthDay: dict["BirthDay"]?.string == nil ? Date.init(fromString: "1980-01-01T00:00:00") :  Date.init(fromString: dict["BirthDay"]!.string!)
                             , Email: dict["Email"]!.string ?? ""
                             , Entity: dict["EntityId"]!.int
                             , FamilyName: dict["FamilyName"]!.string ?? ""
@@ -106,11 +104,12 @@ public class VSMProfile{
                 print(z.0)
             }
         }
-            return nil
+        return nil
     }
-    public convenience init?(){
+    
+    public convenience init?() {
         var z : (Any, Bool)
-        if VSMAPI.Connectivity.isConn{
+        if VSMAPI.Connectivity.isConn {
             z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.profile, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
             _ = VSMAPI.saveFile(name: VSMAPI.WebAPIEntry.profile.rawValue + ".I", data: z.0 as! Data)
         } else {
@@ -120,7 +119,7 @@ public class VSMProfile{
                 z = ("И интернета нет и данные не сохранены",false)
             }
         }
-        if(z.1){
+        if (z.1) {
             let d = z.0 as! Data
             if let json = try? JSON(data: d) {
                 if let dict = json.dictionary{
@@ -144,7 +143,8 @@ public class VSMProfile{
         }
         return nil
     }
-    public func setChanges()->Bool{
+    
+    public func setChanges()->Bool {
         if self.p.count != 0 {
             p["Email"] = VSMAPI.Settings.user
             p["PasswordHash"] = VSMAPI.Settings.hash
@@ -169,5 +169,4 @@ public class VSMProfile{
         p = Dictionary<String,Any>()
         return false
     }
-    
 }

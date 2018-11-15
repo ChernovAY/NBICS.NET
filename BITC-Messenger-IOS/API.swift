@@ -14,54 +14,58 @@ import FirebaseMessaging
 import FirebaseInstanceID
 
 public typealias Params = [String:Any];
-
+public typealias inet = VSMAPI.Connectivity
 public class VSMAPI{
-    public static var sites:[String] = ["https://nbics.net/", "https://sc.gov39.ru/", "http://site.bgr39.ru/", "http://dev.nbics.net/", "http://education.nbics.net/"]
+    public static var sites:[String]                = ["https://nbics.net/", "https://sc.gov39.ru/", "http://site.bgr39.ru/", "http://dev.nbics.net/", "http://education.nbics.net/"]
+    public static var sitesForRegistration:[String] = ["https://nbics.net/", "https://sc.gov39.ru/", "http://site.bgr39.ru/", "http://dev.nbics.net/", "http://education.nbics.net/"]
     
     public class Connectivity {
         public class var isConn:Bool {
             return NetworkReachabilityManager()!.isReachable
         }
     }
-   /* public struct DefColors{
-        public static var backGroundColor:String{
-            get{return UserDefaults.standard.object(forKey: "backGroundColor") as? String ?? "#393939"}
-            set(value){UserDefaults.standard.set(value, forKey: "backGroundColor")}
-        }
+
+    public struct Settings {
         
-    }*/
-    public struct Settings{
-        public static var refreshToken:String{
+        public static var refreshToken:String {
             get{return UserDefaults.standard.object(forKey: "refreshToken") as? String ?? ""}
             set(value){UserDefaults.standard.set(value, forKey: "refreshToken")}
         }
-        public static var hash:String{
+        
+        public static var hash:String {
             get{return UserDefaults.standard.object(forKey: "hash") as? String ?? ""}
             set(value){UserDefaults.standard.set(value, forKey: "hash")}
         }
-        public static var caddress:String{
+        
+        public static var caddress:String {
             get{return UserDefaults.standard.object(forKey: "caddress") as? String ?? "https://nbics.net/"}
             set(value){UserDefaults.standard.set(value, forKey: "caddress")}
         }
-        public static var user:String{
+        
+        public static var user:String {
             get{return UserDefaults.standard.object(forKey: "user") as? String ?? ""}
             set(value){UserDefaults.standard.set(value, forKey: "user")}
         }
-        public static var login:Bool{
+        
+        public static var login:Bool {
             get{return UserDefaults.standard.object(forKey: "login") as? Bool ?? false}
             set(value){UserDefaults.standard.set(value, forKey: "login")}
         }
-        public static var darkSchreme:Bool{
-            //get{return UserDefaults.standard.object(forKey: "darkSchreme") as? Bool ?? false}
+        
+        public static var darkSchreme:Bool {
             get{return UserDefaults.standard.object(forKey: "darkSchreme") as? Bool ?? true}
             set(value){UserDefaults.standard.set(value, forKey: "darkSchreme")}
         }
-        public static var alias:String{
+        
+        public static var alias:String {
             get{return UserDefaults.standard.object(forKey: "alias") as? String ?? ""}
             set(value){UserDefaults.standard.set(value, forKey: "alias")}
         }
+        
         public static func logOut(){
-            if VSMAPI.Settings.user == "" || VSMAPI.Settings.hash == "" {return}
+            if VSMAPI.Settings.user == "" || VSMAPI.Settings.hash == "" {
+                return
+            }
             Data.ETimerAction.raise(data: true)
             VSMAPI.Request(addres: Settings.caddress, entry: .DisconnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"]) { (d, b) in
                 VSMAPI.Request(addres: Settings.caddress, entry: .UnregisterDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"], completionHandler: { (d, b) in
@@ -69,16 +73,16 @@ public class VSMAPI{
                     Settings.user = ""; Settings.hash = ""; Settings.login = false; Settings.alias = "";
                     Data.deleteAll()
                     UIApplication.shared.applicationIconBadgeNumber  = 0
-                    })
+                })
             }
         }
-        public static func refreshFB(fcmToken:String){
-            if VSMAPI.Settings.refreshToken != fcmToken{
-                if Settings.login{
+        
+        public static func refreshFB(fcmToken:String) {
+            if VSMAPI.Settings.refreshToken != fcmToken {
+                if Settings.login {
                     Data.ETimerAction.raise(data: true)
                     VSMAPI.Request(addres: Settings.caddress, entry: .DisconnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"]) { (d, b) in
                         VSMAPI.Request(addres: Settings.caddress, entry: .UnregisterDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(Settings.refreshToken)"], completionHandler: { (d, b) in
-                            
                                 VSMAPI.Settings.refreshToken = fcmToken
                                 VSMAPI.Request(addres: Settings.caddress, entry: .RegisterNewDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(UIDevice.current.identifierForVendor!.uuidString)&\(Settings.refreshToken)", "DeviceOS":"2"], completionHandler: { (d, b) in
                                     VSMAPI.Request(addres: Settings.caddress, entry: .ConnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"Device":
@@ -95,7 +99,8 @@ public class VSMAPI{
                 }
             }
         }
-        private static func preLoadAll(){
+        
+        private static func preLoadAll() {
             Settings.refreshToken = InstanceID.instanceID().token() ?? ""
             VSMAPI.Request(addres: Settings.caddress, entry: .RegisterNewDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"DeviceID":"\(UIDevice.current.identifierForVendor!.uuidString)&\(Settings.refreshToken)", "DeviceOS":"2"], completionHandler: { (d, b) in
                 VSMAPI.Request(addres: Settings.caddress, entry: .ConnectUserDevice, params: ["Email":VSMAPI.Settings.user,"PasswordHash":VSMAPI.Settings.hash,"Device":
@@ -103,34 +108,32 @@ public class VSMAPI{
                     ,completionHandler: { (d, b) in
                         Data.loadAll()
                 })
-                
             })
         }
-        private static func checkDBDirectory(){
+        
+        private static func checkDBDirectory() {
             func directoryExistsAtPath(_ path: String) -> Bool {
                 var isDirectory = ObjCBool(true)
                 let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
                 return exists && isDirectory.boolValue
             }
-            
-            if !directoryExistsAtPath(VSMAPI.DBURL.path){
+            if !directoryExistsAtPath(VSMAPI.DBURL.path) {
                 try? FileManager.default.createDirectory(at: VSMAPI.DBURL, withIntermediateDirectories: false)
             }
             
         }
+        
         public static func logIn(user:String, hash: String){
             VSMAPI.Settings.checkDBDirectory()
             if(VSMAPI.Settings.login) {
                 preLoadAll()
                 return;
             }
-            VSMAPI.RequestFull(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(r,s) in{
-                
-                if(!s){
+            VSMAPI.RequestFull(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.login, params: ["login" : user, "passwordHash" : hash], completionHandler: {(r,s) in {
+                if(!s) {
                         UIAlertView(title: "Ошибка", message: r as? String, delegate: self, cancelButtonTitle: "OK").show()
-                    }
-                else {
-                    if let d = (r as! DefaultDataResponse).data{
+                } else {
+                    if let d = (r as! DefaultDataResponse).data {
                         let data = d as Data
                         let result = String(data: data, encoding: .utf8)
                         switch result {
@@ -158,18 +161,34 @@ public class VSMAPI{
                 }()}
             )
         }
-        public static func registration(email:String, passwordHash:String)->Int?{
+        public static func registration(email:String, passwordHash:String)->Int? {
             var retval = nil as Int?
-            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.registration, params: ["email" : email, "passwordHash" : passwordHash, "captchaId" : -2147483648, "captchaText" : "137285"]) { (d, s) in
-                if(!s){
-                    UIAlertView(title: "Ошибка", message: d as? String, delegate: self, cancelButtonTitle: "OK").show()
-                } else {
-                    if d is Data {
-                        let data = d as! Data
-                        if let result = try? JSON(data: data){
-                            if let res = result.dictionary!["Code"]?.int{
-                               retval = res
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.registration, params: ["email" : email, "passwordHash" : passwordHash, "captchaId" : -2147483648, "captchaText" : "137285"])
+            if(!z.1) {
+                    UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self, cancelButtonTitle: "OK").show()
+            } else {
+                if z.0 is Data {
+                    let data = z.0 as! Data
+                        if let result = try? JSON(data: data) {
+                            if let res = result.dictionary!["Code"]?.int {
+                                retval = res
                             }
+                        }
+                    }
+                }
+            return retval
+        }
+        public static func resetPassword(email:String)->Int? {
+            var retval = nil as Int?
+            let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.resetPassword, params: ["email" : email, "captchaId" : -2147483648, "captchaText" : "137285"])
+            if(!z.1) {
+                UIAlertView(title: "Ошибка", message: z.0 as? String, delegate: self, cancelButtonTitle: "OK").show()
+            } else {
+                if z.0 is Data {
+                    let data = z.0 as! Data
+                    if let result = try? JSON(data: data) {
+                        if let res = result.dictionary!["Code"]?.int {
+                            retval = res
                         }
                     }
                 }
@@ -178,11 +197,13 @@ public class VSMAPI{
         }
     }
 
-    public enum WebAPIEntry:String{
+    public enum WebAPIEntry:String {
+        
         case login                  = "Account/Login" //+++
+        case resetPassword          = "Account/ResetPasswordQuery"//---
         case captcha                = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/CaptchaGet"//---
         case registration           = "VSM.Web.Plugins.BaseRegistration/BaseRegistrationHome/Registration"//---
-    
+
         case userInformation        = "VSM.Web.Plugins.Contacts/ContactsHome/GetUserInformation" //+++
         case profile                = "VSM.Web.Plugins.NProfile/NProfileHome/GetUserProfileApi"  //+++
         case setProfile             = "VSM.Web.Plugins.NProfile/NProfileHome/SetUserProfileApi" //+++
@@ -228,34 +249,36 @@ public class VSMAPI{
         case AddNewConversation                 = "VSM.Web.Plugins.Contacts/ContactsHome/AddNewConversation"    //+++
         case ConversationRename                 = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationRename"
         case ConversationUsersIncludeOrExclude  = "VSM.Web.Plugins.Contacts/ContactsHome/ConversationUsersIncludeOrExclude"     //+++
+        case UserLeaveConversation              = "VSM.Web.Plugins.Contacts/ContactsHome/UserLeaveConversation"
         
         case Configurations             = "Workplace/GetConfigurations" //+++
         case PublicConfigurations       = "Workplace/GetUserRolesWithConfigurations"
         case CopyConfiguration          = "Workplace/CopyNode"
         case DeleteConfiguration        = "Workplace/DeleteNode"
+        
+        case CommunicatorSites          = "SiteNetwork/CommunicatorSitesListGet2"// Завтра сделать!!!
     }
-    // Session Manager Configurations!!!!!!!
-    public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params)->(Any,Bool){
-        if !Connectivity.isConn {return("Интернета нету!", false)}
-        let request = Alamofire.request(addres + entry.rawValue + postf, method: method, parameters: params/*, encoding: JSONEncoding.prettyPrinted*/, headers: nil)
+    
+    public static func syncRequest(addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params)->(Any,Bool) {
+        if !Connectivity.isConn {return("Нет соединения с интернетом", false)}
+        let request = Alamofire.request(addres + entry.rawValue + postf, method: method, parameters: params, headers: nil)
         let resp =  request.syncResponse()
         let succ = resp.error == nil
-        if(succ){
+        if (succ) {
             return (resp.data!, true)
-        } else
-        {
+        } else {
             return (resp.error.unsafelyUnwrapped.localizedDescription, false)
         }
     }
     
     public static func Request (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
-        if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
+        if !Connectivity.isConn {completionHandler("Нет соединения с интернетом", false);return}
         let addr = addres + entry.rawValue + postf
-        let request = Alamofire.request(addr, method: method, parameters: params/*, encoding: URLEncoding(destination: .methodDependent)*/, headers: nil)
+        let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
         request.response {  response in
             var res:Any
             let succ = response.error == nil
-            if(succ){
+            if (succ) {
                     res = response.data!
             } else {
                 res = response.error.unsafelyUnwrapped.localizedDescription
@@ -263,10 +286,11 @@ public class VSMAPI{
             completionHandler(res, succ)
         }
     }
+    
     public static func RequestFull (addres:String, entry: VSMAPI.WebAPIEntry, postf:String = "", method: HTTPMethod = HTTPMethod.get, params:Params, completionHandler: @escaping (Any,Bool) -> ()) {
-        if !Connectivity.isConn {completionHandler("Интернета нету!", false);return}
+        if !Connectivity.isConn {completionHandler("Нет соединения с интернетом", false);return}
         let addr = addres + entry.rawValue + postf
-        let request = Alamofire.request(addr, method: method, parameters: params/*, encoding: URLEncoding(destination: .methodDependent)*/, headers: nil)
+        let request = Alamofire.request(addr, method: method, parameters: params, headers: nil)
         request.response {  response in
             var res:Any
             let succ = response.error == nil
@@ -278,21 +302,24 @@ public class VSMAPI{
             completionHandler(res, succ)
         }
     }
-    public static func delFile(name: String)->Bool{
+    
+    public static func delFile(name: String)->Bool {
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/"+name.replacingOccurrences(of: "/", with: "_")
         return ((try? fm.removeItem(atPath: VSMAPI.DBURL.path+"/"+filename)) != nil)
     }
+    
     public static func saveFile(name: String, data: Data)->Bool{
         var ret = false
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/"+name.replacingOccurrences(of: "/", with: "_")
-        if(fm.createFile(atPath: filename, contents: data)){
+        if (fm.createFile(atPath: filename, contents: data)) {
             ret = true
         }
         return ret
     }
-    public static func getFile(name:String)->Data?{
+    
+    public static func getFile(name:String)->Data? {
         var ret:Data?
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/" + name.replacingOccurrences(of: "/", with: "_")
@@ -303,32 +330,34 @@ public class VSMAPI{
         }
         return ret
     }
-    public static func getPicture(name:String, empty:String)->UIImage?{
+    
+    public static func getPicture(name:String, empty:String)->UIImage? {
         var img:UIImage?
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/" + name.replacingOccurrences(of: "/", with: "_")
         if(fm.fileExists(atPath: filename)){
-            if let data = fm.contents(atPath: filename){
+            if let data = fm.contents(atPath: filename) {
                 img = UIImage(data: data)
-            } else if empty != ""{
+            } else if (empty != "") {
                 img = UIImage(named: empty)
             }
-        } else if empty != ""{
+        } else if (empty != "") {
             img = UIImage(named: empty)
         }
-        if img == nil && empty != "" {
+        if (img == nil && empty != "") {
             img = UIImage(named: empty)
         }
         return img
     }
-    public static func fileExists(_ name:String)->Bool{
+    
+    public static func fileExists(_ name:String)->Bool {
         let fm = FileManager.default
         let filename = VSMAPI.DBURL.path + "/" + name
         return fm.fileExists(atPath: filename)
     }
-    public static func deleteCommunicatorFiles(){
+    
+    public static func deleteCommunicatorFiles() {
             let fm = FileManager.default
-        
             let enumerator: FileManager.DirectoryEnumerator = fm.enumerator(atPath: VSMAPI.DBURL.path)!
             while let element = enumerator.nextObject() as? String {
                 if element.hasSuffix(".I"){
@@ -336,20 +365,19 @@ public class VSMAPI{
                 }
             }
     }
-    //----------------------------------------------------------------------------------------
+    
     public static let DBURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("DB", isDirectory: true)
     public static var Data = VSMData()
     
     public struct VSMChatsCommunication{
-        public static var conversetionId    = ""{
-            didSet{
+        public static var conversetionId    = "" {
+            didSet {
                 checkedContactForConversation.removeAll()
                 let a = VSMAPI.Data.getContacts(type: VSMContact.ContactType.Cont)
                 let conv = VSMAPI.Data.Conversations[conversetionId]
                 let users = conv?.Users ?? [VSMContact]()
                 for c in a {
                     let cc = VSMCheckedContact(c,false)
-                    
                     if conversetionId != "" {
                         if let _ = users.first(where: ({$0.Id == c.Id})){
                             cc.Checked = true
@@ -367,5 +395,6 @@ public class VSMAPI{
         public static var tabBarChats           :UITabBarItem? = UITabBarItem()
         public static var tabBarApplications    :UITabBarItem? = UITabBarItem()
         public static var nailIFirstOpenOfConfigurationBliad = true
+        public static var copiedArrayMessages : VSMMessage? = nil
     }
 }

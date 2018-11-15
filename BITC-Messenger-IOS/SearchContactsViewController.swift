@@ -17,17 +17,21 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
     @IBOutlet weak var SearchBar: UISearchBar!
     
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     @IBOutlet weak var SearchTextField: UITextField!
 
     var refreshControl:UIRefreshControl!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
-        //SearchButton.layer.cornerRadius = 5
+        SearchBar.delegate = self
+        SearchBar.returnKeyType = UIReturnKeyType.done
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: SearchContactsViewController.Load)}
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        }
         Load()
     }
     deinit {
@@ -55,17 +59,12 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
         return cArray.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let add = addAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [add])
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -74,10 +73,19 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
         performSegue(withIdentifier: "showContactProfileFromSearchContact", sender: self)
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if (inet.isConn) {
+            let add = addAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [add])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+    }
+    
     func addAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Добавить") { (action, view, completion) in
             let c = self.cArray[indexPath.row]
-            if c.UserContactOperations(VSMAPI.WebAPIEntry.Op_AcceptUserRequest){
+            if c.UserContactOperations(VSMAPI.WebAPIEntry.Op_SendUserRequest){
                 VSMAPI.Data.loadAll()
             }
         }
@@ -86,15 +94,14 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
         return action
     }
     
-    /*
-    @IBAction func searchContact(_ sender: UIButton) {
-        let searchText = SearchTextField.text
-        if searchText != nil || searchText != "" {
-            self.cArray = VSMAPI.Data.searchContacts(SearchString: searchText ?? "")
-            Table.reloadData()
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if SearchBar.text == nil || SearchBar.text == "" {
+            view.endEditing(true)
         }
+        self.cArray = VSMAPI.Data.searchContacts(SearchString: SearchBar.text ?? "")
+        Table.reloadData()
     }
-    */
+    
     private func Load(_ b:Bool=true) {
         if(b) {
             cArray = VSMAPI.Data.searchContacts(SearchString: "")
@@ -105,16 +112,19 @@ class SearchContactsViewController: VSMUIViewController, UITableViewDelegate, UI
     }
     
     override func setColors(){
-        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
-        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.barTintColor = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor = UIColor.VSMNavigationBarTitle
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
         
-        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
-        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        tabBarController?.tabBar.barTintColor = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor = UIColor.VSMNavigationTabBarItem
         
-        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
         
-        SearchBar.backgroundColor                               = UIColor.VSMSearchBarBackground
+        SearchBar.backgroundColor = UIColor.VSMSearchBarBackground
+        let textFieldInsideUISearchBar = SearchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideUISearchBar?.textColor = UIColor.VSMBlackWhite
+        textFieldInsideUISearchBar?.font = textFieldInsideUISearchBar?.font?.withSize(12)
         
         Load()
     }

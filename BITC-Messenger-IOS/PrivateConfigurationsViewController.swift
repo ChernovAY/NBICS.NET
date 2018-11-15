@@ -15,8 +15,8 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
     private var configurationURL: String!
     
     @IBOutlet var MainView: UIView!
-    
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +27,16 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
         Load(false)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         Load()
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
+        }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         Load(false)
     }
 
@@ -55,17 +60,13 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let u = cArray[indexPath.row].content as? VSMConfiguration{
-            if u.CType == "Configuration"{
-                configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
-                performSegue(withIdentifier: "showPrivateConfiguration", sender: self)
+        if (inet.isConn) {
+            if let u = cArray[indexPath.row].content as? VSMConfiguration{
+                if u.CType == "Configuration"{
+                    configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
+                    performSegue(withIdentifier: "showPrivateConfiguration", sender: self)
+                }
             }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ConfigurationViewController{
-            destination.configurationURL = configurationURL
         }
     }
     
@@ -78,15 +79,20 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ConfigurationViewController{
+            destination.configurationURL = configurationURL
+        }
+    }
+    
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, completion) in
             let c = self.cArray[indexPath.row]
             if let conf = c.content as? VSMConfiguration
             {
-                if conf.DeleteConfiguration(){
+                if conf.DeleteConfiguration() {
                     c.delete(self.show)
                     VSMAPI.Data.loadAll()
-                    
                 }
             }
         }
@@ -108,6 +114,11 @@ class PrivateConfigurationsViewController: VSMUIViewController, UITableViewDeleg
         } else {
             cArray.removeAll()
             Tree = nil
+        }
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
         }
     }
     

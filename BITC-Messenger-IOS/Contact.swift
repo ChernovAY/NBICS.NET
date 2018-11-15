@@ -10,19 +10,22 @@ import Foundation
 import SwiftyJSON
 
 public class VSMContact {
-    public enum ContactType:Int{
+    public enum ContactType:Int {
         case Del = -1, Own, Cont, Conv, In, Out
     }
-    public var ContactType  = VSMContact.ContactType.Del{
-        willSet(newType){
+    
+    public var ContactType  = VSMContact.ContactType.Del {
+        willSet(newType) {
             
         }
     }
-    public var isOwnContact:Bool{
-        get{
+    
+    public var isOwnContact:Bool {
+        get {
             return self.ContType == .Own
         }
     }
+    
     public var ContType         = VSMContact.ContactType.Del
     public let Id:              Int
     public let Code:            String?
@@ -31,43 +34,33 @@ public class VSMContact {
     public let FirstName:       String
     public let SurName:         String
     public let Patronymic:      String
-    
-    //public let Devices: Devices
-    //public let Groups: Groups
-    
-   
+
     public  var IsNew:           Bool
     public  var IsOnline:        Bool
     public  var ReadOnly:        Bool
     
-    public var Photo:           UIImage?{
-        get{
+    public var Photo:           UIImage? {
+        get {
             return VSMAPI.getPicture(name: "Icon_\(self.Id).I", empty: "EmptyUser")
         }
     }
-    public var PhotoUrl:        String
     
+    public var PhotoUrl:        String
 
-    public init
-        ( Id:              Int
+    public init (
+          Id:              Int
         , Code:            String?
         , Alias:           String?
         , Name:            String
         , FirstName:       String
         , SurName:         String
         , Patronymic:      String
-        
-        //public let Devices: Devices
-        //public let Groups: Groups
-   
         , IsNew:           Bool
         , IsOnline:        Bool
         , ReadOnly:        Bool
-        
         , PhotoUrl:        String
-        
         , Photo:           String = ""
-        ){
+    ){
         self.Id             = Id
         self.Code           = Code
         self.Alias          = Alias
@@ -75,18 +68,13 @@ public class VSMContact {
         self.FirstName      = FirstName
         self.SurName        = SurName
         self.Patronymic     = Patronymic
-        
-        //public let Devices: Devices
-        //public let Groups: Groups
-        
         self.IsNew          = IsNew
         self.IsOnline       = IsOnline
         self.ReadOnly       = ReadOnly
-        
         self.PhotoUrl       = PhotoUrl
         
         if (self.PhotoUrl != "") {
-            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in{
+            VSMAPI.Request(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.getIcon, postf:self.PhotoUrl, params: [:], completionHandler: {(d,s) in {
             if (!s){
                 print(d as! String)
             } else {
@@ -99,9 +87,8 @@ public class VSMContact {
                 }
             }
             }()})
-        }
-        else if Photo != "" {
-            if let dataDecoded  = Data(base64Encoded: Photo, options: Data.Base64DecodingOptions.ignoreUnknownCharacters){
+        } else if Photo != "" {
+            if let dataDecoded  = Data(base64Encoded: Photo, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) {
                 _ = VSMAPI.saveFile(name:"Icon_\(self.Id).I", data: dataDecoded)
             }
         }
@@ -123,24 +110,22 @@ public class VSMContact {
             , Photo:        dict["Photo"        ]!.string != nil ? dict["Photo"        ]!.string! : ""
         )
     }
-    public convenience init?(){
+    
+    public convenience init?() {
         var z : (Any, Bool)
-        if VSMAPI.Connectivity.isConn{
+        if VSMAPI.Connectivity.isConn {
             z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: VSMAPI.WebAPIEntry.userInformation, params: ["email" : VSMAPI.Settings.user, "passwordHash" : VSMAPI.Settings.hash])
             _ = VSMAPI.saveFile(name: VSMAPI.WebAPIEntry.userInformation.rawValue + ".I", data: z.0 as! Data)
-        }
-        else{
-            if let d = VSMAPI.getFile(name: VSMAPI.WebAPIEntry.userInformation.rawValue + ".I"){
+        } else {
+            if let d = VSMAPI.getFile(name: VSMAPI.WebAPIEntry.userInformation.rawValue + ".I") {
                 z = (d,true)
-            }
-            else{
+            } else {
                 z = ("И интернета нет и данные не сохранены",false)
             }
         }
         if(!z.1){
             print("Ошибка \(z.0 as? String)")
-        }
-        else{
+        } else {
             if z.0 is Data {
                 let data = z.0 as! Data
                 if let json = try? JSON(data: data) {
@@ -153,7 +138,8 @@ public class VSMContact {
         }
         return nil
     }
-    public func UserContactOperations(_ what:VSMAPI.WebAPIEntry)->Bool{
+    
+    public func UserContactOperations(_ what:VSMAPI.WebAPIEntry)->Bool {
         if !String(describing: what).hasPrefix("Op_") {return false}
         var retVal = false
         let z = VSMAPI.syncRequest(addres: VSMAPI.Settings.caddress, entry: what, params: ["Email" : VSMAPI.Settings.user, "PasswordHash" : VSMAPI.Settings.hash, "UserId" : self.Id])
@@ -164,33 +150,31 @@ public class VSMContact {
                     retVal = true
                 }
             }
-        }
-        else{
+        } else {
             print(z.0)
         }
         return retVal
     }
-
 }
+
 public class VSMCheckedContact{
     public var Contact:VSMContact!
     public var Conversation:VSMConversation?
-
-    public var Checked:Bool = false{
-        didSet{
-
-            if let conv = Conversation{
+    
+    public var Checked:Bool = false {
+        didSet {
+            if let conv = Conversation {
                 conv.isSendNeeded = true
                 let contInUsers = conv.Users.first(where:({$0.Id == Contact.Id}))
-                if Checked && contInUsers == nil{
+                if Checked && contInUsers == nil {
                   conv.Users.append(Contact)
-                }
-                else if !Checked && contInUsers != nil{
+                } else if !Checked && contInUsers != nil{
                     conv.Users = conv.Users.filter({!($0 === contInUsers)})
                 }
             }
         }
     }
+    
     public init(_ contact:VSMContact, _ chk:Bool){
         Contact = contact
         Checked = chk

@@ -18,7 +18,7 @@ import SwiftyJSON
 
 
 @UIApplicationMain
- class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
@@ -39,7 +39,6 @@ import SwiftyJSON
             application.registerUserNotificationSettings(settings)
         }
         application.registerForRemoteNotifications()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
         if VSMAPI.Settings.darkSchreme {
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
@@ -69,25 +68,6 @@ import SwiftyJSON
     }()
     
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        /*let json = JSON(remoteMessage.appData)
-        //print("убрать!!!")
-        //print(json)
-        if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_CHAT"{
-            let convId = json.dictionary!["ConversationId"]!.string!
-            VSMAPI.VSMChatsCommunication.conversetionId = convId
-            if let v = VSMAPI.Data.chat, let c = VSMAPI.Data.tabBarController{
-                if let cur = VSMAPI.Data.curConv{
-                    cur.navigationController?.popViewController(animated: true)
-                }
-                c.selectedIndex = 0
-                v.performSegue(withIdentifier: "showChat", sender: v)
-            }
-        }
-        else if json.dictionary!["notification"]?.dictionary!["click_action"]?.string == "OPEN_REQUESTS"{
-            if let c = VSMAPI.Data.tabBarController{
-                c.selectedIndex = 2
-            }
-        }*/
         VSMAPI.Data.timerFired()
     }
     
@@ -98,7 +78,6 @@ import SwiftyJSON
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         VSMAPI.Data.timerFired()
-        
         let json = JSON(response.notification.request.content.userInfo)
         if let cat = json["aps"].dictionary!["category"]!.string{
             if cat == "OPEN_CHAT"{
@@ -111,33 +90,19 @@ import SwiftyJSON
                     c.selectedIndex = 0
                     v.performSegue(withIdentifier: "showChat", sender: v)
                 }
-            }
-            else if cat == "OPEN_REQUESTS"{
+            } else if cat == "OPEN_REQUESTS"{
                 if let c = VSMAPI.Data.tabBarController{
                     c.selectedIndex = 2
                 }
             }
         }
-        
         completionHandler()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        //print(notification.request.content.userInfo)
         completionHandler(.sound)
-        //UIAlertView(title: "UNNotification", message: "\(notification.request.content.userInfo)", delegate: self, cancelButtonTitle: "OK").show()
         VSMAPI.Data.timerFired()
     }
-
-    
-    /*func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-                //UIAlertView(title: "didReceiveRemoteNotification", message: "\(userInfo)", delegate: self, cancelButtonTitle: "OK").show()
-        print(userInfo)
-        print("убрать!!!")
-        /*VSMAPI.Data.timerFired()*/
-        completionHandler(.newData)
-    }*/
- 
  
     // The callback to handle data message received via FCM for devices running iOS 10 or above.
     func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {

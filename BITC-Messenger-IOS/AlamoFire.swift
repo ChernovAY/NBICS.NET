@@ -11,24 +11,15 @@ import Alamofire
 
 extension DataRequest {
     
-    
-    /**
-     Wait for the request to finish then return the response value.
-     
-     - returns: The response.
-     */
     public func syncResponse() -> DefaultDataResponse {
         
         let semaphore = DispatchSemaphore(value: 0)
         var result: DefaultDataResponse!
         
         self.response(queue: DispatchQueue.global(qos: .default)) { response in
-            
             result = response
             semaphore.signal()
-            
         }
-        
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
         
         return result

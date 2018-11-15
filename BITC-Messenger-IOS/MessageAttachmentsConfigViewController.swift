@@ -16,15 +16,22 @@ class MessageAttachmentsConfigViewController: VSMUIViewController, UITableViewDe
     @IBOutlet var MainView: UIView!
     
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Table.dataSource = self
         Table.delegate = self
     }
-    override func viewDidAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         Load()
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        }
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         Load(false)
     }
@@ -56,8 +63,7 @@ class MessageAttachmentsConfigViewController: VSMUIViewController, UITableViewDe
         if (conf.children?.count)!>0{
             if conf.isExpanded{
                 conf.collapse(show)
-            }
-            else{
+            } else {
                 conf.expandAll(show)
             }
         }
@@ -67,6 +73,7 @@ class MessageAttachmentsConfigViewController: VSMUIViewController, UITableViewDe
         self.cArray = a!
         self.Table.reloadData()
     }
+    
     private func Load(_ b:Bool = true) {
         if b {
             Tree = VSMSimpleTree()
@@ -75,10 +82,9 @@ class MessageAttachmentsConfigViewController: VSMUIViewController, UITableViewDe
             for i in _array{
                 let ccfg = VSMCheckedConfiguration(i)
                 ccfg.msg = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft
-                if let _ = ccfg.msg?.AttachedConfs.first(where: {$0 === ccfg.Conf}){
+                if let _ = ccfg.msg?.AttachedConfs.first(where: {$0 === ccfg.Conf}) {
                     ccfg.Checked = true
-                }
-                else{
+                } else {
                     ccfg.Checked = false
                 }
                 _array2.append(ccfg)

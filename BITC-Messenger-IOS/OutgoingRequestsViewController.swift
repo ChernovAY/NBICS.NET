@@ -11,6 +11,7 @@ import UIKit
 class OutgoingRequestsViewController: VSMUIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     
     @IBOutlet var MainView: UIView!
     
@@ -21,7 +22,9 @@ class OutgoingRequestsViewController: VSMUIViewController, UITableViewDelegate, 
         super.viewDidLoad()
         Table.delegate = self
         Table.dataSource = self
-        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: OutgoingRequestsViewController.Load)}
+        if (EInitHandler == nil) {
+            EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: OutgoingRequestsViewController.Load)
+        }
         Load()
     }
     deinit {
@@ -60,8 +63,12 @@ class OutgoingRequestsViewController: VSMUIViewController, UITableViewDelegate, 
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = deleteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete])
+        if (inet.isConn) {
+            let delete = deleteAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -88,8 +95,14 @@ class OutgoingRequestsViewController: VSMUIViewController, UITableViewDelegate, 
         } else {
             fArray.removeAll()
         }
+        if (fArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
+        }
         self.Table.reloadData()
     }
+    
     override func setColors(){
         navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
         navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle

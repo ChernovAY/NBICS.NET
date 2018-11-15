@@ -14,6 +14,8 @@ class AuthorizationViewController: VSMUIViewController {
     private var EInitHandler: Disposable?
     public  var email: String!
     public  var password: String!
+    public  var globalServerName: String!
+    public  var globalServer: String!
     
     @IBOutlet var MainView: UIView!
     @IBOutlet weak var AuthorizationButton: UIButton!
@@ -28,39 +30,54 @@ class AuthorizationViewController: VSMUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AuthorizationViewController.NavigateToChats)}
+        if (EInitHandler == nil) {
+            EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: AuthorizationViewController.NavigateToChats)
+        }
         AuthorizationIndicator.isHidden = true
     }
     deinit {
         EInitHandler?.dispose()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
         LoginField.text = email
         PasswordField.text = password
+        if (globalServer != nil && globalServerName != nil) {
+            saveServer(server: globalServer, serverName: globalServerName)
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    //let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Логин или пароль не могут быть пустыми", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+    //button2Alert.show()
+    
     @IBAction func authorization(_ sender: UIButton) {
-        AuthorizationIndicator.isHidden = false
-        if !VSMAPI.Settings.login{
-            if (!(PasswordField.text?.isEmpty)! && !(LoginField.text?.isEmpty)!){
-                if let hash = mHasher.GetMD5Hash(inputString: PasswordField.text!) {
-                    if let email = LoginField.text {
-                        VSMAPI.Settings.logIn(user: email, hash: hash)
+        if (inet.isConn) {
+            AuthorizationIndicator.isHidden = false
+            if !VSMAPI.Settings.login {
+                if (!(PasswordField.text?.isEmpty)! && !(LoginField.text?.isEmpty)!){
+                    if let hash = mHasher.GetMD5Hash(inputString: PasswordField.text!) {
+                        if let email = LoginField.text {
+                            VSMAPI.Settings.logIn(user: email, hash: hash)
+                        }
                     }
+                } else {
+                    let alert = UIAlertController(title: "Ошибка авторизации", message: "Логин или пароль не могут быть пустыми", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                    AuthorizationIndicator.isHidden = true
                 }
             } else {
-                let button2Alert: UIAlertView = UIAlertView(title: "Ошибка", message: "Логин или пароль не могут быть пустыми", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
-                button2Alert.show()
-                AuthorizationIndicator.isHidden = true
+                VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash);
             }
         } else {
-            VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
+            let alert = UIAlertController(title: "Ошибка авторизации", message: "Нет связи с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+            AuthorizationIndicator.isHidden = true
         }
     }
     
@@ -73,7 +90,7 @@ class AuthorizationViewController: VSMUIViewController {
     }
     
     @IBAction func checkSC(_ sender: UIButton) {
-        saveServer(server: "http://sc.nbics.net/", serverName: "sc.nbics")
+        saveServer(server: "http://dev.nbics.net/", serverName: ".nbics")
     }
     
     @IBAction func checkMarketing(_ sender: UIButton) {
@@ -96,23 +113,12 @@ class AuthorizationViewController: VSMUIViewController {
         saveServer(server: "http://education.nbics.net/", serverName: "education")
     }
     
+    
+    
     func saveServer(server: String, serverName: String){
         ServersListView.isHidden = true
         CheckServerButton.titleLabel?.text = serverName
         VSMAPI.Settings.caddress = server
-    }
-    
-    override func setColors(){
-        /*
-        MainView.backgroundColor = UIColor.VSMBackgroundColor
-        AuthorizationButton.backgroundColor = UIColor.VSMText1Color
-        RegistrationButton.setTitleColor(UIColor.VSMText1Color, for: .normal)
-        LoginField.backgroundColor = UIColor.VSMText2Color
-        PasswordField.backgroundColor = UIColor.VSMText2Color
-        LoginField.textColor = UIColor.VSMBackgroundColor
-        PasswordField.textColor = UIColor.VSMBackgroundColor
-        AuthorizationIndicator.color = UIColor.VSMText2Color
-        */
     }
     
     private func NavigateToChats(_ b: Bool=true) {

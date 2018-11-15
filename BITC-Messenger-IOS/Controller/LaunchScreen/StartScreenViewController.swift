@@ -16,11 +16,11 @@ class StartScreenViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         if EInitHandler == nil{EInitHandler = VSMAPI.Data.EInit.addHandler(target: self, handler: StartScreenViewController.NavigateToChats)}
-        
     }
     deinit {
         EInitHandler?.dispose()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         if !VSMAPI.Settings.login {
             performSegue(withIdentifier: "showAuthorizationScreen", sender: self)
@@ -28,17 +28,17 @@ class StartScreenViewController: UIViewController{
             VSMAPI.Settings.logIn(user: VSMAPI.Settings.user, hash: VSMAPI.Settings.hash)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    func NavigateToChats(_ b:Bool=true) {
-        EInitHandler?.dispose()
-        if b{performSegue(withIdentifier: "showChatsScreen", sender: self)}
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
     }
 
+    func NavigateToChats(_ b:Bool=true) {
+        EInitHandler?.dispose()
+        if b{performSegue(withIdentifier: "showChatsScreen", sender: self)}
+    }
 }

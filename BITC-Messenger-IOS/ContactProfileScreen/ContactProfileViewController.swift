@@ -10,14 +10,14 @@ import UIKit
 
 class ContactProfileViewController: VSMUIViewController {
     
+    public var writeMessageCheck = false
     private let profile = VSMProfile(UserId: VSMAPI.VSMChatsCommunication.contactId)
     
     @IBOutlet var MainView: UIView!
+    @IBOutlet weak var WriteMessageButton: UIBarButtonItem!
     @IBOutlet weak var PhotoView: UIView!
     @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
-    
     @IBOutlet weak var UserDataView: UIView!
-    
     @IBOutlet weak var ContactPhoto: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var BirthDayLabel: UILabel!
@@ -33,6 +33,16 @@ class ContactProfileViewController: VSMUIViewController {
             SkypeLabel.text = profile!.Skype
         }
         EmailLabel.text = profile!.Email
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (writeMessageCheck) {
+            WriteMessageButton.image = UIImage(named: "NewChat.png")
+            WriteMessageButton.isEnabled = true
+        } else {
+            WriteMessageButton.image = nil
+            WriteMessageButton.isEnabled = false
+        }
     }
 
     override func didReceiveMemoryWarning() {

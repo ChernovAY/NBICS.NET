@@ -40,9 +40,7 @@ class AddContactsToChatViewController: VSMUIViewController, UITableViewDelegate,
             var contact: VSMCheckedContact!
             contact = cArray[indexPath.row]
             cell.ConfigureCell(contact: contact)
-            
             return cell
-            
         } else {
             return UITableViewCell()
         }
@@ -53,8 +51,12 @@ class AddContactsToChatViewController: VSMUIViewController, UITableViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let add = addAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [add])
+        if (inet.isConn) {
+            let add = addAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [add])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     func addAction(at indexPath: IndexPath) -> UIContextualAction {
@@ -83,7 +85,7 @@ class AddContactsToChatViewController: VSMUIViewController, UITableViewDelegate,
     }
     
     override func setColors(){
-        MainView.backgroundColor                                = UIColor.VSMMainViewBackground
+        MainView.backgroundColor = UIColor.VSMMainViewBackground
         
         Load()
     }

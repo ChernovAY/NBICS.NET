@@ -19,10 +19,8 @@ public class Event<T> {
         }
     }
     
-    public func addHandler<U: AnyObject>(target: U,
-                                         handler: @escaping (U) -> EventHandler) -> Disposable {
-        let wrapper = EventHandlerWrapper(target: target,
-                                          handler: handler, event: self)
+    public func addHandler<U: AnyObject>(target: U, handler: @escaping (U) -> EventHandler) -> Disposable {
+        let wrapper = EventHandlerWrapper(target: target, handler: handler, event: self)
         eventHandlers.append(wrapper)
         return wrapper
     }
@@ -35,6 +33,7 @@ public protocol Disposable {
 internal protocol Invocable: class {
     func invoke(_ data: Any)
 }
+
 private class EventHandlerWrapper<T: AnyObject, U>
 : Invocable, Disposable {
     weak var target: T?
@@ -54,18 +53,6 @@ private class EventHandlerWrapper<T: AnyObject, U>
     }
     
     func dispose() {
-        event.eventHandlers =
-            event.eventHandlers.filter { $0 !== self }
+        event.eventHandlers = event.eventHandlers.filter { $0 !== self }
     }
 }
-/*
-//
-let handler = event.addHandler(self, ViewController.handleEvent)
-// remove the handler
-handler.dispose()
-}
-func handleEvent(data: (String, String)) {
-    println("Hello \(data.0), \(data.1)")
-}
-//
-*/

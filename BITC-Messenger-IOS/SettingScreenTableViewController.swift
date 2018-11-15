@@ -26,7 +26,6 @@ class SettingScreenTableViewController: UITableViewController {
     @IBOutlet weak var PrivateConfigurationsTableCell: UITableViewCell!
     @IBOutlet weak var CommonConfigurationsTableCell: UITableViewCell!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setColors()
@@ -40,6 +39,7 @@ class SettingScreenTableViewController: UITableViewController {
             DarkThemeSwitch.isOn = false
         }
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         if let usr = VSMAPI.Data.Profile{
             UserPhoto.image = usr.Icon
@@ -48,6 +48,7 @@ class SettingScreenTableViewController: UITableViewController {
             PhoneLabel.text = "\(usr.Phone)"
         }
     }
+    
     @IBAction func switchDarkTheme(_ sender: UISwitch) {
         if (DarkThemeSwitch.isOn == true){
             VSMAPI.Settings.darkSchreme = false
@@ -61,7 +62,6 @@ class SettingScreenTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -77,9 +77,8 @@ class SettingScreenTableViewController: UITableViewController {
         } else {
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         }
-        
-        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
-        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.barTintColor = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor = UIColor.VSMNavigationBarTitle
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
         
         Table.backgroundColor = UIColor.VSMMainViewBackground
@@ -92,7 +91,7 @@ class SettingScreenTableViewController: UITableViewController {
         CommonConfigurationsLabel.textColor = UIColor.VSMBlackWhite
         CommonConfigurationsTableCell.backgroundColor = UIColor.VSMContentViewBackground
         
-        tabBarController?.tabBar.barTintColor                   = UIColor.VSMNavigationTabBarBackground
-        tabBarController?.tabBar.tintColor                      = UIColor.VSMNavigationTabBarItem
+        tabBarController?.tabBar.barTintColor = UIColor.VSMNavigationTabBarBackground
+        tabBarController?.tabBar.tintColor = UIColor.VSMNavigationTabBarItem
     }
 }

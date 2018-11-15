@@ -32,16 +32,16 @@ class MessageNestedConfigurationsViewController: VSMUIViewController, UITableVie
             var conf: VSMConfiguration!
             conf = cArray[indexPath.row]
             cell.ConfigureCell(configuration: conf)
-            
             return cell
-            
         } else {
             return UITableViewCell()
         }
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cArray.count
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

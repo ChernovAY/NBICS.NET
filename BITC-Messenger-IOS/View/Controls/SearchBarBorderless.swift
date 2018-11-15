@@ -12,7 +12,6 @@ import UIKit
 class SearchBarBorderless : UISearchBar {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         self.layer.borderWidth = 0
     }
 }

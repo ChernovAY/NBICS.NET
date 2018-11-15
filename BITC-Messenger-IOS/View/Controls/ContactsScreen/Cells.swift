@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ActiveLabel
 
 public class ContactCell : UITableViewCell {
     
@@ -38,18 +39,21 @@ public class MessageCell : UITableViewCell {
     
     @IBOutlet weak var ReceiverView: UIView!
     @IBOutlet weak var ReceiverImage: UIImageView!
-    @IBOutlet weak var ReceiverMessageLabel: UILabel!
+    @IBOutlet weak var RecieverMessageLabel: ActiveLabel!
     @IBOutlet weak var ReceiverMessageTimeLabel: UILabel!
     @IBOutlet weak var ReceiverAttachedFilesButton: UIButton!
     @IBOutlet weak var ReceiverAttachedConfigurationsButton: UIButton!
     @IBOutlet weak var ReceiverAttachedConfigurationsLeadingConstrainButton: NSLayoutConstraint!
     
     @IBOutlet weak var SenderView: UIView!
-    @IBOutlet weak var SenderMessageLabel: UILabel!
+    @IBOutlet weak var SenderMessageLabel: ActiveLabel!
     @IBOutlet weak var SenderMessageTimeLabel: UILabel!
     @IBOutlet weak var SenderAttachedFilesButton: UIButton!
     @IBOutlet weak var SenderAttachedConfigurationsButton: UIButton!
     @IBOutlet weak var SenderAttachedConfigurationsLeadingConstrainButton: NSLayoutConstraint!
+    
+    @IBOutlet weak var SystemView: UIView!
+    @IBOutlet weak var SystemMessageLabel: UILabel!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -67,13 +71,19 @@ public class MessageCell : UITableViewCell {
         SenderView?.clipsToBounds = true
         SenderView!.layer.cornerRadius = 10
         
+        SystemView?.clipsToBounds = true
+        SystemView!.layer.cornerRadius = 10
+        SystemMessageLabel.textColor = UIColor.VSMBlackWhite
+        
         SenderMessageLabel.text = ""
         SenderMessageTimeLabel.text = ""
-        ReceiverMessageLabel.text = ""
+        RecieverMessageLabel.text = ""
         ReceiverMessageTimeLabel.text = ""
+        SystemMessageLabel.text = ""
             
         SenderView.isHidden = true
         ReceiverView.isHidden = true
+        SystemView.isHidden = true
         
         SenderAttachedConfigurationsButton.isHidden = true
         SenderAttachedFilesButton.isHidden = true
@@ -82,73 +92,87 @@ public class MessageCell : UITableViewCell {
         ReceiverAttachedConfigurationsButton.isHidden = true
         ReceiverAttachedFilesButton.isHidden = true
         SenderAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(8)
-    
+        
         if (message.Sender?.isOwnContact == false) {
             ReceiverView.isHidden = false
-            ReceiverMessageLabel.text = message.Text
+            RecieverMessageLabel.text = message.Text
+            RecieverMessageLabel.handleURLTap { (URL) in
+                UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+                print(URL)
+            }
             ReceiverMessageTimeLabel.text = message.Time.toTimeString();
             ReceiverImage.image = message.Sender?.Photo
-            if (message.AttachedConfs.count > 0){
+            if (message.AttachedConfs.count > 0) {
                 ReceiverAttachedConfigurationsButton.isHidden = false
             }
-            if (message.AttachedFiles.count > 0){
+            if (message.AttachedFiles.count > 0) {
                 ReceiverAttachedFilesButton.isHidden = false
             } else {
                 ReceiverAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(-25)
             }
-        } else {
+        } else if (message.Sender?.isOwnContact == true) {
             SenderView.isHidden = false
             SenderMessageLabel.text = message.Text
+            SenderMessageLabel.handleURLTap { (URL) in
+                UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+            }
             SenderMessageTimeLabel.text = message.Time.toTimeString();
-            if (message.AttachedConfs.count > 0){
+            if (message.AttachedConfs.count > 0) {
                 SenderAttachedConfigurationsButton.isHidden = false
             }
-            if (message.AttachedFiles.count > 0){
+            if (message.AttachedFiles.count > 0) {
                 SenderAttachedFilesButton.isHidden = false
             } else {
                 SenderAttachedConfigurationsLeadingConstrainButton.constant = CGFloat(-25)
             }
+        } else {
+            SystemView.isHidden = false
+            SystemMessageLabel.text = message.Text
         }
-        
         self.backgroundColor = UIColor.clear
     }
     
     @IBAction func showReceiverAttachedFiles(_ sender: UIButton) {
-        setAttachsMessage()
+        if (inet.isConn) {
+            setAttachsMessage()
+        }
     }
     
     @IBAction func showSenderAttachedFiles(_ sender: UIButton) {
-        setAttachsMessage()
+        if (inet.isConn) {
+            setAttachsMessage()
+        }
     }
     
     @IBAction func showSenderAttacherConfigurations(_ sender: UIButton) {
-        setAttachsConfigurationsMessage()
+        if (inet.isConn) {
+            setAttachsConfigurationsMessage()
+        }
     }
     
     @IBAction func showReceiverAttachedConfigurations(_ sender: UIButton) {
-        setAttachsConfigurationsMessage()
+        if (inet.isConn) {
+            setAttachsConfigurationsMessage()
+        }
     }
     
-    func setAttachsMessage(){
+    func setAttachsMessage() {
         VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
         if let d = self.delegate{
-            if self.mMessage.AttachedFiles.count>0{
+            if (self.mMessage.AttachedFiles.count > 0) {
                 d(true)
             }
         }
     }
     
-    func setAttachsConfigurationsMessage(){
-        
+    func setAttachsConfigurationsMessage() {
         VSMAPI.VSMChatsCommunication.AttMessageId = self.mMessage.Id
         if let d = self.delegate{
-            if self.mMessage.AttachedConfs.count>0{
+            if (self.mMessage.AttachedConfs.count > 0) {
                 d(false)
             }
         }
-        
     }
-    
 }
 
 public class ConversationCell : UITableViewCell {
@@ -186,7 +210,7 @@ public class ConversationCell : UITableViewCell {
         self.backgroundColor = UIColor.clear
     }
     
-    private func buildName()->String{
+    private func buildName()->String {
         if mConv.Name != "" {
             return mConv.Name
         }
@@ -195,6 +219,7 @@ public class ConversationCell : UITableViewCell {
         }
         return "name"
     }
+    
     private func buildImage()->UIImage {
         if let r = mConv.Users.first(where: ({!$0.isOwnContact}))?.Photo {
             return r
@@ -277,7 +302,7 @@ public class CreateChatСontactCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func chkChange(_ b: Bool){
+    public func chkChange(_ b: Bool) {
         self.contact.Checked = b
     }
     
@@ -291,6 +316,22 @@ public class CreateChatСontactCell : UITableViewCell {
         CheckButton.tintColor = UIColor.VSMBlackWhite
         NameLabel.textColor = UIColor.VSMBlackWhite
         self.backgroundColor = UIColor.clear
+        
+        let labelTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelTapped(labelTapGestureRecognizer:)))
+        NameLabel.isUserInteractionEnabled = true
+        NameLabel.addGestureRecognizer(labelTapGestureRecognizer)
+        
+        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(imageTapGestureRecognizer:)))
+        PhotoImage.isUserInteractionEnabled = true
+        PhotoImage.addGestureRecognizer(imageTapGestureRecognizer)
+    }
+    
+    @objc func imageTapped(imageTapGestureRecognizer: UITapGestureRecognizer) {
+        CheckButton.sendActions(for: .touchUpInside)
+    }
+    
+    @objc func labelTapped(labelTapGestureRecognizer: UITapGestureRecognizer) {
+        CheckButton.sendActions(for: .touchUpInside)
     }
 }
 
@@ -300,7 +341,6 @@ public class DeleteContactFromChatCell : UITableViewCell {
     
     @IBOutlet weak var PhotoImage: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
-    
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -365,7 +405,7 @@ public class MessageAttachmentsCell : UICollectionViewCell {
         NameFileLabel.textColor = UIColor.VSMBlackWhite
         FileImage.image = file.PreviewIcon
         
-        if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
+        if VSMAPI.VSMChatsCommunication.AttMessageId == "New" {
             DownloadFileButton.setImage(UIImage(named: "delete"), for: .normal)
             DownloadFileButton.setImage(UIImage(named: "delete"), for: .selected)
             DownloadFileButton.setImage(UIImage(named: "delete"), for: .focused)
@@ -411,6 +451,7 @@ public class MessageAttachmentsCell : UICollectionViewCell {
             }
         }
     }
+    
     private func loaded(url:URL?){
         if let d = self.stateDelegate{
             d(false)
@@ -424,6 +465,7 @@ public class MessageAttachmentsCell : UICollectionViewCell {
         ProgressView.isHidden = true
         ProgressView.progress = 0
     }
+    
     private func progress(progress:Double){
         ProgressView.progress = Float(progress)
         if !DownloadFileButton.isHidden {DownloadFileButton.isHidden = true}
@@ -463,7 +505,7 @@ public class CommonConfigurationCell : UITableViewCell {
         tree = treenode
         configuration = tree.content as? VSMConfiguration
         self.delegate = delegate
-        
+
         ConfView?.clipsToBounds = true
         ConfView!.layer.cornerRadius = 6
         if (configuration.CType == "Folder"){
@@ -475,7 +517,11 @@ public class CommonConfigurationCell : UITableViewCell {
             NameLabel.textColor = UIColor.VSMBlackWhite
             OpenListButton.tintColor = UIColor.VSMBlackWhite
         }
-        ConfViewLeading.constant = CGFloat(tree.level * 30)
+        if (tree.level == 0){
+            ConfViewLeading.constant = CGFloat(8)
+        } else {
+            ConfViewLeading.constant = CGFloat(tree.level * 30)
+        }
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
         
@@ -493,8 +539,8 @@ public class PrivateConfigurationCell : UITableViewCell {
     
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ConfView: UIView!
-    @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
     @IBOutlet weak var OpenListButton: ExpendButton!
+    @IBOutlet weak var ConfViewLeading: NSLayoutConstraint!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -529,7 +575,11 @@ public class PrivateConfigurationCell : UITableViewCell {
             NameLabel.textColor = UIColor.VSMBlackWhite
             OpenListButton.tintColor = UIColor.VSMBlackWhite
         }
-        ConfViewLeading.constant = CGFloat(tree.level * 30)
+        if (tree.level == 0){
+            ConfViewLeading.constant = CGFloat(8)
+        } else {
+            ConfViewLeading.constant = CGFloat(tree.level * 30)
+        }
         NameLabel.text = configuration.Name
         self.backgroundColor = UIColor.clear
         OpenListButton.isExpandable = (tree.children?.count)! > 0 ? true : false
@@ -563,6 +613,7 @@ public class AttachConfigurationCell : UITableViewCell {
     
     @IBAction func openList(_ sender: ExpendButton) {
     }
+    
     public func lstChange(_ b: Bool){
         if (self.tree.children?.count)!>0{
             if !b{
@@ -572,12 +623,15 @@ public class AttachConfigurationCell : UITableViewCell {
             }
         }
     }
+    
     public func chkChange(_ b: Bool){
         self.configuration.Checked = b
     }
+    
     public func lockChange(_ b: Bool){
         self.configuration.Conf.ReadOnly = !b
     }
+    
     public func ConfigureCell(treenode: VSMSimpleTree, delegate: (([VSMSimpleTree]?)->())? = nil) {
         tree = treenode
         self.delegate = delegate
@@ -598,9 +652,12 @@ public class AttachConfigurationCell : UITableViewCell {
             NameLabel.textColor = UIColor.VSMBlackWhite
             ConfView.backgroundColor = UIColor.VSMContentViewBackground
         }
-        ConfViewLeading.constant = CGFloat(tree.level * 30)
+        if (tree.level == 0){
+            ConfViewLeading.constant = CGFloat(8)
+        } else {
+            ConfViewLeading.constant = CGFloat(tree.level * 30)
+        }
         NameLabel.text = configuration.Conf.Name
-        
 
         self.backgroundColor =  UIColor.clear
         
@@ -640,13 +697,17 @@ public class MessageConfigurationCell : UITableViewCell {
     }
     
     @IBAction func addConfiguration(_ sender: UIButton) {
-        if (checkAddConf == false){
-            AddConfButton.setImage(#imageLiteral(resourceName: "blackCheck"), for: UIControl.State.normal)
-            checkAddConf = true
-            if configuration.CopyConfiguration(){
-                VSMAPI.Data.loadAll()
-                
+        if (inet.isConn) {
+            if (checkAddConf == false) {
+                AddConfButton.setImage(#imageLiteral(resourceName: "blackCheck"), for: UIControl.State.normal)
+                checkAddConf = true
+                if configuration.CopyConfiguration(){
+                    VSMAPI.Data.loadAll()
+                }
             }
+        } else {
+            let button2Alert: UIAlertView = UIAlertView(title: "Не удалось добавить конфигурацию", message: "Нет соединения с интернетом", delegate: self as? UIAlertViewDelegate, cancelButtonTitle: "OK")
+            button2Alert.show()
         }
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 extension UITextField {
     func deleteBorder() {
         self.layer.sublayers?.forEach {
-            if $0.value(forKey: "Delete THIS") != nil {
+            if ($0.value(forKey: "Delete THIS") != nil) {
                 $0.removeFromSuperlayer()
             }
         }
@@ -31,9 +31,9 @@ extension UITextField {
     }
 }
 
-class ProfileViewController: VSMUIViewController{
+class ProfileViewController: VSMUIViewController {
     
-    
+    @IBOutlet var MainView: UIView!
     @IBOutlet weak var UserPhoto: UIImageView!
     @IBOutlet weak var NameField: UITextField!
     @IBOutlet weak var FamilyField: UITextField!
@@ -43,8 +43,6 @@ class ProfileViewController: VSMUIViewController{
     @IBOutlet weak var BirthdayButton: UIButton!
     @IBOutlet weak var SkypeField: UITextField!
     @IBOutlet weak var NewTextField: UITextField!
-    
-    @IBOutlet var MainView: UIView!
     @IBOutlet weak var ExitButton: UIButton!
     @IBOutlet weak var PhotoView: UIView!
     @IBOutlet weak var InformationView: UIView!
@@ -52,7 +50,6 @@ class ProfileViewController: VSMUIViewController{
     @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
     @IBOutlet weak var InformaionLabel: UILabel!
     @IBOutlet weak var ContactsLabel: UILabel!
-    
     
     var effect:UIVisualEffect!
     
@@ -71,25 +68,14 @@ class ProfileViewController: VSMUIViewController{
         UserPhoto.isUserInteractionEnabled = true
         UserPhoto.addGestureRecognizer(tapGestureRecognizer)
     }
-
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
-        //let tappedImage = tapGestureRecognizer.view as! UIImageView
-        if (EditButton.title == "Сохранить") {
-            //Загрузить новое фото
-            performSegue(withIdentifier: "showPhotoEditor", sender: self)
-        }
-    }
     
-    public func setBDateButton(){
-        BirthdayButton.setTitle("\((VSMAPI.Data.Profile?.BirthDay.toString())!)", for: .normal)
-    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         BirthdayButton.setTitle("\((VSMAPI.Data.Profile?.BirthDay.toString())!)", for: .normal)
-        if let usr = VSMAPI.Data.Profile{
+        if let usr = VSMAPI.Data.Profile {
             UserPhoto.image = usr.Icon
             NameField.text = "\(usr.Name)"
             FamilyField.text = "\(usr.FamilyName)"
@@ -100,28 +86,41 @@ class ProfileViewController: VSMUIViewController{
         }
     }
     
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        if (EditButton.title == "Сохранить") {
+            //Загрузить новое фото
+            performSegue(withIdentifier: "showPhotoEditor", sender: self)
+        }
+    }
+    
     @IBAction func EditProfile(_ sender: UIBarButtonItem) {
-        if (EditButton.title == "Редактировать") {
-            EditButton.title = "Сохранить"
-            NameField.addBorder()
-            FamilyField.addBorder()
-            PatronymicField.addBorder()
-            SkypeField.addBorder()
-            BirthdayButton.isEnabled = true
-        } else {
-            EditButton.title = "Редактировать"
-            NameField.deleteBorder()
-            FamilyField.deleteBorder()
-            PatronymicField.deleteBorder()
-            SkypeField.deleteBorder()
-            VSMAPI.Data.Profile?.Name = NameField.text!
-            VSMAPI.Data.Profile?.FamilyName = FamilyField.text!
-            VSMAPI.Data.Profile?.Patronymic = PatronymicField.text!
-            VSMAPI.Data.Profile?.Skype = SkypeField.text!
-            if VSMAPI.Data.Profile!.setChanges(){
-                VSMAPI.Data.loadAll()
+        if (inet.isConn) {
+            if (EditButton.title == "Редактировать") {
+                EditButton.title = "Сохранить"
+                NameField.addBorder()
+                FamilyField.addBorder()
+                PatronymicField.addBorder()
+                SkypeField.addBorder()
+                BirthdayButton.isEnabled = true
+            } else {
+                EditButton.title = "Редактировать"
+                NameField.deleteBorder()
+                FamilyField.deleteBorder()
+                PatronymicField.deleteBorder()
+                SkypeField.deleteBorder()
+                VSMAPI.Data.Profile?.Name = NameField.text!
+                VSMAPI.Data.Profile?.FamilyName = FamilyField.text!
+                VSMAPI.Data.Profile?.Patronymic = PatronymicField.text!
+                VSMAPI.Data.Profile?.Skype = SkypeField.text!
+                if VSMAPI.Data.Profile!.setChanges() {
+                    VSMAPI.Data.loadAll()
+                }
+                BirthdayButton.isEnabled = false
             }
-            BirthdayButton.isEnabled = false
+        } else {
+            let alert = UIAlertController(title: "Редактирование не доступно", message: "Нет соединения с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -129,25 +128,25 @@ class ProfileViewController: VSMUIViewController{
         VSMAPI.Settings.logOut()
         self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
     }
-    override func setColors(){
-        NavigationBarButton.tintColor = UIColor.VSMNavigationBarTitle
-        
-        MainView.backgroundColor = UIColor.VSMMainViewBackground
- 
-        PhotoView.backgroundColor = UIColor.VSMContentViewBackground
-        
-        InformationView.backgroundColor = UIColor.VSMContentViewBackground
-        NameField.textColor = UIColor.VSMBlackWhite
-        PatronymicField.textColor = UIColor.VSMBlackWhite
-        FamilyField.textColor = UIColor.VSMBlackWhite
+    
+    public func setBDateButton() {
+        BirthdayButton.setTitle("\((VSMAPI.Data.Profile?.BirthDay.toString())!)", for: .normal)
+    }
+    
+    override func setColors() {
         BirthdayButton.setTitleColor(UIColor.VSMBlackWhite, for: .normal)
-        InformaionLabel.textColor = UIColor.VSMButton
-        
-        ContactsView.backgroundColor = UIColor.VSMContentViewBackground
-        EmailField.textColor = UIColor.VSMBlackWhite
-        SkypeField.textColor = UIColor.VSMBlackWhite
-        ContactsLabel.textColor = UIColor.VSMButton
-        
-        ExitButton.backgroundColor = UIColor.VSMButton
+        NavigationBarButton.tintColor   = UIColor.VSMNavigationBarTitle
+        MainView.backgroundColor        = UIColor.VSMMainViewBackground
+        PhotoView.backgroundColor       = UIColor.VSMContentViewBackground
+        InformationView.backgroundColor = UIColor.VSMContentViewBackground
+        NameField.textColor             = UIColor.VSMBlackWhite
+        PatronymicField.textColor       = UIColor.VSMBlackWhite
+        FamilyField.textColor           = UIColor.VSMBlackWhite
+        InformaionLabel.textColor       = UIColor.VSMButton
+        ContactsView.backgroundColor    = UIColor.VSMContentViewBackground
+        EmailField.textColor            = UIColor.VSMBlackWhite
+        SkypeField.textColor            = UIColor.VSMBlackWhite
+        ContactsLabel.textColor         = UIColor.VSMButton
+        ExitButton.backgroundColor      = UIColor.VSMButton
     }
 }

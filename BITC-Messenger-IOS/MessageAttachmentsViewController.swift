@@ -33,7 +33,7 @@ class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDat
     
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         if urls.count > 0 {swichNavigationBar(state: true);}
-        if let MSG = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft{
+        if let MSG = VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft {
             for f in urls{
                 var isDirectory = ObjCBool(false)
                 let isExists = FileManager.default.fileExists(atPath: f.path, isDirectory: &isDirectory)
@@ -60,9 +60,7 @@ class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDat
             var file: VSMAttachedFile!
             file = cArray[indexPath.row]
             cell.ConfigureCell(file: file, previewDelegate: preview, stateDelegate: swichNavigationBar)
-            
             return cell
-            
         } else {
             return UICollectionViewCell()
         }
@@ -74,16 +72,14 @@ class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDat
         docController.presentPreview(animated: true)
     }
     
-    func Load(_ b:Bool = true){
+    func Load(_ b:Bool = true) {
         if b {
-            if VSMAPI.VSMChatsCommunication.AttMessageId == "New"{
+            if VSMAPI.VSMChatsCommunication.AttMessageId == "New" {
                 cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Draft.AttachedFiles)!
                 AttachFileButton.isHidden = false
+            } else {    cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Messages.array.first(where: {$0.Id == VSMAPI.VSMChatsCommunication.AttMessageId})!.AttachedFiles)!
             }
-            else{    cArray =  (VSMAPI.Data.Conversations[VSMAPI.VSMChatsCommunication.conversetionId]?.Messages.array.first(where: {$0.Id == VSMAPI.VSMChatsCommunication.AttMessageId})!.AttachedFiles)!
-            }
-        }
-        else{
+        } else {
             cArray.removeAll()
         }
         self.Table.reloadData()
@@ -95,7 +91,7 @@ class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDat
         docController = nil
     }
     
-    public func swichNavigationBar(state: Bool){
+    public func swichNavigationBar(state: Bool) {
         if (state == true){
             navigationItem.hidesBackButton = true
             NavigationTitle.title = "Подождите..."
@@ -108,11 +104,17 @@ class MessageAttachmentsViewController: VSMUIViewController, UICollectionViewDat
     }
     
     @IBAction func attachFile(_ sender: UIButton) {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.content","public.data"], in: .import)
-        documentPicker.delegate = self
-        documentPicker.modalPresentationStyle = .pageSheet
-        documentPicker.allowsMultipleSelection = true
-        self.present(documentPicker, animated: true, completion: nil)
+        if (inet.isConn) {
+            let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.content","public.data"], in: .import)
+            documentPicker.delegate = self
+            documentPicker.modalPresentationStyle = .pageSheet
+            documentPicker.allowsMultipleSelection = true
+            self.present(documentPicker, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Не удалось прикрепить файл", message: "Нет соединения с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func setColors(){

@@ -17,8 +17,10 @@ class CreateChatViewController: VSMUIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var NameChatField: UITextField!
     @IBOutlet weak var CreateChatButton: UIButton!
+    
     @IBOutlet weak var Table: UITableView!
-
+    @IBOutlet weak var EmptyContentLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         CreateChatButton.layer.cornerRadius = 17
@@ -67,22 +69,42 @@ class CreateChatViewController: VSMUIViewController, UITableViewDelegate, UITabl
         } else {
             cArray.removeAll()
         }
+        
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
+        }
         self.Table.reloadData()
     }
     
     @IBAction func createChat(_ sender: UIButton) {
-        let newConv = VSMAPI.Data.newConversation(NameChatField.text!)
-        
-        let nCells = Table.numberOfRows(inSection: 0)
-        for i in 0..<nCells{
-            if cArray[i].Checked{
-                newConv?.Users.append(cArray[i].Contact)
+        if (inet.isConn) {
+            let newConv = VSMAPI.Data.newConversation(NameChatField.text!)
+            
+            let nCells = Table.numberOfRows(inSection: 0)
+            for i in 0..<nCells{
+                if cArray[i].Checked {
+                    newConv?.Users.append(cArray[i].Contact)
+                }
             }
+            if newConv!.sendMembers() {
+                VSMAPI.Data.loadAll()
+            }
+            _ = navigationController?.popToRootViewController(animated: true)
+        } else {
+            let alert = UIAlertController(title: "Не удалось создать чат", message: "Нет соединения с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    print("default")
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }}))
+            self.present(alert, animated: true, completion: nil)
         }
-        if newConv!.sendMembers(){
-            VSMAPI.Data.loadAll()
-        }
-        _ = navigationController?.popToRootViewController(animated: true)
     }
     
     override func setColors(){

@@ -16,7 +16,9 @@ extension UITextField {
             return currentAttributedPlaceholderColor
         }
         set {
-            guard let currentAttributedString = attributedPlaceholder else { return }
+            guard let currentAttributedString = attributedPlaceholder else {
+                return
+            }
             let attributes = [NSAttributedString.Key.foregroundColor : newValue]
             
             attributedPlaceholder = NSAttributedString(string: currentAttributedString.string, attributes: attributes)

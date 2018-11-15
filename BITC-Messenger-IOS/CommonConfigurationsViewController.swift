@@ -15,23 +15,29 @@ class CommonConfigurationsViewController: VSMUIViewController, UITableViewDelega
     private var configurationURL: String!
     
     @IBOutlet var MainView: UIView!
-    
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Table.dataSource = self
         Table.delegate = self
+        Load()
     }
     deinit {
-        Load(false)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         Load()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        Load()
+        if (cArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
         Load(false)
     }
     
@@ -55,10 +61,12 @@ class CommonConfigurationsViewController: VSMUIViewController, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let u = cArray[indexPath.row].content as? VSMConfiguration{
-            if u.CType == "Configuration"{
-                configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
-                performSegue(withIdentifier: "showCommonConfiguration", sender: self)
+        if (inet.isConn) {
+            if let u = cArray[indexPath.row].content as? VSMConfiguration {
+                if u.CType == "Configuration"{
+                    configurationURL = VSMAPI.Settings.caddress + "/#ru/"+u.Code
+                    performSegue(withIdentifier: "showCommonConfiguration", sender: self)
+                }
             }
         }
     }
@@ -87,9 +95,8 @@ class CommonConfigurationsViewController: VSMUIViewController, UITableViewDelega
     
     override func setColors(){
         MainView.backgroundColor = UIColor.VSMMainViewBackground
-        
-        navigationController?.navigationBar.barTintColor        = UIColor.VSMNavigationBarBackground
-        navigationController?.navigationBar.tintColor           = UIColor.VSMNavigationBarTitle
+        navigationController?.navigationBar.barTintColor = UIColor.VSMNavigationBarBackground
+        navigationController?.navigationBar.tintColor = UIColor.VSMNavigationBarTitle
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.VSMNavigationBarTitle]
     }
     

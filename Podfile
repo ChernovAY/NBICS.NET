@@ -7,5 +7,6 @@ target 'BITC-Messenger-IOS' do
   pod 'Firebase/Core' 
   pod 'Firebase/Database'	
   pod 'Firebase/Messaging'
+  pod 'ActiveLabel'
   use_frameworks!
 end

@@ -19,6 +19,7 @@ public class tree{
         self.npp    = npp
     }
 }
+
 public class VSMSimpleTree{
    
     public      var root:       VSMSimpleTree?
@@ -52,13 +53,13 @@ public class VSMSimpleTree{
         root?.all?.append(self)
     }
     
-    deinit{
+    deinit {
         self.children?.removeAll()
         root?.all = root?.all?.filter({!($0 === self)})
         parent?.children = parent?.children?.filter({!($0 === self)})
     }
     
-    public func fillTreee(root: VSMSimpleTree, from: [tree] ){
+    public func fillTreee(root: VSMSimpleTree, from: [tree]) {
         
         let array = from.filter({$0.Parent == self.content?.Id})
         for a in array{
@@ -68,31 +69,32 @@ public class VSMSimpleTree{
         }
     }
 
-    public func collapse(_ delegate:(([VSMSimpleTree]?)->Void)? = nil){
+    public func collapse(_ delegate:(([VSMSimpleTree]?)->Void)? = nil) {
         self.isExpanded = false
-        if let cc = children{
+        if let cc = children {
             for c in cc{
                 c.collapse()
                 c.isShown = false
             }
         }
-        if let d = delegate{
+        if let d = delegate {
             d(root?.all?.filter({$0.isShown}))
         }
     }
-    public func expand(_ delegate:(([VSMSimpleTree]?)->Void)? = nil){
+    
+    public func expand(_ delegate:(([VSMSimpleTree]?)->Void)? = nil) {
        self.isExpanded = true
-        if let cc = children{
-            for c in cc{
+        if let cc = children {
+            for c in cc {
                 c.isShown = true
             }
         }
-        if let d = delegate{
+        if let d = delegate {
             d(root?.all?.filter({$0.isShown}))
         }
     }
 
-    public func expandAll(_ delegate:(([VSMSimpleTree]?)->Void)? = nil){
+    public func expandAll(_ delegate:(([VSMSimpleTree]?)->Void)? = nil) {
         self.isExpanded = true
         if let cc = children{
             for c in cc{
@@ -100,20 +102,20 @@ public class VSMSimpleTree{
                 c.expandAll()
             }
         }
-        if let d = delegate{
+        if let d = delegate {
             d(root?.all?.filter({$0.isShown}))
         }
     }
-    public func delete(_ delegate:(([VSMSimpleTree]?)->Void)? = nil){
-        if let cc = children{
+    
+    public func delete(_ delegate:(([VSMSimpleTree]?)->Void)? = nil) {
+        if let cc = children {
             for c in cc{
                 c.delete()
             }
         }
         root?.all = root?.all?.filter({!($0 === self)})
         parent?.children = parent?.children?.filter({!($0 === self)})
-        
-        if let d = delegate{
+        if let d = delegate {
             d(root?.all?.filter({$0.isShown}))
         }
     }

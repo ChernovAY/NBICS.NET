@@ -17,6 +17,7 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
     @IBOutlet weak var NavigationBarButton: UIBarButtonItem!
     
     @IBOutlet weak var Table: UITableView!
+    @IBOutlet weak var EmptyContentLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
     deinit {
         EInitHandler?.dispose()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -60,9 +62,13 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = deleteAction(at: indexPath)
-        let add = addAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete, add])
+        if (inet.isConn) {
+            let delete = deleteAction(at: indexPath)
+            let add = addAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete, add])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -100,6 +106,11 @@ class IncommingRequestsViewController: VSMUIViewController, UITableViewDelegate,
             fArray = VSMAPI.Data.getContacts(type: VSMContact.ContactType.In)
         } else {
             fArray.removeAll()
+        }
+        if (fArray.count > 0){
+            EmptyContentLabel.isHidden = true
+        } else {
+            EmptyContentLabel.isHidden = false
         }
         self.Table.reloadData()
     }

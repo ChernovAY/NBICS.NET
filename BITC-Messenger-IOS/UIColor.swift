@@ -24,5 +24,4 @@ extension UIColor{
     open class var VSMNavigationBarTitle:            UIColor {get{return UIColor(hexString: VSMAPI.Settings.darkSchreme ? "#000000":"#FFFFFF")}}
     open class var VSMNavigationTabBarBackground:    UIColor {get{return UIColor(hexString: VSMAPI.Settings.darkSchreme ? "#EAECEC":"#393939")}}
     open class var VSMNavigationTabBarItem:          UIColor {get{return UIColor(hexString: VSMAPI.Settings.darkSchreme ? "#000000":"#FFFFFF")}}
-    
 }

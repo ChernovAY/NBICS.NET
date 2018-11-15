@@ -22,8 +22,6 @@ class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITa
     @IBOutlet weak var Table: UITableView!
     @IBOutlet weak var NameChat: UITextField!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         SaveNameChatButton.layer.cornerRadius = 17
@@ -55,28 +53,30 @@ class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITa
             var contact: VSMCheckedContact!
             contact = cArray[indexPath.row]
             cell.ConfigureCell(contact: contact)
-            
             return cell
-            
         } else {
             return UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 55
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = deleteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete])
+        if (inet.isConn) {
+            let delete = deleteAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Удалить") { (action, view, completion) in
             let c = self.cArray[indexPath.row]
             c.Checked = false
-            self.Load()
+                self.Load()
         }
         action.image = #imageLiteral(resourceName: "delete")
         action.backgroundColor = .red
@@ -93,18 +93,30 @@ class ChatSettingsViewController: VSMUIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func LeaveChat(_ sender: UIButton) {
-        conv?.Users = (conv?.Users.filter({!($0 === VSMAPI.Data.Contact!)}))!
-        if (conv?.sendMembers())!{
-            VSMAPI.Data.loadAll()
+        if (inet.isConn) {
+            conv?.isSendNeeded = true
+            if (conv?.LeaveConversation())!{
+                VSMAPI.Data.loadAll()
+            }
+            _ = navigationController?.popToRootViewController(animated: true)
+        } else {
+            let alert = UIAlertController(title: "Не удалось покинуть чат", message: "Нет соединения с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
-        _ = navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func saveNameChat(_ sender: UIButton) {
-        if NameChat.text != conv?.Name && NameChat.text != ""{
-            if (conv?.Rename(NameChat.text!))!{
-                VSMAPI.Data.loadAll()
+        if (inet.isConn) {
+            if NameChat.text != conv?.Name && NameChat.text != ""{
+                if (conv?.Rename(NameChat.text!))!{
+                    VSMAPI.Data.loadAll()
+                }
             }
+        } else {
+            let alert = UIAlertController(title: "Не удалось сохранить имя чата", message: "Нет соединения с интернетом", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
